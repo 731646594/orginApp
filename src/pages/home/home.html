@@ -1,17 +1,74 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>首页</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+  <div class="userInfoBox">
+    <div class="userPhotoBox" item-start>
+      <img class="userPhoto" src="assets/imgs/user.png">
+    </div>
+    <div class="userTextBox" item-end>
+      <div class="userName">{{userName}}</div>
+      <div class="userDepart">{{departName}}</div>
+    </div>
+  </div>
+  <div class="homeButtonBox">
+    <button class="homeButton" (click)="formPage(1)"><ion-icon name="qr-scanner" class="homeButtonIcon"></ion-icon><br>资产盘点</button>
+    <button class="homeButton" (click)="formPage(2)"><ion-icon name="open" class="homeButtonIcon"></ion-icon><br>调拨申请</button>
+    <button class="homeButton" (click)="formPage(3)"><ion-icon name="trash" class="homeButtonIcon"></ion-icon><br>报废申请</button>
+  </div>
+  <div>
+    <ion-list>
+      <ion-item class="inputItem" (click)="searchPage(1)">
+        <div>
+          待办类型：正在盘点
+        </div>
+        <div>
+          待办数量：{{inventoryNum}}
+        </div>
+      </ion-item>
+      <ion-item class="inputItem"  (click)="planListPage(1)">
+        <div>
+          待办类型：未盘计划
+        </div>
+        <div>
+          待办数量：{{num1}}
+        </div>
+      </ion-item>
+      <ion-item class="inputItem" (click)="censorshipPage(1)">
+        <div>
+          待办类型：调拨审批
+        </div>
+        <div>
+          待办数量：{{num2}}
+        </div>
+      </ion-item>
+      <ion-item class="inputItem" (click)="censorshipPage(2)">
+        <div>
+          待办类型：调出确认
+        </div>
+        <div>
+          待办数量：{{num3}}
+        </div>
+      </ion-item>
+      <ion-item class="inputItem" (click)="censorshipPage(3)">
+        <div>
+          待办类型：调入确认
+        </div>
+        <div>
+          待办数量：{{num4}}
+        </div>
+      </ion-item>
+      <ion-item  (click)="censorshipPage(4)">
+        <div>
+          待办类型：报废审批
+        </div>
+        <div>
+          待办数量：{{num5}}
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

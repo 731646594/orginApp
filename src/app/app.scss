@@ -14,3 +14,101 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+//自定义css
+//输入框
+.inputItem{
+  width: 95%;
+}
+//button样式
+.myStyleButton{
+  background: #0091d2;
+}
+//覆盖css
+//返回键
+.back-button.show-back-button{
+  color: white;
+}
+//下拉框和字体
+.popover-ios .popover-content{
+  width: 75%;
+  .item-block{
+    font-size: 14.5px;
+  }
+}
+.popover-md .popover-content{
+  width: 75%;
+  .item-block{
+    font-size: 14.5px;
+  }
+}
+//tabs下button
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: #0091d2;
+}
+.tabs-md .tab-button[aria-selected=true] {
+  color: #0091d2;
+}
+.tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
+  color: #0091d2;
+}
+.tabs-ios .tab-button[aria-selected=true] {
+  color: #0091d2;
+}
+//标题栏
+.toolbar-background-ios{
+  background: #0091d2;
+}
+.toolbar-title-ios{
+  color: white;
+  font-size: 1.3em;
+}
+.toolbar-background-md{
+  background: #0091d2;
+}
+.toolbar-title-md{
+  color: white;
+  font-size: 1.3em;
+}
+//选项卡
+.segment-ios .segment-button.segment-activated{
+  background: #0091d2;
+}
+.segment-ios .segment-button{
+  color: #0091d2;
+  border-color: #0091d2;
+}
+.segment-md .segment-button.segment-activated{
+  background: #0091d2;
+}
+.segment-md .segment-button{
+  color: #0091d2;
+  border-color: #0091d2;
+}
+//radiobutton
+.item-radio-checked.item-ios ion-label{
+  color: #0091d2;
+}
+.radio-ios .radio-checked .radio-inner{
+  border-color: #0091d2;
+}
+.item-radio-checked.item-md ion-label{
+  color: #0091d2;
+}
+.radio-md .radio-checked .radio-inner{
+  border-color: #0091d2;
+}
+//alertbutton
+.alert-ios .alert-button{
+  color: #0091d2;
+}
+.alert-md .alert-button{
+  color: #0091d2;
+}
+//datetimebutton
+.picker-ios .picker-button{
+  color: #0091d2;
+}
+.picker-md .picker-button{
+  color: #0091d2;
+}
