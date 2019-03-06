@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="formInfoBox" >
+    <div class="formInfoInput">
+      <ion-item *ngFor="let Data of contentData;let i = index">
+        <ion-label [class]="Data[0]">{{Data[1]}}</ion-label>
+        <ion-input *ngIf="Data[2]==3" (ionChange)="filterOptionName($event,i)" [placeholder]="Data[4]" [(ngModel)]="inputData[i]" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+        <ion-input *ngIf="(Data[2]==0||Data[2]==1)&&!Data[3]" [readonly]="Data[3]" [placeholder]="Data[4]" [(ngModel)]="inputData[i]" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+        <ion-input *ngIf="(Data[2]==0)&&Data[3]" [readonly]="Data[3]" [placeholder]="Data[4]" [(ngModel)]="inputData[i]"></ion-input>
+        <button *ngIf="Data[2]==1" item-end class="formInputButton">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <ion-select *ngIf="Data[2]==2" class="formSelect"  interface="popover"  [(ngModel)]="selectedData[i]">
+          <ion-option *ngFor="let option of selectShowData[i]" (ionSelect)="showOptionName(option[1],i)" [value]="option[0]">{{option[1]}}</ion-option>
+        </ion-select>
+        <ion-select *ngIf="Data[2]==3" class="noSelectText"  interface="popover"  [(ngModel)]="selectedData[i]">
+          <ion-option *ngFor="let option of selectShowData[i]" (ionSelect)="showOptionName(option[1],i)" [value]="option[0]">{{option[1]}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
+
+<footer class="formFooter" padding *ngIf="isShow&&!isOnfocus">
+  <button class="formFooterButton" (click)="pickPhoto()" *ngFor="let Data of footerContentData">
+    <ion-icon class="formFooterIcon" [name]="Data[0]"></ion-icon><br>{{Data[1]}}
+  </button>
+</footer>

@@ -26,7 +26,7 @@ export class HomePage {
   }
   loadData(){
     this.userName = this.storageService.read("loginUserName");
-    this.userCode = this.storageService.read("loginUsercode");
+    this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
     this.httpService.post(this.httpService.getUrl()+"toDoController.do?tododetailcounts", {userCode:this.userCode,departCode:this.departCode}).subscribe((data)=>{
@@ -45,19 +45,19 @@ export class HomePage {
         this.num5 = todoList[1][1];
       }
     },err=>{
-      console.log(err)
+      alert(err)
     })
   }
-  // formPage(pageIndex){
-  //   this.app.getRootNav().push(FormPage,{pageIndex:pageIndex})
-  // }
-  // planListPage(pageIndex){
-  //   this.app.getRootNav().push(PlanListPage,{pageIndex:pageIndex})
-  // }
-  // censorshipPage(pageIndex){
-  //   this.app.getRootNav().push(CensorshipPage,{pageIndex:pageIndex})
-  // }
-  // searchPage(pageIndex){
-  //   this.app.getRootNav().push(SearchPage,{pageIndex:pageIndex})
-  // }
+  formPage(pageIndex){
+    // this.app.getRootNav().push(FormPage,{pageIndex:pageIndex})
+  }
+  planListPage(pageIndex){
+    // this.app.getRootNav().push(PlanListPage,{pageIndex:pageIndex})
+  }
+  censorshipPage(pageIndex){
+    // this.app.getRootNav().push(CensorshipPage,{pageIndex:pageIndex})
+  }
+  searchPage(pageIndex){
+    // this.app.getRootNav().push(SearchPage,{pageIndex:pageIndex})
+  }
 }

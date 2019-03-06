@@ -17,6 +17,6 @@
     </div>
   </div>
   <div class="appsButtonBox" *ngFor="let Data of pageData">
-    <button *ngFor="let data of Data" class="appsButton" (click)="appChoose(data[0],data[1][0])"><ion-icon [name]="data[2]" class="appsButtonIcon"></ion-icon><br>{{data[3]}}</button>
+    <button *ngFor="let data of Data" class="appsButton" (click)="appChoose(data[0],data[1])"><ion-icon [name]="data[2]" class="appsButtonIcon"></ion-icon><br>{{data[3]}}</button>
   </div>
 </ion-content>

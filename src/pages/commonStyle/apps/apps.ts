@@ -5,6 +5,7 @@ import {ServerSettingPage} from "../../mine/serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../../mine/modifyPassword/modifyPassword";
 import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
+import {InsertFormPage} from "../insertForm/insertForm";
 
 @Component({
   selector: 'page-apps',
@@ -24,23 +25,23 @@ export class AppsPage {
     this.loadData();
   }
   loadData(){
-    console.log(this.navParams.data);
     this.userName = this.storageService.read("loginUserName");
-    this.userCode = this.storageService.read("loginUsercode");
+    this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.pageName = this.navParams.data.pageName;
     this.pageData = this.navParams.data.pageData;
   }
   appChoose(page,params){
 
-    //1:commonStyle/apps通用样式
+    //1:commonStyle/apps通用菜单样式
     //2:mine/serverSetting服务器设置
     //3:mine/modifyPassword修改密码
     //4:mine/login切换单位
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-
+    //8:commmonStyle/insertForm通用表单录入样式
+    //9:离线盘点
     let willGoPage = null;
     if(page == 1){
       willGoPage = AppsPage;
@@ -77,6 +78,27 @@ export class AppsPage {
     }
     else if(page == 7){
       this.downloadDictionaries();
+    }
+    else if(page==8){
+      willGoPage = InsertFormPage;
+    }
+    else if(page==9){
+      let tableName = "storePlaceData";
+      this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
+        if (res.rows.length>0){
+          let item = [];
+          let stringData =  res.rows.item(0).stringData;
+          let jsonData = JSON.parse(stringData);
+          for (let i in jsonData){
+            item[i] = [jsonData[i].complexcode,jsonData[i].complexname]
+          }
+          params.pageData[0][0][1].pageData.tsData.selectData[7] = item;
+          params.pageData[0][0][1].pageData.tsData.selectedData[7] = item[0];
+        }else {
+
+        }
+      }).catch(e =>alert("erro2:"+JSON.stringify(e)));
+      willGoPage = AppsPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

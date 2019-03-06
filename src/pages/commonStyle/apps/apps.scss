@@ -2,49 +2,4 @@ page-apps {
   .scroll-content{
     overflow: hidden;
   }
-  .appsButtonBox{
-    width: 100%;
-    text-align: center;
-    display: flex;
-  }
-  .appsButtonIcon{
-    color: #0091d2;
-    font-size: 3.5em;
-  }
-  .appsButton{
-    width: 100%;
-    padding: 5%;
-    background: transparent;
-    border-bottom: 1px solid #dedede;
-  }
-  .appsButton:nth-child(even){
-    border-left: 1px solid #dedede;
-    border-right: 1px solid #dedede;
-  }
-  //userInfo显示
-  .userInfoBox{
-    width: 100%;
-    display: table;
-    background: rgb(248, 248, 248);
-    padding: 16px 16px 8px 16px;
-  }
-  .userPhotoBox{
-    display: table-cell;
-    width: 20%;
-  }
-  .userPhoto{
-    width: 100%;
-  }
-  .userTextBox{
-    display: table-cell;
-    width: 70%;
-    vertical-align: top;
-    font-size: 16px;
-  }
-  .userName{
-    margin: 5% 10%;
-  }
-  .userDepart{
-    margin: 5% 10%;
-  }
 }

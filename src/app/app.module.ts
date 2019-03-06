@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from "../pages/mine/login/login";
 import { ModifyPasswordPage } from '../pages/mine/modifyPassword/modifyPassword';
 import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
+import { InsertFormPage } from "../pages/commonStyle/insertForm/insertForm";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +27,8 @@ import { StorageService } from "../services/storageService";
     TabsPage,
     LoginPage,
     ModifyPasswordPage,
-    ServerSettingPage
+    ServerSettingPage,
+    InsertFormPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { StorageService } from "../services/storageService";
     TabsPage,
     LoginPage,
     ModifyPasswordPage,
-    ServerSettingPage
+    ServerSettingPage,
+    InsertFormPage
   ],
   providers: [
     StatusBar,
