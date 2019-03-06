@@ -24,13 +24,14 @@ export class TabsPage {
     //6:清除数据
     //7:更新字典
     //8:commmonStyle/insertForm通用表单录入样式
-    //9:离线盘点
+    //9:资产盘点，content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
     let kuaisusaoma = {
       pageName:"快速扫码",
+      isNeedPictureArea:true,
       pageData:{
         htmlData:{
           contentData:[
-            ["","资产条码：",1,false,"条形码输入",""],
+            ["","资产条码：",1,false,"条形码输入"],
             ["","盘点单位：",0,true,""],
             ["","资产编码：",0,true,""],
             ["formSelectLabel","使用状态：",2,false,""],
@@ -38,16 +39,16 @@ export class TabsPage {
             ["","规格型号：",0,false,""],
             ["","车牌井号：",0,false,""],
             ["formSelectLabel","存放地点：",3,false,""],
-            ["","保管人：",0,false,"",""],
+            ["","保管人：",0,false,""],
             ["formSelectLabel","贴码状态：",2,false,""],
             ["formSelectLabel","技术状况：",2,false,""],
           ],
           footerData:{
             isShow:true,
             footerContentData:[
-              ["camera","照片"],
-              ["qr-scanner","扫码"],
-              ["checkmark-circle","保存"],
+              ["camera","照片",0,0],
+              ["qr-scanner","扫码",1,0],
+              ["checkmark-circle","保存",2,0],
             ]
           }
         },
@@ -96,7 +97,7 @@ export class TabsPage {
             [],
             [],
             [],
-            ["formSelectLabel","存放地点："],
+            [],
             [],
             [
               ["0","相符"],
@@ -119,6 +120,7 @@ export class TabsPage {
     };
     let panyingluru = {
       pageName:"盘盈录入",
+      isNeedPictureArea:true,
       pageData:{
         htmlData:{
           contentData:[
@@ -128,7 +130,7 @@ export class TabsPage {
             ["","规格型号：",0,false,""],
             ["formSelectLabel","盘盈原因：",2,false,""],
             ["formSelectLabel","存放地点：",2,false,""],
-            ["","保管人：",0,false,"",""],
+            ["","保管人：",0,false,""],
             ["formSelectLabel","使用状态：",2,false,""],
             ["formSelectLabel","技术状况：",2,false,""],
             ["","备注：",0,false,""],
@@ -136,24 +138,71 @@ export class TabsPage {
           footerData:{
             isShow:true,
             footerContentData:[
-              ["camera","照片"],
-              ["qr-scanner","扫码"],
-              ["checkmark-circle","保存"],
+              ["camera","照片",0,1],
+              ["qr-scanner","扫码",1,1],
+              ["checkmark-circle","保存",2,1],
             ]
           }
         },
-        tsData:[
-          ["formSelectLabel","盘点单位：",2,false],
-          ["","资产条码：",0,false],
-          ["","资产名称：",0,false],
-          ["","规格型号：",0,false],
-          ["formSelectLabel","盘盈原因：",2,false],
-          ["formSelectLabel","存放地点：",2,false],
-          ["","保管人：",0,false],
-          ["formSelectLabel","使用状态：",2,false],
-          ["formSelectLabel","技术状况：",2,false],
-          ["","备注：",0,false],
-        ]
+        tsData:{
+          inputData:[
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+          ],
+          selectedData:[
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "010101",
+            "01",
+            ""
+          ],
+          selectData:[
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+              ["010101","生产经营用-科研"],
+              ["010102","生产经营用-其他"],
+              ["0102","非生产经营用"],
+              ["0201","季节性经营停用"],
+              ["0202","其他原因停用"],
+              ["0203","经营场所备用"],
+              ["0204","闲置"],
+              ["03","租出"],
+              ["04","借出"],
+            ],
+            [
+              ["01","完好"],
+              ["02","带病运行"],
+              ["03","在修"],
+              ["04","待修"],
+              ["05","待报废"],
+              ["06","损毁"],
+              ["07","待处置"],
+              ["08","已处置"],
+            ],
+            [],
+          ]
+
+        }
       }
     };
     let pandian = {

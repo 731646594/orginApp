@@ -42,6 +42,7 @@ export class AppsPage {
     //7:更新字典
     //8:commmonStyle/insertForm通用表单录入样式
     //9:离线盘点
+    //9:资产盘点，content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
     let willGoPage = null;
     if(page == 1){
       willGoPage = AppsPage;

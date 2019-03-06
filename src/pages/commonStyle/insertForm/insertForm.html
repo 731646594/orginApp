@@ -23,12 +23,21 @@
           <ion-option *ngFor="let option of selectShowData[i]" (ionSelect)="showOptionName(option[1],i)" [value]="option[0]">{{option[1]}}</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item *ngIf="isNeedPictureArea" class="inputItem imgItem">
+        <ion-label>图片区:</ion-label>
+      </ion-item>
+      <div class="imgBox" *ngFor="let photo of photoFiles;let i = index;">
+        <div class="imgInclusion">
+          <img class="imgShow" (click)="showPhoto(i)" src="{{photo}}">
+          <img class="imgDeleteButton" (click)="deletePhoto(i)" src='assets/imgs/delete.png'>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>
 
 <footer class="formFooter" padding *ngIf="isShow&&!isOnfocus">
-  <button class="formFooterButton" (click)="pickPhoto()" *ngFor="let Data of footerContentData">
+  <button class="formFooterButton" (click)="footerFunction(Data[2],Data[3])" *ngFor="let Data of footerContentData">
     <ion-icon class="formFooterIcon" [name]="Data[0]"></ion-icon><br>{{Data[1]}}
   </button>
 </footer>

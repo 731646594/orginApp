@@ -10,6 +10,7 @@ import { LoginPage } from "../pages/mine/login/login";
 import { ModifyPasswordPage } from '../pages/mine/modifyPassword/modifyPassword';
 import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
 import { InsertFormPage } from "../pages/commonStyle/insertForm/insertForm";
+import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +19,9 @@ import { HttpModule } from "@angular/http";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { HttpService } from "../services/httpService";
 import { StorageService } from "../services/storageService";
+import { BarcodeScanner } from "@ionic-native/barcode-scanner";
+import { Camera } from '@ionic-native/camera';
+import {File} from "@ionic-native/file";
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { StorageService } from "../services/storageService";
     LoginPage,
     ModifyPasswordPage,
     ServerSettingPage,
-    InsertFormPage
+    InsertFormPage,
+    ShowPicturePage
   ],
   imports: [
     BrowserModule,
@@ -54,13 +59,17 @@ import { StorageService } from "../services/storageService";
     LoginPage,
     ModifyPasswordPage,
     ServerSettingPage,
-    InsertFormPage
+    InsertFormPage,
+    ShowPicturePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     SQLite,
     HttpClient,
+    BarcodeScanner,
+    Camera,
+    File,
     HttpService,
     StorageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
