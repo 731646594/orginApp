@@ -30,17 +30,17 @@ export class TabsPage {
       pageData:{
         htmlData:{
           contentData:[
-            ["","资产条码：",1,false,"条形码输入","",""],
-            ["","盘点单位：",0,true,"",""],
-            ["","资产编码：",0,true,"",""],
-            ["formSelectLabel","使用状态：",2,false,"","formSelect"],
-            ["","资产名称：",0,true,"",""],
-            ["","规格型号：",0,false,"",""],
-            ["","车牌井号：",0,false,"",""],
-            ["formSelectLabel","存放地点：",3,false,"","noSelectText"],
+            ["","资产条码：",1,false,"条形码输入",""],
+            ["","盘点单位：",0,true,""],
+            ["","资产编码：",0,true,""],
+            ["formSelectLabel","使用状态：",2,false,""],
+            ["","资产名称：",0,true,""],
+            ["","规格型号：",0,false,""],
+            ["","车牌井号：",0,false,""],
+            ["formSelectLabel","存放地点：",3,false,""],
             ["","保管人：",0,false,"",""],
-            ["formSelectLabel","贴码状态：",2,false,"","formSelect"],
-            ["formSelectLabel","技术状况：",2,false,"","formSelect"],
+            ["formSelectLabel","贴码状态：",2,false,""],
+            ["formSelectLabel","技术状况：",2,false,""],
           ],
           footerData:{
             isShow:true,
@@ -122,16 +122,16 @@ export class TabsPage {
       pageData:{
         htmlData:{
           contentData:[
-            ["formSelectLabel","盘点单位：",2,false,"","formSelect"],
-            ["","资产条码：",0,false,"",""],
-            ["","资产名称：",0,false,"",""],
-            ["","规格型号：",0,false,"",""],
-            ["formSelectLabel","盘盈原因：",2,false,"","formSelect"],
-            ["formSelectLabel","存放地点：",2,false,"","formSelect"],
+            ["formSelectLabel","盘点单位：",2,false,""],
+            ["","资产条码：",0,false,""],
+            ["","资产名称：",0,false,""],
+            ["","规格型号：",0,false,""],
+            ["formSelectLabel","盘盈原因：",2,false,""],
+            ["formSelectLabel","存放地点：",2,false,""],
             ["","保管人：",0,false,"",""],
-            ["formSelectLabel","使用状态：",2,false,"","formSelect"],
-            ["formSelectLabel","技术状况：",2,false,"","formSelect"],
-            ["","备注：",0,false,"",""],
+            ["formSelectLabel","使用状态：",2,false,""],
+            ["formSelectLabel","技术状况：",2,false,""],
+            ["","备注：",0,false,""],
           ],
           footerData:{
             isShow:true,
