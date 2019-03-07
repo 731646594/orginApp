@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { AppsPage } from '../commonStyle/apps/apps';
 import { HomePage } from '../home/home';
+import {PageUtil} from "../../services/storageService";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -14,8 +15,15 @@ export class TabsPage {
   pageData1;
   pageData2;
 
+  kuaisusaoma;
+  panyingluru;
+  pandian;
+  baofei;
+  diaobo;
+  tongji;
+  jiayouzhan;
   constructor() {
-
+    PageUtil.pages["tabs"]=this;
     //1:commonStyle/apps通用菜单样式
     //2:mine/serverSetting服务器设置
     //3:mine/modifyPassword修改密码
@@ -23,9 +31,8 @@ export class TabsPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-    //8:commmonStyle/insertForm通用表单录入样式
-    //9:资产盘点，content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
-    let kuaisusaoma = {
+    //8:commmonStyle/insertForm通用表单录入样式,content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
+    this.kuaisusaoma = {
       pageName:"快速扫码",
       isNeedPictureArea:true,
       pageData:{
@@ -118,7 +125,7 @@ export class TabsPage {
         }
       }
     };
-    let panyingluru = {
+    this.panyingluru = {
       pageName:"盘盈录入",
       isNeedPictureArea:true,
       pageData:{
@@ -205,18 +212,18 @@ export class TabsPage {
         }
       }
     };
-    let pandian = {
+    this.pandian = {
       pageName:"资产盘点",
       pageData:[
         [
-          [8,kuaisusaoma,"qr-scanner","快速扫码"],[,,"sync","盘点查询"],[,,"cloud-download","数据下载"]
+          [8,this.kuaisusaoma,"qr-scanner","快速扫码"],[,,"sync","盘点查询"],[,,"cloud-download","数据下载"]
         ],
         [
-          [,,"search","本地下载查询"],[,,"cloud-upload","数据上传"],[8,panyingluru,"create","盘盈录入"]
+          [,,"search","本地下载查询"],[,,"cloud-upload","数据上传"],[8,this.panyingluru,"create","盘盈录入"]
         ],
       ]
     };
-    let baofei = {
+    this.baofei = {
       pageName:"报废管理",
       pageData:[
         [
@@ -224,7 +231,7 @@ export class TabsPage {
         ]
       ]
     };
-    let diaobo = {
+    this.diaobo = {
       pageName:"调拨管理",
       pageData:[
         [
@@ -235,7 +242,7 @@ export class TabsPage {
         ]
       ]
     };
-    let tongji = {
+    this.tongji = {
       pageName:"统计查询",
       pageData:[
         [
@@ -243,7 +250,7 @@ export class TabsPage {
         ]
       ]
     };
-    let jiayouzhan = {
+    this.jiayouzhan = {
       pageName:"加油站管理",
       pageData:[
         [
@@ -256,10 +263,10 @@ export class TabsPage {
       pageName:"应用",
       pageData:[
         [
-          [9,pandian,"qr-scanner","资产盘点"],[1,baofei,"trash","报废管理"],[1,diaobo,"open","调拨管理"]
+          [1,this.pandian,"qr-scanner","资产盘点"],[1,this.baofei,"trash","报废管理"],[1,this.diaobo,"open","调拨管理"]
         ],
         [
-          [1,tongji,"search","统计查询"],[1,jiayouzhan,"water","加油站管理"]
+          [1,this.tongji,"search","统计查询"],[1,this.jiayouzhan,"water","加油站管理"]
         ]
       ]
     };

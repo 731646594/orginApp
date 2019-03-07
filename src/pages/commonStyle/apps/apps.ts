@@ -40,9 +40,8 @@ export class AppsPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-    //8:commmonStyle/insertForm通用表单录入样式
+    //8:commmonStyle/insertForm通用表单录入样式content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
     //9:离线盘点
-    //9:资产盘点，content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
     let willGoPage = null;
     if(page == 1){
       willGoPage = AppsPage;
@@ -82,24 +81,6 @@ export class AppsPage {
     }
     else if(page==8){
       willGoPage = InsertFormPage;
-    }
-    else if(page==9){
-      let tableName = "storePlaceData";
-      this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
-        if (res.rows.length>0){
-          let item = [];
-          let stringData =  res.rows.item(0).stringData;
-          let jsonData = JSON.parse(stringData);
-          for (let i in jsonData){
-            item[i] = [jsonData[i].complexcode,jsonData[i].complexname]
-          }
-          params.pageData[0][0][1].pageData.tsData.selectData[7] = item;
-          params.pageData[0][0][1].pageData.tsData.selectedData[7] = item[0];
-        }else {
-
-        }
-      }).catch(e =>alert("erro2:"+JSON.stringify(e)));
-      willGoPage = AppsPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

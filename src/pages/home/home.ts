@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {App, NavController} from 'ionic-angular';
-import {StorageService} from "../../services/storageService";
+import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
+import {InsertFormPage} from "../commonStyle/insertForm/insertForm";
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,8 @@ export class HomePage {
   num3;
   num4;
   num5;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService) {
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,
+              ) {
 
   }
   ionViewDidEnter(){
@@ -46,7 +48,25 @@ export class HomePage {
       }
     },err=>{
       alert(err)
-    })
+    });
+    let tableName = "storePlaceData";
+    this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
+      if (res.rows.length>0){
+        let item = [];
+        let stringData =  res.rows.item(0).stringData;
+        let jsonData = JSON.parse(stringData);
+        for (let i in jsonData){
+          item[i] = [jsonData[i].complexcode,jsonData[i].complexname]
+        }
+        PageUtil.pages["tabs"].kuaisusaoma.pageData.tsData.selectData[7] = item;
+        PageUtil.pages["tabs"].kuaisusaoma.pageData.tsData.selectedData[7] = item[0];
+      }
+    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
+  }
+  willGoPage(pageIndex){
+    if (pageIndex==1){
+      this.app.getRootNav().push(InsertFormPage,PageUtil.pages["tabs"].kuaisusaoma)
+    }
   }
   formPage(pageIndex){
     // this.app.getRootNav().push(FormPage,{pageIndex:pageIndex})
