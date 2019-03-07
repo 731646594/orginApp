@@ -6,7 +6,7 @@ import {BarcodeScanner,BarcodeScannerOptions} from "@ionic-native/barcode-scanne
 import {Camera,CameraOptions} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {ShowPicturePage} from "../showPicture/showPicture";
-
+let that;
 @Component({
   selector: 'page-insertForm',
   templateUrl: 'insertForm.html'
@@ -26,6 +26,7 @@ export class InsertFormPage {
   selectShowData=[];
   selectedData;
 
+  i=0;
   photoFiles=[];
 
   isShow;
@@ -33,7 +34,7 @@ export class InsertFormPage {
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,
               public navParams:NavParams,public barcodeScanner:BarcodeScanner,public camera:Camera,public alertCtrl:AlertController,
               public actionSheetCtrl:ActionSheetController,public file:File) {
-
+    that = this;
   }
   ionViewDidEnter(){
     this.loadData();
@@ -169,8 +170,30 @@ export class InsertFormPage {
         url.file((file)=>{
           let reader = new FileReader();
           reader.onloadend=(e)=>{
+            let node = document.getElementById("imgBoxContent");
             let base64Image=e.target['result'];
+            let div = document.createElement("div");
+            div.className = "imgInclusion";
+            div.innerHTML+=
+              "<img id=\"i"+this.i+"\" name=\"i"+this.i+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
+              "<img id=\"b"+this.i+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+            node.appendChild(div);
             this.photoFiles.push(base64Image);
+            document.getElementById("i"+that.i).onclick=function() {
+              try {
+                that.app.getRootNav().push(ShowPicturePage,{picture:base64Image});
+              } catch (e) {
+                alert(e)
+              }
+            };
+            document.getElementById("b"+that.i).onclick=function(){
+              try {
+                node.removeChild(div);
+              }catch(e) {
+                alert(e)
+              }
+            };
+            this.i++;
           };
           reader.readAsDataURL(file);
         },err=>{
@@ -192,12 +215,6 @@ export class InsertFormPage {
         reject(err);
       });
     })
-  }
-  showPhoto(index){
-    this.app.getRootNav().push(ShowPicturePage,{picture:this.photoFiles[index]});
-  }
-  deletePhoto(index){
-    this.photoFiles.splice(index,1);
   }
   saveInfo(){
     console.log(this.inputData);
