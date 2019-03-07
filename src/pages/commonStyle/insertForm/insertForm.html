@@ -26,9 +26,9 @@
       <ion-item *ngIf="isNeedPictureArea" class="inputItem imgItem">
         <ion-label>图片区:</ion-label>
       </ion-item>
-      <div class="imgBox" *ngFor="let photo of photoFiles;let i = index;">
-        <div class="imgInclusion">
-          <img class="imgShow" (click)="showPhoto(i)" src="{{photo}}">
+      <div class="imgBox">
+        <div class="imgInclusion" *ngFor="let photo of photoFiles;let i = index;">
+          <img class="imgShow" (click)="showPhoto(i)" [src]="photo">
           <img class="imgDeleteButton" (click)="deletePhoto(i)" src='assets/imgs/delete.png'>
         </div>
       </div>
