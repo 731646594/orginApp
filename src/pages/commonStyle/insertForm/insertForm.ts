@@ -217,6 +217,18 @@ export class InsertFormPage {
     })
   }
   saveInfo(){
+    let info = new Array(this.selectedData.length);
+    for (let i=0;i < info.length;i++){
+      if (this.selectedData[i]){
+        info[i]=this.selectedData[i];
+      }else if(this.inputData[i]){
+        info[i]=this.inputData[i];
+      }
+      if(!info[i]){
+        info[i]="";
+      }
+    }
+    console.log(info)
     console.log(this.inputData);
     console.log(this.selectedData);
   }
