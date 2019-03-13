@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {App, NavController} from 'ionic-angular';
-import {PageUtil, StorageService} from "../../services/storageService";
+import {StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
 
 @Component({
