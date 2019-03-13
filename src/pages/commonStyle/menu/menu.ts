@@ -39,8 +39,6 @@ export class MenuPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-    //8:commmonStyle/insertForm通用表单录入样式content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
-    //9:commonStyle/downloadList通用下载列表样式
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
