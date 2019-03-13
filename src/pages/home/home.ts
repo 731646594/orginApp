@@ -36,9 +36,13 @@ export class HomePage {
         for (let key in data.data[0]) {
           todoList.push([key,data.data[0][key]]);
         }
-        this.storageService.getUserTable().executeSql('SELECT * FROM planListWillPlanDetail WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
-          this.inventoryNum=res.rows.length;
-        }).catch();
+        let tableName = "planListWillPlanDetail";
+        this.storageService.createUserTable(tableName);
+        this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
+          if (res.rows.length>0) {
+            this.inventoryNum = res.rows.length;
+          }
+        }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
         this.num1 = todoList[2][1];
         this.num2 = todoList[4][1];
         this.num3 = todoList[0][1];
@@ -49,6 +53,7 @@ export class HomePage {
       alert(err)
     });
     let tableName = "storePlaceData";
+    this.storageService.createUserTable(tableName);
     this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
       if (res.rows.length>0){
         let item = [];
@@ -60,7 +65,7 @@ export class HomePage {
         PageUtil.pages["tabs"].kuaisusaoma.pageData.tsData.selectData[7] = item;
         PageUtil.pages["tabs"].kuaisusaoma.pageData.tsData.selectedData[7] = item[0];
       }
-    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
   willGoPage(pageIndex){
     if (pageIndex==1){
