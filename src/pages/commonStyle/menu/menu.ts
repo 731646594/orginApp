@@ -5,13 +5,12 @@ import {ServerSettingPage} from "../../mine/serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../../mine/modifyPassword/modifyPassword";
 import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
-import {InsertFormPage} from "../insertForm/insertForm";
 
 @Component({
-  selector: 'page-apps',
-  templateUrl: 'apps.html'
+  selector: 'page-menu',
+  templateUrl: 'menu.html'
 })
-export class AppsPage {
+export class MenuPage {
   userName;
   userCode;
   departName;
@@ -41,10 +40,10 @@ export class AppsPage {
     //6:清除数据
     //7:更新字典
     //8:commmonStyle/insertForm通用表单录入样式content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
-    //9:离线盘点
+    //9:commonStyle/downloadList通用下载列表样式
     let willGoPage = null;
     if(page == 1){
-      willGoPage = AppsPage;
+      willGoPage = MenuPage;
     }
     else if(page == 2){
       willGoPage = ServerSettingPage;
@@ -66,10 +65,10 @@ export class AppsPage {
     }
     else if(page == 6){
       this.storageService.clear();
-      this.storageService.deleteUserTable("loginDepartList");
-      this.storageService.deleteUserTable("departListData");
-      this.storageService.deleteUserTable("lossReasonData");
-      this.storageService.deleteUserTable("storePlaceData");
+      this.storageService.remove("loginDepartList");
+      this.storageService.dropUserTable("departListData");
+      this.storageService.dropUserTable("lossReasonData");
+      this.storageService.dropUserTable("storePlaceData");
       let alertCtrl = this.alertCtrl.create({
         title:"清除成功！"
       });
@@ -78,9 +77,6 @@ export class AppsPage {
     }
     else if(page == 7){
       this.downloadDictionaries();
-    }
-    else if(page==8){
-      willGoPage = InsertFormPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

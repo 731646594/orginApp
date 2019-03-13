@@ -12,8 +12,8 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
-      this.setUrl("http","lhsm.weiapp.pw","3575","AssetsDataPhone");
-      return "http://lhsm.weiapp.pw:3575/AssetsDataPhone/mobile/";
+      this.setUrl("http","210.12.194.218","9080","AssetsDataPhone");
+      return "http://210.12.194.218:9080/AssetsDataPhone/mobile/";
     }
     let strUrl=url["agreement"]+"://"+url["address"]+":"+url["port"]+"/"+url["serviceName"]+"/mobile/";
     return strUrl;

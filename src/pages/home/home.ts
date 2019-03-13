@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {App, NavController} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
-import {InsertFormPage} from "../commonStyle/insertForm/insertForm";
 
 @Component({
   selector: 'page-home',
@@ -37,9 +36,9 @@ export class HomePage {
         for (let key in data.data[0]) {
           todoList.push([key,data.data[0][key]]);
         }
-        if (this.storageService.read("willPlanDetailLength")){
-          this.inventoryNum=this.storageService.read("willPlanDetailLength");
-        }
+        this.storageService.getUserTable().executeSql('SELECT * FROM planListWillPlanDetail WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
+          this.inventoryNum=res.rows.length;
+        }).catch();
         this.num1 = todoList[2][1];
         this.num2 = todoList[4][1];
         this.num3 = todoList[0][1];
@@ -65,7 +64,7 @@ export class HomePage {
   }
   willGoPage(pageIndex){
     if (pageIndex==1){
-      this.app.getRootNav().push(InsertFormPage,PageUtil.pages["tabs"].kuaisusaoma)
+
     }
   }
   formPage(pageIndex){

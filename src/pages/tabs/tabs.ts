@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AppsPage } from '../commonStyle/apps/apps';
+import { MenuPage } from '../commonStyle/menu/menu';
 import { HomePage } from '../home/home';
 import {PageUtil} from "../../services/storageService";
 
@@ -10,13 +10,16 @@ import {PageUtil} from "../../services/storageService";
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = AppsPage;
+  tab2Root = MenuPage;
 
   pageData1;
   pageData2;
 
   kuaisusaoma;
   panyingluru;
+  shujuxiazai;
+  bendixiazai;
+
   pandian;
   baofei;
   diaobo;
@@ -31,12 +34,13 @@ export class TabsPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-    //8:commmonStyle/insertForm通用表单录入样式,content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
+    //8:commonStyle/insertForm通用表单录入样式,content:0：输入框，1：搜索栏，2：下拉框，3：筛选下拉框
+    //9:commonStyle/downloadList通用下载列表样式
     this.kuaisusaoma = {
       pageName:"快速扫码",
-      isNeedPictureArea:true,
       pageData:{
         htmlData:{
+          isNeedPictureArea:true,
           contentData:[
             ["","资产条码：",1,false,"条形码输入"],
             ["","盘点单位：",0,true,""],
@@ -127,9 +131,9 @@ export class TabsPage {
     };
     this.panyingluru = {
       pageName:"盘盈录入",
-      isNeedPictureArea:true,
       pageData:{
         htmlData:{
+          isNeedPictureArea:true,
           contentData:[
             ["formSelectLabel","盘点单位：",2,false,""],
             ["","资产条码：",0,false,""],
@@ -212,14 +216,64 @@ export class TabsPage {
         }
       }
     };
+    this.shujuxiazai = {
+      pageName:"数据下载",
+      pageData:{
+        htmlData:{
+          isHaveDownloadIcon:true,
+          contentData:[
+            "盘点计划编码：", "盘点计划名称：",
+          ],
+          footerData:{
+            isShow:false,
+          }
+        },
+        tsData:{
+          inputData:[
+            ["盘点计划编码：", "盘点计划名称："],
+            ["盘点计划编码：", "盘点计划名称："],
+            ["盘点计划编码：", "盘点计划名称："],
+          ],
+          downloadIconData:[
+            true,
+            false,
+            false,
+          ],
+          page:0
+        }
+      }
+    };
+    this.bendixiazai = {
+      pageName:"本地下载查询",
+      pageData:{
+        htmlData:{
+          isHaveDownloadIcon:false,
+          contentData:[
+            "盘点计划编码：","盘点计划名称：","结束日期：","单位范围：",
+          ],
+          footerData:{
+            isShow:false,
+          }
+        },
+        tsData:{
+          inputData:[
+            ["盘点计划编码：","盘点计划名称：","结束日期：","单位范围："],
+            ["盘点计划编码：","盘点计划名称：","结束日期：","单位范围："],
+            ["盘点计划编码：","盘点计划名称：","结束日期：","单位范围："],
+          ],
+          downloadIconData:[],
+          page:1
+        }
+      }
+    };
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
         [
-          [8,this.kuaisusaoma,"qr-scanner","快速扫码"],[,,"sync","盘点查询"],[,,"cloud-download","数据下载"]
+          [8,this.kuaisusaoma,"qr-scanner","快速扫码"],["","","sync","盘点查询"],[9,this.shujuxiazai,"cloud-download","数据下载"]
         ],
         [
-          [,,"search","本地下载查询"],[,,"cloud-upload","数据上传"],[8,this.panyingluru,"create","盘盈录入"]
+          [9,this.bendixiazai,"search","本地下载查询"],["","","cloud-upload","数据上传"],[8,this.panyingluru,"create","盘盈录入"]
         ],
       ]
     };
@@ -227,7 +281,7 @@ export class TabsPage {
       pageName:"报废管理",
       pageData:[
         [
-          [,,"trash","报废申请"],[,,"paper","报废审批"],[,,"search","报废查询"]
+          ["","","trash","报废申请"],["","","paper","报废审批"],["","","search","报废查询"]
         ]
       ]
     };
@@ -235,10 +289,10 @@ export class TabsPage {
       pageName:"调拨管理",
       pageData:[
         [
-          [,,"open","调拨申请"],[,,"paper","调拨审批"],[,,"search","调拨查询"]
+          ["","","open","调拨申请"],["","","paper","调拨审批"],["","","search","调拨查询"]
         ],
         [
-          [,,"arrow-round-up","调出确认"],[,,"arrow-round-down","调入确认"]
+          ["","","arrow-round-up","调出确认"],["","","arrow-round-down","调入确认"]
         ]
       ]
     };
@@ -246,7 +300,7 @@ export class TabsPage {
       pageName:"统计查询",
       pageData:[
         [
-          [,,"search","资产查询"],[,,"search","台账查询"],[,,"search","汇总查询"]
+          ["","","search","资产查询"],["","","search","台账查询"],["","","search","汇总查询"]
         ]
       ]
     };
@@ -254,7 +308,7 @@ export class TabsPage {
       pageName:"加油站管理",
       pageData:[
         [
-          [,,"create","周检表录入"],[,,"create","交接班录入"],[,,"cloud-upload","数据上传"]
+          ["","","create","周检表录入"],["","","create","交接班录入"],["","","cloud-upload","数据上传"]
         ]
       ]
     };

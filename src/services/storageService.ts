@@ -36,8 +36,12 @@ export class StorageService {
     this.AssetInventoryDatabase.executeSql('UPDATE '+tableName+' SET stringData=? WHERE userCode=?;', [stringData, userCode]).then().catch(e => alert("erro4:"+JSON.stringify(e)));
   }
 
-  deleteUserTable(tableName){
-    this.AssetInventoryDatabase.executeSql('DROP TABLE '+tableName+';', []).then().catch(e => alert("erro5:"+JSON.stringify(e)));
+  deleteUserTable(tableName,userCode){
+    this.AssetInventoryDatabase.executeSql('DELETE FROM '+tableName+' WHERE userCode=?;', [userCode]).then().catch(e => alert("erro5:"+JSON.stringify(e)));
+  }
+
+  dropUserTable(tableName){
+    this.AssetInventoryDatabase.executeSql('DROP TABLE '+tableName+';', []).then().catch(e => alert("erro6:"+JSON.stringify(e)));
   }
 
   write(key: string, value: any) {

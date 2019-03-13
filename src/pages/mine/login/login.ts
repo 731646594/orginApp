@@ -59,15 +59,7 @@ export class LoginPage {
         this.departList = loginInfo[1].depart;
         this.storageService.write("loginUserName",loginInfo[0].user.username);
         this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
-        let tableName = "loginDepartList";
-        this.storageService.createUserTable(tableName);
-        this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+loginInfo[0].user.usercode+'\';',[]).then(res =>{
-          if (res.rows.length>0){
-            this.storageService.updateUserTable(tableName,loginInfo[0].user.usercode,JSON.stringify(this.departList));
-          }else {
-            this.storageService.insertIntoUserTable(tableName,loginInfo[0].user.usercode,JSON.stringify(this.departList));
-          }
-        }).catch(e =>alert("erro2:"+JSON.stringify(e)));
+        this.storageService.write("loginDepartList",this.departList);
         this.depart = this.departList[0];
       }
     },err=>{
