@@ -8,6 +8,8 @@ import {HttpService} from "../../../services/httpService";
 import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
 import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryEntry";
 import {InventoryEnquiryPage} from "../../apps/inventory/inventoryEnquiry/inventoryEnquiry";
+import {InventoryDataUploadPage} from "../../apps/inventory/inventoryDataUpload/inventoryDataUpload";
+import {InventoryDataDownloadPage} from "../../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 
 @Component({
   selector: 'page-menu',
@@ -42,9 +44,12 @@ export class MenuPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
-    //8:快速扫码
-    //9:盘盈录入
-    //10:盘点查询
+    //11:快速扫码
+    //12:盘点查询
+    //13:数据下载
+    //14:本地下载查询
+    //15:数据上传
+    //16:盘盈录入
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
@@ -82,14 +87,23 @@ export class MenuPage {
     else if(page == 7){
       this.downloadDictionaries();
     }
-    else if(page == 8){
+    else if(page == 11){
       willGoPage = ScanCodePage;
     }
-    else if(page == 9){
-      willGoPage = InventoryEntryPage;
-    }
-    else if(page == 10){
+    else if(page == 12){
       willGoPage = InventoryEnquiryPage;
+    }
+    else if(page == 13){
+      willGoPage = InventoryDataDownloadPage;
+    }
+    else if(page == 14){
+      willGoPage = InventoryEnquiryPage;
+    }
+    else if(page == 15){
+      willGoPage = InventoryDataUploadPage;
+    }
+    else if(page == 16){
+      willGoPage = InventoryEntryPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
@@ -103,7 +117,7 @@ export class MenuPage {
     loadingCtrl.present();
     this.httpService.post(this.httpService.getUrl()+"allotController.do?getDeparts",{userCode:this.userCode}).subscribe(data1=>{
       if (data1.success == "true"){
-        this.sqliteInsert("departListData",this.userCode,JSON.stringify(data1.data));
+        this.storageService.sqliteInsert("departListData",this.userCode,JSON.stringify(data1.data));
         // this.storageService.write("departListData",data1.data);
         loadingCtrl.dismiss();
         let alertCtrl = this.alertCtrl.create({
@@ -116,7 +130,7 @@ export class MenuPage {
     });
     this.httpService.get(this.httpService.getUrl()+"dictionariesController.do?getPyyyDic",{}).subscribe(data2=> {
       if (data2.success == "success"){
-        this.sqliteInsert("lossReasonData",this.userCode,JSON.stringify(data2.data));
+        this.storageService.sqliteInsert("lossReasonData",this.userCode,JSON.stringify(data2.data));
         // this.storageService.write("lossReasonData",data2.data);
       }
       else {
@@ -125,22 +139,12 @@ export class MenuPage {
     });
     this.httpService.get(this.httpService.getUrl()+"dictionariesController.do?getCfddDic",{}).subscribe(data3=> {
       if (data3.success == "success"){
-        this.sqliteInsert("storePlaceData",this.userCode,JSON.stringify(data3.data));
+        this.storageService.sqliteInsert("storePlaceData",this.userCode,JSON.stringify(data3.data));
         // this.storageService.write("storePlaceData",data3.data);
       }
       else {
         alert(data3.msg)
       }
     });
-  }
-  sqliteInsert(tableName,userCode,stringData){
-    this.storageService.createUserTable(tableName);
-    this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
-      if (res.rows.length>0){
-        this.storageService.updateUserTable(tableName,userCode,stringData);
-      }else {
-        this.storageService.insertIntoUserTable(tableName,userCode,stringData);
-      }
-    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
   }
 }

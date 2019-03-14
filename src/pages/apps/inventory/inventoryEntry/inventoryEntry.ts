@@ -39,12 +39,12 @@ export class InventoryEntryPage {
     this.invoice=JSON.parse("{}");
     this.invoice["barCode"] = this.navParams.get("barCode");
     this.userCode = this.storageService.read("loginUserCode");
-    this.storageService.getUserTable().executeSql(this.getSSS("localPlan",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.getSSS("storePlaceData",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.storePlaceData = JSON.parse(res.rows.item(0).stringData);
         this.showStorePlaceData = JSON.parse(res.rows.item(0).stringData);
@@ -53,7 +53,7 @@ export class InventoryEntryPage {
     if (this.departments){
       this.invoice["managerDepart"]=this.departments[0].departCode
     }
-    this.storageService.getUserTable().executeSql(this.getSSS("lossReasonData",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.lossReasonData = JSON.parse(res.rows.item(0).stringData);
         this.showLossReasonData = JSON.parse(res.rows.item(0).stringData);
@@ -196,7 +196,7 @@ export class InventoryEntryPage {
     let isReplace = false;
     isReplace = false;
     invoiceList = [];
-    this.storageService.getUserTable().executeSql(this.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         invoiceList = JSON.parse(res.rows.item(0).stringData);
         for (let i in invoiceList){
@@ -211,27 +211,13 @@ export class InventoryEntryPage {
       }else {
         invoiceList[0]=this.invoice;
       }
-      this.sqliteInsert("newPlanDetail",this.userCode,JSON.stringify(invoiceList));
+      this.storageService.sqliteInsert("newPlanDetail",this.userCode,JSON.stringify(invoiceList));
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
       });
       alertCtrl.present();
       this.navCtrl.pop();
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-  }
-  getSSS(tableName,userCode){
-    this.storageService.createUserTable(tableName);
-    return 'SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';';
-  }
-  sqliteInsert(tableName,userCode,stringData){
-    this.storageService.createUserTable(tableName);
-    this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
-      if (res.rows.length>0){
-        this.storageService.updateUserTable(tableName,userCode,stringData);
-      }else {
-        this.storageService.insertIntoUserTable(tableName,userCode,stringData);
-      }
-    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
   }
   filterReasonString(ev: any) {
     const val = ev.value;

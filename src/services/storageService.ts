@@ -44,6 +44,22 @@ export class StorageService {
     this.AssetInventoryDatabase.executeSql('DROP TABLE '+tableName+';', []).then().catch(e => alert("erro6:"+JSON.stringify(e)));
   }
 
+  getSSS(tableName,userCode){
+    this.createUserTable(tableName);
+    return 'SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';';
+  }
+
+  sqliteInsert(tableName,userCode,stringData){
+    this.createUserTable(tableName);
+    this.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
+      if (res.rows.length>0){
+        this.updateUserTable(tableName,userCode,stringData);
+      }else {
+        this.insertIntoUserTable(tableName,userCode,stringData);
+      }
+    }).catch(e =>alert("erro7:"+JSON.stringify(e)));
+  }
+
   write(key: string, value: any) {
     if (value) {
       value = JSON.stringify(value);

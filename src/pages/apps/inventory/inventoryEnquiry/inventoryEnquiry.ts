@@ -32,7 +32,7 @@ export class InventoryEnquiryPage {
   }
   loadData(){
     this.userCode = this.storageService.read("loginUserCode");
-    this.storageService.getUserTable().executeSql(this.getSSS("localPlan",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.plan = JSON.parse(res.rows.item(0).stringData);
         this.departments = this.plan["departments"];
@@ -53,17 +53,17 @@ export class InventoryEnquiryPage {
     }
   }
   selectDepart(){
-    this.storageService.getUserTable().executeSql(this.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.existPlanDetail = JSON.parse(res.rows.item(0).stringData);
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.willPlanDetail = JSON.parse(res.rows.item(0).stringData);
       }
     }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
       }
@@ -102,18 +102,5 @@ export class InventoryEnquiryPage {
   planListLocalDetailPage(planDetail,pageIndex){
     this.app.getRootNav().push(InventoryEnquiryDetailPage,{planDetail:planDetail})
   }
-  getSSS(tableName,userCode){
-    this.storageService.createUserTable(tableName);
-    return 'SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';';
-  }
-  sqliteInsert(tableName,userCode,stringData){
-    this.storageService.createUserTable(tableName);
-    this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
-      if (res.rows.length>0){
-        this.storageService.updateUserTable(tableName,userCode,stringData);
-      }else {
-        this.storageService.insertIntoUserTable(tableName,userCode,stringData);
-      }
-    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
-  }
+
 }

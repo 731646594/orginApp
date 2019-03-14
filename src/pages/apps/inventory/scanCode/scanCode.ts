@@ -37,7 +37,7 @@ export class ScanCodePage {
   loadData(){
     this.userCode = this.storageService.read("loginUserCode");
     this.invoice=JSON.parse("{}");
-    this.storageService.getUserTable().executeSql(this.getSSS("storePlaceData",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.storePlaceData = JSON.parse(res.rows.item(0).stringData);
         this.showStorePlaceData = JSON.parse(res.rows.item(0).stringData);
@@ -182,13 +182,13 @@ export class ScanCodePage {
     let isReplace = false;
     let willList = [];
     let willListLength=0;
-    this.storageService.getUserTable().executeSql(this.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         willList = JSON.parse(res.rows.item(0).stringData);
         willListLength = JSON.parse(res.rows.item(0).stringData).length;
       }
     }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         invoiceList = JSON.parse(res.rows.item(0).stringData);
         for (let i in invoiceList){
@@ -216,9 +216,9 @@ export class ScanCodePage {
           }
         }
       }
-      this.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
+      this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
       PageUtil.pages["home"].inventoryNum = willListLength;
-      this.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
+      this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
       });
@@ -238,7 +238,7 @@ export class ScanCodePage {
     }
     let localPlanDetail = [];
     let isSearch = false;
-    this.storageService.getUserTable().executeSql(this.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         localPlanDetail = JSON.parse(res.rows.item(0).stringData);
       }
@@ -249,7 +249,7 @@ export class ScanCodePage {
         isSearch = true;
       }
     }
-    this.storageService.getUserTable().executeSql(this.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         localPlanDetail = JSON.parse(res.rows.item(0).stringData);
       }
@@ -278,20 +278,6 @@ export class ScanCodePage {
       });
       alertCtrl.present();
     }
-  }
-  getSSS(tableName,userCode){
-    this.storageService.createUserTable(tableName);
-    return 'SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';';
-  }
-  sqliteInsert(tableName,userCode,stringData){
-    this.storageService.createUserTable(tableName);
-    this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
-      if (res.rows.length>0){
-        this.storageService.updateUserTable(tableName,userCode,stringData);
-      }else {
-        this.storageService.insertIntoUserTable(tableName,userCode,stringData);
-      }
-    }).catch(e =>alert("erro2:"+JSON.stringify(e)));
   }
   filterString(ev: any) {
     const val = ev.value;

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>数据上传</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="planListBox">
+    <ion-list class="planList">
+      <ion-item class="inputItem" *ngFor="let planDetail of planDetailList;let i = index">
+        <div *ngIf="planDetail.planStatus=='new'">
+          盘盈
+        </div>
+        <div *ngIf="planDetail.planStatus=='exist'">
+          盘点
+        </div>
+        <div>
+          资产条码：<input readonly class="readonlyInput" [(ngModel)]="planDetail.barCode">
+        </div>
+        <div>
+          资产编码：<input readonly class="readonlyInput" [(ngModel)]="planDetail.assetsCode">
+        </div>
+        <div>
+          资产名称：<input readonly class="readonlyInput" [(ngModel)]="planDetail.assetsName">
+        </div>
+        <div>
+          保管单位：<input readonly class="readonlyInput" [(ngModel)]="departName">
+        </div>
+        <div>
+          保管人：&emsp;<input readonly class="readonlyInput" [(ngModel)]="planDetail.userPerson">
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
