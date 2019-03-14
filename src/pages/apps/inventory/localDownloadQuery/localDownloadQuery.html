@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>本地下载查询</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="planListBox">
+    <ion-list class="planList">
+      <ion-item class="inputItem" *ngFor="let plan of planList;let i = index" (click)="planListLocalPage()">
+        <div>
+          盘点计划编码：<input readonly class="readonlyInput" [(ngModel)]="plan.planNumber">
+        </div>
+        <div>
+          盘点计划名称：<input readonly class="readonlyInput" [(ngModel)]="plan.planName">
+        </div>
+        <div>
+          结束日期：&emsp;&emsp;<input readonly class="readonlyInput" [(ngModel)]="plan.stopDate">
+        </div>
+        <div>
+          单位范围：&emsp;&emsp;<input readonly class="readonlyInput" [(ngModel)]="plan.departRange">
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

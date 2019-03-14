@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
-import {FileTransfer} from "@ionic-native/file-transfer";
-import {File} from "@ionic-native/file";
 
 @Component({
   selector: 'page-inventoryDataUpload',
@@ -15,8 +13,7 @@ export class InventoryDataUploadPage {
   departName;
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public loadingCtrl:LoadingController,public file:File,
-              public fileTransfer:FileTransfer,public navParams:NavParams,public app:App) {
+              public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
   }
   ionViewDidEnter(){

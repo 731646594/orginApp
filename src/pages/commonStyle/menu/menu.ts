@@ -10,6 +10,7 @@ import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryE
 import {InventoryEnquiryPage} from "../../apps/inventory/inventoryEnquiry/inventoryEnquiry";
 import {InventoryDataUploadPage} from "../../apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import {InventoryDataDownloadPage} from "../../apps/inventory/inventoryDataDownload/inventoryDataDownload";
+import {LocalDownloadQueryPage} from "../../apps/inventory/localDownloadQuery/localDownloadQuery";
 
 @Component({
   selector: 'page-menu',
@@ -97,7 +98,7 @@ export class MenuPage {
       willGoPage = InventoryDataDownloadPage;
     }
     else if(page == 14){
-      willGoPage = InventoryEnquiryPage;
+      willGoPage = LocalDownloadQueryPage;
     }
     else if(page == 15){
       willGoPage = InventoryDataUploadPage;
