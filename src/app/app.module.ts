@@ -10,6 +10,8 @@ import { LoginPage } from "../pages/mine/login/login";
 import { ModifyPasswordPage } from '../pages/mine/modifyPassword/modifyPassword';
 import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
 import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
+import { ScanCodePage } from "../pages/apps/inventory/scanCode/scanCode";
+import { InventoryEntryPage } from "../pages/apps/inventory/inventoryEntry/inventoryEntry";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -33,6 +35,8 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ModifyPasswordPage,
     ServerSettingPage,
     ShowPicturePage,
+    ScanCodePage,
+    InventoryEntryPage
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,8 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ModifyPasswordPage,
     ServerSettingPage,
     ShowPicturePage,
+    ScanCodePage,
+    InventoryEntryPage
   ],
   providers: [
     StatusBar,

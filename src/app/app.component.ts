@@ -14,6 +14,12 @@ export class MyApp {
   rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService) {
+    // let olog = console.error;
+    // console.error = function() {
+    //   alert([].join.call(arguments, ''))
+    //   olog.apply(this, arguments);
+    //
+    // };
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

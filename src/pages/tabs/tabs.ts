@@ -29,14 +29,15 @@ export class TabsPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
+    //8:快速扫码
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
         [
-          [8,"","qr-scanner","快速扫码"],["","","sync","盘点查询"],[9,"","cloud-download","数据下载"]
+          [8,"","qr-scanner","快速扫码"],["","","sync","盘点查询"],["","","cloud-download","数据下载"]
         ],
         [
-          [9,"","search","本地下载查询"],["","","cloud-upload","数据上传"],[8,"","create","盘盈录入"]
+          ["","","search","本地下载查询"],["","","cloud-upload","数据上传"],[9,"","create","盘盈录入"]
         ],
       ]
     };

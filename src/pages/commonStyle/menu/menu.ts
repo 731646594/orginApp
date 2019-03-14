@@ -5,6 +5,8 @@ import {ServerSettingPage} from "../../mine/serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../../mine/modifyPassword/modifyPassword";
 import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
+import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
+import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryEntry";
 
 @Component({
   selector: 'page-menu',
@@ -39,6 +41,8 @@ export class MenuPage {
     //5:mine/login重新登录
     //6:清除数据
     //7:更新字典
+    //8:快速扫码
+    //9:盘盈录入
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
@@ -75,6 +79,12 @@ export class MenuPage {
     }
     else if(page == 7){
       this.downloadDictionaries();
+    }
+    else if(page == 8){
+      willGoPage = ScanCodePage;
+    }
+    else if(page == 9){
+      willGoPage = InventoryEntryPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

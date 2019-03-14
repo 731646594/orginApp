@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {App, NavController} from 'ionic-angular';
-import {StorageService} from "../../services/storageService";
+import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
+import {ScanCodePage} from "../apps/inventory/scanCode/scanCode";
 
 @Component({
   selector: 'page-home',
@@ -26,6 +27,7 @@ export class HomePage {
     this.loadData();
   }
   loadData(){
+    PageUtil.pages["home"]=this;
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
@@ -55,7 +57,7 @@ export class HomePage {
   }
   willGoPage(pageIndex){
     if (pageIndex==1){
-
+      this.app.getRootNav().push(ScanCodePage)
     }
   }
   formPage(pageIndex){
