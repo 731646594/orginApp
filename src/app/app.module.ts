@@ -12,6 +12,8 @@ import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
 import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
 import { ScanCodePage } from "../pages/apps/inventory/scanCode/scanCode";
 import { InventoryEntryPage } from "../pages/apps/inventory/inventoryEntry/inventoryEntry";
+import { InventoryEnquiryPage } from "../pages/apps/inventory/inventoryEnquiry/inventoryEnquiry";
+import { InventoryEnquiryDetailPage } from "../pages/apps/inventory/inventoryEnquiryDetail/inventoryEnquiryDetail";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +38,9 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ServerSettingPage,
     ShowPicturePage,
     ScanCodePage,
-    InventoryEntryPage
+    InventoryEntryPage,
+    InventoryEnquiryPage,
+    InventoryEnquiryDetailPage,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,9 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ServerSettingPage,
     ShowPicturePage,
     ScanCodePage,
-    InventoryEntryPage
+    InventoryEntryPage,
+    InventoryEnquiryPage,
+    InventoryEnquiryDetailPage,
   ],
   providers: [
     StatusBar,

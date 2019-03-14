@@ -7,6 +7,7 @@ import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
 import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
 import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryEntry";
+import {InventoryEnquiryPage} from "../../apps/inventory/inventoryEnquiry/inventoryEnquiry";
 
 @Component({
   selector: 'page-menu',
@@ -43,6 +44,7 @@ export class MenuPage {
     //7:更新字典
     //8:快速扫码
     //9:盘盈录入
+    //10:盘点查询
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
@@ -85,6 +87,9 @@ export class MenuPage {
     }
     else if(page == 9){
       willGoPage = InventoryEntryPage;
+    }
+    else if(page == 10){
+      willGoPage = InventoryEnquiryPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
