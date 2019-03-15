@@ -7,7 +7,7 @@ import {ScrapApplicationPage} from "../apps/scrap/scrapApplication/scrapApplicat
 import {ScrapApprovalPage} from "../apps/scrap/scrapApproval/scrapApproval";
 import {InventoryEnquiryPage} from "../apps/inventory/inventoryEnquiry/inventoryEnquiry";
 import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
-
+let that;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -23,9 +23,8 @@ export class HomePage {
   num3;
   num4;
   num5;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,
-              ) {
-
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,) {
+    that = this;
   }
   ionViewDidEnter(){
     this.loadData();
@@ -42,12 +41,6 @@ export class HomePage {
         for (let key in data.data[0]) {
           todoList.push([key,data.data[0][key]]);
         }
-        let tableName = "planListWillPlanDetail";
-        this.storageService.getUserTable().executeSql(this.storageService.getSSS(tableName,this.userCode),[]).then(res =>{
-          if (res.rows.length>0) {
-            this.inventoryNum = res.rows.length;
-          }
-        }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
         this.num1 = todoList[2][1];
         this.num2 = todoList[4][1];
         this.num3 = todoList[0][1];
@@ -57,6 +50,15 @@ export class HomePage {
     },err=>{
       alert(err)
     });
+    setTimeout(this.readInventoryNum,1000)
+  }
+  readInventoryNum(){
+    let tableName = "planListWillPlanDetail";
+    that.storageService.getUserTable().executeSql(that.storageService.getSSS(tableName,that.userCode),[]).then(res =>{
+      if (res.rows.length>0) {
+        that.inventoryNum = res.rows.length;
+      }
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   willGoPage(pageIndex){
     if (pageIndex==1){
