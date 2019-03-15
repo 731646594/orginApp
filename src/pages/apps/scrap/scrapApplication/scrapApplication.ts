@@ -5,7 +5,6 @@ import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
 import {File} from "@ionic-native/file";
 
-let that;
 @Component({
   selector: 'page-scrapApplication',
   templateUrl: 'scrapApplication.html'
@@ -31,7 +30,6 @@ export class ScrapApplicationPage {
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,public file:File,
               public actionSheetCtrl:ActionSheetController,public navParams:NavParams) {
-    that = this;
     this.loadData();
   }
   ionViewDidEnter(){

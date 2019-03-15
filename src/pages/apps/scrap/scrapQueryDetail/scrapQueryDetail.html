@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="pageIndex==6">报废查询</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="detailListBox">
+    <ion-list class="detailList">
+      <ion-item class="inputItem" *ngFor="let detail of detailList;let i = index">
+        <div>
+          <div>
+            资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
+          </div>
+          <div>
+            资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
+          </div>
+          <div>
+            所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
+          </div>
+          <div>
+            报废类型:<input readonly class="readonlyInput" [(ngModel)]="detail.discardTypeName">
+          </div>
+          <div>
+            报废原因:<input readonly class="readonlyInput" [(ngModel)]="detail.discardReasonName">
+          </div>
+          <div>
+            停产日期:<input readonly class="readonlyInput" [(ngModel)]="detail.stopDate">
+          </div>
+          <div>
+            申请单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

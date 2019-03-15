@@ -22,6 +22,8 @@ import { LocalDownloadQueryListDetailPage } from "../pages/apps/inventory/localD
 import { ScrapApplicationPage } from "../pages/apps/scrap/scrapApplication/scrapApplication";
 import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApproval";
 import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
+import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
+import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -56,7 +58,9 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     LocalDownloadQueryListDetailPage,
     ScrapApplicationPage,
     ScrapApprovalPage,
-    ScrapApprovalDetailPage
+    ScrapApprovalDetailPage,
+    ScrapQueryPage,
+    ScrapQueryDetailPage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +98,9 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     LocalDownloadQueryListDetailPage,
     ScrapApplicationPage,
     ScrapApprovalPage,
-    ScrapApprovalDetailPage
+    ScrapApprovalDetailPage,
+    ScrapQueryPage,
+    ScrapQueryDetailPage
   ],
   providers: [
     StatusBar,

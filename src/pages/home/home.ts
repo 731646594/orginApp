@@ -43,7 +43,6 @@ export class HomePage {
           todoList.push([key,data.data[0][key]]);
         }
         let tableName = "planListWillPlanDetail";
-        this.storageService.createUserTable(tableName);
         this.storageService.getUserTable().executeSql(this.storageService.getSSS(tableName,this.userCode),[]).then(res =>{
           if (res.rows.length>0) {
             this.inventoryNum = res.rows.length;

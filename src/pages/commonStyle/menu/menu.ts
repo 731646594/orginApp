@@ -13,6 +13,7 @@ import {InventoryDataDownloadPage} from "../../apps/inventory/inventoryDataDownl
 import {LocalDownloadQueryPage} from "../../apps/inventory/localDownloadQuery/localDownloadQuery";
 import {ScrapApplicationPage} from "../../apps/scrap/scrapApplication/scrapApplication";
 import {ScrapApprovalPage} from "../../apps/scrap/scrapApproval/scrapApproval";
+import {ScrapQueryPage} from "../../apps/scrap/scrapQuery/scrapQuery";
 
 @Component({
   selector: 'page-menu',
@@ -118,7 +119,7 @@ export class MenuPage {
       willGoPage = ScrapApprovalPage;
     }
     else if(page == 23){
-      willGoPage = InventoryEntryPage;
+      willGoPage = ScrapQueryPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
