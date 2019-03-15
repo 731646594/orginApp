@@ -18,12 +18,12 @@
   </div>
   <div class="appsButtonBox">
     <button class="appsButton" (click)="willGoPage(1)"><ion-icon name="qr-scanner" class="appsButtonIcon"></ion-icon><br>快速扫码</button>
-    <button class="appsButton" (click)="formPage(2)"><ion-icon name="open" class="appsButtonIcon"></ion-icon><br>调拨申请</button>
-    <button class="appsButton" (click)="formPage(3)"><ion-icon name="trash" class="appsButtonIcon"></ion-icon><br>报废申请</button>
+    <button class="appsButton" (click)="willGoPage(2)"><ion-icon name="open" class="appsButtonIcon"></ion-icon><br>调拨申请</button>
+    <button class="appsButton" (click)="willGoPage(3)"><ion-icon name="trash" class="appsButtonIcon"></ion-icon><br>报废申请</button>
   </div>
   <div>
     <ion-list>
-      <ion-item class="inputItem" (click)="searchPage(1)">
+      <ion-item class="inputItem" (click)="willGoPage(4)">
         <div>
           待办类型：正在盘点
         </div>
@@ -31,7 +31,7 @@
           待办数量：{{inventoryNum}}
         </div>
       </ion-item>
-      <ion-item class="inputItem"  (click)="planListPage(1)">
+      <ion-item class="inputItem"  (click)="willGoPage(5)">
         <div>
           待办类型：未盘计划
         </div>
@@ -39,7 +39,7 @@
           待办数量：{{num1}}
         </div>
       </ion-item>
-      <ion-item class="inputItem" (click)="censorshipPage(1)">
+      <ion-item class="inputItem" (click)="willGoPage(6)">
         <div>
           待办类型：调拨审批
         </div>
@@ -47,7 +47,7 @@
           待办数量：{{num2}}
         </div>
       </ion-item>
-      <ion-item class="inputItem" (click)="censorshipPage(2)">
+      <ion-item class="inputItem" (click)="willGoPage(7)">
         <div>
           待办类型：调出确认
         </div>
@@ -55,7 +55,7 @@
           待办数量：{{num3}}
         </div>
       </ion-item>
-      <ion-item class="inputItem" (click)="censorshipPage(3)">
+      <ion-item class="inputItem" (click)="willGoPage(8)">
         <div>
           待办类型：调入确认
         </div>
@@ -63,7 +63,7 @@
           待办数量：{{num4}}
         </div>
       </ion-item>
-      <ion-item  (click)="censorshipPage(4)">
+      <ion-item  (click)="willGoPage(9)">
         <div>
           待办类型：报废审批
         </div>

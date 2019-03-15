@@ -11,6 +11,8 @@ import {InventoryEnquiryPage} from "../../apps/inventory/inventoryEnquiry/invent
 import {InventoryDataUploadPage} from "../../apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import {InventoryDataDownloadPage} from "../../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import {LocalDownloadQueryPage} from "../../apps/inventory/localDownloadQuery/localDownloadQuery";
+import {ScrapApplicationPage} from "../../apps/scrap/scrapApplication/scrapApplication";
+import {ScrapApprovalPage} from "../../apps/scrap/scrapApproval/scrapApproval";
 
 @Component({
   selector: 'page-menu',
@@ -51,6 +53,9 @@ export class MenuPage {
     //14:本地下载查询
     //15:数据上传
     //16:盘盈录入
+    //21:报废申请
+    //22:报废审批
+    //23:报废查询
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
@@ -104,6 +109,15 @@ export class MenuPage {
       willGoPage = InventoryDataUploadPage;
     }
     else if(page == 16){
+      willGoPage = InventoryEntryPage;
+    }
+    else if(page == 21){
+      willGoPage = ScrapApplicationPage;
+    }
+    else if(page == 22){
+      willGoPage = ScrapApprovalPage;
+    }
+    else if(page == 23){
       willGoPage = InventoryEntryPage;
     }
     if (willGoPage!=null){

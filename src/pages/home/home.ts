@@ -3,6 +3,10 @@ import {App, NavController} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
 import {ScanCodePage} from "../apps/inventory/scanCode/scanCode";
+import {ScrapApplicationPage} from "../apps/scrap/scrapApplication/scrapApplication";
+import {ScrapApprovalPage} from "../apps/scrap/scrapApproval/scrapApproval";
+import {InventoryEnquiryPage} from "../apps/inventory/inventoryEnquiry/inventoryEnquiry";
+import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 
 @Component({
   selector: 'page-home',
@@ -40,7 +44,7 @@ export class HomePage {
         }
         let tableName = "planListWillPlanDetail";
         this.storageService.createUserTable(tableName);
-        this.storageService.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+this.userCode+'\';',[]).then(res =>{
+        this.storageService.getUserTable().executeSql(this.storageService.getSSS(tableName,this.userCode),[]).then(res =>{
           if (res.rows.length>0) {
             this.inventoryNum = res.rows.length;
           }
@@ -59,17 +63,20 @@ export class HomePage {
     if (pageIndex==1){
       this.app.getRootNav().push(ScanCodePage)
     }
-  }
-  formPage(pageIndex){
-    // this.app.getRootNav().push(FormPage,{pageIndex:pageIndex})
-  }
-  planListPage(pageIndex){
-    // this.app.getRootNav().push(PlanListPage,{pageIndex:pageIndex})
-  }
-  censorshipPage(pageIndex){
-    // this.app.getRootNav().push(CensorshipPage,{pageIndex:pageIndex})
-  }
-  searchPage(pageIndex){
-    // this.app.getRootNav().push(SearchPage,{pageIndex:pageIndex})
+    else if(pageIndex == 2){
+
+    }
+    else if(pageIndex == 3){
+      this.app.getRootNav().push(ScrapApplicationPage)
+    }
+    else if(pageIndex == 4){
+      this.app.getRootNav().push(InventoryEnquiryPage)
+    }
+    else if(pageIndex == 5){
+      this.app.getRootNav().push(InventoryDataDownloadPage)
+    }
+    else if(pageIndex == 9){
+      this.app.getRootNav().push(ScrapApprovalPage)
+    }
   }
 }

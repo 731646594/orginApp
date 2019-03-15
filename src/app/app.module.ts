@@ -16,6 +16,12 @@ import { InventoryEnquiryPage } from "../pages/apps/inventory/inventoryEnquiry/i
 import { InventoryEnquiryDetailPage } from "../pages/apps/inventory/inventoryEnquiryDetail/inventoryEnquiryDetail";
 import { InventoryDataUploadPage } from "../pages/apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import { InventoryDataDownloadPage } from "../pages/apps/inventory/inventoryDataDownload/inventoryDataDownload";
+import { LocalDownloadQueryPage } from "../pages/apps/inventory/localDownloadQuery/localDownloadQuery";
+import { LocalDownloadQueryListPage } from "../pages/apps/inventory/localDownloadQueryList/localDownloadQueryList";
+import { LocalDownloadQueryListDetailPage } from "../pages/apps/inventory/localDownloadQueryListDetail/localDownloadQueryListDetail";
+import { ScrapApplicationPage } from "../pages/apps/scrap/scrapApplication/scrapApplication";
+import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApproval";
+import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -45,6 +51,12 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     InventoryEnquiryDetailPage,
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
+    LocalDownloadQueryPage,
+    LocalDownloadQueryListPage,
+    LocalDownloadQueryListDetailPage,
+    ScrapApplicationPage,
+    ScrapApprovalPage,
+    ScrapApprovalDetailPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +88,13 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     InventoryEnquiryPage,
     InventoryEnquiryDetailPage,
     InventoryDataUploadPage,
-    InventoryDataDownloadPage
+    InventoryDataDownloadPage,
+    LocalDownloadQueryPage,
+    LocalDownloadQueryListPage,
+    LocalDownloadQueryListDetailPage,
+    ScrapApplicationPage,
+    ScrapApprovalPage,
+    ScrapApprovalDetailPage
   ],
   providers: [
     StatusBar,

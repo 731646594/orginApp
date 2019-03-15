@@ -16,6 +16,20 @@
 // automatically applied to the <body> element in the app.
 
 //自定义css
+//单选容器
+.radioBox{
+  display: flex;
+  width: 100%;
+}
+.radioItem .item-inner{
+  padding: 0 !important;
+}
+.radioItem .radio-ios{
+  margin-right: 0 !important;
+}
+.radioItem .radio-md{
+  margin-right: 0 !important;
+}
 //必填label
 .requireLabel{
   color:red;

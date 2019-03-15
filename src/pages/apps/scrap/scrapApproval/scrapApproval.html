@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title >报废审批</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="censorshipListBox">
+    <ion-list class="censorshipList">
+      <ion-item class="inputItem" *ngIf="!isHave">
+        <ion-label>暂无数据</ion-label>
+      </ion-item>
+      <ion-item class="inputItem" *ngFor="let censorship of censorshipList;let i = index">
+        <div (click)="censorshipDetailPage(censorship)">
+          <div>
+            单据号&emsp;：{{censorship.invoiceNumber}}
+          </div>
+          <div>
+            申请人&emsp;：{{censorship.operateUser}}
+          </div>
+          <div>
+            单据类型：<input readonly class="readonlyInput" [(ngModel)]="censorship.invoiceName">
+          </div>
+          <div>
+            明细数量：{{censorship.detailAmountSum?censorship.detailAmountSum:censorship.allotAmount}}
+          </div>
+          <div>
+            申请单位：<input readonly class="readonlyInput" [(ngModel)]="censorship.departName">
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

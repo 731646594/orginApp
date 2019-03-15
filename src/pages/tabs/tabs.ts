@@ -35,6 +35,9 @@ export class TabsPage {
     //14:本地下载查询
     //15:数据上传
     //16:盘盈录入
+    //21:报废申请
+    //22:报废审批
+    //23:报废查询
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
@@ -50,7 +53,7 @@ export class TabsPage {
       pageName:"报废管理",
       pageData:[
         [
-          ["","","trash","报废申请"],["","","paper","报废审批"],["","","search","报废查询"]
+          [21,"","trash","报废申请"],[22,"","paper","报废审批"],[23,"","search","报废查询"]
         ]
       ]
     };
