@@ -24,6 +24,8 @@ import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApprov
 import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
 import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
 import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
+import { ChangeShiftsEntryPage } from "../pages/apps/gas/changeShiftsEntry/changeShiftsEntry";
+import { ChangeShiftsEntrySignaturePage } from "../pages/apps/gas/changeShiftsEntrySignature/changeShiftsEntrySignature";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +38,7 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { Camera } from '@ionic-native/camera';
 import { File } from "@ionic-native/file";
 import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
+import {SignaturePadModule} from "angular2-signaturepad";
 
 @NgModule({
   declarations: [
@@ -60,12 +63,15 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ScrapApprovalPage,
     ScrapApprovalDetailPage,
     ScrapQueryPage,
-    ScrapQueryDetailPage
+    ScrapQueryDetailPage,
+    ChangeShiftsEntryPage,
+    ChangeShiftsEntrySignaturePage,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    SignaturePadModule,
     IonicModule.forRoot(MyApp,{
       tabsHideOnSubPages: 'true' ,       //隐藏全部子页面tabs
       iconMode: 'ios',
@@ -100,7 +106,9 @@ import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
     ScrapApprovalPage,
     ScrapApprovalDetailPage,
     ScrapQueryPage,
-    ScrapQueryDetailPage
+    ScrapQueryDetailPage,
+    ChangeShiftsEntryPage,
+    ChangeShiftsEntrySignaturePage
   ],
   providers: [
     StatusBar,
