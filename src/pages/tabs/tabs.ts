@@ -38,6 +38,10 @@ export class TabsPage {
     //21:报废申请
     //22:报废审批
     //23:报废查询
+
+    //51:周检表录入
+    //52:交接班录入
+    //53:数据上传
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
@@ -80,7 +84,7 @@ export class TabsPage {
       pageName:"加油站管理",
       pageData:[
         [
-          ["","","create","周检表录入"],["","","create","交接班录入"],["","","cloud-upload","数据上传"]
+          [51,"","create","周检表录入"],[52,"","create","交接班录入"],[53,"","cloud-upload","数据上传"]
         ]
       ]
     };

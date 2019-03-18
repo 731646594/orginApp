@@ -43,15 +43,15 @@
         </ion-item>
         <ion-item class="inputItem">
           <ion-label>原&emsp;&emsp;值:</ion-label>
-          <ion-input readonly type="number" [(ngModel)]="invoice.originalValue" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+          <ion-input readonly type="number" [(ngModel)]="invoice.originalValue" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
         </ion-item>
         <ion-item class="inputItem">
           <ion-label>净&emsp;&emsp;值:</ion-label>
-          <ion-input readonly type="number" [(ngModel)]="invoice.nowValue" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+          <ion-input readonly type="number" [(ngModel)]="invoice.nowValue" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
         </ion-item>
         <ion-item class="inputItem">
           <ion-label>累计折旧:</ion-label>
-          <ion-input readonly type="number" [(ngModel)]="invoice.addDepreciate" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+          <ion-input readonly type="number" [(ngModel)]="invoice.addDepreciate" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
         </ion-item>
         <ion-item class="inputItem">
           <ion-label>减值准备:</ion-label>
@@ -86,13 +86,13 @@
         </ion-item>
       </div>
       <ion-item class="inputItem" *ngIf="radioButton == '资产条码'">
-        <ion-input [(ngModel)]="barCode" [placeholder]="radioButton" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+        <ion-input [(ngModel)]="barCode" [placeholder]="radioButton" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
         <button item-end class="formInputButton" (click)="searchDetail()">
           <ion-icon name="search"></ion-icon>
         </button>
       </ion-item>
       <ion-item class="inputItem" *ngIf="radioButton == '资产编码'">
-        <ion-input [(ngModel)]="assetsCode" [placeholder]="radioButton" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+        <ion-input [(ngModel)]="assetsCode" [placeholder]="radioButton" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
         <button item-end class="formInputButton" (click)="searchDetail()">
           <ion-icon name="search"></ion-icon>
         </button>
@@ -190,7 +190,7 @@
             <ion-option value="10">其他</ion-option>
           </ion-select>
         </ion-item>
-        <textarea class="scrapDetailReason" placeholder="详细报废原因" [(ngModel)]="detail.discardMark" (focus)="inputOnfocus()" (blur)="inputOnblur()"></textarea>
+        <textarea class="scrapDetailReason" placeholder="详细报废原因" [(ngModel)]="detail.discardMark" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></textarea>
       </ion-list>
     </div>
   </div>

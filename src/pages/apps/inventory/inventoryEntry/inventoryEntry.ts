@@ -148,7 +148,7 @@ export class InventoryEntryPage {
             node.appendChild(div);
             document.getElementById("i"+that.i).onclick=function() {
               try {
-                that.app.getRootNav().push(ShowPicturePage,{picture:imageData})
+                that.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
               } catch (e) {
                 alert(e)
               }

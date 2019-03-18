@@ -14,6 +14,7 @@ import {LocalDownloadQueryPage} from "../../apps/inventory/localDownloadQuery/lo
 import {ScrapApplicationPage} from "../../apps/scrap/scrapApplication/scrapApplication";
 import {ScrapApprovalPage} from "../../apps/scrap/scrapApproval/scrapApproval";
 import {ScrapQueryPage} from "../../apps/scrap/scrapQuery/scrapQuery";
+import {ChangeShiftsEntryPage} from "../../apps/gas/changeShiftsEntry/changeShiftsEntry";
 
 @Component({
   selector: 'page-menu',
@@ -23,8 +24,10 @@ export class MenuPage {
   userName;
   userCode;
   departName;
+  departCode;
   pageName;
   pageData;
+  itemData=[];
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
               public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
 
@@ -36,8 +39,34 @@ export class MenuPage {
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
+    this.departCode = this.storageService.read("loginDepartCode");
     this.pageName = this.navParams.data.pageName;
     this.pageData = this.navParams.data.pageData;
+    this.itemData = [];
+    if(this.pageName == "加油站管理"){
+      let loading = this.loadingCtrl.create({
+        content:"请等待...",
+        duration: 10000
+      });
+      loading.present();
+      this.httpService.post(this.httpService.getUrl()+"devWeeklyCheckController.do?getCheckListCols",{departCode:this.departCode}).subscribe(data=>{
+        if (data.success=="true"){
+          this.itemData.push(data.data);
+          this.httpService.post(this.httpService.getUrl()+"devHandOverController.do?getCheckListCols",{departCode:this.departCode}).subscribe(data2=>{
+            if (data2.success=="true"){
+              this.itemData.push(data2.data);
+              loading.dismiss();
+            }else {
+              alert(data2.msg);
+              loading.dismiss();
+            }
+          });
+        }else {
+          alert(data.msg);
+          loading.dismiss();
+        }
+      });
+    }
   }
   appChoose(page,params){
 
@@ -57,6 +86,10 @@ export class MenuPage {
     //21:报废申请
     //22:报废审批
     //23:报废查询
+
+    //51:周检表录入
+    //52:交接班录入
+    //53:数据上传
     let willGoPage = null;
     if(page == 1){
       willGoPage = MenuPage;
@@ -120,6 +153,17 @@ export class MenuPage {
     }
     else if(page == 23){
       willGoPage = ScrapQueryPage;
+    }
+
+    else if(page == 51){
+      params = {Data:this.itemData[0]};
+    }
+    else if(page == 52){
+      willGoPage = ChangeShiftsEntryPage;
+      params = {Data:this.itemData[1]};
+    }
+    else if(page == 53){
+
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
