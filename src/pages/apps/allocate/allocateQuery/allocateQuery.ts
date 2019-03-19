@@ -2,20 +2,20 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
-import {ScrapQueryDetailPage} from "../scrapQueryDetail/scrapQueryDetail";
+import {AllocateQueryDetailPage} from "../allocateQueryDetail/allocateQueryDetail";
 
 @Component({
-  selector: 'page-scrapQuery',
-  templateUrl: 'scrapQuery.html'
+  selector: 'page-allocateQuery',
+  templateUrl: 'allocateQuery.html'
 })
-export class ScrapQueryPage {
+export class AllocateQueryPage {
+  loginUserCode;
+  loginDepartCode;
   planStatus="";
   planDetailList;
   invoice=[];
-  loginUserCode;
-  loginDepartCode;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public app:App,
-              public loadingCtrl:LoadingController,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
+              public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -36,7 +36,7 @@ export class ScrapQueryPage {
     });
     loading.present();
     let url;
-    url = "discardController.do?getInvoice";
+    url = "allotController.do?getAllotInvoices";
     if (!this.invoice["invoiceNumber"]){
       this.invoice["invoiceNumber"]="";
     }
@@ -54,7 +54,7 @@ export class ScrapQueryPage {
     })
   }
   invoiceDetail(invoice){
-    this.app.getRootNav().push(ScrapQueryDetailPage,{invoice:invoice})
+    this.app.getRootNav().push(AllocateQueryDetailPage,{invoice:invoice})
   }
 
 }

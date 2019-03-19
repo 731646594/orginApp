@@ -12,8 +12,8 @@ import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
 import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
 import { ScanCodePage } from "../pages/apps/inventory/scanCode/scanCode";
 import { InventoryEntryPage } from "../pages/apps/inventory/inventoryEntry/inventoryEntry";
-import { InventoryEnquiryPage } from "../pages/apps/inventory/inventoryEnquiry/inventoryEnquiry";
-import { InventoryEnquiryDetailPage } from "../pages/apps/inventory/inventoryEnquiryDetail/inventoryEnquiryDetail";
+import { InventoryQueryPage } from "../pages/apps/inventory/inventoryQuery/inventoryQuery";
+import { InventoryQueryDetailPage } from "../pages/apps/inventory/inventoryQueryDetail/inventoryQueryDetail";
 import { InventoryDataUploadPage } from "../pages/apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import { InventoryDataDownloadPage } from "../pages/apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import { LocalDownloadQueryPage } from "../pages/apps/inventory/localDownloadQuery/localDownloadQuery";
@@ -25,6 +25,9 @@ import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail
 import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
 import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
 import { AllocateApplicationPage } from "../pages/apps/allocate/allocateApplication/allocateApplication";
+
+import { AllocateQueryPage } from "../pages/apps/allocate/allocateQuery/allocateQuery";
+import { AllocateQueryDetailPage } from "../pages/apps/allocate/allocateQueryDetail/allocateQueryDetail";
 
 import { AssetQuiryPage } from "../pages/apps/query/assetQuiry/assetQuiry";
 import { LedgerQueryPage } from "../pages/apps/query/ledgerQuery/ledgerQuery";
@@ -61,8 +64,8 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ShowPicturePage,
     ScanCodePage,
     InventoryEntryPage,
-    InventoryEnquiryPage,
-    InventoryEnquiryDetailPage,
+    InventoryQueryPage,
+    InventoryQueryDetailPage,
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
@@ -74,6 +77,9 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapQueryPage,
     ScrapQueryDetailPage,
     AllocateApplicationPage,
+
+    AllocateQueryPage,
+    AllocateQueryDetailPage,
 
     AssetQuiryPage,
     LedgerQueryPage,
@@ -113,8 +119,8 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ShowPicturePage,
     ScanCodePage,
     InventoryEntryPage,
-    InventoryEnquiryPage,
-    InventoryEnquiryDetailPage,
+    InventoryQueryPage,
+    InventoryQueryDetailPage,
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
@@ -126,6 +132,9 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapQueryPage,
     ScrapQueryDetailPage,
     AllocateApplicationPage,
+
+    AllocateQueryPage,
+    AllocateQueryDetailPage,
 
     AssetQuiryPage,
     LedgerQueryPage,

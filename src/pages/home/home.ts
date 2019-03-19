@@ -5,7 +5,7 @@ import {HttpService} from "../../services/httpService";
 import {ScanCodePage} from "../apps/inventory/scanCode/scanCode";
 import {ScrapApplicationPage} from "../apps/scrap/scrapApplication/scrapApplication";
 import {ScrapApprovalPage} from "../apps/scrap/scrapApproval/scrapApproval";
-import {InventoryEnquiryPage} from "../apps/inventory/inventoryEnquiry/inventoryEnquiry";
+import {InventoryQueryPage} from "../apps/inventory/inventoryQuery/inventoryQuery";
 import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allocateApplication";
 let that;
@@ -72,7 +72,7 @@ export class HomePage {
       this.app.getRootNav().push(ScrapApplicationPage)
     }
     else if(pageIndex == 4){
-      this.app.getRootNav().push(InventoryEnquiryPage)
+      this.app.getRootNav().push(InventoryQueryPage)
     }
     else if(pageIndex == 5){
       this.app.getRootNav().push(InventoryDataDownloadPage)

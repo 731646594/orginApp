@@ -5,10 +5,10 @@ import {FileTransfer} from "@ionic-native/file-transfer";
 import {File} from "@ionic-native/file";
 
 @Component({
-  selector: 'page-inventoryEnquiryDetail',
-  templateUrl: 'inventoryEnquiryDetail.html'
+  selector: 'page-inventoryQueryDetail',
+  templateUrl: 'inventoryQueryDetail.html'
 })
-export class InventoryEnquiryDetailPage {
+export class InventoryQueryDetailPage {
   planDetail;
   constructor(public navCtrl: NavController,public storageService:StorageService, public file:File,
               public fileTransfer:FileTransfer,public navParams:NavParams) {

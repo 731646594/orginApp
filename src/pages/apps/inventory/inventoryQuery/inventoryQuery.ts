@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { App, NavController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
-import {InventoryEnquiryDetailPage} from "../inventoryEnquiryDetail/inventoryEnquiryDetail";
+import {InventoryQueryDetailPage} from "../inventoryQueryDetail/inventoryQueryDetail";
 
 @Component({
-  selector: 'page-inventoryEnquiry',
-  templateUrl: 'inventoryEnquiry.html'
+  selector: 'page-inventoryQuery',
+  templateUrl: 'inventoryQuery.html'
 })
-export class InventoryEnquiryPage {
+export class InventoryQueryPage {
   agreement;
   address;
   port;
@@ -99,8 +99,8 @@ export class InventoryEnquiryPage {
     this.plan["number"] = this.existNum+this.willNum+this.newNum;
     this.readData();
   }
-  planListLocalDetailPage(planDetail,pageIndex){
-    this.app.getRootNav().push(InventoryEnquiryDetailPage,{planDetail:planDetail})
+  planListLocalDetailPage(planDetail){
+    this.app.getRootNav().push(InventoryQueryDetailPage,{planDetail:planDetail})
   }
 
 }

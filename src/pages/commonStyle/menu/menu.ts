@@ -7,7 +7,7 @@ import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
 import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
 import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryEntry";
-import {InventoryEnquiryPage} from "../../apps/inventory/inventoryEnquiry/inventoryEnquiry";
+import {InventoryQueryPage} from "../../apps/inventory/inventoryQuery/inventoryQuery";
 import {InventoryDataUploadPage} from "../../apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import {InventoryDataDownloadPage} from "../../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import {LocalDownloadQueryPage} from "../../apps/inventory/localDownloadQuery/localDownloadQuery";
@@ -21,6 +21,7 @@ import {AssetQuiryPage} from "../../apps/query/assetQuiry/assetQuiry";
 import {LedgerQueryPage} from "../../apps/query/ledgerQuery/ledgerQuery";
 import {AggregateQueryPage} from "../../apps/query/aggregateQuery/aggregateQuery";
 import {AllocateApplicationPage} from "../../apps/allocate/allocateApplication/allocateApplication";
+import {AllocateQueryPage} from "../../apps/allocate/allocateQuery/allocateQuery";
 
 @Component({
   selector: 'page-menu',
@@ -143,7 +144,7 @@ export class MenuPage {
       willGoPage = ScanCodePage;
     }
     else if(page == 12){
-      willGoPage = InventoryEnquiryPage;
+      willGoPage = InventoryQueryPage;
     }
     else if(page == 13){
       willGoPage = InventoryDataDownloadPage;
@@ -173,7 +174,7 @@ export class MenuPage {
       willGoPage = AllocateApplicationPage;
     }
     else if(page == 33){
-      willGoPage = AllocateApplicationPage;
+      willGoPage = AllocateQueryPage;
     }
     else if(page == 34){
       willGoPage = AllocateApplicationPage;

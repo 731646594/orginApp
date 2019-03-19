@@ -52,7 +52,7 @@
       </ion-segment>
     </ion-toolbar>
     <ion-list class="searchDetailList">
-      <ion-item class="inputItem" *ngFor="let planDetail of planDetailList" (click)="planListLocalDetailPage(planDetail,2)">
+      <ion-item class="inputItem" *ngFor="let planDetail of planDetailList" (click)="planListLocalDetailPage(planDetail)">
         <div >
           <label>资产名称:</label>
           <input readonly class="readonlyInput" [(ngModel)]="planDetail.assetsName">
