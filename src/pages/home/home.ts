@@ -7,6 +7,7 @@ import {ScrapApplicationPage} from "../apps/scrap/scrapApplication/scrapApplicat
 import {ScrapApprovalPage} from "../apps/scrap/scrapApproval/scrapApproval";
 import {InventoryEnquiryPage} from "../apps/inventory/inventoryEnquiry/inventoryEnquiry";
 import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
+import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allocateApplication";
 let that;
 @Component({
   selector: 'page-home',
@@ -65,7 +66,7 @@ export class HomePage {
       this.app.getRootNav().push(ScanCodePage)
     }
     else if(pageIndex == 2){
-
+      this.app.getRootNav().push(AllocateApplicationPage)
     }
     else if(pageIndex == 3){
       this.app.getRootNav().push(ScrapApplicationPage)

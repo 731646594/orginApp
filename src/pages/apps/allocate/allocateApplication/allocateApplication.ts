@@ -3,13 +3,16 @@ import {ActionSheetController, AlertController, App, NavController, NavParams} f
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
-import {File} from "@ionic-native/file";
 
 @Component({
-  selector: 'page-scrapApplication',
-  templateUrl: 'scrapApplication.html'
+  selector: 'page-allocateApplication',
+  templateUrl: 'allocateApplication.html'
 })
-export class ScrapApplicationPage {
+export class AllocateApplicationPage {
+  userName;
+  userCode;
+  departName;
+  departCode;
   isOnfocus=false;
   shape = "brief";
   radioButton = "资产条码";
@@ -23,12 +26,12 @@ export class ScrapApplicationPage {
   storePlaceData=[];
   loginDepartList;
   departListData;
-  userName;
-  userCode;
-  departName;
-  departCode;
+  outDepartData;
+  inDepartData;
+  outDepartName;
+  inDepartName;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,public file:File,
+              public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,
               public actionSheetCtrl:ActionSheetController,public navParams:NavParams) {
     this.loadData();
   }
@@ -47,26 +50,23 @@ export class ScrapApplicationPage {
         this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    if (this.storageService.read("loginDepartList")){
-      this.loginDepartList = this.storageService.read("loginDepartList");
-    }
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("departListData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.departListData = JSON.parse(res.rows.item(0).stringData);
+        this.outDepartData = JSON.parse(res.rows.item(0).stringData);
+        this.inDepartData = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
     let date = new Date();
-    this.invoice["discardTypeCode"]="020201";
-    this.invoice["allotAmount"]=0;
+    this.invoice["invoiceType"]="1401";
+    this.invoice["inDepartcode"]="";
+    this.invoice["sl"]=0;
     this.invoice["originalValue"]=0;
     this.invoice["nowValue"]=0;
     this.invoice["addDepreciate"]=0;
-    this.invoice["devalueValue"]=0;
-    if (this.lossReasonData[0])
-    this.invoice["lossReason"]=this.lossReasonData[0]["complexcode"];
-    if (this.storePlaceData[0])
-    this.invoice["storePlace"]=this.storePlaceData[0]["complexcode"];
-    this.invoice["departCode"]=this.departCode;
-    this.invoice["createuserid"]=this.userName;
-    this.invoice["createdate"]=date.toLocaleDateString();
-
-    this.detail["stopDate"]=date.toLocaleDateString();
-    this.detail["discardReasonCode"]="01";
+    this.invoice["createUserid"]=this.userCode;
+    this.invoice["createTime"]=date.toLocaleDateString();
+    this.invoice["createDepart"]=this.departName;
   }
   inputOnfocus(){
     this.isOnfocus=true;
@@ -107,10 +107,9 @@ export class ScrapApplicationPage {
       });
   }
   saveInfo(){
-    this.storageService.sqliteInsert("discardInvoice",this.userCode,JSON.stringify(this.invoice));
-    this.storageService.sqliteInsert("discardDetail",this.userCode,JSON.stringify(this.detail));
+    this.storageService.sqliteInsert("allotInvoice",this.userCode,JSON.stringify(this.invoice));
+    this.storageService.sqliteInsert("allotDetail",this.userCode,JSON.stringify(this.detail));
   }
-
   searchDetail(){
     //问题
     if(!this.assetsCode){
@@ -133,7 +132,7 @@ export class ScrapApplicationPage {
   }
   uploadData(){
     let url;
-    url = "discardController.do?add"
+    url = "allotController.do?add";
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,departName:this.departName,userCode:this.userCode,userName:this.userName,
       allotInvoiceDTO:this.invoice,eamDiscardInvoices:this.invoice,eamAllotDetal:this.detail,eamDiscardDetails:this.detail}).subscribe(data=>{
       if (data.success == "true"){
@@ -149,7 +148,7 @@ export class ScrapApplicationPage {
   }
   censorship(){
     let url;
-    url = "discardController.do?send";
+    url = "allotController.do?sendAllot";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
       if (data.success == "true"){
@@ -187,7 +186,7 @@ export class ScrapApplicationPage {
   }
   uploadDataToEAM(){
     let url;
-    url = "discardController.do?confirm";
+    url = "allotController.do?confirm";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
       if (data.success=="true"){
@@ -200,6 +199,39 @@ export class ScrapApplicationPage {
         alert(data.msg)
       }
     })
+  }
+  selectDepart(departName,funIndex){
+    if (funIndex == "out"){
+      this.outDepartName = departName;
+    }else if (funIndex == "in"){
+      this.inDepartName = departName;
+    }
+  }
+  filterDepartName(ev: any,funIndex) {
+    const val = ev.target.value;
+    let item = [];
+    if (val && val.trim() != '') {
+      for (let i in this.departListData){
+        if(this.departListData[i]["departname"].indexOf(val)>=0){
+          item.push(this.departListData[i])
+        }
+      }
+    }
+    else {
+      item = this.departListData;
+    }
+    if (funIndex=="out"){
+      this.outDepartData = item;
+      if (!item.length){
+        this.invoice["outDepartcode"]=""
+      }
+    }
+    else  if (funIndex=="in"){
+      this.inDepartData = item;
+      if (!item.length){
+        this.invoice["inDepartcode"]=""
+      }
+    }
   }
 
 }

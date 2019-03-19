@@ -24,6 +24,7 @@ import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApprov
 import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
 import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
 import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
+import { AllocateApplicationPage } from "../pages/apps/allocate/allocateApplication/allocateApplication";
 
 import { AssetQuiryPage } from "../pages/apps/query/assetQuiry/assetQuiry";
 import { LedgerQueryPage } from "../pages/apps/query/ledgerQuery/ledgerQuery";
@@ -72,6 +73,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapApprovalDetailPage,
     ScrapQueryPage,
     ScrapQueryDetailPage,
+    AllocateApplicationPage,
 
     AssetQuiryPage,
     LedgerQueryPage,
@@ -123,6 +125,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapApprovalDetailPage,
     ScrapQueryPage,
     ScrapQueryDetailPage,
+    AllocateApplicationPage,
 
     AssetQuiryPage,
     LedgerQueryPage,

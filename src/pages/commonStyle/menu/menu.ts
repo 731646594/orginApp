@@ -20,6 +20,7 @@ import {GasDataUploadPage} from "../../apps/gas/gasDataUpload/gasDataUpload";
 import {AssetQuiryPage} from "../../apps/query/assetQuiry/assetQuiry";
 import {LedgerQueryPage} from "../../apps/query/ledgerQuery/ledgerQuery";
 import {AggregateQueryPage} from "../../apps/query/aggregateQuery/aggregateQuery";
+import {AllocateApplicationPage} from "../../apps/allocate/allocateApplication/allocateApplication";
 
 @Component({
   selector: 'page-menu',
@@ -90,7 +91,11 @@ export class MenuPage {
     //21:报废申请
     //22:报废审批
     //23:报废查询
-
+    //31:调拨申请
+    //32:调拨审批
+    //33:调拨查询
+    //34:调出确认
+    //35:调入确认
     //41:资产查询
     //42:台账查询
     //43:汇总查询
@@ -161,7 +166,21 @@ export class MenuPage {
     else if(page == 23){
       willGoPage = ScrapQueryPage;
     }
-
+    else if(page == 31){
+      willGoPage = AllocateApplicationPage;
+    }
+    else if(page == 32){
+      willGoPage = AllocateApplicationPage;
+    }
+    else if(page == 33){
+      willGoPage = AllocateApplicationPage;
+    }
+    else if(page == 34){
+      willGoPage = AllocateApplicationPage;
+    }
+    else if(page == 35){
+      willGoPage = AllocateApplicationPage;
+    }
     else if(page == 41){
       willGoPage = AssetQuiryPage;
     }
