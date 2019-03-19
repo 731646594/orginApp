@@ -24,6 +24,11 @@ import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApprov
 import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
 import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
 import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
+
+import { AssetQuiryPage } from "../pages/apps/query/assetQuiry/assetQuiry";
+import { LedgerQueryPage } from "../pages/apps/query/ledgerQuery/ledgerQuery";
+import { LedgerQueryDetailPage } from "../pages/apps/query/ledgerQueryDetail/ledgerQueryDetail";
+import { AggregateQueryPage } from "../pages/apps/query/aggregateQuery/aggregateQuery";
 import { ChangeShiftsEntryPage } from "../pages/apps/gas/changeShiftsEntry/changeShiftsEntry";
 import { ChangeShiftsEntrySignaturePage } from "../pages/apps/gas/changeShiftsEntrySignature/changeShiftsEntrySignature";
 import { WeeklyChecklistEntryPage } from "../pages/apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
@@ -67,6 +72,11 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapApprovalDetailPage,
     ScrapQueryPage,
     ScrapQueryDetailPage,
+
+    AssetQuiryPage,
+    LedgerQueryPage,
+    LedgerQueryDetailPage,
+    AggregateQueryPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
     WeeklyChecklistEntryPage,
@@ -113,6 +123,11 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScrapApprovalDetailPage,
     ScrapQueryPage,
     ScrapQueryDetailPage,
+
+    AssetQuiryPage,
+    LedgerQueryPage,
+    LedgerQueryDetailPage,
+    AggregateQueryPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
     WeeklyChecklistEntryPage,

@@ -1,0 +1,93 @@
+page-aggregateQuery{
+  .queryToolbar .toolbar-background-ios{
+    background: white;
+  }
+  .switchBox{
+    margin-bottom: 60px;
+  }
+  .switchBoxTop{
+    margin-bottom: 0;
+  }
+  .switchList .inputItem:last-child{
+    width: 100%;
+  }
+  .queryInputButton{
+    background: transparent;
+    margin: 0 !important;
+    padding: 0;
+    font-size: 1.1em;
+  }
+  .imgItem{
+    //.item-inner{
+    //  border-bottom: none !important;
+    //}
+  }
+  .queryFooter{
+    width: 100%;
+    display: flex;
+    padding: 5px !important;
+    border-top: 1px solid #d9d9d9;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
+    background: white;
+  }
+  .queryFooterButton{
+    background: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    font-size: 1em;
+  }
+  .queryFooterIcon{
+    font-size: 2em;
+    color: #0091d2;
+    margin-bottom: 2px;
+  }
+  .querySelectLabel{
+    flex: none;
+  }
+  .querySelect{
+    width: 100%;
+    max-width: 100%;
+  }
+  .readonlyInput{
+    width: 63%;
+  }
+  .imgItemStartBox{
+    text-align: center;
+    width: 20%;
+    margin: 8px !important;
+  }
+  .imgItemStart{
+    width: 100%;
+  }
+  .infoList .inputItem{
+    border-bottom: 0.55px solid #c8c7cc;
+    margin-left: 16px;
+    padding-left: 0;
+    width: calc(95% - 16px) !important;
+  }
+  .infoList .inputItem .item-inner{
+    border: none;
+  }
+
+  .chart {
+    position: absolute;
+    width: 100%;
+    height: 40%;
+  }
+  #chart1{
+    top: 10%;
+  }
+  #chart2{
+    top: 60%;
+  }
+  #chart3{
+    top: 110%;
+  }
+  #chart4{
+    top: 160%;
+  }
+}

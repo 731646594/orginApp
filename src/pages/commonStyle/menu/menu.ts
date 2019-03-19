@@ -17,6 +17,9 @@ import {ScrapQueryPage} from "../../apps/scrap/scrapQuery/scrapQuery";
 import {ChangeShiftsEntryPage} from "../../apps/gas/changeShiftsEntry/changeShiftsEntry";
 import {WeeklyChecklistEntryPage} from "../../apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
 import {GasDataUploadPage} from "../../apps/gas/gasDataUpload/gasDataUpload";
+import {AssetQuiryPage} from "../../apps/query/assetQuiry/assetQuiry";
+import {LedgerQueryPage} from "../../apps/query/ledgerQuery/ledgerQuery";
+import {AggregateQueryPage} from "../../apps/query/aggregateQuery/aggregateQuery";
 
 @Component({
   selector: 'page-menu',
@@ -88,6 +91,9 @@ export class MenuPage {
     //22:报废审批
     //23:报废查询
 
+    //41:资产查询
+    //42:台账查询
+    //43:汇总查询
     //51:周检表录入
     //52:交接班录入
     //53:数据上传
@@ -156,6 +162,15 @@ export class MenuPage {
       willGoPage = ScrapQueryPage;
     }
 
+    else if(page == 41){
+      willGoPage = AssetQuiryPage;
+    }
+    else if(page == 42){
+      willGoPage = LedgerQueryPage;
+    }
+    else if(page == 43){
+      willGoPage = AggregateQueryPage;
+    }
     else if(page == 51){
       willGoPage = WeeklyChecklistEntryPage;
       params = {Data:this.itemData[0]};

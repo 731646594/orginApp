@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>台账明细</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list class="callList">
+    <ion-item class="inputItem">
+      <ion-label>资产编码:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>资产名称:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>资产条码:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.barCode"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>规格型号:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.assetsStandard"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>车牌井号:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.licenceNumber"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>保管人&emsp;:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.userPerson"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>存放地点:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.storePlace"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>出厂编号:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.productId"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>使用状态编码:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.usedState"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>使用状态名称:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.usedStateName"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>技术状况:</ion-label>
+      <ion-input readonly class="readonlyInput" [(ngModel)]="detail.technicalCondition"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>制造厂家:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.makeFactory"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>备&emsp;&emsp;注:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.remark"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>净&emsp;&emsp;值:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.nowValue"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>原&emsp;&emsp;值:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.originalValue"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>累计折旧:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.addDepreciate"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>减值准备:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.devalueValue"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>所属单位编码:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.departCode"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>所属单位名称:</ion-label>
+      <ion-input readonly [(ngModel)]="detail.departName"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem imgItem">
+      <ion-label>照片区&emsp;:</ion-label>
+    </ion-item>
+    <div class="imgBox">
+      <div id="imgBox">
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
