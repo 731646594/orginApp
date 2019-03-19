@@ -39,6 +39,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from "@ionic-native/file";
 import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
 import {SignaturePadModule} from "angular2-signaturepad";
+import {WeeklyChecklistEntryPage} from "../pages/apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {SignaturePadModule} from "angular2-signaturepad";
     ScrapQueryDetailPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
+    WeeklyChecklistEntryPage
   ],
   imports: [
     BrowserModule,
@@ -108,7 +110,8 @@ import {SignaturePadModule} from "angular2-signaturepad";
     ScrapQueryPage,
     ScrapQueryDetailPage,
     ChangeShiftsEntryPage,
-    ChangeShiftsEntrySignaturePage
+    ChangeShiftsEntrySignaturePage,
+    WeeklyChecklistEntryPage
   ],
   providers: [
     StatusBar,

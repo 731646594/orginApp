@@ -15,6 +15,7 @@ import {ScrapApplicationPage} from "../../apps/scrap/scrapApplication/scrapAppli
 import {ScrapApprovalPage} from "../../apps/scrap/scrapApproval/scrapApproval";
 import {ScrapQueryPage} from "../../apps/scrap/scrapQuery/scrapQuery";
 import {ChangeShiftsEntryPage} from "../../apps/gas/changeShiftsEntry/changeShiftsEntry";
+import {WeeklyChecklistEntryPage} from "../../apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
 
 @Component({
   selector: 'page-menu',
@@ -42,8 +43,7 @@ export class MenuPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.pageName = this.navParams.data.pageName;
     this.pageData = this.navParams.data.pageData;
-    this.itemData = [];
-    if(this.pageName == "加油站管理"){
+    if(this.pageName == "加油站管理"&&!this.itemData.length){
       let loading = this.loadingCtrl.create({
         content:"请等待...",
         duration: 10000
@@ -156,6 +156,7 @@ export class MenuPage {
     }
 
     else if(page == 51){
+      willGoPage = WeeklyChecklistEntryPage;
       params = {Data:this.itemData[0]};
     }
     else if(page == 52){
