@@ -16,6 +16,7 @@ import {ScrapApprovalPage} from "../../apps/scrap/scrapApproval/scrapApproval";
 import {ScrapQueryPage} from "../../apps/scrap/scrapQuery/scrapQuery";
 import {ChangeShiftsEntryPage} from "../../apps/gas/changeShiftsEntry/changeShiftsEntry";
 import {WeeklyChecklistEntryPage} from "../../apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
+import {GasDataUploadPage} from "../../apps/gas/gasDataUpload/gasDataUpload";
 
 @Component({
   selector: 'page-menu',
@@ -164,7 +165,7 @@ export class MenuPage {
       params = {Data:this.itemData[1]};
     }
     else if(page == 53){
-
+      willGoPage = GasDataUploadPage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

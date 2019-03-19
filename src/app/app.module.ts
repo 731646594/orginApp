@@ -26,6 +26,9 @@ import { ScrapQueryPage } from "../pages/apps/scrap/scrapQuery/scrapQuery";
 import { ScrapQueryDetailPage } from "../pages/apps/scrap/scrapQueryDetail/scrapQueryDetail";
 import { ChangeShiftsEntryPage } from "../pages/apps/gas/changeShiftsEntry/changeShiftsEntry";
 import { ChangeShiftsEntrySignaturePage } from "../pages/apps/gas/changeShiftsEntrySignature/changeShiftsEntrySignature";
+import { WeeklyChecklistEntryPage } from "../pages/apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
+import { GasDataUploadPage } from "../pages/apps/gas/gasDataUpload/gasDataUpload";
+import { GasDataUploadDetailPage } from "../pages/apps/gas/gasDataUploadDetail/gasDataUploadDetail";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -38,8 +41,7 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { Camera } from '@ionic-native/camera';
 import { File } from "@ionic-native/file";
 import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
-import {SignaturePadModule} from "angular2-signaturepad";
-import {WeeklyChecklistEntryPage} from "../pages/apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
+import { SignaturePadModule } from "angular2-signaturepad";
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import {WeeklyChecklistEntryPage} from "../pages/apps/gas/weeklyChecklistEntry/w
     ScrapQueryDetailPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
-    WeeklyChecklistEntryPage
+    WeeklyChecklistEntryPage,
+    GasDataUploadPage,
+    GasDataUploadDetailPage
   ],
   imports: [
     BrowserModule,
@@ -111,7 +115,9 @@ import {WeeklyChecklistEntryPage} from "../pages/apps/gas/weeklyChecklistEntry/w
     ScrapQueryDetailPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
-    WeeklyChecklistEntryPage
+    WeeklyChecklistEntryPage,
+    GasDataUploadPage,
+    GasDataUploadDetailPage
   ],
   providers: [
     StatusBar,

@@ -26,11 +26,11 @@
       </ion-item>
       <ion-item class="inputItem">
         <ion-label>交班人员:</ion-label>
-        <ion-input [(ngModel)]="userName"></ion-input>
+        <ion-input [(ngModel)]="userName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
       <ion-item class="inputItem">
         <ion-label>接班人员:</ion-label>
-        <ion-input [(ngModel)]="userName2"></ion-input>
+        <ion-input [(ngModel)]="userName2" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
     </ion-list>
     <ion-list  class="fieldBox" *ngFor="let cols of colsData;let i = index">

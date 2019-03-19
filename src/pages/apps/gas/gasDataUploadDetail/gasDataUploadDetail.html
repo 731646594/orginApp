@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>数据上传详情</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item class="inputItem">
+      <ion-label>分公司编码:</ion-label>
+      <ion-input readonly [(ngModel)]="item.fgsbm"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>油站编码:</ion-label>
+      <ion-input readonly [(ngModel)]="item.yzbm"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngIf="itemName=='zjb'">
+      <ion-label>周检日期:</ion-label>
+      <ion-input readonly [(ngModel)]="item.zjrq"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngIf="itemName=='jjb'">
+      <ion-label>交接班日期:</ion-label>
+      <ion-input readonly [(ngModel)]="item.jjbrq"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngIf="itemName=='zjb'">
+      <ion-label>周检人员:</ion-label>
+      <ion-input readonly [(ngModel)]="item.zjry"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngIf="itemName=='jjb'">
+      <ion-label>交班人员:</ion-label>
+      <ion-input readonly [(ngModel)]="item.jiaobanry"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngIf="itemName=='jjb'">
+      <ion-label>接班人员:</ion-label>
+      <ion-input readonly [(ngModel)]="item.jiebanry"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>油站名称:</ion-label>
+      <ion-input readonly [(ngModel)]="item.yzmc"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem">
+      <ion-label>分公司名称:</ion-label>
+      <ion-input readonly [(ngModel)]="item.fgsmc"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" *ngFor="let col of colsItemName;let i = index">
+      <ion-label>{{col+":"}}</ion-label>
+      <ion-input readonly [(ngModel)]="colItem[i]"></ion-input>
+    </ion-item>
+    <ion-item class="inputItem imgItem">
+      <ion-label>照片区&emsp;:</ion-label>
+    </ion-item>
+    <div class="imgBox" *ngFor="let photo of photoShowArrary">
+      <div class="imgInclusion">
+        <img class="imgShow" (click)="showSign(photo)" src="{{photo}}">
+      </div>
+    </div>
+    <ion-item class="inputItem imgItem" *ngIf="signatureImage1">
+      <ion-label>交班人员签字:</ion-label>
+    </ion-item>
+    <div class="imgBox" *ngIf="signatureImage1">
+      <div class="imgInclusion">
+        <img class="imgShow" (click)="showSign(signatureImage1)" src="{{signatureImage1}}">
+      </div>
+    </div>
+    <ion-item class="inputItem imgItem" *ngIf="signatureImage2">
+      <ion-label>接班人员签字:</ion-label>
+    </ion-item>
+    <div class="imgBox" *ngIf="signatureImage2">
+      <div class="imgInclusion">
+        <img class="imgShow" (click)="showSign(signatureImage2)" src="{{signatureImage2}}">
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
+
