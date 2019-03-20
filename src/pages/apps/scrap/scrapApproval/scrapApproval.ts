@@ -45,6 +45,6 @@ export class ScrapApprovalPage {
     })
   }
   censorshipDetailPage(invoice){
-    this.app.getRootNav().push(ScrapApprovalDetailPage,{nvoice:invoice});
+    this.app.getRootNav().push(ScrapApprovalDetailPage,{invoice:invoice});
   }
 }
