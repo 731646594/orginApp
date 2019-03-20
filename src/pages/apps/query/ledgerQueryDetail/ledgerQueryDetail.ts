@@ -12,6 +12,5 @@ export class LedgerQueryDetailPage {
   }
   loadData(){
     this.detail = this.navParams.get("detail");
-    alert(JSON.stringify(this.detail))
   }
 }
