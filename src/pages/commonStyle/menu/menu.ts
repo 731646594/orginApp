@@ -23,6 +23,7 @@ import {AggregateQueryPage} from "../../apps/query/aggregateQuery/aggregateQuery
 import {AllocateApplicationPage} from "../../apps/allocate/allocateApplication/allocateApplication";
 import {AllocateQueryPage} from "../../apps/allocate/allocateQuery/allocateQuery";
 import {AllocateApprovalPage} from "../../apps/allocate/allocateApproval/allocateApproval";
+import {TransferConfirmationPage} from "../../apps/allocate/transferConfirmation/transferConfirmation";
 
 @Component({
   selector: 'page-menu',
@@ -178,10 +179,10 @@ export class MenuPage {
       willGoPage = AllocateQueryPage;
     }
     else if(page == 34){
-      willGoPage = AllocateApplicationPage;
+      willGoPage = TransferConfirmationPage;
     }
     else if(page == 35){
-      willGoPage = AllocateApplicationPage;
+      willGoPage = TransferConfirmationPage;
     }
     else if(page == 41){
       willGoPage = AssetQuiryPage;

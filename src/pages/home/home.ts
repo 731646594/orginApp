@@ -9,6 +9,7 @@ import {InventoryQueryPage} from "../apps/inventory/inventoryQuery/inventoryQuer
 import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allocateApplication";
 import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateApproval";
+import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
 let that;
 @Component({
   selector: 'page-home',
@@ -80,6 +81,12 @@ export class HomePage {
     }
     else if(pageIndex == 6){
       this.app.getRootNav().push(AllocateApprovalPage)
+    }
+    else if(pageIndex == 7){
+      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"})
+    }
+    else if(pageIndex == 8){
+      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"})
     }
     else if(pageIndex == 9){
       this.app.getRootNav().push(ScrapApprovalPage)

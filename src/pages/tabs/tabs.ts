@@ -75,7 +75,8 @@ export class TabsPage {
           [31,"","open","调拨申请"],[32,"","paper","调拨审批"],[33,"","search","调拨查询"]
         ],
         [
-          [34,"","arrow-round-up","调出确认"],[35,"","arrow-round-down","调入确认"]
+          [34,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"},"arrow-round-up","调出确认"],
+          [35,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"},"arrow-round-down","调入确认"]
         ]
       ]
     };

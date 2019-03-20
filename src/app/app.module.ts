@@ -29,7 +29,8 @@ import { AllocateApprovalPage } from "../pages/apps/allocate/allocateApproval/al
 import { AllocateApprovalDetailPage } from "../pages/apps/allocate/allocateApprovalDetail/allocateApprovalDetail";
 import { AllocateQueryPage } from "../pages/apps/allocate/allocateQuery/allocateQuery";
 import { AllocateQueryDetailPage } from "../pages/apps/allocate/allocateQueryDetail/allocateQueryDetail";
-
+import { TransferConfirmationPage } from "../pages/apps/allocate/transferConfirmation/transferConfirmation";
+import { TransferConfirmationDetailPage } from "../pages/apps/allocate/transferConfirmationDetail/transferConfirmationDetail";
 import { AssetQuiryPage } from "../pages/apps/query/assetQuiry/assetQuiry";
 import { LedgerQueryPage } from "../pages/apps/query/ledgerQuery/ledgerQuery";
 import { LedgerQueryDetailPage } from "../pages/apps/query/ledgerQueryDetail/ledgerQueryDetail";
@@ -82,7 +83,8 @@ import { SignaturePadModule } from "angular2-signaturepad";
     AllocateApprovalDetailPage,
     AllocateQueryPage,
     AllocateQueryDetailPage,
-
+    TransferConfirmationPage,
+    TransferConfirmationDetailPage,
     AssetQuiryPage,
     LedgerQueryPage,
     LedgerQueryDetailPage,
@@ -138,7 +140,8 @@ import { SignaturePadModule } from "angular2-signaturepad";
     AllocateApprovalDetailPage,
     AllocateQueryPage,
     AllocateQueryDetailPage,
-
+    TransferConfirmationPage,
+    TransferConfirmationDetailPage,
     AssetQuiryPage,
     LedgerQueryPage,
     LedgerQueryDetailPage,
