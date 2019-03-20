@@ -2,23 +2,22 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import {AllocateApprovalDetailPage} from "../allocateApprovalDetail/allocateApprovalDetail";
 
 @Component({
-  selector: 'page-scrapApprovalDetail',
-  templateUrl: 'scrapApprovalDetail.html'
+  selector: 'page-allocateApproval',
+  templateUrl: 'allocateApproval.html'
 })
-export class ScrapApprovalDetailPage {
-  invoice;
+export class AllocateApprovalPage {
   postUrl;
-  detailList;
-  detail=[];
-  isOnfocus=false;
+  censorshipList;
+  checkedIndex = null;
   isAgree=1;
   isReasonModel=0;
-  detailReason;
+  censorshipReason;
+  isHave = 0;
   userName;
   userCode;
-  departName;
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
@@ -30,25 +29,38 @@ export class ScrapApprovalDetailPage {
   loadData(){
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
-    this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.invoice = this.navParams.get("invoice");
-    this.postUrl = "discardController.do?getDetail";
+    this.postUrl = "allotController.do?queryApproveInvoice";
     let loading = this.loadingCtrl.create({
       content:"正在加载",
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,userCode:this.userCode}).subscribe(data=>{
       if (data.success == "true"){
-        this.detailList = data.data;
+        this.censorshipList = data.data;
+        if (this.censorshipList.length){
+          this.isHave=1;
+        }
       }else {
         alert(data.msg);
       }
       loading.dismiss();
     })
   }
-
+  checkedItem(index){
+    if ((this.checkedIndex||this.checkedIndex==0)&&this.checkedIndex!=index){
+      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
+      this.censorshipList[index].checked = true;
+      document.getElementsByClassName("censorshipIcon")[this.checkedIndex].setAttribute("style","color: #dedede;");
+      this.censorshipList[this.checkedIndex].checked = false;
+      this.checkedIndex = index;
+    }else {
+      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
+      this.censorshipList[index].checked = true;
+      this.checkedIndex = index;
+    }
+  }
   alertTextarea(){
     this.isReasonModel=1;
   }
@@ -86,7 +98,7 @@ export class ScrapApprovalDetailPage {
         {
           text:'确定',
           handler:data=>{
-            this.detailReason="";
+            this.censorshipReason="";
           }
 
         }
@@ -99,11 +111,17 @@ export class ScrapApprovalDetailPage {
   }
   postData(){
     let url;
-    url = "discardController.do?approve";
-    if (!this.detailReason){
-      this.detailReason = ""
+    url = "allotController.do?allotAudit";
+    if (!this.censorshipReason){
+      this.censorshipReason = ""
     }
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:this.invoice.invoiceNumber,approveResult:this.isAgree,opinion:this.detailReason}).subscribe(data=>{
+    let isAgree;
+    if (this.isAgree==1){
+      isAgree = 0;
+    }else if (this.isAgree==0){
+      isAgree = 1;
+    }
+    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:this.censorshipList[this.checkedIndex],approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
@@ -113,5 +131,8 @@ export class ScrapApprovalDetailPage {
         alert(data.msg)
       }
     })
+  }
+  censorshipDetailPage(invoice){
+    this.app.getRootNav().push(AllocateApprovalDetailPage,{invoice:invoice});
   }
 }

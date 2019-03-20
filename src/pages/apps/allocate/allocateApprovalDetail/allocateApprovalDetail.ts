@@ -2,18 +2,16 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
-import {ScrapApprovalDetailPage} from "../scrapApprovalDetail/scrapApprovalDetail";
 
 @Component({
-  selector: 'page-scrapApproval',
-  templateUrl: 'scrapApproval.html'
+  selector: 'page-allocateApprovalDetail',
+  templateUrl: 'allocateApprovalDetail.html'
 })
-export class ScrapApprovalPage {
+export class AllocateApprovalDetailPage {
+  invoice;
   postUrl;
-  censorshipList;
-  isHave = 0;
-  userName;
-  userCode;
+  detailList;
+  detail=[];
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
@@ -23,28 +21,24 @@ export class ScrapApprovalPage {
     // this.loadData();
   }
   loadData(){
-    this.userName = this.storageService.read("loginUserName");
-    this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.postUrl = "discardController.do?queryApproveInvoice";
+    this.invoice = this.navParams.get("invoice");
+    this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
     let loading = this.loadingCtrl.create({
       content:"正在加载",
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,userCode:this.userCode}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
       if (data.success == "true"){
-        this.censorshipList = data.data;
-        if (this.censorshipList.length){
-          this.isHave=1;
-        }
+        this.detailList = data.data;
       }else {
         alert(data.msg);
       }
       loading.dismiss();
     })
   }
-  censorshipDetailPage(invoice){
-    this.app.getRootNav().push(ScrapApprovalDetailPage,{nvoice:invoice});
+  getDetail(detail){
+    this.detail = detail;
   }
 }

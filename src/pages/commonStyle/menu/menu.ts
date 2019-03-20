@@ -22,6 +22,7 @@ import {LedgerQueryPage} from "../../apps/query/ledgerQuery/ledgerQuery";
 import {AggregateQueryPage} from "../../apps/query/aggregateQuery/aggregateQuery";
 import {AllocateApplicationPage} from "../../apps/allocate/allocateApplication/allocateApplication";
 import {AllocateQueryPage} from "../../apps/allocate/allocateQuery/allocateQuery";
+import {AllocateApprovalPage} from "../../apps/allocate/allocateApproval/allocateApproval";
 
 @Component({
   selector: 'page-menu',
@@ -171,7 +172,7 @@ export class MenuPage {
       willGoPage = AllocateApplicationPage;
     }
     else if(page == 32){
-      willGoPage = AllocateApplicationPage;
+      willGoPage = AllocateApprovalPage;
     }
     else if(page == 33){
       willGoPage = AllocateQueryPage;

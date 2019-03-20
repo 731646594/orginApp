@@ -8,6 +8,7 @@ import {ScrapApprovalPage} from "../apps/scrap/scrapApproval/scrapApproval";
 import {InventoryQueryPage} from "../apps/inventory/inventoryQuery/inventoryQuery";
 import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allocateApplication";
+import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateApproval";
 let that;
 @Component({
   selector: 'page-home',
@@ -76,6 +77,9 @@ export class HomePage {
     }
     else if(pageIndex == 5){
       this.app.getRootNav().push(InventoryDataDownloadPage)
+    }
+    else if(pageIndex == 6){
+      this.app.getRootNav().push(AllocateApprovalPage)
     }
     else if(pageIndex == 9){
       this.app.getRootNav().push(ScrapApprovalPage)
