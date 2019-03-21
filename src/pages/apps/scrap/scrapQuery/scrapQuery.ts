@@ -14,6 +14,7 @@ export class ScrapQueryPage {
   invoice=[];
   loginUserCode;
   loginDepartCode;
+  newDate;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public app:App,
               public loadingCtrl:LoadingController,public alertCtrl:AlertController) {
     this.loadData();
@@ -28,6 +29,7 @@ export class ScrapQueryPage {
     this.invoice["invoiceStatus"]="0";
     let date = new Date();
     this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1)).toISOString();
+    this.newDate = this.invoice["invoiceYM"];
   }
   searchForm(){
     let loading = this.loadingCtrl.create({

@@ -14,6 +14,7 @@ export class AllocateQueryPage {
   planStatus="";
   planDetailList;
   invoice=[];
+  nowDate;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController) {
     this.loadData();
@@ -28,6 +29,7 @@ export class AllocateQueryPage {
     this.invoice["invoiceStatus"]="0";
     let date = new Date();
     this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1)).toISOString();
+    this.nowDate = this.invoice["invoiceYM"]
   }
   searchForm(){
     let loading = this.loadingCtrl.create({
