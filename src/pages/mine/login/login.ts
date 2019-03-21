@@ -52,6 +52,7 @@ export class LoginPage {
     this.httpService.post(this.httpService.getUrl()+"appLoginController.do?login",
       {usercode:this.username,password:this.password}).subscribe((data)=>{
       if (data.success=="false"){
+        loading.dismiss()
         let alert=this.alertCtrl.create({
           title:data.msg
         });

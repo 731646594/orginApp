@@ -40,7 +40,7 @@ export class InventoryDataDownloadPage {
               let plan = [];
               plan = this.planList[i];
               try {
-                if (res.rows.item(0).stringData["planNumber"]==plan["planNumber"]){
+                if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==plan["planNumber"]){
                   this.planList[i].isDownLoad=true;
                   this.lastIndex = i;
                 }
