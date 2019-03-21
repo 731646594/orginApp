@@ -22,7 +22,7 @@
       </ion-item>
       <ion-item class="inputItem">
         <ion-label class="gasSelectLabel">周检日期:</ion-label>
-        <ion-datetime class="gasSelect" displayFormat="YYYY/MM/DD" cancelText="关闭" doneText="确定" [max]="nowDataTime" [(ngModel)]="nowDataTime"></ion-datetime>
+        <ion-input readonly [(ngModel)]="nowDataTime"></ion-input>
       </ion-item>
       <ion-item class="inputItem">
         <ion-label>周检人员:</ion-label>

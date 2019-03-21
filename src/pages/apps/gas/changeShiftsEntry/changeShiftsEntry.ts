@@ -30,7 +30,6 @@ export class ChangeShiftsEntryPage {
   gasStation = null;
   colsData = null;
   isOnfocus = false;
-  stationName = "";
   i = 0;
   signatureImage1 = '';
   signatureImage2 = '';
@@ -41,7 +40,6 @@ export class ChangeShiftsEntryPage {
   scanQybm = "";
   oldIndex = null;
   firstIn=true;
-  // AssetInventoryDatabase:SQLiteObject;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,public barcodeScanner:BarcodeScanner,
               public actionSheetCtrl:ActionSheetController,public camera:Camera,public file:File,
@@ -64,7 +62,7 @@ export class ChangeShiftsEntryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
-    this.nowDataTime = new Date().toISOString();
+    this.nowDataTime = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+(new Date().getDate());
     this.localData = this.navParams.get("Data");
     this.departListData = this.localData.fgsData;
     this.departList = this.departListData;
