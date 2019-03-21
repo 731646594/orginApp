@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, NavController, NavParams} from 'ionic-angular';
+import { AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
@@ -28,8 +28,7 @@ export class ScrapApplicationPage {
   departName;
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,public file:File,
-              public actionSheetCtrl:ActionSheetController,public navParams:NavParams) {
+              public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,public file:File,public navParams:NavParams) {
     this.loadData();
   }
   ionViewDidEnter(){

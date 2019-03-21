@@ -46,7 +46,8 @@ export class InventoryDataUploadPage {
   }
   uploadList(){
     let loadingCtrl = this.loadingCtrl.create({
-      content:"正在加载"
+      content:"正在加载",
+      duration:10000
     });
     loadingCtrl.present();
     this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?uploadcheckplan",{userCode:this.userCode,departCode:this.departCode,uploadType:"",uploadFile:[],keyCode:"",data:""}).subscribe(data=>{

@@ -78,7 +78,8 @@ export class InventoryDataDownloadPage {
   }
   downLoadPlan1(index){
     let loading = this.loadingCtrl.create({
-      content:"正在加载"
+      content:"正在加载",
+      duration:10000
     });
     loading.present();
     this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planList[index]));

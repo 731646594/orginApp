@@ -211,7 +211,8 @@ export class MenuPage {
   }
   downloadDictionaries(){
     let loadingCtrl = this.loadingCtrl.create({
-      content:"正在加载"
+      content:"正在加载",
+      duration:10000
     });
     loadingCtrl.present();
     this.httpService.post(this.httpService.getUrl()+"allotController.do?getDeparts",{userCode:this.userCode}).subscribe(data1=>{

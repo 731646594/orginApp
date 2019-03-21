@@ -98,6 +98,11 @@ export class ScrapApprovalDetailPage {
     this.isReasonModel=0;
   }
   postData(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     let url;
     url = "discardController.do?approve";
     if (!this.detailReason){
@@ -112,6 +117,7 @@ export class ScrapApprovalDetailPage {
       }else {
         alert(data.msg)
       }
+      loading.dismiss()
     })
   }
 }

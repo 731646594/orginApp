@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
@@ -32,7 +32,7 @@ export class AllocateApplicationPage {
   inDepartName;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,
-              public actionSheetCtrl:ActionSheetController,public navParams:NavParams) {
+              public navParams:NavParams,public loadingCtrl:LoadingController) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -112,6 +112,11 @@ export class AllocateApplicationPage {
   }
   searchDetail(){
     //问题
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     if(!this.assetsCode){
       this.assetsCode = "";
     }
@@ -128,9 +133,15 @@ export class AllocateApplicationPage {
         });
         alertCtrl.present();
       }
+      loading.dismiss();
     })
   }
   uploadData(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     let url;
     url = "allotController.do?add";
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,departName:this.departName,userCode:this.userCode,userName:this.userName,
@@ -144,9 +155,15 @@ export class AllocateApplicationPage {
       else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
   censorship(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     let url;
     url = "allotController.do?sendAllot";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
@@ -160,6 +177,7 @@ export class AllocateApplicationPage {
       else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
 
@@ -185,6 +203,11 @@ export class AllocateApplicationPage {
     return this.formatDateToString(date)+""+hours+""+mins+""+secs;
   }
   uploadDataToEAM(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     let url;
     url = "allotController.do?confirm";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
@@ -198,6 +221,7 @@ export class AllocateApplicationPage {
       else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
   selectDepart(departName,funIndex){

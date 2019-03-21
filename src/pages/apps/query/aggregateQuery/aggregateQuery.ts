@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import * as  echarts from 'echarts';
@@ -26,7 +26,7 @@ export class AggregateQueryPage {
 
   queryResult = [];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public navParams:NavParams, public alertCtrl:AlertController) {
+              public app:App,public navParams:NavParams, public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
     this.loadData();
     that = this;
   }
@@ -63,6 +63,11 @@ export class AggregateQueryPage {
     this.isOnfocus=false;
   }
   query(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     let url,body;
 
     url = "summaryController.do?querySummary";
@@ -87,6 +92,7 @@ export class AggregateQueryPage {
       }else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
   selectDepart(departName){

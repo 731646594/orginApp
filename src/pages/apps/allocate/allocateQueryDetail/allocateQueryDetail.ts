@@ -25,7 +25,8 @@ export class AllocateQueryDetailPage {
     this.invoice = this.navParams.get("invoice");
     this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
     let loading = this.loadingCtrl.create({
-      content:"正在加载"
+      content:"正在加载",
+      duration:10000
     });
     loading.present();
     this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{

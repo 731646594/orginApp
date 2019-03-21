@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
 import {HttpService} from "../../../services/httpService";
 import {StorageService} from "../../../services/storageService";
 
@@ -17,7 +17,7 @@ export class LoginPage {
   depart;
   departList=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public alertCtrl:AlertController,
-              public storageService:StorageService,public app:App) {
+              public storageService:StorageService,public app:App,public loadingCtrl:LoadingController) {
     this.loadData();
   }
   loadData(){
@@ -44,6 +44,11 @@ export class LoginPage {
       alert.present();
       return;
     }
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     this.httpService.post(this.httpService.getUrl()+"appLoginController.do?login",
       {usercode:this.username,password:this.password}).subscribe((data)=>{
       if (data.success=="false"){
@@ -62,6 +67,7 @@ export class LoginPage {
         this.storageService.write("loginDepartList",this.departList);
         this.depart = this.departList[0];
       }
+      loading.dismiss()
     },err=>{
       alert(err)
     })

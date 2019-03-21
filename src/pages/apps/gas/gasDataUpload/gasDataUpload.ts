@@ -74,6 +74,11 @@ export class GasDataUploadPage {
     alertCtrl.present();
   }
   uploading(url,data,name){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     this.httpService.post(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]}).subscribe(data=>{
       if (data.success=="true"){
         if(name=="zjb"){
@@ -86,6 +91,7 @@ export class GasDataUploadPage {
       }else{
         alert(data.msg)
       }
+      loading.dismiss()
     })
   }
 }
