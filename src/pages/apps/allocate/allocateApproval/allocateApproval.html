@@ -43,7 +43,7 @@
     </ion-item>
     <ion-item class="radioItem">
       <ion-label>驳回:</ion-label>
-      <ion-radio value=0></ion-radio>
+      <ion-radio value=0 (ionSelect)="alertTextarea()"></ion-radio>
     </ion-item>
     <button class="censorshipFooterButton" (click)="alertTextarea()">
       <ion-icon class="censorshipFooterIcon" name="paper"></ion-icon><br>编辑原因

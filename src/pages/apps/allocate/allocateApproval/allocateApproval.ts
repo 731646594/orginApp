@@ -115,11 +115,25 @@ export class AllocateApprovalPage {
     if (!this.censorshipReason){
       this.censorshipReason = ""
     }
+    if(!this.checkedIndex){
+      let alert = this.alertCtrl.create({
+        title:"请选择单据！"
+      });
+      alert.present();
+      return false;
+    }
     let isAgree;
     if (this.isAgree==1){
       isAgree = 0;
     }else if (this.isAgree==0){
       isAgree = 1;
+      if (!this.censorshipReason){
+        let alert = this.alertCtrl.create({
+          title:"请输入驳回原因！"
+        });
+        alert.present();
+        return false;
+      }
     }
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:this.censorshipList[this.checkedIndex],approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
       if (data.success == "true"){
