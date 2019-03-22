@@ -14,7 +14,7 @@ export class AllocateApprovalPage {
   checkedIndex = null;
   isAgree=1;
   isReasonModel=0;
-  censorshipReason;
+  censorshipReason="";
   isHave = 0;
   userName;
   userCode;
@@ -135,6 +135,11 @@ export class AllocateApprovalPage {
         return false;
       }
     }
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.censorshipList[this.checkedIndex]),approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
@@ -144,6 +149,7 @@ export class AllocateApprovalPage {
       }else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
   censorshipDetailPage(invoice){

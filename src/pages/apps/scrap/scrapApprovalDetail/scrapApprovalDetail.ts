@@ -15,7 +15,7 @@ export class ScrapApprovalDetailPage {
   isOnfocus=false;
   isAgree=1;
   isReasonModel=0;
-  detailReason;
+  detailReason="";
   userName;
   userCode;
   departName;
@@ -98,17 +98,30 @@ export class ScrapApprovalDetailPage {
     this.isReasonModel=0;
   }
   postData(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
     let url;
     url = "discardController.do?approve";
     if (!this.detailReason){
       this.detailReason = ""
     }
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:this.invoice.invoiceNumber,approveResult:this.isAgree,opinion:this.detailReason}).subscribe(data=>{
+    let isAgree;
+    if (this.isAgree==1){
+      isAgree = "0";
+    }else if (this.isAgree==0){
+      isAgree = "1";
+      if (!this.detailReason){
+        let alert = this.alertCtrl.create({
+          title:"请输入驳回原因！"
+        });
+        alert.present();
+        return false;
+      }
+    }
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
+    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:this.invoice.invoiceNumber,approveResult:isAgree,opinion:this.detailReason}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg

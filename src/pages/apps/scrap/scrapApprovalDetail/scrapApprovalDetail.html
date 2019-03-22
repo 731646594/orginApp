@@ -6,41 +6,37 @@
 
 <ion-content>
   <div class="detailListBox">
-    <div class="userInfoBox">
-      <div class="userPhotoBox" item-start>
-        <img class="userPhoto" src="assets/imgs/user.png">
-      </div>
-      <div class="userTextBox" item-end>
-        <div class="userName">{{userName}}</div>
-        <div class="userDepart">{{departName}}</div>
-      </div>
-    </div>
     <ion-list class="detailList">
-      <ion-item class="inputItem" *ngFor="let detail of detailList;let i = index">
-        <div>
-          <div>
-            资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
-          </div>
-          <div>
-            资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
-          </div>
-          <div>
-            所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
-          </div>
-          <div>
-            报废类型:<input readonly class="readonlyInput" [(ngModel)]="detail.discardTypeName">
-          </div>
-          <div>
-            报废原因:<input readonly class="readonlyInput" [(ngModel)]="detail.discardReasonName">
-          </div>
-          <div>
-            停产日期:<input readonly class="readonlyInput" [(ngModel)]="detail.stopDate">
-          </div>
-          <div>
-            申请单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
-          </div>
-        </div>
-      </ion-item>
+      <ion-list class="inputItem" *ngFor="let detail of detailList;let i = index">
+        <ion-item class="inputItem">
+          <ion-label>资产编码:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.assetsCode"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>资产名称:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.assetsName"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>所属单位:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.departName"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>报废类型:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.discardTypeName"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>报废原因:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.discardReasonName"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>停产日期:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.stopDate"></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label>申请单位:</ion-label>
+          <ion-input readonly  [(ngModel)]="detail.departName"></ion-input>
+        </ion-item>
+      </ion-list>
     </ion-list>
   </div>
 </ion-content>
@@ -52,7 +48,7 @@
     </ion-item>
     <ion-item class="radioItem">
       <ion-label>驳回:</ion-label>
-      <ion-radio value=0></ion-radio>
+      <ion-radio value=0 (ionSelect)="alertTextarea()"></ion-radio>
     </ion-item>
     <button class="detailFooterButton" (click)="alertTextarea()">
       <ion-icon class="detailFooterIcon" name="paper"></ion-icon><br>编辑原因

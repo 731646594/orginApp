@@ -17,7 +17,7 @@ export class AllocateApprovalDetailPage {
   userCode;
   isAgree=1;
   isReasonModel=0;
-  censorshipReason;
+  censorshipReason="";
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
     this.loadData();
@@ -115,6 +115,11 @@ export class AllocateApprovalDetailPage {
         return false;
       }
     }
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.invoice),approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
@@ -124,6 +129,7 @@ export class AllocateApprovalDetailPage {
       }else {
         alert(data.msg)
       }
+      loading.dismiss();
     })
   }
 }
