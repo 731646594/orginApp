@@ -13,6 +13,11 @@ export class AllocateApprovalDetailPage {
   detailList;
   detail=[];
   departCode;
+  userName;
+  userCode;
+  isAgree=1;
+  isReasonModel=0;
+  censorshipReason;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
     this.loadData();
@@ -21,6 +26,8 @@ export class AllocateApprovalDetailPage {
     // this.loadData();
   }
   loadData(){
+    this.userName = this.storageService.read("loginUserName");
+    this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     this.invoice = this.navParams.get("invoice");
     this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
@@ -40,5 +47,83 @@ export class AllocateApprovalDetailPage {
   }
   getDetail(detail){
     this.detail = detail;
+  }
+  alertTextarea(){
+    this.isReasonModel=1;
+  }
+  cancelReasonModel(){
+    let alertCtrl = this.alertCtrl.create({
+      title:"是否取消编辑原因？",
+      buttons: [
+        {
+          text:'取消',
+          handler:data=>{
+            console.log("取消");
+          }
+        },
+        {
+          text:'确定',
+          handler:data=>{
+            this.isReasonModel=0;
+          }
+
+        }
+      ]
+    });
+    alertCtrl.present();
+  }
+  clearReason(){
+    let alertCtrl = this.alertCtrl.create({
+      title:"是否取消清空编辑内容？",
+      buttons: [
+        {
+          text:'取消',
+          handler:data=>{
+            console.log("取消");
+          }
+        },
+        {
+          text:'确定',
+          handler:data=>{
+            this.censorshipReason="";
+          }
+
+        }
+      ]
+    });
+    alertCtrl.present();
+  }
+  saveReason(){
+    this.isReasonModel=0;
+  }
+  postData(){
+    let url;
+    url = "allotController.do?allotAudit";
+    if (!this.censorshipReason){
+      this.censorshipReason = ""
+    }
+    let isAgree;
+    if (this.isAgree==1){
+      isAgree = "0";
+    }else if (this.isAgree==0){
+      isAgree = "1";
+      if (!this.censorshipReason){
+        let alert = this.alertCtrl.create({
+          title:"请输入驳回原因！"
+        });
+        alert.present();
+        return false;
+      }
+    }
+    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.invoice),approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
+      if (data.success == "true"){
+        let alertCtrl = this.alertCtrl.create({
+          title:data.msg
+        });
+        alertCtrl.present()
+      }else {
+        alert(data.msg)
+      }
+    })
   }
 }

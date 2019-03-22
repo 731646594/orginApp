@@ -21,10 +21,10 @@ export class AllocateApprovalPage {
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
-    this.loadData();
+    // this.loadData();
   }
   ionViewDidEnter(){
-    // this.loadData();
+    this.loadData();
   }
   loadData(){
     this.userName = this.storageService.read("loginUserName");
@@ -124,9 +124,9 @@ export class AllocateApprovalPage {
     }
     let isAgree;
     if (this.isAgree==1){
-      isAgree = 0;
+      isAgree = "0";
     }else if (this.isAgree==0){
-      isAgree = 1;
+      isAgree = "1";
       if (!this.censorshipReason){
         let alert = this.alertCtrl.create({
           title:"请输入驳回原因！"
@@ -135,7 +135,7 @@ export class AllocateApprovalPage {
         return false;
       }
     }
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:this.censorshipList[this.checkedIndex],approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.censorshipList[this.checkedIndex]),approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
