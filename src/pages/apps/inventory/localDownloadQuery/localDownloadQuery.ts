@@ -17,7 +17,7 @@ export class LocalDownloadQueryPage {
     // this.loadData();
   }
   loadData(){
-    this.userCode = this.storageService.read("userCode");
+    this.userCode = this.storageService.read("loginUserCode");
     this.planList = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){

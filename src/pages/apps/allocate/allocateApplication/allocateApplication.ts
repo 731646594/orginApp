@@ -89,7 +89,7 @@ export class AllocateApplicationPage {
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.detail["barCode"] = data.text;
+        this.barCode = data.text;
         // const alert = this.alertCtrl.create({
         //   title: 'Scan Results',
         //   subTitle: data.text,

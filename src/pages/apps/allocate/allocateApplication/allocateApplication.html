@@ -196,7 +196,7 @@
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>送审
   </button>
 
-  <button class="formFooterButton" (click)="scan()" *ngIf="shape=='detailed'">
+  <button class="formFooterButton" (click)="scan()" *ngIf="shape=='detailed'&&radioButton == '资产条码'">
     <ion-icon class="formFooterIcon" name="qr-scanner"></ion-icon><br>扫码
   </button>
   <button class="formFooterButton" (click)="saveInfo()" *ngIf="shape=='detailed'">
