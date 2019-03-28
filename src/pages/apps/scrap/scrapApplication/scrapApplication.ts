@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
@@ -14,7 +14,7 @@ export class ScrapApplicationPage {
   shape = "brief";
   radioButton = "资产条码";
   invoice=JSON;
-  detail=[];
+  detailList=[{}];
   i=0;
   departments;
   barCode;
@@ -27,7 +27,8 @@ export class ScrapApplicationPage {
   userCode;
   departName;
   departCode;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
+  displayIndex;
+  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public loadingCtrl:LoadingController,
               public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,public file:File,public navParams:NavParams) {
     this.loadData();
   }
@@ -52,10 +53,10 @@ export class ScrapApplicationPage {
     let date = new Date();
     this.invoice["discardTypeCode"]="020201";
     this.invoice["allotAmount"]=0;
-    this.invoice["originalValue"]=0;
-    this.invoice["nowValue"]=0;
-    this.invoice["addDepreciate"]=0;
-    this.invoice["devalueValue"]=0;
+    this.invoice["originalValue"]="0.00";
+    this.invoice["nowValue"]="0.00";
+    this.invoice["addDepreciate"]="0.00";
+    this.invoice["devalueValue"]="0.00";
     if (this.lossReasonData[0])
     this.invoice["lossReason"]=this.lossReasonData[0]["complexcode"];
     if (this.storePlaceData[0])
@@ -63,9 +64,16 @@ export class ScrapApplicationPage {
     this.invoice["departCode"]=this.departCode;
     this.invoice["createuserid"]=this.userName;
     this.invoice["createdate"]=date.toLocaleDateString();
-
-    this.detail["stopDate"]=date.toLocaleDateString();
-    this.detail["discardReasonCode"]="01";
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("discardInvoice",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.invoice = JSON.parse(res.rows.item(0).stringData)
+      }
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("discardDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.detailList = JSON.parse(res.rows.item(0).stringData)
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
   }
   inputOnfocus(){
     this.isOnfocus=true;
@@ -88,7 +96,7 @@ export class ScrapApplicationPage {
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.detail["barCode"] = data.text;
+        this.barCode = data.text;
         // const alert = this.alertCtrl.create({
         //   title: 'Scan Results',
         //   subTitle: data.text,
@@ -106,21 +114,50 @@ export class ScrapApplicationPage {
       });
   }
   saveInfo(){
+    if (!this.confirmChecked()){
+      return false;
+    }
     this.storageService.sqliteInsert("discardInvoice",this.userCode,JSON.stringify(this.invoice));
-    this.storageService.sqliteInsert("discardDetail",this.userCode,JSON.stringify(this.detail));
+    let list=[];
+    for(let index in this.detailList){
+      if(this.detailList[index]["checkedIcon"]){
+        list.push(this.detailList[index]);
+      }
+    }
+    this.detailList = list;
+    this.storageService.sqliteInsert("discardDetail",this.userCode,JSON.stringify(this.detailList));
+    let alertCtrl = this.alertCtrl.create({
+      title:"保存成功！"
+    });
+    alertCtrl.present();
   }
 
   searchDetail(){
     //问题
-    if(!this.assetsCode){
-      this.assetsCode = "";
+    if (!this.confirmInput()){
+      return false;
     }
-    if (!this.barCode){
-      this.barCode = "";
+    for (let detail in this.detailList){
+      if (this.detailList[detail]["assetsCode"]==this.assetsCode||this.detailList[detail]["barCode"]==this.barCode){
+        let alertCtrl = this.alertCtrl.create({
+          title:"该条明细已被搜出！"
+        });
+        alertCtrl.present();
+        return false;
+      }
     }
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loading.present();
     this.httpService.post(this.httpService.getUrl()+"discardController.do?queryByCodeOrBar",{userCode:this.userCode,departCode:this.departCode,assetsCode:this.assetsCode,barCode:this.barCode}).subscribe(data=>{
       if (data.success=="true"){
-        this.detail = data.data;
+        let date = new Date();
+        data.data["nowDate"]=date.toISOString();
+        alert(data.data["nowDate"])
+        data.data["discardReasonCode"]="01";
+        this.detailList.push(data.data);
       }
       else {
         let alertCtrl = this.alertCtrl.create({
@@ -128,13 +165,22 @@ export class ScrapApplicationPage {
         });
         alertCtrl.present();
       }
+      loading.dismiss()
     })
   }
   uploadData(){
+    if (!this.confirmChecked()){
+      return false;
+    }
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loadingCtrl.present();
     let url;
-    url = "discardController.do?add"
+    url = "discardController.do?add";
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,departName:this.departName,userCode:this.userCode,userName:this.userName,
-      allotInvoiceDTO:this.invoice,eamDiscardInvoices:this.invoice,eamAllotDetal:this.detail,eamDiscardDetails:this.detail}).subscribe(data=>{
+      allotInvoiceDTO:this.invoice,eamDiscardInvoices:this.invoice,eamAllotDetal:this.detailList,eamDiscardDetails:this.detailList}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
@@ -144,11 +190,20 @@ export class ScrapApplicationPage {
       else {
         alert(data.msg)
       }
+      loadingCtrl.dismiss();
     })
   }
   censorship(){
+    if (!this.confirmChecked()){
+      return false;
+    }
     let url;
     url = "discardController.do?send";
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loadingCtrl.present();
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
       if (data.success == "true"){
@@ -160,6 +215,7 @@ export class ScrapApplicationPage {
       else {
         alert(data.msg)
       }
+      loadingCtrl.dismiss()
     })
   }
 
@@ -185,6 +241,14 @@ export class ScrapApplicationPage {
     return this.formatDateToString(date)+""+hours+""+mins+""+secs;
   }
   uploadDataToEAM(){
+    if (!this.confirmChecked()){
+      return false;
+    }
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loadingCtrl.present();
     let url;
     url = "discardController.do?confirm";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
@@ -198,7 +262,94 @@ export class ScrapApplicationPage {
       else {
         alert(data.msg)
       }
+      loadingCtrl.dismiss();
     })
   }
-
+  checkedItem(index){
+   this.detailList[index]["checkedIcon"] = !this.detailList[index]["checkedIcon"];
+    this.invoice["originalValue"] = <any>this.invoice["originalValue"]*1;
+    this.invoice["nowValue"] = <any>this.invoice["nowValue"]*1;
+    this.invoice["addDepreciate"] = <any>this.invoice["addDepreciate"]*1;
+    this.invoice["devalueValue"] = <any>this.invoice["devalueValue"]*1;
+    if (this.detailList[index]["checkedIcon"]){
+     this.invoice["allotAmount"]++;
+     this.invoice["originalValue"] += <any>this.detailList[index]["originalValue"]*1;
+     this.invoice["nowValue"] += <any>this.detailList[index]["nowValue"]*1;
+     this.invoice["addDepreciate"] += <any>this.detailList[index]["addDepreciate"]*1;
+     this.invoice["devalueValue"] += <any>this.detailList[index]["devalueValue"]*1;
+   }else {
+     this.invoice["allotAmount"]--;
+     this.invoice["originalValue"] -= <any>this.detailList[index]["originalValue"]*1;
+     this.invoice["nowValue"] -= <any>this.detailList[index]["nowValue"]*1;
+     this.invoice["addDepreciate"] -= <any>this.detailList[index]["addDepreciate"]*1;
+     this.invoice["devalueValue"] -= <any>this.detailList[index]["devalueValue"]*1;
+   }
+    this.invoice["originalValue"] = this.invoice["originalValue"].toFixed(2)
+    this.invoice["nowValue"] = this.invoice["nowValue"].toFixed(2)
+    this.invoice["addDepreciate"] = this.invoice["addDepreciate"].toFixed(2)
+    this.invoice["devalueValue"] = this.invoice["devalueValue"].toFixed(2)
+  }
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
+    }else {
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+        if(!this.detailList[index]["stopDate"]){
+          this.detailList[index]["stopDate"] = this.detailList[this.displayIndex]["stopDate"];
+        }
+        if(!this.detailList[index]["discardReasonCode"]){
+          this.detailList[index]["discardReasonCode"] = this.detailList[this.displayIndex]["discardReasonCode"];
+        }
+        if(!this.detailList[index]["discardMark"]){
+          this.detailList[index]["discardMark"] = this.detailList[this.displayIndex]["discardMark"];
+        }
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
+    }
+  }
+  confirmInput(){
+    if(this.radioButton=="资产条码"){
+      this.assetsCode = "";
+      if(!this.barCode){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请输入或扫描资产条码！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+    }
+    if (this.radioButton=="资产编码"){
+      this.barCode = "";
+      if(!this.assetsCode){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请输入资产编码！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+    }
+    return true;
+  }
+  confirmChecked(){
+    for(let index in this.detailList){
+      if(this.detailList[index]["checkedIcon"]){
+        if (!this.detailList[index]["stopDate"]){
+          let alertCtrl = this.alertCtrl.create({
+            title:"请选择停产日期！"
+          });
+          alertCtrl.present();
+          return false;
+        }
+        return true;
+      }
+    }
+    let alertCtrl = this.alertCtrl.create({
+      title:"请选择明细！"
+    });
+    alertCtrl.present();
+    return false;
+  }
 }
