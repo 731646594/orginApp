@@ -18,6 +18,12 @@ page-inventoryQuery{
   .searchList .inputItem:last-child{
     width: 100%;
   }
+  .list-ios > .item-block:first-child{
+    border-top: 0;
+  }
+  .searchDetailList{
+    margin: 0 !important;
+  }
   .searchDetailList .inputItem:last-child{
     width: 100%;
   }

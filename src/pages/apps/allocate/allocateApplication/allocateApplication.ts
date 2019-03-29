@@ -334,15 +334,6 @@ export class AllocateApplicationPage {
     }else {
       if(this.displayIndex>=0){
         (<HTMLElement>content[this.displayIndex]).style.display="none";
-        if(!this.detailList[index]["stopDate"]){
-          this.detailList[index]["stopDate"] = this.detailList[this.displayIndex]["stopDate"];
-        }
-        if(!this.detailList[index]["discardReasonCode"]){
-          this.detailList[index]["discardReasonCode"] = this.detailList[this.displayIndex]["discardReasonCode"];
-        }
-        if(!this.detailList[index]["discardMark"]){
-          this.detailList[index]["discardMark"] = this.detailList[this.displayIndex]["discardMark"];
-        }
       }
       (<HTMLElement>content[index]).style.display="block";
       this.displayIndex = index;

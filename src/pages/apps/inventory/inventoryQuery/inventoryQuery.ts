@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { App, NavController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
-import {InventoryQueryDetailPage} from "../inventoryQueryDetail/inventoryQueryDetail";
 @Component({
   selector: 'page-inventoryQuery',
   templateUrl: 'inventoryQuery.html'
@@ -23,6 +22,7 @@ export class InventoryQueryPage {
   willNum=0;
   newNum=0;
   userCode;
+  displayIndex;
   constructor(public navCtrl: NavController,public storageService:StorageService,public app:App) {
     this.loadData();
   }
@@ -97,8 +97,17 @@ export class InventoryQueryPage {
     this.plan["number"] = this.existNum+this.willNum+this.newNum;
     this.readData();
   }
-  planListLocalDetailPage(planDetail){
-    this.app.getRootNav().push(InventoryQueryDetailPage,{planDetail:planDetail})
-  }
 
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
+    }else {
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
+    }
+  }
 }

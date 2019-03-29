@@ -13,7 +13,6 @@ import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
 import { ScanCodePage } from "../pages/apps/inventory/scanCode/scanCode";
 import { InventoryEntryPage } from "../pages/apps/inventory/inventoryEntry/inventoryEntry";
 import { InventoryQueryPage } from "../pages/apps/inventory/inventoryQuery/inventoryQuery";
-import { InventoryQueryDetailPage } from "../pages/apps/inventory/inventoryQueryDetail/inventoryQueryDetail";
 import { InventoryDataUploadPage } from "../pages/apps/inventory/inventoryDataUpload/inventoryDataUpload";
 import { InventoryDataDownloadPage } from "../pages/apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import { LocalDownloadQueryPage } from "../pages/apps/inventory/localDownloadQuery/localDownloadQuery";
@@ -67,7 +66,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScanCodePage,
     InventoryEntryPage,
     InventoryQueryPage,
-    InventoryQueryDetailPage,
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
@@ -124,7 +122,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ScanCodePage,
     InventoryEntryPage,
     InventoryQueryPage,
-    InventoryQueryDetailPage,
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
