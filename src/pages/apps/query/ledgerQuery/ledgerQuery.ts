@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
-import {LedgerQueryDetailPage} from "../ledgerQueryDetail/ledgerQueryDetail";
 @Component({
   selector: 'page-ledgerQuery',
   templateUrl: 'ledgerQuery.html'
@@ -24,7 +23,7 @@ export class LedgerQueryPage {
   loginDepartCode;
   loginDepartName;
   userCode;
-
+  displayIndex;
   queryResult = [];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public loadingCtrl:LoadingController,
               public app:App,public navParams:NavParams, public alertCtrl:AlertController, public toastCtrl:ToastController) {
@@ -126,7 +125,16 @@ export class LedgerQueryPage {
       this.departCode=""
     }
   }
-  queryDetailPage(detail){
-    this.app.getRootNav().push(LedgerQueryDetailPage,{detail:detail})
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
+    }else {
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
+    }
   }
 }

@@ -31,7 +31,6 @@ import { TransferConfirmationPage } from "../pages/apps/allocate/transferConfirm
 import { TransferConfirmationDetailPage } from "../pages/apps/allocate/transferConfirmationDetail/transferConfirmationDetail";
 import { AssetQuiryPage } from "../pages/apps/query/assetQuiry/assetQuiry";
 import { LedgerQueryPage } from "../pages/apps/query/ledgerQuery/ledgerQuery";
-import { LedgerQueryDetailPage } from "../pages/apps/query/ledgerQueryDetail/ledgerQueryDetail";
 import { AggregateQueryPage } from "../pages/apps/query/aggregateQuery/aggregateQuery";
 import { ChangeShiftsEntryPage } from "../pages/apps/gas/changeShiftsEntry/changeShiftsEntry";
 import { ChangeShiftsEntrySignaturePage } from "../pages/apps/gas/changeShiftsEntrySignature/changeShiftsEntrySignature";
@@ -83,7 +82,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     TransferConfirmationDetailPage,
     AssetQuiryPage,
     LedgerQueryPage,
-    LedgerQueryDetailPage,
     AggregateQueryPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
@@ -138,7 +136,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     TransferConfirmationDetailPage,
     AssetQuiryPage,
     LedgerQueryPage,
-    LedgerQueryDetailPage,
     AggregateQueryPage,
     ChangeShiftsEntryPage,
     ChangeShiftsEntrySignaturePage,
