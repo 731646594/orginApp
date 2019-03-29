@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MenuPage } from '../commonStyle/menu/menu';
 import { HomePage } from '../home/home';
 import {PageUtil} from "../../services/storageService";
+import {MinePage} from "../mine/mine/mine";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -11,6 +12,7 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = MenuPage;
+  tab3Root = MinePage;
 
   pageData1;
   pageData2;

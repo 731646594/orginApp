@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 import { MenuPage } from '../pages/commonStyle/menu/menu';
 import { HomePage } from '../pages/home/home';
+import { MinePage } from "../pages/mine/mine/mine";
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from "../pages/mine/login/login";
 import { ModifyPasswordPage } from '../pages/mine/modifyPassword/modifyPassword';
@@ -56,6 +57,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
     MyApp,
     MenuPage,
     HomePage,
+    MinePage,
     TabsPage,
     LoginPage,
     ModifyPasswordPage,
@@ -110,6 +112,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
     MyApp,
     MenuPage,
     HomePage,
+    MinePage,
     TabsPage,
     LoginPage,
     ModifyPasswordPage,
