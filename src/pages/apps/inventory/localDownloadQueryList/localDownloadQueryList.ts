@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { App, NavController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
-import {LocalDownloadQueryListDetailPage} from "../localDownloadQueryListDetail/localDownloadQueryListDetail";
 
 @Component({
   selector: 'page-localDownloadQueryList',
@@ -11,6 +10,7 @@ export class LocalDownloadQueryListPage {
   planDetailList=[];
   planDetailListLength;
   userCode;
+  displayIndex;
   constructor(public navCtrl: NavController,public storageService:StorageService,public app:App) {
     this.loadData();
   }
@@ -26,7 +26,16 @@ export class LocalDownloadQueryListPage {
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
-  planListLocalDetailPage(planDetail){
-    this.app.getRootNav().push(LocalDownloadQueryListDetailPage,{planDetail:planDetail})
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
+    }else {
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
+    }
   }
 }

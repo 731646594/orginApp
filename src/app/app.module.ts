@@ -17,7 +17,6 @@ import { InventoryDataUploadPage } from "../pages/apps/inventory/inventoryDataUp
 import { InventoryDataDownloadPage } from "../pages/apps/inventory/inventoryDataDownload/inventoryDataDownload";
 import { LocalDownloadQueryPage } from "../pages/apps/inventory/localDownloadQuery/localDownloadQuery";
 import { LocalDownloadQueryListPage } from "../pages/apps/inventory/localDownloadQueryList/localDownloadQueryList";
-import { LocalDownloadQueryListDetailPage } from "../pages/apps/inventory/localDownloadQueryListDetail/localDownloadQueryListDetail";
 import { ScrapApplicationPage } from "../pages/apps/scrap/scrapApplication/scrapApplication";
 import { ScrapApprovalPage } from "../pages/apps/scrap/scrapApproval/scrapApproval";
 import { ScrapApprovalDetailPage } from "../pages/apps/scrap/scrapApprovalDetail/scrapApprovalDetail";
@@ -70,7 +69,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
     LocalDownloadQueryListPage,
-    LocalDownloadQueryListDetailPage,
     ScrapApplicationPage,
     ScrapApprovalPage,
     ScrapApprovalDetailPage,
@@ -126,7 +124,6 @@ import { SignaturePadModule } from "angular2-signaturepad";
     InventoryDataDownloadPage,
     LocalDownloadQueryPage,
     LocalDownloadQueryListPage,
-    LocalDownloadQueryListDetailPage,
     ScrapApplicationPage,
     ScrapApprovalPage,
     ScrapApprovalDetailPage,
