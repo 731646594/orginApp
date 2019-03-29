@@ -11,12 +11,12 @@ export class TransferConfirmationDetailPage {
   pageName;
   invoice;
   postUrl;
-  detailList;
-  detail=[];
+  detailList=[];
   isOnfocus=false;
   userName;
   userCode;
   departCode;
+  displayIndex;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
     this.loadData();
@@ -52,19 +52,34 @@ export class TransferConfirmationDetailPage {
   inputOnblur(){
     this.isOnfocus=false;
   }
-  checkedItem(index){
-    if (this.detailList[index].checked){
-      document.getElementsByClassName("detailIcon")[index].setAttribute("style","color: #dedede;");
-      this.detailList[index].checked = false;
-      this.detail = [];
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
     }else {
-      document.getElementsByClassName("detailIcon")[index].setAttribute("style","color: #0091d2;");
-      this.detailList[index].checked = true;
-      this.detail = this.detailList[index];
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+        if(!this.detailList[index]["stopDate"]){
+          this.detailList[index]["stopDate"] = this.detailList[this.displayIndex]["stopDate"];
+        }
+        if(!this.detailList[index]["discardReasonCode"]){
+          this.detailList[index]["discardReasonCode"] = this.detailList[this.displayIndex]["discardReasonCode"];
+        }
+        if(!this.detailList[index]["discardMark"]){
+          this.detailList[index]["discardMark"] = this.detailList[this.displayIndex]["discardMark"];
+        }
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
     }
   }
   uploadData(){
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,phoneInvoiceNumber:this.invoice.invoiceNumber,eamAllotDetal:this.detail,invoiceDatas:this.invoice}).subscribe(data=>{
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loadingCtrl.present();
+    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceDatas:this.invoice}).subscribe(data=>{
       if (data.success=="true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
@@ -73,6 +88,7 @@ export class TransferConfirmationDetailPage {
       }else {
         alert(data.msg)
       }
+      loadingCtrl.dismiss();
     })
   }
 }

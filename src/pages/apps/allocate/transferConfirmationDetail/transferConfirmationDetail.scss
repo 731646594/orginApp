@@ -1,4 +1,14 @@
 page-transferConfirmationDetail{
+  .detailList{
+    margin: 0 ;
+  }
+  .disContent{
+    height: 330px;
+  }
+  .callList{
+    border: none !important;
+    margin: 0;
+  }
   .list-ios .item-block .item-inner{
     border-bottom: 0.55px solid #c8c7cc !important;
     padding-right: 0 !important;
@@ -8,13 +18,15 @@ page-transferConfirmationDetail{
     padding-right: 0 !important;
   }
   .item-ios{
-    border-bottom: none !important;
+    border: none !important;
   }
   .item-md{
-    border-bottom: none !important;
+    border: none !important;
   }
   .label-ios{
     margin-right: 0 !important;;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .label-md{
     margin-right: 0 !important;;
@@ -85,6 +97,8 @@ page-transferConfirmationDetail{
   .detailSelect{
     width: 100%;
     max-width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   .detailSelectLabel{
     flex: none;

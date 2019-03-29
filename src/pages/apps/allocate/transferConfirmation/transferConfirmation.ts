@@ -12,9 +12,10 @@ export class TransferConfirmationPage {
   pageName;
   pageIndex;
   postUrl;
-  censorshipList;
+  censorshipList=[];
   checkedIndex = null;
   isHave = 0;
+  userName;
   userCode;
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
@@ -25,6 +26,7 @@ export class TransferConfirmationPage {
     // this.loadData();
   }
   loadData(){
+    this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     this.pageName = this.navParams.get("pageName");
@@ -49,17 +51,35 @@ export class TransferConfirmationPage {
   checkedItem(index){
     if ((this.checkedIndex||this.checkedIndex==0)&&this.checkedIndex!=index){
       document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
-      this.censorshipList[index].checked = true;
+      this.censorshipList[index]["checked"] = true;
       document.getElementsByClassName("censorshipIcon")[this.checkedIndex].setAttribute("style","color: #dedede;");
-      this.censorshipList[this.checkedIndex].checked = false;
+      this.censorshipList[this.checkedIndex]["checked"] = false;
       this.checkedIndex = index;
     }else {
       document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
-      this.censorshipList[index].checked = true;
+      this.censorshipList[index]["checked"] = true;
       this.checkedIndex = index;
     }
   }
   censorshipDetailPage(invoice){
     this.app.getRootNav().push(TransferConfirmationDetailPage,{pageName:this.navParams.get("childPageName"),postUrl:this.navParams.get("childPostUrl"),invoice:invoice});
+  }
+  uploadData(){
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:10000
+    });
+    loadingCtrl.present();
+    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,phoneInvoiceNumber: this.censorshipList[this.checkedIndex]["invoiceNumber"],invoiceDatas: this.censorshipList[this.checkedIndex]}).subscribe(data=>{
+      if (data.success=="true"){
+        let alertCtrl = this.alertCtrl.create({
+          title:data.msg
+        });
+        alertCtrl.present()
+      }else {
+        alert(data.msg)
+      }
+      loadingCtrl.dismiss()
+    })
   }
 }
