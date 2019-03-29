@@ -12,6 +12,7 @@ export class ScrapQueryDetailPage {
   postUrl;
   detailList;
   departCode;
+  displayIndex;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
     this.loadData();
@@ -36,5 +37,17 @@ export class ScrapQueryDetailPage {
       }
       loading.dismiss();
     })
+  }
+  displayContent(index){
+    let content = document.getElementsByClassName("disContent");
+    if ((<HTMLElement>content[index]).style.display=="block"){
+      (<HTMLElement>content[index]).style.display="none";
+    }else {
+      if(this.displayIndex>=0){
+        (<HTMLElement>content[this.displayIndex]).style.display="none";
+      }
+      (<HTMLElement>content[index]).style.display="block";
+      this.displayIndex = index;
+    }
   }
 }

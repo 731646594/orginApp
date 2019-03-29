@@ -93,4 +93,13 @@ page-scrapQueryDetail{
     width: 100% !important;
     padding-right: 5%;
   }
+  .detailList{
+    margin: 0;
+  }
+  .list-ios > .item-block:first-child{
+    border-top: 0;
+  }
+  .disContent{
+    height: 280px;
+  }
 }

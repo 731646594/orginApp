@@ -6,8 +6,8 @@
 
 <ion-content>
   <div class="detailListBox">
-    <ion-list class="detailList">
-      <ion-item class="inputItem" *ngFor="let detail of detailList;" (click)="getDetail(detail)">
+    <ion-list class="detailList" *ngFor="let detail of detailList;let i = index">
+      <ion-item class="inputItem" (click)="displayContent(i)">
         <div>
           <div>
             资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
@@ -20,7 +20,8 @@
           </div>
         </div>
       </ion-item>
-      <ion-list class="callList">
+      <ion-content class="disContent">
+        <ion-list class="callList">
         <ion-item class="inputItem">
           <ion-label>资产编码:</ion-label>
           <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
@@ -94,6 +95,7 @@
           <ion-input readonly [(ngModel)]="detail.usedStateName"></ion-input>
         </ion-item>
       </ion-list>
+      </ion-content>
     </ion-list>
   </div>
 </ion-content>
