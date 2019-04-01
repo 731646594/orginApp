@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
-import {ServerSettingPage} from "../../mine/serverSetting/serverSetting";
-import {ModifyPasswordPage} from "../../mine/modifyPassword/modifyPassword";
-import {LoginPage} from "../../mine/login/login";
 import {HttpService} from "../../../services/httpService";
 import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
 import {InventoryEntryPage} from "../../apps/inventory/inventoryEntry/inventoryEntry";

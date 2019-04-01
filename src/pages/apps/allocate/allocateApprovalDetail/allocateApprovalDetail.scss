@@ -116,4 +116,10 @@ page-allocateApprovalDetail{
     color: #0091d2;
     margin-bottom: 2px;
   }
+  .detailList{
+    margin: 0;
+  }
+  .list-ios > .item-block:first-child{
+    border-top: 0;
+  }
 }
