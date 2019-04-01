@@ -78,7 +78,8 @@ export class TabsPage {
         ],
         [
           [34,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"},"arrow-round-up","调出确认"],
-          [35,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"},"arrow-round-down","调入确认"]
+          [35,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"},"arrow-round-down","调入确认"],
+          []
         ]
       ]
     };
@@ -102,12 +103,8 @@ export class TabsPage {
     this.pageData1 = {
       pageName:"应用",
       pageData:[
-        [
-          [1,this.pandian,"qr-scanner","资产盘点"],[1,this.baofei,"trash","报废管理"],[1,this.diaobo,"open","调拨管理"]
-        ],
-        [
-          [1,this.tongji,"search","统计查询"],[1,this.jiayouzhan,"water","加油站管理"]
-        ]
+        [1,this.pandian,"qr-scanner","资产盘点"],[1,this.baofei,"trash","报废管理"],[1,this.diaobo,"open","调拨管理"],
+        [1,this.tongji,"search","统计查询"],[1,this.jiayouzhan,"water","加油站管理"]
       ]
     };
 

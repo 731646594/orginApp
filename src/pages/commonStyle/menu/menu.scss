@@ -1,5 +1,15 @@
 page-menu {
-  .scroll-content{
-    overflow: hidden;
+  .menuBox{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-top: 1px solid #dedede;
+  }
+  .menuName{
+    padding-left: 5%;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .appsButton{
+    border: 0 !important;
   }
 }

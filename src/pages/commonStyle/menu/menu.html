@@ -1,22 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{pageName}}
+      应用
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div class="userInfoBox">
-    <div class="userPhotoBox" item-start>
-      <img class="userPhoto" src="assets/imgs/user.png">
+  <div class="menuBox" *ngFor="let Data of pageData;let i = index">
+    <div class="menuName">{{Data[3]}}</div>
+    <div class="appsButtonBox" *ngFor="let datas of Data[1].pageData">
+      <button *ngFor="let data of datas" class="appsButton" (click)="appChoose(data[0],data[1])"><ion-icon [name]="data[2]" class="appsButtonIcon"></ion-icon><br>{{data[3]}}</button>
     </div>
-    <div class="userTextBox" item-end>
-      <div class="userName">{{userName}}</div>
-      <div class="userDepart">{{departName}}</div>
-    </div>
-  </div>
-  <div class="appsButtonBox" *ngFor="let Data of pageData">
-    <button *ngFor="let data of Data" class="appsButton" (click)="appChoose(data[0],data[1])"><ion-icon [name]="data[2]" class="appsButtonIcon"></ion-icon><br>{{data[3]}}</button>
   </div>
 </ion-content>

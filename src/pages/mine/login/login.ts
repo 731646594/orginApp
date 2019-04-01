@@ -74,6 +74,28 @@ export class LoginPage {
     })
   }
   entry(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration: 10000
+    });
+    loading.present();
+    this.httpService.post(this.httpService.getUrl()+"devWeeklyCheckController.do?getCheckListCols",{departCode:this.depart.departcode}).subscribe(data=>{
+      if (data.success=="true"){
+        this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
+        this.httpService.post(this.httpService.getUrl()+"devHandOverController.do?getCheckListCols",{departCode:this.depart.departcode}).subscribe(data2=>{
+          if (data2.success=="true"){
+            this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
+            loading.dismiss();
+          }else {
+            alert(data2.msg);
+            loading.dismiss();
+          }
+        });
+      }else {
+        alert(data.msg);
+        loading.dismiss();
+      }
+    });
     this.storageService.write("loginDepartName",this.depart.shortname);
     this.storageService.write("loginDepartCode",this.depart.departcode);
     this.app.getRootNav().push(TabsPage);
