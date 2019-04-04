@@ -115,7 +115,7 @@ export class TabsPage {
           [2,null,"settings","服务器设置"],[3,null,"create","修改密码"],[4,null,"repeat","切换单位"]
         ],
         [
-          [5,null,"refresh-circle","重新登陆"],[6,null,"trash","清除数据"],[7,null,"cloud-download","更新字典"]
+          [6,null,"trash","清除数据"],[7,null,"cloud-download","更新字典"],[5,null,"refresh-circle","退出登陆"]
         ]
       ]
     }
