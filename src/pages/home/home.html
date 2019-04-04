@@ -7,61 +7,48 @@
 </ion-header>
 
 <ion-content>
-  <div class="appsButtonBox">
-    <button class="appsButton" (click)="willGoPage(1)"><ion-icon name="qr-scanner" class="appsButtonIcon"></ion-icon><br>快速扫码</button>
-    <button class="appsButton" (click)="willGoPage(2)"><ion-icon name="open" class="appsButtonIcon"></ion-icon><br>调拨申请</button>
-    <button class="appsButton" (click)="willGoPage(3)"><ion-icon name="trash" class="appsButtonIcon"></ion-icon><br>报废申请</button>
+  <div class="appsButtonBigBox">
+    <div class="appsButtonBox">
+      <button class="appsButton" (click)="willGoPage(1)"><ion-icon name="qr-scanner" class="appsButtonIcon"></ion-icon><br>快速扫码</button>
+      <button class="appsButton" (click)="willGoPage(2)"><ion-icon name="open" class="appsButtonIcon"></ion-icon><br>调拨申请</button>
+      <button class="appsButton" (click)="willGoPage(3)"><ion-icon name="trash" class="appsButtonIcon"></ion-icon><br>报废申请</button>
+    </div>
   </div>
-  <div>
-    <ion-list>
-      <ion-item class="inputItem" (click)="willGoPage(4)">
-        <div>
-          待办类型：正在盘点
-        </div>
-        <div>
-          待办数量：{{inventoryNum}}
-        </div>
-      </ion-item>
-      <ion-item class="inputItem"  (click)="willGoPage(5)">
-        <div>
-          待办类型：未盘计划
-        </div>
-        <div>
-          待办数量：{{num1}}
-        </div>
-      </ion-item>
-      <ion-item class="inputItem" (click)="willGoPage(6)">
-        <div>
-          待办类型：调拨审批
-        </div>
-        <div>
-          待办数量：{{num2}}
-        </div>
-      </ion-item>
-      <ion-item class="inputItem" (click)="willGoPage(7)">
-        <div>
-          待办类型：调出确认
-        </div>
-        <div>
-          待办数量：{{num3}}
-        </div>
-      </ion-item>
-      <ion-item class="inputItem" (click)="willGoPage(8)">
-        <div>
-          待办类型：调入确认
-        </div>
-        <div>
-          待办数量：{{num4}}
-        </div>
-      </ion-item>
-      <ion-item  (click)="willGoPage(9)">
-        <div>
-          待办类型：报废审批
-        </div>
-        <div>
-          待办数量：{{num5}}
-        </div>
-      </ion-item>
-    </ion-list>
+  <div class="splitBar"></div>
+  <div class="appsButtonBigBox">
+    <div class="appsButtonBox">
+      <button class="appsButton" (click)="willGoPage(4)">
+        <ion-icon name="sync" class="appsButtonIcon"></ion-icon>
+        <ion-badge  *ngIf="inventoryNum!=0" item-end>{{inventoryNum}}</ion-badge>
+        <br>正在盘点
+      </button>
+      <button class="appsButton" (click)="willGoPage(5)">
+        <ion-icon name="cloud-download" class="appsButtonIcon"></ion-icon>
+        <ion-badge *ngIf="num1!=0" item-end>{{num1}}</ion-badge>
+        <br>未盘计划
+      </button>
+      <button class="appsButton" (click)="willGoPage(6)">
+        <ion-icon name="paper" class="appsButtonIcon"></ion-icon>
+        <ion-badge *ngIf="num2!=0" item-end>{{num2}}</ion-badge>
+        <br>调拨审批
+      </button>
+    </div>
+    <div class="appsButtonBox">
+      <button class="appsButton" (click)="willGoPage(7)">
+        <ion-icon name="arrow-round-up" class="appsButtonIcon"></ion-icon>
+        <ion-badge *ngIf="num3!=0" item-end>{{num3}}</ion-badge>
+        <br>调出确认
+      </button>
+      <button class="appsButton" (click)="willGoPage(8)">
+        <ion-icon name="arrow-round-down" class="appsButtonIcon"></ion-icon>
+        <ion-badge *ngIf="num4!=0" item-end>{{num4}}</ion-badge>
+        <br>调入确认
+      </button>
+      <button class="appsButton" (click)="willGoPage(9)">
+        <ion-icon name="paper" class="appsButtonIcon"></ion-icon>
+        <ion-badge *ngIf="num5!=0" item-end>{{num5}}</ion-badge><br>
+        报废审批
+      </button>
+    </div>
   </div>
 </ion-content>

@@ -1,3 +1,25 @@
 page-home {
-
+  .appsButtonBox{
+    border-bottom: 0;
+  }
+  .appsButton{
+    border: 0 !important;
+  }
+  .badge-ios {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    padding-top: 4px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    background-color:red;
+    position: fixed;
+  }
+  .splitBar{
+    height: 3%;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #dedede;
+    border-top: 1px solid #dedede;
+  }
 }
