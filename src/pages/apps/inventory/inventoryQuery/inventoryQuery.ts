@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, NavController} from 'ionic-angular';
+import {App, NavController, ToastController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 @Component({
   selector: 'page-inventoryQuery',
@@ -20,13 +20,14 @@ export class InventoryQueryPage {
   existPlanDetail=[];
   willPlanDetail=[];
   newPlanDetail=[];
-  planDetailList;
+  planDetailList=[];
   existNum=0;
   willNum=0;
   newNum=0;
   userCode;
   displayIndex;
-  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App) {
+  page=1;
+  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -61,13 +62,56 @@ export class InventoryQueryPage {
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   readData(){
+    this.planDetailList = [];
+    let item = [];
     if (this.planStatus=="exist"){
-      this.planDetailList = this.existPlanDetail;
+      item = this.existPlanDetail
     }else if (this.planStatus=="will"){
-      this.planDetailList = this.willPlanDetail;
+      item = this.willPlanDetail;
     }else {
-      this.planDetailList = this.newPlanDetail;
+      item = this.newPlanDetail;
     }
+    for (let i = 0;i<10;i++){
+      if(item[i]){
+        this.planDetailList.push(item[i]);
+      }
+      else {
+        this.page=-1
+      }
+    }
+  }
+  getMore(infiniteScroll){
+    let item = [];
+    if (this.planStatus=="exist"){
+      item = this.existPlanDetail
+    }else if (this.planStatus=="will"){
+      item = this.willPlanDetail;
+    }else {
+      item = this.newPlanDetail;
+    }
+    if (this.page==-1){
+      infiniteScroll.enable(false);
+      let toast = this.toastCtrl.create({
+        message: "这已经是最后一页了",
+        duration: 2000,
+      });
+      toast.present();
+    }else {
+      let i = this.page*10;
+      for (i;i<(this.page*10+10);i++){
+        if(item[i]){
+          this.planDetailList.push(item[i]);
+        }
+        else {
+          this.page=-1
+        }
+      }
+      if (this.page!=-1){
+        this.page++;
+      }
+    }
+    infiniteScroll.complete();
+
   }
   selectDepart(){
     this.existPlanDetail=[];
