@@ -6,7 +6,8 @@ page-home {
     border: 0 !important;
   }
   .badge-ios {
-    width: 20px;
+    min-width: 20px;
+    max-width: 25px;
     height: 20px;
     padding: 0;
     padding-top: 4px;

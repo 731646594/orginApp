@@ -37,6 +37,7 @@ export class InventoryQueryPage {
         this.departments = this.plan["departments"];
         this.departCode = this.departments[0]["departCode"];
         this.planStatus = "will";
+        this.selectDepart();
       }
       this.plan["username"]=this.storageService.read("loginUserName");
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
