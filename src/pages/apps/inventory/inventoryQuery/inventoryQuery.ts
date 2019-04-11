@@ -14,6 +14,9 @@ export class InventoryQueryPage {
   departments;
   departCode;
   planStatus="";
+  existPlan=[];
+  willPlan=[];
+  newPlan=[];
   existPlanDetail=[];
   willPlanDetail=[];
   newPlanDetail=[];
@@ -31,6 +34,21 @@ export class InventoryQueryPage {
   }
   loadData(){
     this.userCode = this.storageService.read("loginUserCode");
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.existPlan = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.willPlan = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.newPlan = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_4:"+JSON.stringify(e)));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.plan = JSON.parse(res.rows.item(0).stringData);
@@ -52,43 +70,24 @@ export class InventoryQueryPage {
     }
   }
   selectDepart(){
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.existPlanDetail = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.willPlanDetail = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_4:"+JSON.stringify(e)));
-    let item = [];
-    for (let x in this.existPlanDetail){
-      if (this.departCode == this.existPlanDetail[x]["managerDepart"]){
-        item.push(this.existPlanDetail[x])
+    this.existPlanDetail=[];
+    this.willPlanDetail=[];
+    this.newPlanDetail=[];
+    for (let x in this.existPlan){
+      if (this.departCode == this.existPlan[x]["managerDepart"]){
+        this.existPlanDetail.push(this.existPlan[x])
       }
     }
-    this.existPlanDetail = item;
-    item = [];
-    for (let i in this.willPlanDetail){
-      if (this.departCode == this.willPlanDetail[i]["managerDepart"]){
-        item.push(this.willPlanDetail[i])
+    for (let i in this.willPlan){
+      if (this.departCode == this.willPlan[i]["managerDepart"]){
+        this.willPlanDetail.push(this.willPlan[i])
       }
     }
-    this.willPlanDetail = item;
-    item = [];
-    for (let j in this.newPlanDetail){
-      if (this.departCode == this.newPlanDetail[j]["managerDepart"]){
-        item.push(this.newPlanDetail[j])
+    for (let j in this.newPlan){
+      if (this.departCode == this.newPlan[j]["managerDepart"]){
+        this.newPlanDetail.push(this.newPlan[j])
       }
     }
-    this.newPlanDetail = item;
-    console.log("exist："+this.existPlanDetail+"will:"+this.willPlanDetail+"new:"+this.newPlanDetail)
     if(this.existPlanDetail)
       this.existNum = this.existPlanDetail.length;
     if(this.willPlanDetail)

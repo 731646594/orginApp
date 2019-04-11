@@ -27,12 +27,13 @@ export class HomePage {
   num4;
   num5;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,) {
-    that = this;
+
   }
   ionViewDidEnter(){
     this.loadData();
   }
   loadData(){
+    that = this;
     PageUtil.pages["home"]=this;
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
@@ -53,13 +54,13 @@ export class HomePage {
     },err=>{
       alert(err)
     });
-    setTimeout(this.readInventoryNum,1000)
+    setTimeout(this.readInventoryNum,500)
   }
   readInventoryNum(){
-    let tableName = "planListWillPlanDetail";
+    let tableName = "willPlanDetail";
     that.storageService.getUserTable().executeSql(that.storageService.getSSS(tableName,that.userCode),[]).then(res =>{
       if (res.rows.length>0) {
-        that.inventoryNum = res.rows.length;
+        that.inventoryNum = JSON.parse(res.rows.item(0).stringData).length;
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
