@@ -150,6 +150,10 @@
   display: none;
 }
 //覆盖css
+//下拉框文字...问题
+.item-radio.item-ios ion-label{
+  white-space: normal;
+}
 //返回键
 .back-button.show-back-button{
   color: white;
