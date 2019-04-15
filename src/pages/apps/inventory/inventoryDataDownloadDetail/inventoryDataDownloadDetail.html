@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>数据下载详情</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="planListBox">
+    <ion-item class="inputItem">
+      <div>
+        盘点计划编码：<input readonly class="readonlyInput" [(ngModel)]="plan.planNumber">
+      </div>
+      <div>
+        盘点计划名称：<input readonly class="readonlyInput" [(ngModel)]="plan.planName">
+      </div>
+    </ion-item>
+    <ion-list class="planList">
+      <ion-item class="inputItem" *ngFor="let department of departments;let i = index">
+        <ion-checkbox [checked]="department.checked" (click)="checkedOne(i)"></ion-checkbox>
+        <ion-label>{{department.departName}}</ion-label>
+        <div *ngIf="!department.isDownLoad" class="planButton" item-end >
+          <ion-icon name="cloud-download" class="planIcon"></ion-icon>
+          <div class="planStatus">未下载</div>
+        </div>
+        <div *ngIf="department.isDownLoad" class="planButton" item-end >
+          <ion-icon name="checkmark-circle" class="planIcon"></ion-icon>
+          <div class="planStatus">已下载</div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+<footer class="formFooter" padding >
+  <button class="formFooterButton" (click)="checkAll()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>全选
+  </button>
+  <button class="formFooterButton" (click)="checkInverse()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle-outline"></ion-icon><br>反选
+  </button>
+  <button class="formFooterButton" (click)="downloadPlan()">
+    <ion-icon class="formFooterIcon" name="cloud-download"></ion-icon><br>下载
+  </button>
+</footer>

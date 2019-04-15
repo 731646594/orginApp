@@ -59,7 +59,13 @@ export class StorageService {
       }
     }).catch(e =>alert("erro7:"+JSON.stringify(e)));
   }
-
+  sqliteDrop(tableName,userCode){
+    this.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
+      if (res.rows.length>0){
+        this.dropUserTable(tableName);
+      }
+    }).catch(e =>alert("erro8:"+JSON.stringify(e)));
+  }
   write(key: string, value: any) {
     if (value) {
       value = JSON.stringify(value);
