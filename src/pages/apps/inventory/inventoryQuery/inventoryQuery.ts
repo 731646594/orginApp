@@ -11,7 +11,7 @@ export class InventoryQueryPage {
   port;
   serviceName;
   plan=JSON;
-  departments;
+  departments=[];
   departCode;
   planStatus="";
   existPlan=[];
@@ -53,8 +53,14 @@ export class InventoryQueryPage {
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.plan = JSON.parse(res.rows.item(0).stringData);
-        this.departments = this.plan["departments"];
-        this.departCode = this.departments[0]["departCode"];
+        for(let i in this.plan["departments"]){
+          if(this.plan["departments"][i].isDownLoad){
+            this.departments.push(this.plan["departments"][i]);
+          }
+        }
+        if (this.departments.length>0){
+          this.departCode = this.departments[0]["departCode"];
+        }
         this.planStatus = "will";
         this.selectDepart();
       }
