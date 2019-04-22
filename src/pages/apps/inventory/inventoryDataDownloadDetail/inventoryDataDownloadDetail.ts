@@ -45,7 +45,7 @@ export class InventoryDataDownloadDetailPage {
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?phonecheckplandetail",{userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,departCodeList:item}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?phonecheckplandetailNew",{userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item}).subscribe(data=>{
       if (data.success=="true"){
 
         this.downloadPlan2(data.data);
@@ -82,7 +82,7 @@ export class InventoryDataDownloadDetailPage {
     },300);
     //android 存储externalDataDirectory,通用沙盒存储dataDirectory
     fileTransferNow.download(url,
-      this.file.dataDirectory+"file").then((entry)=>{
+      this.file.dataDirectory+"file.txt").then((entry)=>{
       if (timer) clearInterval(timer);
       loading.dismiss();
       this.storageService.write("JsonUrl",entry);
@@ -90,7 +90,7 @@ export class InventoryDataDownloadDetailPage {
       entry.file((file)=>{
         var reader = new FileReader();
         reader.onloadend=(e)=>{
-          let data=JSON.parse(e.target['result']);
+          let data=JSON.parse(e.target['result']).data;
           for (let i in this.departments){
             if(this.departments[i].checked){
               this.departments[i].isDownLoad = true;
@@ -112,46 +112,42 @@ export class InventoryDataDownloadDetailPage {
   }
   downloadPlan(){
     let item=[];
-    let isDownload = true;
     let isAlertOnce = true;
     for (let i in this.departments){
       if(this.departments[i].checked){
         if(this.departments[i].isDownLoad&&isAlertOnce){
           isAlertOnce = false;
-          let alertCtrl = this.alertCtrl.create({
-            title:"重新下载将清除已盘点的数据！",
-            buttons:[
-              {
-                text:"否",
-                handler:data=>{
-                  isDownload = false;
-                }
-              },
-              {
-                text:"是",
-              }
-            ]
-          });
-          alertCtrl.present();
         }
-        if (isDownload){
-          item.push(this.departments[i].departCode);
-        }
+        item.push(this.departments[i].departCode);
       }
-
     }
-    if(isDownload&&!item.length){
+    if(!item.length){
       let alertCtrl = this.alertCtrl.create({
         title:"请选择单位！",
       });
       alertCtrl.present();
+      return false;
     }
-    if (isDownload&&item.length){
-      if(!this.isOldPlan||!isAlertOnce){
-        this.storageService.sqliteDrop("existPlanDetail",this.userCode);
-        this.storageService.sqliteDrop("newPlanDetail",this.userCode);
-      }
-      this.downloadPlan1(item)
+    if(!isAlertOnce){
+      let alertCtrl = this.alertCtrl.create({
+        title:"重新下载将清除已盘点的数据！",
+        buttons:[
+          {
+            text:"否",
+          },
+          {
+            text:"是",
+            handler:data=>{
+              if(!this.isOldPlan){
+                this.storageService.sqliteDrop("existPlanDetail",this.userCode);
+                this.storageService.sqliteDrop("newPlanDetail",this.userCode);
+              }
+              this.downloadPlan1(item)
+            }
+          }
+        ]
+      });
+      alertCtrl.present();
     }
   }
   checkedOne(index){

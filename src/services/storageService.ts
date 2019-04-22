@@ -60,6 +60,7 @@ export class StorageService {
     }).catch(e =>alert("erro7:"+JSON.stringify(e)));
   }
   sqliteDrop(tableName,userCode){
+    this.createUserTable(tableName);
     this.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
       if (res.rows.length>0){
         this.dropUserTable(tableName);
