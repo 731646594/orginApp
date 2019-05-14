@@ -104,6 +104,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
       mode: 'ios',
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
+      pageTransition:'md-transition',
       scrollAssist:false,
       autoFocusAssit:false,
       backButtonText: '返回',
