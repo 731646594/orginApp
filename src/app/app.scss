@@ -100,33 +100,45 @@
 .userInfoBox{
   width: 100%;
   display: table;
-  background: rgb(248, 248, 248);
-  padding: 16px 16px 8px 16px;
+  background: linear-gradient(to right,rgb(23,168,250),rgb(26,79,221));
+  padding: 0 16px 8px 16px;
+  margin-bottom: 10px;
 }
 .userPhotoBox{
-  display: table-cell;
-  width: 20%;
+  margin: 0 auto;
+  width: 62px;
+  height: 62px;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 3px;
 }
 .userPhoto{
   width: 100%;
+  border-radius: 50%;
 }
 .userTextBox{
-  display: table-cell;
   width: 70%;
-  vertical-align: top;
   font-size: 16px;
-}
-.userName{
-  margin: 5% 10%;
+  color: white;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-align: center;
 }
 .userDepart{
-  margin: 5% 10%;
+  font-size: 12px;
+  font-weight: lighter;
 }
 //菜单样式
 .appsButtonBox{
   width: 100%;
   text-align: center;
   display: flex;
+}
+.appsButtonIconBox{
+  display: table-cell;
+  img{
+    width: 20px;
+  }
 }
 .appsButtonIcon{
   color: #0091d2;
@@ -135,8 +147,7 @@
 .appsButton{
   width: 100%;
   padding: 5%;
-  background: transparent;
-  border-bottom: 1px solid #dedede;
+  background: white;
 }
 .appsButton:nth-child(even){
   border-left: 1px solid #dedede;
@@ -186,7 +197,7 @@
 }
 //标题栏
 .toolbar-background-ios{
-  background: #0091d2;
+  background: linear-gradient(to right,rgb(23,168,250),rgb(26,79,221));
 }
 .toolbar-title-ios{
   color: white;

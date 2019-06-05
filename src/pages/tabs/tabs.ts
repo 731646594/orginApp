@@ -112,10 +112,10 @@ export class TabsPage {
       pageName:"我的",
       pageData:[
         [
-          [2,null,"settings","服务器设置"],[3,null,"create","修改密码"],[4,null,"repeat","切换单位"]
+          [2,null,"shezhi.png","服务器设置"],[3,null,"xiugai.png","修改密码"],[4,null,"qiehuan.png","切换单位"]
         ],
         [
-          [6,null,"trash","清除数据"],[7,null,"cloud-download","更新字典"],[5,null,"refresh-circle","退出登陆"]
+          [6,null,"qingchu.png","清除数据"],[7,null,"gengxin.png","更新字典"],[5,null,"tuichu.png","退出登陆"]
         ]
       ]
     }

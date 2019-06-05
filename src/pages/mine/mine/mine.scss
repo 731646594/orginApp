@@ -1,11 +1,12 @@
 page-mine {
   .scroll-content{
     overflow: hidden;
+    background-color: rgba(0,0,0,0.05);
   }
   .appsButton{
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
-    line-height: 18px;
+    line-height: 16px;
     display: table;
     border-left:0 !important;
     border-right:0 !important;
