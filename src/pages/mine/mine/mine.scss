@@ -20,4 +20,9 @@ page-mine {
     vertical-align: middle;
     display: table-cell;
   }
+  //去除title-toolbar下的白线
+  .toolbar-background{
+    height: 102%;
+    border-bottom: 0!important;
+  }
 }
