@@ -3,20 +3,23 @@
 <ion-content>
   <div class="loginTitleBox">
     <div class="loginTitleText">
-      <h1 class="loginTitleCaption">盘点</h1>
-      <p class="loginTitleDiscription">资产盘点</p>
+      <img src="assets/loginPageImgs/logo.png">
     </div>
   </div>
   <div class="loginInfoBox">
     <div class="loginInfoInput" *ngIf="!isLogin">
-      <ion-item>
-        <ion-label floating>用户名/邮箱</ion-label>
-        <ion-input [(ngModel)]="username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>密&emsp;码</ion-label>
-        <ion-input [(ngModel)]="password" type="password"></ion-input>
-      </ion-item>
+      <div class="loginInfoItem">
+        <div class="inputImgBox">
+          <img src="assets/loginPageImgs/yonghu.png">
+        </div>
+        <ion-input placeholder="请输入用户名/邮箱" [(ngModel)]="username"></ion-input>
+      </div>
+      <div class="loginInfoItem">
+        <div class="inputImgBox">
+          <img src="assets/loginPageImgs/mima.png">
+        </div>
+        <ion-input placeholder="请输入密码" [(ngModel)]="password" type="password"></ion-input>
+      </div>
     </div>
     <div class="loginInfoInput" *ngIf="isLogin">
       <ion-select class="loginSelectList" [(ngModel)]="depart" interface="popover">
@@ -25,7 +28,7 @@
     </div>
     <div class="loginButtonBox">
       <div class="loginSub">
-        <button *ngIf="!isLogin" ion-button class="loginSubButton myStyleButton" (click)="login()">登录</button>
+        <button *ngIf="!isLogin" ion-button class="loginSubButton myStyleButton" (click)="login()">登&emsp;录</button>
         <button *ngIf="isLogin" ion-button class="loginSubButton myStyleButton" (click)="entry()">进入系统</button>
       </div>
       <div *ngIf="!isLogin" class="loginService">

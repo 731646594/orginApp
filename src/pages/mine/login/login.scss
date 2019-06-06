@@ -1,6 +1,7 @@
 page-login {
   .scroll-content{
     overflow: hidden;
+    background-color: rgb(251,251,251);
   }
   .toolbar-background{
     border-bottom: none !important;
@@ -9,25 +10,23 @@ page-login {
     padding-top: 5px !important;
   }
   .loginTitleBox{
+    margin-top: 5%;
     width: 100%;
-    height: 45%;
-    background: linear-gradient(#0091d2, #0091d2);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    display: table;
+    //height: 45%;
+    //background: linear-gradient(#0091d2, #0091d2);
+    //box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    //display: table;
   }
   .loginTitleText{
-    width: 10%;
-    color: white;
+    width: 70%;
+    //color: white;
     margin: 0 auto;
-    text-align: center;
-    vertical-align: middle;
-    display: table-cell;
-  }
-  .loginTitleCaption{
-    font-size: 4em;
-  }
-  .loginTitleDiscription{
-    font-size: 1em;
+    //text-align: center;
+    //vertical-align: middle;
+    //display: table-cell;
+    img{
+      width: 100%;
+    }
   }
   .loginInfoBox{
     width: 100%;
@@ -37,26 +36,30 @@ page-login {
     margin-top: 5%;
   }
   .loginSelectList{
-    max-width: 75%;
-    width: 75%;
-    margin: 0 auto;
-    border: gray solid 2px;
-    border-radius: 10px;
+    max-width: calc(0.90*(100% - 32px));
+    width: calc(0.90*(100% - 32px));
+    margin: 5% auto;
+    height: 3.5em;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 0 25px -15px;
+    border-radius: 50px;
   }
   .loginButtonBox{
     padding: 0 16px;
     margin-top: 5%;
   }
   .loginSub{
-    width: 50%;
+    width: 90%;
     margin: 0 auto;
   }
   .loginSubButton{
     width: 100%;
     padding: 5px;
     font-size: 1.5em;
-    border-radius: 10px;
-    height: 2em;
+    border-radius: 50px;
+    height: 2.5em;
+    background: linear-gradient(to right,rgb(23,168,250),rgb(26,79,221));
   }
   .loginService{
     float: right;
@@ -64,10 +67,31 @@ page-login {
   }
   .loginServiceIcon{
     font-size: 2em;
+    color: rgb(26,79,221);
   }
   .loginServiceButton{
+    color: rgba(0,0,0,0.5);
     text-align: center;
     background: transparent;
     padding: 0;
+  }
+  .loginInfoItem{
+    width: calc(0.90*(100% - 32px));
+    display: flex;
+    margin: 5% auto;
+    border-radius: 50px;
+    //border: 1px solid #dedede;
+    background-color: white;
+    box-shadow: 0 0 25px -15px;
+    input{
+      height: 2.2em;
+
+    }
+  }
+  .inputImgBox{
+    margin: 5%;
+    img{
+      width: 16px;
+    }
   }
 }
