@@ -100,7 +100,7 @@
 .userInfoBox{
   width: 100%;
   display: table;
-  background: linear-gradient(to right,rgb(23,168,250),rgb(26,79,221));
+  background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
   padding: 8px 16px 8px 16px;
   margin-bottom: 10px;
 }
@@ -140,13 +140,18 @@
     width: 20px;
   }
 }
-.appsButtonIcon{
-  color: #0091d2;
-  font-size: 3.5em;
+.appsButtonIconBox2{
+  display: block;
+  //width: 50px;
+  //margin: 0 auto;
+  img{
+    width: 40px;
+    height: 40px;
+  }
 }
 .appsButton{
   width: 100%;
-  padding: 5%;
+  padding: 4%;
   background: white;
 }
 .appsButton:nth-child(even){
@@ -184,20 +189,20 @@
 }
 //tabs下button
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
-  color: #0091d2;
+  color: #4389e8;
 }
 .tabs-md .tab-button[aria-selected=true] {
-  color: #0091d2;
+  color: #4389e8;
 }
 .tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
-  color: #0091d2;
+  color: #4389e8;
 }
 .tabs-ios .tab-button[aria-selected=true] {
-  color: #0091d2;
+  color: #4389e8;
 }
 //标题栏
 .toolbar-background-ios{
-  background: linear-gradient(to right,rgb(23,168,250),rgb(26,79,221));
+  background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
 }
 .toolbar-title-ios{
   color: white;

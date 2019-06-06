@@ -55,10 +55,10 @@ export class TabsPage {
       pageName:"资产盘点",
       pageData:[
         [
-          [11,"","qr-scanner","快速扫码"],[12,"","sync","盘点查询"],[13,"","cloud-download","数据下载"]
+          [11,"","saoyisao.png","快速扫码"],[12,"","pandianchaxun.png","盘点查询"],[13,"","xiazai.png","数据下载"]
         ],
         [
-          [14,"","search","本地下载查询"],[15,"","cloud-upload","数据上传"],[16,"","create","盘盈录入"]
+          [14,"","chaxun.png","本地下载查询"],[15,"","shangchuan.png","数据上传"],[16,"","luruzhong.png","盘盈录入"]
         ],
       ]
     };
@@ -66,7 +66,7 @@ export class TabsPage {
       pageName:"报废管理",
       pageData:[
         [
-          [21,"","trash","报废申请"],[22,"","paper","报废审批"],[23,"","search","报废查询"]
+          [21,"","baofeishengqing.png","报废申请"],[22,"","baofeishenpi.png","报废审批"],[23,"","baofeichaxun.png","报废查询"]
         ]
       ]
     };
@@ -74,11 +74,11 @@ export class TabsPage {
       pageName:"调拨管理",
       pageData:[
         [
-          [31,"","open","调拨申请"],[32,"","paper","调拨审批"],[33,"","search","调拨查询"]
+          [31,"","diaoboshengqing.png","调拨申请"],[32,"","diaoboshenpi.png","调拨审批"],[33,"","diaobochaxun.png","调拨查询"]
         ],
         [
-          [34,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"},"arrow-round-up","调出确认"],
-          [35,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"},"arrow-round-down","调入确认"],
+          [34,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"},"diaochu.png","调出确认"],
+          [35,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"},"diaoru.png","调入确认"],
           []
         ]
       ]
@@ -87,7 +87,7 @@ export class TabsPage {
       pageName:"统计查询",
       pageData:[
         [
-          [41,"","search","资产查询"],[42,"","search","台账查询"],[43,"","search","汇总查询"]
+          [41,"","zichanchaxun.png","资产查询"],[42,"","taizhangchaxun.png","台账查询"],[43,"","huizongchaxun.png","汇总查询"]
         ]
       ]
     };
@@ -95,7 +95,7 @@ export class TabsPage {
       pageName:"加油站管理",
       pageData:[
         [
-          [51,"","create","周检表录入"],[52,"","create","交接班录入"],[53,"","cloud-upload","数据上传"]
+          [51,"","zhoujian.png","周检表录入"],[52,"","jiaojie.png","交接班录入"],[53,"","shujushangchuan.png","数据上传"]
         ]
       ]
     };
@@ -103,8 +103,8 @@ export class TabsPage {
     this.pageData1 = {
       pageName:"应用",
       pageData:[
-        [1,this.pandian,"qr-scanner","资产盘点"],[1,this.baofei,"trash","报废管理"],[1,this.diaobo,"open","调拨管理"],
-        [1,this.tongji,"search","统计查询"],[1,this.jiayouzhan,"water","加油站管理"]
+        [1,this.pandian,"","资产盘点"],[1,this.baofei,"","报废管理"],[1,this.diaobo,"","调拨管理"],
+        [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"]
       ]
     };
 

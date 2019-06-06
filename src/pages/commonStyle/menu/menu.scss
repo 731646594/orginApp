@@ -1,8 +1,15 @@
 page-menu {
+  .scroll-content{
+    background-color: rgb(246,246,246);
+  }
   .menuBox{
+    background-color: white;
     padding-top: 2%;
     padding-bottom: 2%;
-    border-top: 1px solid #dedede;
+    margin-top: 2%;
+  }
+  .menuBox:first-child{
+    margin-top: 0;
   }
   .menuName{
     padding-left: 5%;

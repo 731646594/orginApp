@@ -1,13 +1,21 @@
 page-home {
+  .appsButtonBigBox:first-child{
+    background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
+    .appsButtonBox .appsButton{
+      color: white;
+    }
+  }
   .appsButtonBox{
     border-bottom: 0;
   }
   .appsButton{
     border: 0 !important;
+    background: transparent;
   }
   .badge-ios {
     min-width: 20px;
     max-width: 25px;
+    margin-top: -5px;
     height: 20px;
     padding: 0;
     padding-top: 4px;
@@ -19,8 +27,12 @@ page-home {
   }
   .splitBar{
     height: 3%;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #dedede;
-    border-top: 1px solid #dedede;
+    background-color: rgb(246,246,246);
+    //border-bottom: 1px solid #dedede;
+    //border-top: 1px solid #dedede;
+  }
+  .toolbar-background{
+    height: 102%;
+    border-bottom: 0!important;
   }
 }
