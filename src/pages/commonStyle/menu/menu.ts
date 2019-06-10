@@ -43,6 +43,16 @@ export class MenuPage {
     this.loadData();
   }
   loadData(){
+    let alertCtrl = this.alertCtrl.create({
+      title:"清除成功",
+      subTitle:"点击确定隐藏",
+      cssClass:"myAlertStyle",
+      buttons:[{
+        text:"确定",
+        cssClass:"myAlertButtonStyle"
+      }]
+    });
+    alertCtrl.present();
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");

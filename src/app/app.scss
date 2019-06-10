@@ -284,3 +284,46 @@
     border-bottom: none !important;
   }
 }
+.myAlertStyle{
+  .alert-wrapper{
+    background-color: transparent;
+    background-image: url("../assets/commonImgs/tc.png");
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    padding: 40px 8px 8px 8px;
+  }
+  .alert-head{
+    max-width: 92%;
+    margin: 0 auto;
+  }
+  .alert-title{
+    font-style: italic;
+    font-weight: bolder;
+    font-size: 20px;
+    color:  #4389e8;
+  }
+  .alert-sub-title{
+    //text-overflow: ellipsis;
+    //overflow: hidden;
+    //white-space: nowrap;
+    color: #b0b0b0;
+    max-height: 32px;
+    overflow: auto;
+  }
+  .alert-message{
+    display: none;
+  }
+  .alert-button-group{
+    padding: 8px;
+  }
+  .myAlertButtonStyle{
+    max-width: 214px;
+    margin: 0 auto;
+    border-radius: 50px;
+    color: white;
+    background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
+  }
+}
