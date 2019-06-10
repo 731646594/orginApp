@@ -8,45 +8,45 @@
   <div class="formInfoBox">
     <div class="formInfoInput">
       <ion-item class="inputItem" >
-        <ion-label class="formSelectLabel">盘点单位:</ion-label>
+        <ion-label class="formSelectLabel"><span class="star">*</span>盘点单位:</ion-label>
         <ion-select class="formSelect"  interface="popover" [(ngModel)]="invoice.managerDepart">
           <ion-option *ngFor="let department of departments" [value]="department.departCode">{{department.departName}}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item class="inputItem">
-        <ion-label>资产条码:</ion-label>
+        <ion-label><span class="star">*</span>资产条码:</ion-label>
         <ion-input [(ngModel)]="invoice.barCode" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
 
       <ion-item class="inputItem" >
-        <ion-label class="requireLabel">资产名称:</ion-label>
+        <ion-label class=""><span class="star requireLabel">*</span>资产名称:</ion-label>
         <ion-input [(ngModel)]="invoice.assetsName"></ion-input>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label>规格型号:</ion-label>
+        <ion-label><span class="star">*</span>规格型号:</ion-label>
         <ion-input [(ngModel)]="invoice.assetsStandard" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="requireLabel">盘盈原因:</ion-label>
+        <ion-label class=""><span class="star requireLabel">*</span>盘盈原因:</ion-label>
         <ion-input (ionChange)="filterReasonString($event)" [(ngModel)]="lossReasonName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
         <ion-select class="noSelectText" interface="popover" [(ngModel)]="invoice.lossReason">
           <ion-option *ngFor="let lossReason of showLossReasonData" (ionSelect)="selectLossReasonData(lossReason.complexname)" [value]="lossReason.complexcode">{{lossReason.complexname}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="requireLabel">存放地点:</ion-label>
+        <ion-label class=""><span class="star requireLabel">*</span>存放地点:</ion-label>
         <ion-input (ionChange)="filterPlaceString($event)" [(ngModel)]="storePlaceName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
         <ion-select class="noSelectText" interface="popover" [(ngModel)]="invoice.storePlace">
           <ion-option *ngFor="let storePlace of showStorePlaceData" (ionSelect)="selectStorePlaceData(storePlace.complexname)" [value]="storePlace.complexcode">{{storePlace.complexname}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="requireLabel">保管人&emsp;:</ion-label>
+        <ion-label class=""><span class="star requireLabel">*</span>保管人&emsp;:</ion-label>
         <ion-input [(ngModel)]="invoice.userPerson" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="formSelectLabel requireLabel">使用状态:</ion-label>
+        <ion-label class="formSelectLabel "><span class="star requireLabel">*</span>使用状态:</ion-label>
         <ion-select class="formSelect" interface="popover"  [(ngModel)]="invoice.assetsStatus">
           <ion-option value="010101">生产经营用-科研</ion-option>
           <ion-option value="010102">生产经营用-其他</ion-option>
@@ -60,7 +60,7 @@
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="formSelectLabel requireLabel">技术状况:</ion-label>
+        <ion-label class="formSelectLabel "><span class="star requireLabel">*</span>技术状况:</ion-label>
         <ion-select class="formSelect" interface="popover" [(ngModel)]="invoice.technicalCondition">
           <ion-option value="01">完好</ion-option>
           <ion-option value="02">带病运行</ion-option>
@@ -73,11 +73,11 @@
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label>备&emsp;&emsp;注:</ion-label>
+        <ion-label><span class="star">*</span>备&emsp;&emsp;注:</ion-label>
         <ion-input [(ngModel)]="invoice.remark"></ion-input>
       </ion-item>
       <ion-item class="inputItem imgItem">
-        <ion-label>照片区&emsp;:</ion-label>
+        <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>
       </ion-item>
       <div class="imgBox">
         <div id="imgBox">

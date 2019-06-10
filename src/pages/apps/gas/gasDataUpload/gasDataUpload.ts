@@ -49,7 +49,7 @@ export class GasDataUploadPage {
   }
   checkedItem(index){
     if (this.checkedArray[index]==false){
-      document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #0091d2;");
+      document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #4389e8;");
       this.checkedArray[index]=true;
     }else {
       document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #dedede;");

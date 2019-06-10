@@ -80,6 +80,11 @@
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
+//非必填label
+.star{
+  color: white;
+  padding: 5px;
+}
 //必填label
 .requireLabel{
   color:red;
@@ -210,7 +215,7 @@
   font-size: 1.3em;
 }
 .toolbar-background-md{
-  background: #0091d2;
+  background: #4389e8;
 }
 .toolbar-title-md{
   color: white;
@@ -218,45 +223,45 @@
 }
 //选项卡
 .segment-ios .segment-button.segment-activated{
-  background: #0091d2;
+  background: #4389e8;
 }
 .segment-ios .segment-button{
-  color: #0091d2;
-  border-color: #0091d2;
+  color: #4389e8;
+  border-color: #4389e8;
 }
 .segment-md .segment-button.segment-activated{
-  background: #0091d2;
+  background: #4389e8;
 }
 .segment-md .segment-button{
-  color: #0091d2;
-  border-color: #0091d2;
+  color: #4389e8;
+  border-color: #4389e8;
 }
 //radiobutton
 .item-radio-checked.item-ios ion-label{
-  color: #0091d2;
+  color: #4389e8;
 }
 .radio-ios .radio-checked .radio-inner{
-  border-color: #0091d2;
+  border-color: #4389e8;
 }
 .item-radio-checked.item-md ion-label{
-  color: #0091d2;
+  color: #4389e8;
 }
 .radio-md .radio-checked .radio-inner{
-  border-color: #0091d2;
+  border-color: #4389e8;
 }
 //alertbutton
 .alert-ios .alert-button{
-  color: #0091d2;
+  color: #4389e8;
 }
 .alert-md .alert-button{
-  color: #0091d2;
+  color: #4389e8;
 }
 //datetimebutton
 .picker-ios .picker-button{
-  color: #0091d2;
+  color: #4389e8;
 }
 .picker-md .picker-button{
-  color: #0091d2;
+  color: #4389e8;
 }
 //图片区
 .imgBox{

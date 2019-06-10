@@ -50,13 +50,13 @@ export class AllocateApprovalPage {
   }
   checkedItem(index){
     if ((this.checkedIndex||this.checkedIndex==0)&&this.checkedIndex!=index){
-      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
+      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #4389e8;");
       this.censorshipList[index].checked = true;
       document.getElementsByClassName("censorshipIcon")[this.checkedIndex].setAttribute("style","color: #dedede;");
       this.censorshipList[this.checkedIndex].checked = false;
       this.checkedIndex = index;
     }else {
-      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #0091d2;");
+      document.getElementsByClassName("censorshipIcon")[index].setAttribute("style","color: #4389e8;");
       this.censorshipList[index].checked = true;
       this.checkedIndex = index;
     }
