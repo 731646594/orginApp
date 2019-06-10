@@ -36,31 +36,31 @@ export class InventoryEntryPage {
     // this.loadData();
   }
   loadData(){
-    // this.invoice=JSON.parse("{}");
-    // this.invoice["barCode"] = this.navParams.get("barCode");
-    // this.userCode = this.storageService.read("loginUserCode");
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
-    //   }
-    // }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.storePlaceData = JSON.parse(res.rows.item(0).stringData);
-    //     this.showStorePlaceData = JSON.parse(res.rows.item(0).stringData);
-    //   }
-    // }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    // if (this.departments){
-    //   this.invoice["managerDepart"]=this.departments[0].departCode
-    // }
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.lossReasonData = JSON.parse(res.rows.item(0).stringData);
-    //     this.showLossReasonData = JSON.parse(res.rows.item(0).stringData);
-    //   }
-    // }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    // this.invoice["assetsStatus"]="010101";
-    // this.invoice["technicalCondition"]="01";
+    this.invoice=JSON.parse("{}");
+    this.invoice["barCode"] = this.navParams.get("barCode");
+    this.userCode = this.storageService.read("loginUserCode");
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
+      }
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.storePlaceData = JSON.parse(res.rows.item(0).stringData);
+        this.showStorePlaceData = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    if (this.departments){
+      this.invoice["managerDepart"]=this.departments[0].departCode
+    }
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.lossReasonData = JSON.parse(res.rows.item(0).stringData);
+        this.showLossReasonData = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
+    this.invoice["assetsStatus"]="010101";
+    this.invoice["technicalCondition"]="01";
   }
   inputOnfocus(){
     this.isOnfocus=true;
