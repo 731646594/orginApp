@@ -977,7 +977,7 @@ export class AllocateApplicationPage {
     this.invoice["devalueValue"] = this.invoice["devalueValue"].toFixed(2)
   }
   displayContent(index){
-    let content = document.getElementsByClassName("detailContentBox");
+    let content = document.getElementsByClassName("disContent");
     if ((<HTMLElement>content[index]).style.display=="block"){
       (<HTMLElement>content[index]).style.display="none";
     }else {
