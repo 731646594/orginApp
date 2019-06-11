@@ -22,9 +22,11 @@
   //border: 1px solid #c8c7cc;
   margin-left: 16px;
   margin-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   width: calc(95% - 16px);
   background-color: white;
+  border-radius: 10px;
   box-shadow: 0 0 25px -15px;
   //.scroll-content{
   //  overflow: hidden;
@@ -47,6 +49,7 @@
 }
 .callContent{
   //border-top: 1px solid #c8c7cc;
+  border-radius: 10px;
   margin-bottom: 0;
   .inputItem{
     min-height: 45px;
@@ -57,7 +60,7 @@
   height: 392px;
   border: 1px solid #c8c7cc;
   margin-left: 16px;
-  margin-top: 16px;
+  //margin-top: 8px;
   width: calc(95% - 16px);
 
   .item-block{
@@ -70,7 +73,7 @@
   .text-input-ios{
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 90%;
+    width: 90% !important;
   }
 }
 //单选容器
