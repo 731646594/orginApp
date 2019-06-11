@@ -1,4 +1,7 @@
 page-allocateApplication{
+  .scroll-content{
+    background-color: rgb(246,246,246);
+  }
   .formSelectLabel{
     flex: none;
   }
@@ -68,6 +71,8 @@ page-allocateApplication{
   }
   .callList{
     margin: 0;
+    padding-left: 16px;
+    background: white;
   }
   .callList .inputItem{
     width: 100%;
@@ -88,7 +93,7 @@ page-allocateApplication{
   }
   .censorshipButton{
     text-align: center;
-    margin:7% 7%;
+    margin:8% 7%;
   }
   .censorshipDisCheckedIcon{
     color: #dedede;
@@ -104,5 +109,13 @@ page-allocateApplication{
   .searchSelect{
     width: 100%;
     max-width: 100%;
+  }
+  .inputItem{
+    width: 100%;
+    padding-right: 16px;
+    background-color: white;
+  }
+  .item-ios.item-block .item-inner{
+    border: 0 !important;
   }
 }
