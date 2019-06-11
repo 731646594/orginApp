@@ -46,7 +46,7 @@ page-allocateApplication{
   }
 
   .pageIndex .toolbar-background-ios{
-    background: #f8f8f8 !important;
+    background: white !important;
     border-bottom: 0 !important;
   }
   .pageIndex .toolbar-title-ios{
@@ -54,7 +54,7 @@ page-allocateApplication{
     font-size: 1.3em !important;
   }
   .pageIndex .toolbar-background-md{
-    background: #f8f8f8 !important;
+    background: white !important;
     border-bottom: 0 !important;
   }
   .pageIndex .toolbar-title-md{
@@ -75,9 +75,9 @@ page-allocateApplication{
     padding: 0;
     border: 0 !important;
   }
-  .callList .inputItem:nth-child(even){
-    background: #efefef;
-  }
+  //.callList .inputItem:nth-child(even){
+  //  background: #efefef;
+  //}
 
 
   .scrapDetailReason{
