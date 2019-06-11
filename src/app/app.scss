@@ -18,18 +18,19 @@
 //自定义css
 //详情容器
 .callContentBox{
-  height: 80px;
+  //height: 80px;
   border: 1px solid #c8c7cc;
   margin-left: 16px;
   margin-top: 16px;
   width: calc(95% - 16px);
   display: flex;
-  .scroll-content{
-    overflow: hidden;
-  }
-  .item-block{
-    min-height: 1rem;
-  }
+
+  //.scroll-content{
+  //  overflow: hidden;
+  //}
+  //.item-block{
+  //  min-height: 1rem;
+  //}
   .label-ios{
     margin-top: 5px;
     margin-bottom: 5px;
@@ -42,6 +43,10 @@
 }
 .callContent{
   border: 1px solid #c8c7cc;
+  margin-bottom: 0;
+  .inputItem{
+    min-height: 45px;
+  }
 }
 .disContent{
   display: none;

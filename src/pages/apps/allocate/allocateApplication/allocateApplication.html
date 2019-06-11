@@ -105,7 +105,7 @@
       </ion-item>
       <div *ngFor="let detail of detailList;let i = index">
         <div class="callContentBox">
-          <ion-content class="callContent">
+          <ion-list class="callContent">
             <ion-list class="callList" (click)="displayContent(i)">
               <ion-item class="inputItem">
                 <ion-label>资产编码:</ion-label>
@@ -116,7 +116,7 @@
                 <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
               </ion-item>
             </ion-list>
-          </ion-content>
+          </ion-list>
           <div class="censorshipButton" item-end (click)="checkedItem(i)">
             <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="censorshipCheckedIcon"></ion-icon>
             <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="censorshipDisCheckedIcon"></ion-icon>
