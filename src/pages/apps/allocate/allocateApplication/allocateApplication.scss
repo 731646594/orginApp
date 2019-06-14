@@ -1,8 +1,11 @@
 page-allocateApplication{
   .scroll-content{
-    background-color: rgb(246,246,246);
-
+    background-color: rgb(246,246,246) !important;
+    .scroll-content{
+      background-color: transparent !important;
+    }
   }
+
   .item-ios{
     font-size: 15px !important;
   }
@@ -75,8 +78,8 @@ page-allocateApplication{
   }
   .callList{
     margin: 0;
-    padding-left: 16px;
-    background: white;
+    padding: 8px 16px;
+    background: transparent;
     border-radius: 10px;
   }
   .callList .inputItem{
@@ -84,6 +87,12 @@ page-allocateApplication{
     margin: 0;
     padding: 0;
     border: 0 !important;
+  }
+  .disContent{
+    border-radius: 0;
+    .callList{
+      padding: 8px 0;
+    }
   }
   //.callList .inputItem:nth-child(even){
   //  background: #efefef;
@@ -98,7 +107,7 @@ page-allocateApplication{
   }
   .censorshipButton{
     text-align: center;
-    margin:8% 7%;
+    margin:8% 5%;
   }
   .censorshipDisCheckedIcon{
     color: #dedede;

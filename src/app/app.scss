@@ -20,14 +20,18 @@
 .callContentBox{
   //height: 80px;
   //border: 1px solid #c8c7cc;
-  margin-left: 16px;
+  //margin-left: 16px;
+  margin: 0 auto;
   margin-top: 16px;
   padding-top: 8px;
   padding-bottom: 8px;
-  width: calc(95% - 16px);
+  width: calc(95% - 8px);
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 25px -15px;
+  //-webkit-appearance: none;
+  //-moz-box-shadow: 0 0 25px -15px;
+  //-webkit-box-shadow: 0 0 25px -15px;
+  //box-shadow: 0 0 25px -15px;
   //.scroll-content{
   //  overflow: hidden;
   //}
@@ -38,27 +42,30 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  .text-input-ios{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 90%;
-  }
+  //.text-input-ios{
+  //  margin-top: 5px;
+  //  margin-bottom: 5px;
+  //  //margin-left: 8px !important;
+  //  margin-right: 0;
+  //  width: 100% !important;
+  //}
 }
 .callContentMiniBox{
   display: flex;
 }
 .callContent{
   //border-top: 1px solid #c8c7cc;
+  width: 80%;
   border-radius: 10px;
   margin-bottom: 0;
   .inputItem{
-    min-height: 45px;
+    min-height: 1em;
   }
 }
 .disContent{
   display: none;
   height: 392px;
-  border: 1px solid #c8c7cc;
+  border-top: 1px solid rgba(0,0,0,0.08);
   margin-left: 16px;
   //margin-top: 8px;
   width: calc(95% - 16px);
@@ -70,11 +77,11 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  .text-input-ios{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 90% !important;
-  }
+  //.text-input-ios{
+  //  margin-top: 5px;
+  //  margin-bottom: 5px;
+  //  width: 100% !important;
+  //}
 }
 //单选容器
 .radioBox{
@@ -343,4 +350,7 @@
     color: white;
     background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
   }
+}
+.itemContentLabel{
+  white-space:normal;
 }
