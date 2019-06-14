@@ -1,10 +1,13 @@
 page-allocateApproval{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
   .list-ios .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
+    border-bottom: 0 !important;
     padding-right: 0 !important;
   }
   .list-md .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
+    border-bottom: 0 !important;
     padding-right: 0 !important;
   }
   .item-ios{
@@ -24,7 +27,7 @@ page-allocateApproval{
   }
   .censorshipButton{
     text-align: center;
-    margin: 0 !important;
+    margin: 5% !important;
   }
   .censorshipIcon{
     color: #dedede;
@@ -78,5 +81,11 @@ page-allocateApproval{
     height: 150px;
     border-width: 2px;
     border-radius: 5px;
+  }
+  .inputItem{
+    border: 0 !important;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 3%;
   }
 }

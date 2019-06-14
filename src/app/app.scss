@@ -351,6 +351,13 @@
     background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
   }
 }
+.itemContentDiv{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .itemContentLabel{
   white-space:normal;
+}
+.noFlexLabel {
+  flex: none;
 }
