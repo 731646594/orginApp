@@ -354,10 +354,16 @@
 .itemContentDiv{
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
 }
 .itemContentLabel{
   white-space:normal;
 }
 .noFlexLabel {
   flex: none;
+}
+.departNameDiv{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
 }
