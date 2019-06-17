@@ -88,120 +88,122 @@
       </ion-item>
       <div *ngFor="let detail of detailList;let i = index">
         <div class="callContentBox">
-          <ion-content class="callContent">
-            <ion-list class="callList" (click)="displayContent(i)">
+          <div class="callContentMiniBox">
+            <ion-list class="callContent">
+              <ion-list class="callList" (click)="displayContent(i)">
+                <ion-item class="inputItem">
+                  <ion-label class="formSelectLabel">资产编码:</ion-label>
+                  <ion-label>{{detail.assetsCode}}</ion-label>
+                </ion-item>
+                <ion-item class="inputItem">
+                  <ion-label class="formSelectLabel">资产名称:</ion-label>
+                  <ion-label>{{detail.assetsName}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-list>
+            <div class="censorshipButton" item-end (click)="checkedItem(i)">
+              <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="censorshipCheckedIcon"></ion-icon>
+              <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="censorshipDisCheckedIcon"></ion-icon>
+            </div>
+          </div>
+          <ion-content class="callContent disContent">
+            <ion-list class="callList">
               <ion-item class="inputItem">
-                <ion-label>资产编码:</ion-label>
-                <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
+                <ion-label class="formSelectLabel">资产编码:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.assetsCode}}</ion-label>
               </ion-item>
               <ion-item class="inputItem">
-                <ion-label>资产名称:</ion-label>
-                <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
+                <ion-label class="formSelectLabel">资产名称:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.assetsName}}</ion-label>
               </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">所属单位:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">备&emsp;&emsp;注:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.remark}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">存放地点:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.storePlace}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">规格型号:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.assetsStandard}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">车牌井号:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.licenceNumber}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">制造厂家:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.makeFactory}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">所属单位编码:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.departCode}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">保管人&emsp;:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.userPerson}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">编&emsp;&emsp;码:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.barCode}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">出厂编号:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.productId}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">原&emsp;&emsp;值:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.originalValue}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">净&emsp;&emsp;值:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.nowValue}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">累计折旧:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.addDepreciate}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">减值准备:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.devalueValue}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">使用状态编码:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.usedState}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">使用状态:</ion-label>
+                <ion-label class="itemContentLabel">{{detail.usedStateName}}</ion-label>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="searchSelectLabel">停产日期:</ion-label>
+                <ion-datetime class="searchSelect" displayFormat="YYYY/MM/DD" cancelText="关闭" doneText="确定" [max]="detail.nowDate" [(ngModel)]="detail.stopDate"></ion-datetime>
+              </ion-item>
+              <ion-item class="inputItem">
+                <ion-label class="formSelectLabel">报废原因:</ion-label>
+                <ion-select class="formSelect" interface="popover"  [(ngModel)]="detail.discardReasonCode">
+                  <ion-option value="01">技术淘汰</ion-option>
+                  <ion-option value="02">毁损</ion-option>
+                  <ion-option value="03">管理不善</ion-option>
+                  <ion-option value="04">自然灾害</ion-option>
+                  <ion-option value="05">国家限制使用</ion-option>
+                  <ion-option value="06">事故</ion-option>
+                  <ion-option value="07">规划、改造拆除</ion-option>
+                  <ion-option value="08">工程</ion-option>
+                  <ion-option value="09">地质</ion-option>
+                  <ion-option value="11">安全、环保</ion-option>
+                  <ion-option value="10">其他</ion-option>
+                </ion-select>
+              </ion-item>
+              <textarea class="scrapDetailReason" placeholder="详细报废原因" [(ngModel)]="detail.discardMark" (focus)="inputOnfocus()" (blur)="inputOnblur()"></textarea>
             </ion-list>
           </ion-content>
-          <div class="censorshipButton" item-end (click)="checkedItem(i)">
-            <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="censorshipCheckedIcon"></ion-icon>
-            <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="censorshipDisCheckedIcon"></ion-icon>
-          </div>
         </div>
-        <ion-content class="callContent disContent">
-          <ion-list class="callList">
-            <ion-item class="inputItem">
-              <ion-label>资产编码:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>资产名称:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>所属单位:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.departName"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>备&emsp;&emsp;注:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.remark"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>存放地点:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.storePlace"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>规格型号:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.assetsStandard"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>车牌井号:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.licenceNumber"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>制造厂家:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.makeFactory"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>所属单位编码:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.departCode"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>保管人&emsp;:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.userPerson"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>编&emsp;&emsp;码:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.barCode"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>出厂编号:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.productId"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>原&emsp;&emsp;值:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.originalValue"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>净&emsp;&emsp;值:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.nowValue"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>累计折旧:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.addDepreciate"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>减值准备:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.devalueValue"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>使用状态编码:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.usedState"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label>使用状态:</ion-label>
-              <ion-input readonly [(ngModel)]="detail.usedStateName"></ion-input>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label class="searchSelectLabel">停产日期:</ion-label>
-              <ion-datetime class="searchSelect" displayFormat="YYYY/MM/DD" cancelText="关闭" doneText="确定" [max]="detail.nowDate" [(ngModel)]="detail.stopDate"></ion-datetime>
-            </ion-item>
-            <ion-item class="inputItem">
-              <ion-label class="formSelectLabel">报废原因:</ion-label>
-              <ion-select class="formSelect" interface="popover"  [(ngModel)]="detail.discardReasonCode">
-                <ion-option value="01">技术淘汰</ion-option>
-                <ion-option value="02">毁损</ion-option>
-                <ion-option value="03">管理不善</ion-option>
-                <ion-option value="04">自然灾害</ion-option>
-                <ion-option value="05">国家限制使用</ion-option>
-                <ion-option value="06">事故</ion-option>
-                <ion-option value="07">规划、改造拆除</ion-option>
-                <ion-option value="08">工程</ion-option>
-                <ion-option value="09">地质</ion-option>
-                <ion-option value="11">安全、环保</ion-option>
-                <ion-option value="10">其他</ion-option>
-              </ion-select>
-            </ion-item>
-            <textarea class="scrapDetailReason" placeholder="详细报废原因" [(ngModel)]="detail.discardMark" (focus)="inputOnfocus()" (blur)="inputOnblur()"></textarea>
-          </ion-list>
-        </ion-content>
       </div>
     </div>
   </div>

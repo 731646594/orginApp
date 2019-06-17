@@ -14,7 +14,7 @@ export class ScrapApplicationPage {
   shape = "brief";
   radioButton = "资产条码";
   invoice=JSON;
-  detailList=[{}];
+  detailList ;
   i=0;
   departments;
   barCode;
