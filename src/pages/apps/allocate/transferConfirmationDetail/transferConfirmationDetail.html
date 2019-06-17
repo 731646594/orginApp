@@ -7,26 +7,27 @@
 <ion-content>
   <div class="detailListBox">
     <ion-list class="detailList" *ngFor="let detail of detailList;let i = index">
-      <ion-item class="inputItem" (click)="displayContent(i)">
+      <ion-item class="inputItem miniContentBox" (click)="displayContent(i)">
         <div>
-          <div>
-            资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
+          <div class="itemContentDiv">
+            资产编码：{{detail.assetsCode}}
           </div>
-          <div *ngIf="pageName=='调入确认详情'">
-            保管人&emsp;:<input readonly class="readonlyInput" [(ngModel)]="detail.userPerson">
+          <div class="itemContentDiv" *ngIf="pageName=='调入确认详情'">
+            保管人&emsp;：{{detail.userPerson}}
           </div>
-          <div *ngIf="pageName=='调出确认详情'">
-            资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
+          <div class="itemContentDiv" *ngIf="pageName=='调出确认详情'">
+            资产名称：{{detail.assetsName}}
           </div>
-          <div *ngIf="pageName=='调出确认详情'">
-            所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
+          <div class="itemContentDiv" *ngIf="pageName=='调出确认详情'">
+            所属单位：<div class="departNameDiv">{{detail.departName}}</div>
           </div>
         </div>
       </ion-item>
-      <ion-content *ngIf="pageName=='调入确认详情'" class="disContent">
-        <ion-list class="callList">
+      <div *ngIf="pageName=='调入确认详情'" class="disContent">
+        <ion-content>
+          <ion-list class="callList">
           <ion-item class="inputItem">
-            <ion-label class="detailSelectLabel">存放地点:</ion-label>
+            <ion-label class="detailSelectLabel">存放地点：</ion-label>
             <ion-select  class="detailSelect" interface="popover"  [(ngModel)]="detail.storePlace">
               <ion-option value="02" selected>炼化装置</ion-option>
               <ion-option value="0201">   烷基化车间烷基化装置</ion-option>
@@ -79,7 +80,7 @@
             </ion-select>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label class="detailSelectLabel">技术状况:</ion-label>
+            <ion-label class="detailSelectLabel">技术状况：</ion-label>
             <ion-select  class="detailSelect" interface="popover"  [(ngModel)]="detail.technicalCondition">
               <ion-option value="01" selected>完好</ion-option>
               <ion-option value="02">带病运行</ion-option>
@@ -92,7 +93,7 @@
             </ion-select>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label class="detailSelectLabel">资产组&emsp;:</ion-label>
+            <ion-label class="detailSelectLabel">资产组&emsp;：</ion-label>
             <ion-select  class="detailSelect" interface="popover"  [(ngModel)]="detail.entityCode">
               <ion-option value="099000000050004" selected>重庆销售公司本部</ion-option>
               <ion-option value="099000000050005">重庆销售渝中公司</ion-option>
@@ -117,103 +118,106 @@
             </ion-select>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>保管人&emsp;:</ion-label>
-            <ion-input [(ngModel)]="detail.userPerson" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+            <ion-label class="detailSelectLabel">保管人&emsp;：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.userPerson}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>项目信息:</ion-label>
-            <ion-input [(ngModel)]="detail.wbsDepreciate" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+            <ion-label class="detailSelectLabel">项目信息：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.wbsDepreciate}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>内部订单:</ion-label>
-            <ion-input [(ngModel)]="detail.erpAufnr" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+            <ion-label class="detailSelectLabel">内部订单：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.erpAufnr}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>订单描述:</ion-label>
-            <ion-input [(ngModel)]="detail.erpKtext" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+            <ion-label class="detailSelectLabel">订单描述：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.erpKtext}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>WBS描述:</ion-label>
-            <ion-input [(ngModel)]="detail.wbsTxt"></ion-input>
+            <ion-label class="detailSelectLabel">WBS描述：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.wbsTxt}}</ion-label>
           </ion-item>
         </ion-list>
-      </ion-content>
-      <ion-content *ngIf="pageName=='调出确认详情'" class="disContent">
-        <ion-list class="callList">
+        </ion-content>
+      </div>
+      <div *ngIf="pageName=='调出确认详情'" class="disContent">
+        <ion-content>
+          <ion-list class="callList">
           <ion-item class="inputItem">
-            <ion-label>资产编码:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
+            <ion-label class="detailSelectLabel">资产编码：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.assetsCode}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>资产名称:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
+            <ion-label class="detailSelectLabel">资产名称：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.assetsName}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>所属单位:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.departName"></ion-input>
+            <ion-label class="detailSelectLabel">所属单位：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>备&emsp;&emsp;注:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.remark"></ion-input>
+            <ion-label class="detailSelectLabel">备&emsp;&emsp;注：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.remark}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>存放地点:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.storePlace"></ion-input>
+            <ion-label class="detailSelectLabel">存放地点：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.storePlace}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>规格型号:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.assetsStandard"></ion-input>
+            <ion-label class="detailSelectLabel">规格型号：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.assetsStandard}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>车牌井号:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.licenceNumber"></ion-input>
+            <ion-label class="detailSelectLabel">车牌井号：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.licenceNumber}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>制造厂家:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.makeFactory"></ion-input>
+            <ion-label class="detailSelectLabel">制造厂家：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.makeFactory}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>所属单位编码:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.departCode"></ion-input>
+            <ion-label class="detailSelectLabel">所属单位编码：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.departCode}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>保管人&emsp;:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.userPerson"></ion-input>
+            <ion-label class="detailSelectLabel">保管人&emsp;：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.userPerson}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>编&emsp;&emsp;码:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.barCode"></ion-input>
+            <ion-label class="detailSelectLabel">编&emsp;&emsp;码：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.barCode}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>出厂编号:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.productId"></ion-input>
+            <ion-label class="detailSelectLabel">出厂编号：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.productId}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>原&emsp;&emsp;值:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.originalValue"></ion-input>
+            <ion-label class="detailSelectLabel">原&emsp;&emsp;值：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.originalValue}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>净&emsp;&emsp;值:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.nowValue"></ion-input>
+            <ion-label class="detailSelectLabel">净&emsp;&emsp;值：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.nowValue}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>累计折旧:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.addDepreciate"></ion-input>
+            <ion-label class="detailSelectLabel">累计折旧：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.addDepreciate}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>减值准备:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.devalueValue"></ion-input>
+            <ion-label class="detailSelectLabel">减值准备：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.devalueValue}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>使用状态编码:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.usedState"></ion-input>
+            <ion-label class="detailSelectLabel">使用状态编码：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.usedState}}</ion-label>
           </ion-item>
           <ion-item class="inputItem">
-            <ion-label>使用状态:</ion-label>
-            <ion-input readonly [(ngModel)]="detail.usedStateName"></ion-input>
+            <ion-label class="detailSelectLabel">使用状态：</ion-label>
+            <ion-label class="itemContentLabel">{{detail.usedStateName}}</ion-label>
           </ion-item>
         </ion-list>
-      </ion-content>
+        </ion-content>
+      </div>
     </ion-list>
   </div>
 </ion-content>

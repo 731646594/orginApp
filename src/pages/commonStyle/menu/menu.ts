@@ -122,9 +122,11 @@ export class MenuPage {
     }
     else if(page == 34){
       willGoPage = TransferConfirmationPage;
+      params = {pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"}
     }
     else if(page == 35){
       willGoPage = TransferConfirmationPage;
+      params = {pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"}
     }
     else if(page == 41){
       willGoPage = AssetQuiryPage;

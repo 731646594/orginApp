@@ -1,21 +1,35 @@
 page-transferConfirmationDetail{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+    .scroll-content{
+      background-color: white ;
+    }
+  }
+  .list-ios .item-block .item-inner{
+    border-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .list-md .item-block .item-inner{
+    border-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
   .detailList{
     margin: 0 ;
   }
   .disContent{
     height: 330px;
+    background-color: white;
+    width: 95%;
+    margin: 0 auto;
+    padding: 8px 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   .callList{
-    border: none !important;
     margin: 0;
-  }
-  .list-ios .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
-    padding-right: 0 !important;
-  }
-  .list-md .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
-    padding-right: 0 !important;
+    .inputItem{
+      width: 100%;
+    }
   }
   .item-ios{
     border: none !important;
@@ -25,8 +39,8 @@ page-transferConfirmationDetail{
   }
   .label-ios{
     margin-right: 0 !important;;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    //margin-top: 5px;
+    //margin-bottom: 5px;
   }
   .label-md{
     margin-right: 0 !important;;
@@ -98,14 +112,25 @@ page-transferConfirmationDetail{
   .detailSelect{
     width: 100%;
     max-width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    //padding-top: 5px;
+    //padding-bottom: 5px;
   }
   .detailSelectLabel{
     flex: none;
   }
-  .inputItem:first-child{
-    width: 100% !important;
-    padding-right: 5%;
+  .miniContentBox{
+    width: 95% !important;
+    margin: 0 auto;
+    margin-top: 3%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-right: 16px;
+  }
+  //.inputItem:first-child{
+  //  width: 100% !important;
+  //  padding-right: 5%;
+  //}
+  .select-ios{
+    padding-left: 0;
   }
 }

@@ -12,19 +12,19 @@
       </ion-item>
       <ion-item class="inputItem" *ngFor="let censorship of censorshipList;let i = index">
         <div (click)="censorshipDetailPage(censorship)">
-          <div>
+          <div class="itemContentDiv">
             单据号&emsp;：{{censorship.invoiceNumber}}
           </div>
-          <div>
+          <div class="itemContentDiv">
             申请人&emsp;：{{censorship.operateUser}}
           </div>
-          <div>
-            调出单位：<input readonly class="readonlyInput" [(ngModel)]="censorship.outDepartname">
+          <div class="itemContentDiv">
+            调出单位：<div class="departNameDiv">{{censorship.outDepartname}}</div>
           </div>
-          <div>
-            调入单位：<input readonly class="readonlyInput" [(ngModel)]="censorship.inDepartname">
+          <div class="itemContentDiv">
+            调入单位：<div class="departNameDiv">{{censorship.inDepartname}}</div>
           </div>
-          <div>
+          <div class="itemContentDiv">
             明细数量：{{censorship.detailAmountSum?censorship.detailAmountSum:censorship.allotAmount}}
           </div>
         </div>
