@@ -12,20 +12,20 @@
       </ion-item>
       <ion-item class="inputItem" *ngFor="let censorship of censorshipList;let i = index">
         <div (click)="censorshipDetailPage(censorship)">
-          <div>
+          <div class="itemContentDiv">
             单据号&emsp;：{{censorship.invoiceNumber}}
           </div>
-          <div>
+          <div class="itemContentDiv">
             申请人&emsp;：{{censorship.operateUser}}
           </div>
-          <div>
-            单据类型：<input readonly class="readonlyInput" [(ngModel)]="censorship.invoiceName">
+          <div class="itemContentDiv">
+            单据类型：{{censorship.invoiceName}}
           </div>
-          <div>
+          <div class="itemContentDiv">
             明细数量：{{censorship.detailAmountSum?censorship.detailAmountSum:censorship.allotAmount}}
           </div>
-          <div>
-            申请单位：<input readonly class="readonlyInput" [(ngModel)]="censorship.departName">
+          <div class="itemContentDiv">
+            申请单位：<div class="departNameDiv">{{censorship.departName}}</div>
           </div>
         </div>
         <div class="censorshipButton" item-end (click)="checkedItem(i)">

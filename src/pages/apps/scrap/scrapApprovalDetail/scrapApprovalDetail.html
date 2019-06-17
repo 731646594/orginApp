@@ -6,54 +6,54 @@
 
 <ion-content>
   <div class="detailListBox">
-    <ion-list class="detailList">
-      <ion-list class="inputItem" *ngFor="let detail of detailList;let i = index">
-        <ion-item class="inputItem" (click)="displayContent(i)">
-          <div>
-            <div>
-              资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
-            </div>
-            <div>
-              资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
-            </div>
-            <div>
-              所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
-            </div>
+    <ion-list class="detailList" *ngFor="let detail of detailList;let i = index">
+      <ion-item class="inputItem miniContentBox" (click)="displayContent(i)">
+        <div>
+          <div class="itemContentDiv">
+            资产编码:{{detail.assetsCode}}
           </div>
-        </ion-item>
-        <ion-content class="disContent">
+          <div class="itemContentDiv">
+            资产名称:{{detail.assetsName}}
+          </div>
+          <div class="itemContentDiv">
+            所属单位:<div class="departNameDiv">{{detail.departName}}</div>
+          </div>
+        </div>
+      </ion-item>
+      <div class="disContent">
+        <ion-content>
           <ion-list class="callList">
             <ion-item class="inputItem">
-              <ion-label>资产编码:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.assetsCode"></ion-input>
+              <ion-label class="noFlexLabel">资产编码:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.assetsCode}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>资产名称:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.assetsName"></ion-input>
+              <ion-label class="noFlexLabel">资产名称:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.assetsName}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>所属单位:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.departName"></ion-input>
+              <ion-label class="noFlexLabel">所属单位:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>报废类型:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.discardTypeName"></ion-input>
+              <ion-label class="noFlexLabel">报废类型:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.discardTypeName}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>报废原因:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.discardReasonName"></ion-input>
+              <ion-label class="noFlexLabel">报废原因:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.discardReasonName}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>停产日期:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.stopDate"></ion-input>
+              <ion-label class="noFlexLabel">停产日期:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.stopDate}}</ion-label>
             </ion-item>
             <ion-item class="inputItem">
-              <ion-label>申请单位:</ion-label>
-              <ion-input readonly  [(ngModel)]="detail.departName"></ion-input>
+              <ion-label class="noFlexLabel">申请单位:</ion-label>
+              <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
             </ion-item>
           </ion-list>
         </ion-content>
-      </ion-list>
+      </div>
     </ion-list>
   </div>
 </ion-content>
