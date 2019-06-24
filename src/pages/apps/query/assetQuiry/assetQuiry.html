@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>资产查询</ion-title>
   </ion-navbar>
-  <ion-toolbar class="queryToolbar" no-border-top style="border-top: 1px solid #c8c7cc;">
+  <ion-toolbar class="queryToolbar" no-border-top>
     <ion-segment [(ngModel)]="shape">
       <ion-segment-button value="detail" >
         基本信息
@@ -16,7 +16,7 @@
 <ion-content>
   <div class="switchBox"  [ngSwitch]="shape">
     <div *ngSwitchCase="'detail'">
-      <div class="inputItem radioBox" radio-group [(ngModel)]="radioButton">
+      <div class="radioBox" radio-group [(ngModel)]="radioButton">
         <ion-item class="radioItem">
           <ion-label>资产条码:</ion-label>
           <ion-radio value="资产条码"></ion-radio>
@@ -37,83 +37,83 @@
       </ion-item>
       <ion-list class="callList">
         <ion-item class="inputItem">
-          <ion-label>资产编码:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.assetsCode"></ion-input>
+          <ion-label class="noFlexLabel">资产编码:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.assetsCode}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>资产名称:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.assetsName"></ion-input>
+          <ion-label class="noFlexLabel">资产名称:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.assetsName}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>资产条码:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.barCode"></ion-input>
+          <ion-label class="noFlexLabel">资产条码:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.barCode}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>规格型号:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.assetsStandard"></ion-input>
+          <ion-label class="noFlexLabel">规格型号:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.assetsStandard}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>车牌井号:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.licenceNumber"></ion-input>
+          <ion-label class="noFlexLabel">车牌井号:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.licenceNumber}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>保管人&emsp;:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.userPerson"></ion-input>
+          <ion-label class="noFlexLabel">保管人&emsp;:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.userPerson}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>存放地点:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.storePlace"></ion-input>
+          <ion-label class="noFlexLabel">存放地点:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.storePlace}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>出厂编号:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.productId"></ion-input>
+          <ion-label class="noFlexLabel">出厂编号:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.productId}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>使用状态编码:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.usedState"></ion-input>
+          <ion-label class="noFlexLabel">使用状态编码:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.usedState}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>使用状态名称:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.usedStateName"></ion-input>
+          <ion-label class="noFlexLabel">使用状态名称:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.usedStateName}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>技术状况:</ion-label>
-          <ion-input readonly class="readonlyInput" [(ngModel)]="detail.technicalCondition"></ion-input>
+          <ion-label class="noFlexLabel">技术状况:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.technicalCondition}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>制造厂家:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.makeFactory"></ion-input>
+          <ion-label class="noFlexLabel">制造厂家:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.makeFactory}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>备&emsp;&emsp;注:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.remark"></ion-input>
+          <ion-label class="noFlexLabel">备&emsp;&emsp;注:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.remark}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>净&emsp;&emsp;值:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.nowValue"></ion-input>
+          <ion-label class="noFlexLabel">净&emsp;&emsp;值:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.nowValue}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>原&emsp;&emsp;值:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.originalValue"></ion-input>
+          <ion-label class="noFlexLabel">原&emsp;&emsp;值:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.originalValue}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>累计折旧:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.addDepreciate"></ion-input>
+          <ion-label class="noFlexLabel">累计折旧:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.addDepreciate}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>减值准备:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.devalueValue"></ion-input>
+          <ion-label class="noFlexLabel">减值准备:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.devalueValue}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>所属单位编码:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.departCode"></ion-input>
+          <ion-label class="noFlexLabel">所属单位编码:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.departCode}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>所属单位名称:</ion-label>
-          <ion-input readonly [(ngModel)]="detail.departName"></ion-input>
+          <ion-label class="noFlexLabel">所属单位名称:</ion-label>
+          <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
         </ion-item>
         <ion-item class="inputItem imgItem">
-          <ion-label>照片区&emsp;:</ion-label>
+          <ion-label class="noFlexLabel">照片区&emsp;:</ion-label>
         </ion-item>
         <div class="imgBox">
           <div [id]="'imgBox'+pageIndex">
@@ -122,25 +122,25 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'plan'">
-      <ion-list class="callList">
+      <ion-list class="callList miniContentBox" *ngFor="let planData of plan">
         <ion-item class="inputItem">
-          <ion-label>盘点名称:</ion-label>
-          <ion-input readonly [(ngModel)]="plan.planName"></ion-input>
+          <ion-label class="noFlexLabel">盘点名称:</ion-label>
+          <ion-label class="itemContentLabel">{{planData.planName}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>盘点编码:</ion-label>
-          <ion-input readonly [(ngModel)]="plan.planNumber"></ion-input>
+          <ion-label class="noFlexLabel">盘点编码:</ion-label>
+          <ion-label class="itemContentLabel">{{planData.planNumber}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>所属单位:</ion-label>
-          <ion-input readonly [(ngModel)]="plan.managerDepartName"></ion-input>
+          <ion-label class="noFlexLabel">所属单位:</ion-label>
+          <ion-label class="itemContentLabel">{{planData.managerDepartName}}</ion-label>
         </ion-item>
         <ion-item class="inputItem">
-          <ion-label>盘点结果:</ion-label>
-          <ion-input readonly *ngIf="!plan.checkResult" value="无结果"></ion-input>
-          <ion-input readonly *ngIf="plan.checkResult==1" value="存在"></ion-input>
-          <ion-input readonly *ngIf="plan.checkResult==2" value="盘亏"></ion-input>
-          <ion-input readonly *ngIf="plan.checkResult==3" value="盘盈"></ion-input>
+          <ion-label class="noFlexLabel">盘点结果:</ion-label>
+          <ion-input readonly *ngIf="!planData.checkResult" value="无结果"></ion-input>
+          <ion-input readonly *ngIf="planData.checkResult==1" value="存在"></ion-input>
+          <ion-input readonly *ngIf="planData.checkResult==2" value="盘亏"></ion-input>
+          <ion-input readonly *ngIf="planData.checkResult==3" value="盘盈"></ion-input>
         </ion-item>
       </ion-list>
     </div>

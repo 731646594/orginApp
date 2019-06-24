@@ -1,6 +1,10 @@
 page-assetQuiry{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
   .queryToolbar .toolbar-background-ios{
     background: white;
+    border: 0;
   }
   .switchBox{
     margin-bottom: 60px;
@@ -90,5 +94,26 @@ page-assetQuiry{
   }
   #chart4{
     top: 160%;
+  }
+  .item-ios.item-block .item-inner{
+    border: 0 !important;
+  }
+  .list-ios .item-block .item-inner{
+    border: 0 !important;
+  }
+  .list-ios > .item-block{
+    border: 0 !important;
+  }
+  .inputItem{
+    width: 100%;
+    padding-right: 16px;
+  }
+  .miniContentBox{
+    width: 95% !important;
+    margin: 0 auto;
+    margin-top: 3%;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: white;
   }
 }
