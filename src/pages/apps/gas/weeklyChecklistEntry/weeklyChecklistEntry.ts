@@ -33,6 +33,7 @@ export class WeeklyChecklistEntryPage {
   temporaryStorageData=[];
   storageData={};
   signIndex;
+  detailData;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,
               public actionSheetCtrl:ActionSheetController,public camera:Camera,public file:File,
@@ -51,6 +52,7 @@ export class WeeklyChecklistEntryPage {
     this.nowDataTime = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+(new Date().getDate());
     this.localData = this.navParams.get("Data");
     this.departListData = this.localData.fgsData;
+    this.detailData = this.localData.detailData;
     this.departList = this.departListData;
     let isEqual = true;
     for (let i in this.departList){
@@ -68,7 +70,7 @@ export class WeeklyChecklistEntryPage {
     this.gasStation = this.gasStationData;
     isEqual = true;
     for (let i in this.departList){
-      if (this.departCode != this.gasStation[i].departcode){
+      if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
         isEqual = false;
       }else {
         isEqual = true;
@@ -128,12 +130,16 @@ export class WeeklyChecklistEntryPage {
   }
   controlField(i){
     let item = document.getElementById("field"+i).style.display;
+    let transform;
     if (item == ""||item == "block"){
       item = "none";
+      transform = "transform: rotate(-90deg);"
     }else if (item == "none"){
-      item = "block"
+      item = "block";
+      transform = "transform: rotate(0deg);"
     }
     document.getElementById("field"+i).style.display = item;
+    document.getElementById("icon"+i).setAttribute("style",transform)
   }
   pickPhoto(){
     let actionSheet = this.actionSheetCtrl.create({
@@ -187,6 +193,7 @@ export class WeeklyChecklistEntryPage {
               "<img id=\"i"+this.i+"\" name=\"i"+this.i+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
               "<img id=\"b"+this.i+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
             node.appendChild(div);
+            that.storageData["uploadFile"].push(base64Image);
             document.getElementById("i"+that.i).onclick=function() {
               try {
                 that.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
@@ -197,6 +204,7 @@ export class WeeklyChecklistEntryPage {
             document.getElementById("b"+that.i).onclick=function(){
               try {
                 node.removeChild(div);
+                that.storageData["uploadFile"].splice(parseInt(this.id.slice(1)),1);
               }catch(e) {
                 alert(e)
               }

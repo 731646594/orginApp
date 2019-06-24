@@ -16,7 +16,7 @@ export class ChangeShiftsEntrySignaturePage {
   public signaturePadOptions: object={
     "minWidth":2,
     "canvasWidth":document.body.clientWidth,
-    "canvasHeight": (document.body.clientHeight-130)
+    "canvasHeight": (document.body.clientHeight-100)
   };
   public signatureImage: string;
   // AssetInventoryDatabase:SQLiteObject;

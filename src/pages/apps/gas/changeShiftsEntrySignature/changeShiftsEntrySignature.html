@@ -5,20 +5,18 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div style="border: 1px solid black">
-  <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
+  <div>
+    <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
   </div>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-6>
-        <button ion-button full (click)="drawClear()" style="border-radius: 5px">清除</button>
-      </ion-col>
-      <ion-col col-6>
-        <button ion-button full (click)="drawComplete()" style="border-radius: 5px">确认</button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
   <div>
     <img [src]="signatureImage" *ngIf="signatureImage">
   </div>
 </ion-content>
+<footer class="gasFooter" padding *ngIf="!isOnfocus">
+  <button class="gasFooterButton" (click)="drawClear()">
+    <ion-icon class="gasFooterIcon" name="trash"></ion-icon><br>清除
+  </button>
+  <button class="gasFooterButton" (click)="drawComplete()">
+    <ion-icon class="gasFooterIcon" name="checkmark-circle"></ion-icon><br>确认
+  </button>
+</footer>

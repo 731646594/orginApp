@@ -24,6 +24,7 @@ export class ChangeShiftsEntryPage {
   nowDataTime;
   detail=[];
   localData;
+  detailData;
   departListData = null;
   departList = null;
   gasStationData = null;
@@ -65,6 +66,7 @@ export class ChangeShiftsEntryPage {
     this.nowDataTime = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+(new Date().getDate());
     this.localData = this.navParams.get("Data");
     this.departListData = this.localData.fgsData;
+    this.detailData = this.localData.detailData;
     this.departList = this.departListData;
     let isEqual = true;
     for (let i in this.departList){
@@ -82,7 +84,7 @@ export class ChangeShiftsEntryPage {
     this.gasStation = this.gasStationData;
     isEqual = true;
     for (let i in this.departList){
-      if (this.departCode != this.gasStation[i].departcode){
+      if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
         isEqual = false;
       }else {
         isEqual = true;
@@ -222,6 +224,7 @@ export class ChangeShiftsEntryPage {
               "<img id=\"i"+this.i+"\" name=\"i"+this.i+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
               "<img id=\"b"+this.i+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
             node.appendChild(div);
+            that.storageData["uploadFile"].push(base64Image);
             document.getElementById("i"+that.i).onclick=function() {
               try {
                 that.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
@@ -232,6 +235,7 @@ export class ChangeShiftsEntryPage {
             document.getElementById("b"+that.i).onclick=function(){
               try {
                 node.removeChild(div);
+                that.storageData["uploadFile"].splice(parseInt(this.id.slice(1)),1);
               }catch(e) {
                 alert(e)
               }
@@ -293,6 +297,7 @@ export class ChangeShiftsEntryPage {
       if (document.getElementById("field"+this.oldIndex).style.display=="block"&&document.getElementById("checked"+this.oldIndex).style.display=="none"){
         document.getElementById("field"+this.oldIndex).style.display = "none";
         document.getElementById("checked"+this.oldIndex).style.display = "inline";
+        document.getElementById("icon"+this.oldIndex).setAttribute("style","transform: rotate(0);")
       }
     }else {
       let alertCtrl = this.alertCtrl.create({
@@ -379,6 +384,7 @@ export class ChangeShiftsEntryPage {
       if (document.getElementById("field"+this.oldIndex).style.display=="block"&&document.getElementById("checked"+this.oldIndex).style.display=="none"){
         document.getElementById("field"+this.oldIndex).style.display = "none";
         document.getElementById("checked"+this.oldIndex).style.display = "inline";
+        document.getElementById("icon"+this.oldIndex).setAttribute("style","transform: rotate(0);")
       }
     }
 
@@ -387,7 +393,14 @@ export class ChangeShiftsEntryPage {
   }
   showBlock(){
     for (let i=0;i<this.colsData.length;i++){
-      if(this.scanQybm == this.colsData[i].qybm&&this.scanDepartCode == this.loginDepartCode){
+      if(this.scanDepartCode&&(this.scanDepartCode != this.loginDepartCode)){
+        let alertCtrl = this.alertCtrl.create({
+          title:"扫码单位与登录单位不匹配！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+      if(this.scanQybm == this.colsData[i].qybm){
         if (document.getElementById("field"+i).style.display=="none"&&document.getElementById("checked"+i).style.display=="inline"){
           let alertCtrl = this.alertCtrl.create({
             title:"该区域已检查！"
@@ -397,10 +410,14 @@ export class ChangeShiftsEntryPage {
         }
         if (document.getElementById("field"+i).style.display=="none"&&document.getElementById("checked"+i).style.display=="none"){
           document.getElementById("field"+i).style.display = "block";
+          document.getElementById("icon"+i).setAttribute("style","transform: rotate(90deg);")
+
         }
         this.oldIndex = i;
       }else {
         document.getElementById("field"+i).style.display = "none";
+        document.getElementById("icon"+i).setAttribute("style","transform: rotate(0);")
+
       }
     }
   }

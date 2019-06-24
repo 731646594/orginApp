@@ -1,6 +1,6 @@
 page-changeShiftsEntry{
   .list-ios{
-    margin-bottom: 10px !important;
+    margin-bottom: 0 !important;
   }
   .gasSelectLabel{
     flex: none;
@@ -10,30 +10,39 @@ page-changeShiftsEntry{
     max-width: 100%;
   }
   .areaTittle{
-    background: #4389e8;
-    color: white;
+    background:  white;
+    color:#4389e8;
     font-size: 2rem;
-    text-align: center;
+    //text-align: center;
+    padding: 16px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .fieldBigBox{
+    background-color: rgb(246,246,246) ;
+    padding: 8px 0;
   }
   .fieldBox{
     padding: 0 10px;
+    margin: 8px 0;
   }
   .fieldTittle{
     font-size: 1.8rem;
   }
   .fieldInput{
-    border: 1px solid black;
+    border: 1px solid  #dedede;
     border-radius: 5px;
   }
   .fieldItem{
-    margin-bottom: 5px;
+    //margin-bottom: 5px;
   }
   .fieldSelect{
-    border: 1px solid black;
+    border: 1px solid #dedede;
     border-radius: 5px;
     font-size: 1.7rem;
     width: 100%;
     max-width: 100%;
+    margin: 6px 0;
   }
   .gasFooter{
     width: 100%;
@@ -67,14 +76,34 @@ page-changeShiftsEntry{
   .addIcon{
     font-size: 100px;
     padding: 0 0.2em;
+    color: #dedede;
   }
   .labelItem{
     padding-left: 0;
   }
   .itemInput{
     padding-left: 16px;
-    border: 1px solid black;
-    border-radius: 5px
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    margin-bottom: 6px;
   }
-
+  .inputItem{
+    width: 100%;
+    border: none !important;
+  }
+  .item-block .item-inner{
+    border: none !important;
+  }
+  .list-ios{
+    .list-ios{
+      border-top: 1px solid #dedede;
+      background-color: white;
+      padding: 16px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+  .areaIcon{
+    float: right;
+  }
 }

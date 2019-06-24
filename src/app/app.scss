@@ -14,7 +14,9 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
+.item-ios{
+  font-size: 15px !important;
+}
 //自定义css
 //详情容器
 .callContentBox{
@@ -366,4 +368,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   direction: rtl;
+}
+.detailDataLabel{
+  margin-top: 6px;
+  margin-bottom: 0;
+  white-space:normal;
 }

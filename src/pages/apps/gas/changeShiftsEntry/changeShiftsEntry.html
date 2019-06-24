@@ -33,16 +33,18 @@
         <ion-input [(ngModel)]="userName2" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-list  class="fieldBox" *ngFor="let cols of colsData;let i = index">
-      <div class="areaTittle">{{cols.qymc}}<div id="{{'checked'+i}}" style="display: none">（已检查）</div></div>
+    <div class="fieldBigBox">
+      <ion-list  class="fieldBox" *ngFor="let cols of colsData;let i = index">
+      <div class="areaTittle">{{cols.qymc}}<div id="{{'checked'+i}}" style="display: none">（已检查）</div><ion-icon id="{{'icon'+i}}" class="areaIcon" name="arrow-forward"></ion-icon></div>
       <ion-list id="{{'field'+i}}">
         <div class="fieldItem">{{cols.qyremark}}</div>
         <div class="fieldItem" *ngFor="let field of cols.fields;let i2 = index" >
           <span class="fieldTittle">{{field.columnTitle}}</span><span  class="fieldTittle" *ngIf="field.columnRequire==1" style="color: red">*</span><br>
           <div>{{field.remark}}</div>
+          <ion-label class="detailDataLabel" *ngIf="detailData[field.columnName]">{{"未整改内容："+detailData[field.columnName]}}</ion-label>
           <ion-item class="labelItem">
             <ion-select *ngIf="field.columnRequire==1" class="fieldSelect" interface="popover" (ionChange)="selectedChange($event,i,i2)">
-              <ion-option>合格</ion-option>
+              <ion-option *ngIf="!detailData[field.columnName]">合格</ion-option>
               <ion-option>其他情况</ion-option>
             </ion-select>
             <ion-input class="fieldInput" *ngIf="!field.columnRequire" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
@@ -53,6 +55,7 @@
         </div>
       </ion-list>
     </ion-list>
+    </div>
     <ion-list>
       <ion-item class="inputItem imgItem">
         <ion-label>照片区&emsp;:</ion-label>

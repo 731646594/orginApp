@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
-import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
+// import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
+import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 
 @Component({
   selector: 'page-gasDataUpload',
@@ -58,7 +59,62 @@ export class GasDataUploadPage {
   }
   detailPage(data,name){
     if(data.length!=0){
-      this.app.getRootNav().push(GasDataUploadDetailPage,{data:data,name:name})
+      // this.app.getRootNav().push(GasDataUploadDetailPage,{data:data,name:name})
+      this.colItem = [];
+      this.itemName = null;
+      this.photoArrary = [];
+      this.colsItemName = [];
+      let url;
+      let content;
+      if (name=="zjb"){
+        content = document.getElementsByClassName("disContent")[0];
+        this.itemName = "zjb";
+        url = "devWeeklyCheckController.do?getCheckListCols";
+      }else if (name=="jjb"){
+        content = document.getElementsByClassName("disContent")[1];
+        this.itemName = "jjb";
+        url = "devHandOverController.do?getCheckListCols";
+      }
+      if ((<HTMLElement>content).style.display=="block"){
+        (<HTMLElement>content).style.display="none";
+      }else {
+        (<HTMLElement>content).style.display="block";
+        this.item = data;
+        for(let i in this.item){
+          if (i.indexOf("col")!=-1){
+            this.colItem.push(this.item[i])
+          }
+        }
+        this.photoArrary = this.item["uploadFile"];
+        let photoLen = this.photoArrary.length;
+        if (this.itemName=="jjb") {
+          this.signatureImage1 = this.photoArrary[photoLen - 2];
+          this.signatureImage2 = this.photoArrary[photoLen - 1];
+          photoLen = photoLen-2;
+        }
+        for(let i = 0;i<photoLen;i++){
+          this.photoShowArrary[i] = this.photoArrary[i]
+        }
+        let loading = this.loadingCtrl.create({
+          content:"请等待...",
+          duration: 10000
+        });
+        loading.present();
+        this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode}).subscribe(data=>{
+          if (data.success=="true"){
+            let colsData = data.data.colsData;
+            for (let i in colsData){
+              for (let j in colsData[i]["fields"]){
+                this.colsItemName.push(colsData[i]["fields"][j].columnTitle)
+              }
+            }
+            loading.dismiss();
+          }else {
+            alert(data.msg);
+            loading.dismiss();
+          }
+        });
+      }
     }
   }
   uploadGasInfo(){
@@ -93,5 +149,8 @@ export class GasDataUploadPage {
       }
       loading.dismiss()
     })
+  }
+  showSign(imgData){
+    this.app.getRootNav().push(ShowPicturePage,{picture:imgData});
   }
 }
