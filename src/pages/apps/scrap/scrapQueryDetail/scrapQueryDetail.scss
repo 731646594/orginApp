@@ -1,10 +1,16 @@
 page-scrapQueryDetail{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+    .scroll-content{
+      background-color: white ;
+    }
+  }
   .list-ios .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
+    border-bottom: 0 !important;
     padding-right: 0 !important;
   }
   .list-md .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
+    border-bottom: 0 !important;
     padding-right: 0 !important;
   }
   .item-ios{
@@ -90,17 +96,34 @@ page-scrapQueryDetail{
   .detailSelectLabel{
     flex: none;
   }
-  .inputItem:first-child{
-    width: 100% !important;
-    padding-right: 5%;
+  .miniContentBox{
+    width: 95% !important;
+    margin: 0 auto;
+    margin-top: 3%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-right: 16px;
+  }
+  //.inputItem:first-child{
+  //  width: 100% !important;
+  //  padding-right: 5%;
+  //}
+  .disContent{
+    height: 280px;
+    background-color: white;
+    width: 95%;
+    margin: 0 auto;
+    padding: 8px 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   .detailList{
     margin: 0;
+    .list-ios{
+      margin: 0;
+    }
   }
   .list-ios > .item-block:first-child{
     border-top: 0;
-  }
-  .disContent{
-    height: 280px;
   }
 }

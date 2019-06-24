@@ -1,9 +1,30 @@
 page-allocateQuery{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .list-ios .item-block .item-inner{
+    border: 0 !important;
+  }
   .searchList{
     margin-bottom: 12px;
+    .label-ios{
+      margin-right: 0;
+    }
+    .inputItem{
+      width: 100%;
+      padding-left: 16px;
+      border-radius:0;
+      margin: 0;
+    }
   }
   .searchFormList{
     margin-bottom: 60px;
+    .inputItem{
+      border: 0 !important;
+      border-radius: 10px;
+      margin: 0 auto;
+      margin-top: 3%;
+    }
   }
   .searchSelectLabel{
     flex: none;
@@ -32,12 +53,12 @@ page-allocateQuery{
     z-index: 10;
     background: white;
   }
-  .searchFooterButton{
+  .searchFooterButton {
     background: transparent;
     margin: 0 !important;
     padding: 0 !important;
-    color: #4389e8;
     width: 100%;
+    color: #4389e8;
     font-size: 1em;
   }
   .searchFooterIcon{
@@ -53,5 +74,11 @@ page-allocateQuery{
   }
   .readonlyInput{
     width: 71%;
+  }
+  .inputItem{
+    border: 0 !important;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 3%;
   }
 }

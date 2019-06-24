@@ -7,46 +7,53 @@
 <ion-content>
   <div class="detailListBox">
     <ion-list class="detailList" *ngFor="let detail of detailList;let i = index">
-      <ion-item class="inputItem" (click)="displayContent(i)">
+      <ion-item class="inputItem miniContentBox" (click)="displayContent(i)">
         <div>
-          <div>
-            资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
+          <div class="itemContentDiv">
+            资产编码：{{detail.assetsCode}}
           </div>
-          <div>
-            资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
+          <div class="itemContentDiv">
+            资产名称：{{detail.assetsName}}
           </div>
-          <div>
-            所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
+          <div class="itemContentDiv">
+            所属单位：<div class="departNameDiv">{{detail.departName}}</div>
           </div>
         </div>
       </ion-item>
-      <ion-content class="disContent">
-        <ion-item class="inputItem">
-          <div>
-            <div>
-              资产编码:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsCode">
-            </div>
-            <div>
-              资产名称:<input readonly class="readonlyInput" [(ngModel)]="detail.assetsName">
-            </div>
-            <div>
-              所属单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
-            </div>
-            <div>
-              报废类型:<input readonly class="readonlyInput" [(ngModel)]="detail.discardTypeName">
-            </div>
-            <div>
-              报废原因:<input readonly class="readonlyInput" [(ngModel)]="detail.discardReasonName">
-            </div>
-            <div>
-              停产日期:<input readonly class="readonlyInput" [(ngModel)]="detail.stopDate">
-            </div>
-            <div>
-              申请单位:<input readonly class="readonlyInput" [(ngModel)]="detail.departName">
-            </div>
-          </div>
-        </ion-item>
-      </ion-content>
+      <div class="disContent">
+        <ion-content>
+          <ion-list class="callList">
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">资产编码：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.assetsCode}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">资产名称：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.assetsName}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">所属单位：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">报废类型：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.discardTypeName}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">报废原因：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.discardReasonName}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">停产日期：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.stopDate}}</ion-label>
+            </ion-item>
+            <ion-item class="inputItem">
+              <ion-label class="noFlexLabel">申请单位：</ion-label>
+              <ion-label class="itemContentLabel">{{detail.departName}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </div>
     </ion-list>
   </div>
 </ion-content>
