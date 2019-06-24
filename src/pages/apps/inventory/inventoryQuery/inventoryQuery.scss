@@ -1,4 +1,14 @@
 page-inventoryQuery{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .inputItem{
+    width: 100%;
+    border: 0 !important;
+  }
+  .list-ios .item-block .item-inner{
+    border: 0px;
+  }
   .searchList{
     margin-bottom: 12px;
   }
@@ -13,7 +23,7 @@ page-inventoryQuery{
     max-width: 100%;
   }
   .searchToolbar .toolbar-background-ios{
-    background: white;
+    background: transparent;
   }
   .searchList .inputItem:last-child{
     width: 100%;
@@ -60,5 +70,20 @@ page-inventoryQuery{
   .readonlyInput{
     padding-left: 0;
     width: 56%;
+  }
+  .miniContentBox{
+    width: 95% !important;
+    margin: 0 auto;
+    margin-top: 3%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-right: 16px;
+  }
+  .disContent{
+    width: 95%;
+    margin: 0 auto;
+    .label-ios{
+      margin-right: 0;
+    }
   }
 }
