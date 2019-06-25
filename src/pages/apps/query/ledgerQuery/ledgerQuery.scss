@@ -1,4 +1,12 @@
 page-ledgerQuery{
+  .scroll-content{
+    background: #f6f6f6;
+    margin-bottom: 65px;
+    .scroll-content{
+      background: white;
+      margin: 0;
+    }
+  }
   .queryToolbar .toolbar-background-ios{
     background: white;
   }
@@ -93,5 +101,24 @@ page-ledgerQuery{
   }
   #chart4{
     top: 160%;
+  }
+  .inputItem{
+    width: 100%;
+    padding-right: 16px;
+    border: 0 !important;
+  }
+  .list-ios .item-block .item-inner{
+    border: 0 !important;
+  }
+  .item-ios.item-block .item-inner{
+    border: 0 !important;
+  }
+  .miniContentBox{
+    width: 95% !important;
+    margin: 0 auto;
+    margin-top: 3%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-right: 16px;
   }
 }
