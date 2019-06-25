@@ -1,6 +1,10 @@
 page-aggregateQuery{
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
   .queryToolbar .toolbar-background-ios{
     background: white;
+    border: 0;
   }
   .switchBox{
     margin-bottom: 60px;
@@ -76,19 +80,43 @@ page-aggregateQuery{
 
   .chart {
     position: absolute;
-    width: 100%;
+    width: 90%;
     height: 40%;
+    margin: 0 5%;
+    border-radius: 10px;
+    background: white;
   }
   #chart1{
-    top: 10%;
+    top: 3%;
   }
   #chart2{
-    top: 60%;
+    top: 46%;
   }
   #chart3{
-    top: 110%;
+    top: 89%;
   }
   #chart4{
-    top: 160%;
+    top: 132%;
+  }
+  .list-ios{
+    margin: 0;
+  }
+  .list-ios .item-block .item-inner{
+    border: 0 !important;
+  }
+  .item-ios.item-block .item-inner{
+    border: 0 !important;
+  }
+  .list-ios > .item-block{
+    border: 0 !important;
+  }
+  .inputItem{
+    width: 100%;
+    padding-right: 16px;
+    border-radius: 10px;
+    margin-top: 16px;
+  }
+  .resultContent{
+    padding: 0 16px;
   }
 }

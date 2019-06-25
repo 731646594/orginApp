@@ -86,7 +86,7 @@
         </ion-list>
       </div>
       <div *ngSwitchCase="'result'">
-        <ion-list>
+        <ion-list class="resultContent">
           <ion-item class="inputItem" *ngFor="let result of queryResult;let i = index">
             <div style="margin-bottom: 10px">
               <input readonly class="readonlyInput" [(ngModel)]="result.zclbmc">
