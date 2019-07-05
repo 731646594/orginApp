@@ -1,0 +1,11 @@
+<!-- Generated template for the SelectFilterComponent component -->
+<ion-item class="inputItem">
+  <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
+  <ion-label class="labelNormal" (click)="createSelectPage()">
+    <div class="select-text" *ngIf="selectedData">{{selectedData.selectedName}}</div>
+    <div class="select-text" *ngIf="!selectedData">{{selectName}}</div>
+    <div class="selectIconBox">
+      <div class="selectIcon"></div>
+    </div>
+  </ion-label>
+</ion-item>

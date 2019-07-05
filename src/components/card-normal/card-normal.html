@@ -1,0 +1,21 @@
+<!-- Generated template for the CardNormalComponent component -->
+<div *ngFor="let detail of data;let i = index">
+  <div class="callContentBox">
+    <div class="callContentMiniBox">
+      <ion-list class="callContent">
+        <ion-list class="callList" (click)="displayContent(i)">
+          <div *ngFor="let parent of cardData.cardParent">
+            <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+          </div>
+        </ion-list>
+      </ion-list>
+    </div>
+    <ion-content class="callContent disContent">
+      <ion-list class="callList">
+        <div *ngFor="let child of cardData.cardChild">
+          <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+        </div>
+      </ion-list>
+    </ion-content>
+  </div>
+</div>
