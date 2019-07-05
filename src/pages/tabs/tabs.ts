@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MenuPage } from '../commonStyle/menu/menu';
 import { HomePage } from '../home/home';
-import {PageUtil} from "../../services/storageService";
+// import {PageUtil} from "../../services/storageService";
 import {MinePage} from "../mine/mine/mine";
 
 @Component({
@@ -23,7 +23,9 @@ export class TabsPage {
   tongji;
   jiayouzhan;
   constructor() {
-    PageUtil.pages["tabs"]=this;
+
+    // PageUtil.pages["tabs"]=this;
+
     //1:commonStyle/apps通用菜单样式
     //2:mine/serverSetting服务器设置
     //3:mine/modifyPassword修改密码
@@ -55,10 +57,10 @@ export class TabsPage {
       pageName:"资产盘点",
       pageData:[
         [
-          [11,"","saoyisao.png","快速扫码"],[12,"","pandianchaxun.png","盘点查询"],[13,"","xiazai.png","数据下载"]
+          [11,"","saoyisao.png","快速扫码","1"],[12,"","pandianchaxun.png","盘点查询","1"],[13,"","xiazai.png","数据下载","1"]
         ],
         [
-          [14,"","chaxun.png","本地下载查询"],[15,"","shangchuan.png","数据上传"],[16,"","luruzhong.png","盘盈录入"]
+          [14,"","chaxun.png","本地下载查询","1"],[15,"","shangchuan.png","数据上传","1"],[16,"","luruzhong.png","盘盈录入","1"]
         ],
       ]
     };
@@ -66,7 +68,7 @@ export class TabsPage {
       pageName:"报废管理",
       pageData:[
         [
-          [21,"","baofeishengqing.png","报废申请"],[22,"","baofeishenpi.png","报废审批"],[23,"","baofeichaxun.png","报废查询"]
+          [21,"","baofeishengqing.png","报废申请","1"],[22,"","baofeishenpi.png","报废审批","1"],[23,"","baofeichaxun.png","报废查询","1"]
         ]
       ]
     };
@@ -74,11 +76,11 @@ export class TabsPage {
       pageName:"调拨管理",
       pageData:[
         [
-          [31,"","diaoboshengqing.png","调拨申请"],[32,"","diaoboshenpi.png","调拨审批"],[33,"","diaobochaxun.png","调拨查询"]
+          [31,"","diaoboshengqing.png","调拨申请","1"],[32,"","diaoboshenpi.png","调拨审批","1"],[33,"","diaobochaxun.png","调拨查询","1"]
         ],
         [
-          [34,"","diaochu.png","调出确认"],
-          [35,"","diaoru.png","调入确认"],
+          [34,"","diaochu.png","调出确认","1"],
+          [35,"","diaoru.png","调入确认","1"],
           []
         ]
       ]
@@ -87,7 +89,7 @@ export class TabsPage {
       pageName:"统计查询",
       pageData:[
         [
-          [41,"","zichanchaxun.png","资产查询"],[42,"","taizhangchaxun.png","台账查询"],[43,"","huizongchaxun.png","汇总查询"]
+          [41,"","zichanchaxun.png","资产查询","1"],[42,"","taizhangchaxun.png","台账查询","1"],[43,"","huizongchaxun.png","汇总查询","1"]
         ]
       ]
     };
@@ -95,7 +97,7 @@ export class TabsPage {
       pageName:"加油站管理",
       pageData:[
         [
-          [51,"","zhoujian.png","周检表录入"],[52,"","jiaojie.png","交接班录入"],[53,"","shujushangchuan.png","数据上传"]
+          [51,"","zhoujian.png","周检表录入","1"],[52,"","jiaojie.png","交接班录入","1"],[53,"","shujushangchuan.png","数据上传","1"]
         ]
       ]
     };
@@ -107,7 +109,6 @@ export class TabsPage {
         [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"]
       ]
     };
-
     this.pageData2 = {
       pageName:"我的",
       pageData:[

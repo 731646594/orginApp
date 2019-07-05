@@ -90,6 +90,9 @@
   display: flex;
   width: 100%;
 }
+.radioItem{
+  padding-right: 16px;
+}
 .radioItem .item-inner{
   padding: 0 !important;
 }
@@ -112,7 +115,10 @@
 }
 //输入框
 .inputItem{
-  width: 95%;
+  width: 100%;
+  .item-inner{
+    border:none!important;
+  }
 }
 .readonlyInput{
   border:0;
@@ -375,4 +381,63 @@
   margin-top: 6px;
   margin-bottom: 0;
   white-space:normal;
+}
+.formSelect{
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0;
+}
+.labelNormal{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 0;
+  margin-right: 0;
+  padding-right: 4px;
+}
+.callList{
+  margin: 0;
+  padding: 8px 16px;
+  background: transparent;
+  border-radius: 10px;
+}
+.disContent{
+  .callList{
+    padding: 8px 0;
+  }
+}
+.cardButton{
+  text-align: center;
+  margin:auto;
+}
+.cardDisCheckedIcon{
+  color: #dedede;
+  font-size: 30px;
+}
+.cardCheckedIcon{
+  color: #4389e8;
+  font-size: 30px;
+}
+.formFooter{
+  width: 100%;
+  display: flex;
+  padding: 5px !important;
+  border-top: 1px solid #d9d9d9;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 10;
+  background: white;
+}
+.formFooterButton {
+  background: transparent;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #4389e8;
+  width: 100%;
+  font-size: 1em;
+}
+.formFooterIcon{
+  font-size: 2em;
+  color: #4389e8;
+  margin-bottom: 2px;
 }

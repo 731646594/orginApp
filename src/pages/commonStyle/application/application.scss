@@ -1,0 +1,23 @@
+page-application{
+  .scroll-content {
+    background-color: rgb(246, 246, 246) !important;
+    .scroll-content{
+      background-color: transparent !important;
+    }
+  }
+  .applicationToolbar{
+    .toolbar-background{
+      background: white !important;
+      border-bottom: 0 !important;
+    }
+  }
+  .applicationContentBox{
+    margin-bottom: 60px;
+  }
+  .formInputButton{
+    background: transparent;
+    margin: 0 !important;
+    padding: 0;
+    font-size: 1.1em;
+  }
+}

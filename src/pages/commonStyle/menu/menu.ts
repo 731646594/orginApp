@@ -61,8 +61,14 @@ export class MenuPage {
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
-  appChoose(page,params){
-
+  appChoose(page,params,canIn){
+    if(canIn=="0"){
+      let alertCtrl = this.alertCtrl.create({
+        title:"您无权访问该功能！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     //11:快速扫码
     //12:盘点查询
     //13:数据下载

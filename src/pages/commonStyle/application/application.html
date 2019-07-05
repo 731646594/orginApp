@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar class="applicationToolbar">
+    <ion-segment [(ngModel)]="shape" (ionChange)="showFooter()">
+      <ion-segment-button value="brief" >
+        {{pageData.segmentName[0]}}
+      </ion-segment-button>
+      <ion-segment-button value="detailed" >
+        {{pageData.segmentName[1]}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="applicationContentBox" [ngSwitch]="shape">
+    <div *ngSwitchCase="'brief'">
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
+        </div>
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]"></label-normal>
+        </div>
+        <div  *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="'optionValue'" [optionName]="'optionName'" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='selectFilter'">
+          <select-filter [itemName]="item.itemName" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="'departcode'" [optionName]="'departname'" (backValue)="getSelectValue($event,item.itemValue)"></select-filter>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'detailed'">
+      <div *ngFor="let item of pageData.pageItem[1];">
+        <div *ngIf="item.itemType=='radioInput'">
+          <radio-input [radioData]="item.radio" [radioInput]="radioInput" [postUrl]="radioInputPostUrl" (hideFooter)="hideFooter()" (showFooter)="showFooter()" (backSelect)="getRadioValue($event)" (backValue)="getRadioInputValue($event)"></radio-input>
+        </div>
+        <div *ngIf="item.itemType=='card'">
+          <card-select [cardData]="item.card" [data]="searchDatas" (backValue)="getCardSelectValue($event)"></card-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="censorship()" *ngIf="shape=='brief'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>送审
+  </button>
+
+  <div style="width: 100%;" *ngIf="shape=='detailed'&&radioValue == 'barCode'">
+    <scanner (backValue)="getScannerValue($event)"></scanner>
+  </div>
+  <button class="formFooterButton" (click)="saveInfo()" *ngIf="shape=='detailed'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+  <button class="formFooterButton" (click)="uploadData()" *ngIf="shape=='detailed'">
+    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传
+  </button>
+  <button class="formFooterButton" (click)="uploadDataToEAM()" *ngIf="shape=='detailed'">
+    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传到EAM
+  </button>
+</footer>

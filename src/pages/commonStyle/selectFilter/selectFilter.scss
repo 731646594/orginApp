@@ -1,0 +1,27 @@
+page-selectFilter{
+  .scroll-content{
+    overflow: hidden;
+    .scroll-content{
+      overflow-y: auto;
+    }
+  }
+  //::-webkit-scrollbar { display: none !important; }
+  .backgroundBox{
+    width: 100%;
+    height: 100%;
+    padding: 30% 10%;
+
+  }
+  .contentBox{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+  .selectBox{
+    margin: 0;
+    height: 100%;
+  }
+  .searchbar-ios{
+    background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213)) ;
+  }
+}

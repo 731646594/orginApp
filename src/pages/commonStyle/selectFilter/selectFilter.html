@@ -1,0 +1,21 @@
+<ion-header>
+
+</ion-header>
+<ion-content style="background: rgba(0,0,0,0.25);">
+  <div class="backgroundBox" (click)="back()">
+    <div class="contentBox" (click)="$event.cancelBubble=true;">
+      <ion-searchbar (ionInput)="getItems($event)" (ionFocus)="hideFooter()" (ionBlur)="showFooter()" placeholder="请输入要筛选的字符"></ion-searchbar>
+      <ion-content>
+        <ion-list class="selectBox">
+          <ion-item *ngFor="let item of showData;let i = index">
+            <ion-label class="itemContentLabel" (click)="returnSelect(item[optionValue],item[optionName])">{{item[optionName]}}</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-infinite-scroll *ngIf="isScrollWork" (ionInfinite)="getMore($event)" threshold="100px">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-content>
+    </div>
+  </div>
+
+</ion-content>

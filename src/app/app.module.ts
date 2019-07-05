@@ -52,6 +52,10 @@ import { Camera } from '@ionic-native/camera';
 import { File } from "@ionic-native/file";
 import { FileTransfer,FileTransferObject } from "@ionic-native/file-transfer";
 import { SignaturePadModule } from "angular2-signaturepad";
+import {ApplicationPage} from "../pages/commonStyle/application/application";
+import {ComponentsModule} from "../components/components.module";
+import {SelectFilterPage} from "../pages/commonStyle/selectFilter/selectFilter";
+import {ScreenOrientation} from "@ionic-native/screen-orientation";
 
 @NgModule({
   declarations: [
@@ -91,13 +95,16 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ChangeShiftsEntrySignaturePage,
     WeeklyChecklistEntryPage,
     GasDataUploadPage,
-    GasDataUploadDetailPage
+    GasDataUploadDetailPage,
+    ApplicationPage,
+    SelectFilterPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
     SignaturePadModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp,{
       tabsHideOnSubPages: 'true' ,       //隐藏全部子页面tabs
       iconMode: 'ios',
@@ -148,7 +155,9 @@ import { SignaturePadModule } from "angular2-signaturepad";
     ChangeShiftsEntrySignaturePage,
     WeeklyChecklistEntryPage,
     GasDataUploadPage,
-    GasDataUploadDetailPage
+    GasDataUploadDetailPage,
+    ApplicationPage,
+    SelectFilterPage
   ],
   providers: [
     StatusBar,
@@ -162,6 +171,7 @@ import { SignaturePadModule } from "angular2-signaturepad";
     FileTransferObject,
     HttpService,
     StorageService,
+    ScreenOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
