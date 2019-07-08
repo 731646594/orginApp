@@ -1,37 +1,32 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {StorageService} from "../../../services/storageService";
+import {HttpService} from "../../../services/httpService";
 
 @Component({
   selector: 'page-query',
   templateUrl: 'query.html'
 })
 export class QueryPage {
-  data={
-    pageName:"报废查询",
-    pageData:{
-      pageItem:[
-        {itemName:"单据编号", itemType:"input",inputType:"text",itemValue:"invoiceNumber"},
-        {itemName:"审批进度", itemType:"select", itemValue:"invoiceStatus",optionValueString:"optionValue",optionNameString:"optionName",
-          option:[
-            {optionName:"全部",optionValue:"0"},
-            {optionName:"新建",optionValue:"1"},
-            {optionName:"驳回",optionValue:"2"},
-            {optionName:"待审批",optionValue:"3"},
-            {optionName:"审批中",optionValue:"4"},
-            {optionName:"审批完成",optionValue:"5"},
-          ],
-        },
-        {itemName:"查询月份", itemType:"date",itemValue:"invoiceYM"},
-      ]
-    }
-  };
-  pageName = "11111111";
-  pageData = {};
+  data = {};
+  pageName;
+  pageData;
   isFocus;
   invoice=[];
-  constructor(public navCtrl: NavController,public navParams:NavParams) {
-    this.pageName = this.data.pageName;
-    this.pageData = this.data.pageData;
+  maxDate;
+  userCode;
+  departCode;
+  searchDatas;
+  searchFormUrl;
+  nextPage;
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService,public alertCtrl?:AlertController) {
+    this.userCode = this.storageService.read("loginUserCode");
+    this.departCode = this.storageService.read("loginDepartCode");
+    this.invoice["invoiceStatus"]="0";
+    let date = new Date();
+    this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)).toISOString();
+    this.maxDate = this.invoice["invoiceYM"];
   }
   ionViewDidEnter(){
 
@@ -52,5 +47,30 @@ export class QueryPage {
   }
   getDateValue(value,key){
     this.invoice[key] = value;
+  }
+  searchForm(){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration: 5000
+    });
+    loading.present();
+    if (!this.invoice["invoiceNumber"]){
+      this.invoice["invoiceNumber"]="";
+    }
+    this.httpService.post(this.httpService.getUrl()+this.searchFormUrl,{departCode:this.departCode,userCode:this.userCode,invoiceNumber:this.invoice["invoiceNumber"],invoiceStatus:this.invoice["invoiceStatus"],invoiceYM:this.invoice["invoiceYM"]}).subscribe(data=>{
+      if (data.success=="true"){
+        let alert = this.alertCtrl.create({
+          title:"查询成功！"
+        });
+        alert.present();
+        this.searchDatas=data.data;
+      }else {
+        alert(data.msg)
+      }
+      loading.dismiss();
+    })
+  }
+  invoiceDetail(index){
+    this.app.getRootNav().push(this.nextPage,{invoice:this.searchDatas[index]})
   }
 }

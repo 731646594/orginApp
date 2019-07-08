@@ -20,14 +20,19 @@ export class CardNormalComponent {
   }
   displayContent(index){
     let content = document.getElementsByClassName("disContent");
-    if ((<HTMLElement>content[index]).style.display=="block"){
-      (<HTMLElement>content[index]).style.display="none";
-    }else {
-      if(this.displayIndex>=0){
-        (<HTMLElement>content[this.displayIndex]).style.display="none";
+    if (content.length>0){
+      if ((<HTMLElement>content[index]).style.display=="block"){
+        (<HTMLElement>content[index]).style.display="none";
+      }else {
+        if(this.displayIndex>=0){
+          (<HTMLElement>content[this.displayIndex]).style.display="none";
+        }
+        (<HTMLElement>content[index]).style.display="block";
+        this.displayIndex = index;
       }
-      (<HTMLElement>content[index]).style.display="block";
-      this.displayIndex = index;
+    }
+    else {
+      this.backValue.emit(index);
     }
   }
 

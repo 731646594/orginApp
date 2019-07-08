@@ -22,7 +22,6 @@ export class CardSelectInputComponent {
 
   }
   displayContent(index){
-    console.log(this.cardData)
     let content = document.getElementsByClassName("disContent");
     if ((<HTMLElement>content[index]).style.display=="block"){
       (<HTMLElement>content[index]).style.display="none";

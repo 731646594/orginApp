@@ -1,53 +1,43 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import { LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import {QueryDetailPage} from "../../../commonStyle/queryDetail/queryDetail";
 
 @Component({
-  selector: 'page-scrapQueryDetail',
-  templateUrl: 'scrapQueryDetail.html'
+  selector: 'page-queryDetail',
+  templateUrl: '../../../commonStyle/queryDetail/queryDetail.html'
 })
-export class ScrapQueryDetailPage {
-  invoice;
-  postUrl;
-  detailList;
-  departCode;
-  displayIndex;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
-    this.loadData();
-  }
-  ionViewDidEnter(){
-    // this.loadData();
-  }
-  loadData(){
-    this.departCode = this.storageService.read("loginDepartCode");
-    this.invoice = this.navParams.get("invoice");
+export class ScrapQueryDetailPage extends QueryDetailPage{
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService){
+    super(navCtrl,navParams,storageService);
     this.postUrl = "discardController.do?getDetail";
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:10000
-    });
-    loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
-      if (data.success == "true"){
-        this.detailList = data.data;
-      }else {
-        alert(data.msg);
+    this.data = {
+      pageName:"报废查询详情",
+      pageData: {
+        pageItem:[
+          { card:{
+              cardParent:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+              ],
+              cardChild:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+                {itemName:"报废类型", itemType:"label",itemValue:"discardTypeName"},
+                {itemName:"报废原因", itemType:"label",itemValue:"discardReasonName"},
+                {itemName:"停产日期", itemType:"label",itemValue:"stopDate"},
+                {itemName:"申请单位", itemType:"label",itemValue:"departName"},
+              ]
+            }
+          }
+        ]
       }
-      loading.dismiss();
-    })
-  }
-  displayContent(index){
-    let content = document.getElementsByClassName("disContent");
-    if ((<HTMLElement>content[index]).style.display=="block"){
-      (<HTMLElement>content[index]).style.display="none";
-    }else {
-      if(this.displayIndex>=0){
-        (<HTMLElement>content[this.displayIndex]).style.display="none";
-      }
-      (<HTMLElement>content[index]).style.display="block";
-      this.displayIndex = index;
-    }
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
   }
 }

@@ -1,5 +1,5 @@
 <!-- Generated template for the DateNormalComponent component -->
 <ion-item class="inputItem">
   <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
-  <ion-datetime class="dataNormal" [placeholder]="'请选择'+itemName" displayFormat="YYYY/MM/DD" cancelText="关闭" doneText="确定" [max]="maxDate" [(ngModel)]="dateValue" (ionChange)="returnDate()"></ion-datetime>
+  <ion-datetime class="dataNormal" [placeholder]="'请选择'+itemName" [displayFormat]="displayFormat" cancelText="关闭" doneText="确定" [max]="maxDate" [(ngModel)]="dateValue" (ionChange)="returnDate()"></ion-datetime>
 </ion-item>

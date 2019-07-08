@@ -14,6 +14,7 @@ export class DateNormalComponent {
   @Input() itemName="";
   @Input() maxDate="";
   @Input() dateValue="";
+  @Input() displayFormat="";
   @Output() backValue = new EventEmitter();
   constructor() {
 

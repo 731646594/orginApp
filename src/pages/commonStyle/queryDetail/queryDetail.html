@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngFor="let item of pageData.pageItem">
+    <div>
+      <card-normal [cardData]="item.card" [data]="searchDatas" (backValue)="invoiceDetail($event)"></card-normal>
+    </div>
+  </div>
+</ion-content>

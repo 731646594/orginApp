@@ -1,62 +1,59 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
-import {HttpService} from "../../../../services/httpService";
+import {QueryPage} from "../../../commonStyle/query/query";
+import {AlertController, App, LoadingController, NavController, NavParams} from "ionic-angular";
 import {StorageService} from "../../../../services/storageService";
+import {HttpService} from "../../../../services/httpService";
 import {AllocateQueryDetailPage} from "../allocateQueryDetail/allocateQueryDetail";
 
 @Component({
-  selector: 'page-allocateQuery',
-  templateUrl: 'allocateQuery.html'
+  selector: 'page-query',
+  templateUrl: '../../../commonStyle/query/query.html'
 })
-export class AllocateQueryPage {
-  loginUserCode;
-  loginDepartCode;
-  planStatus="";
-  planDetailList;
-  invoice=[];
-  nowDate;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController) {
-    this.loadData();
-  }
-  ionViewDidEnter(){
+export class AllocateQueryPage extends QueryPage{
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService,public alertCtrl?:AlertController) {
+    super(navCtrl,navParams,storageService);
+    this.data = {
+      pageName:"调拨查询",
+      pageData:{
+        pageItem:[
+          {itemName:"单据编号", itemType:"input",inputType:"text",itemValue:"invoiceNumber"},
+          {itemName:"审批进度", itemType:"select", itemValue:"invoiceStatus",optionValueString:"optionValue",optionNameString:"optionName",
+            option:[
+              {optionName:"全部",optionValue:"0"},
+              {optionName:"新建",optionValue:"1"},
+              {optionName:"被退回",optionValue:"2"},
+              {optionName:"第一审批人未审",optionValue:"3"},
+              {optionName:"审批中",optionValue:"4"},
+              {optionName:"审批完成",optionValue:"5"},
+              {optionName:"业务处理中",optionValue:"6"},
+              {optionName:"业务处理完",optionValue:"7"},
+              {optionName:"调出确认中",optionValue:"8"},
+              {optionName:"调出确认完成",optionValue:"9"},
+              {optionName:"调入确认中",optionValue:"10"},
+              {optionName:"调入确认完成",optionValue:"11"},
+            ],
+          },
+          {itemName:"查询月份", itemType:"date",itemValue:"invoiceYM"},
+          {itemType:"card",
+            card:{
+              cardParent:[
+                {itemName:"单位", itemType:"label",itemValue:"departName"},
+                {itemName:"调入单位", itemType:"label",itemValue:"inDepartname"},
+                {itemName:"调出单位", itemType:"label",itemValue:"outDepartname"},
+                {itemName:"调拨原因", itemType:"label",itemValue:"allotReason"},
+                {itemName:"申请人", itemType:"label",itemValue:"operateUser"},
+                {itemName:"明细数量", itemType:"label",itemValue:"allotAmount"},
+              ],
 
-  }
-  loadData(){
-    this.loginUserCode = this.storageService.read("loginUserCode");
-    this.loginDepartCode = this.storageService.read("loginDepartCode");
-    this.planStatus="invoice";
-    this.invoice["invoiceStatus"]="0";
-    let date = new Date();
-    this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1)).toISOString();
-    this.nowDate = this.invoice["invoiceYM"]
-  }
-  searchForm(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration: 10000
-    });
-    loading.present();
-    let url;
-    url = "allotController.do?getAllotInvoices";
-    if (!this.invoice["invoiceNumber"]){
-      this.invoice["invoiceNumber"]="";
-    }
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.loginDepartCode,userCode:this.loginUserCode,invoiceNumber:this.invoice["invoiceNumber"],invoiceStatus:this.invoice["invoiceStatus"],invoiceYM:this.invoice["invoiceYM"]}).subscribe(data=>{
-      if (data.success=="true"){
-        let alert = this.alertCtrl.create({
-          title:"查询成功！"
-        });
-        alert.present();
-        this.planDetailList=data.data;
-      }else {
-        alert(data.msg)
+            }
+          }
+        ]
       }
-      loading.dismiss();
-    })
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
+    this.searchFormUrl = "allotController.do?getAllotInvoices";
+    this.nextPage = AllocateQueryDetailPage;
   }
-  invoiceDetail(invoice){
-    this.app.getRootNav().push(AllocateQueryDetailPage,{invoice:invoice})
-  }
-
 }

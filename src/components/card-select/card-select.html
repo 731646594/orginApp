@@ -14,7 +14,7 @@
         <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
       </div>
     </div>
-    <ion-content class="callContent disContent">
+    <ion-content *ngIf="cardData.cardChild" class="callContent disContent">
       <ion-list class="callList">
         <div *ngFor="let child of cardData.cardChild">
           <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>

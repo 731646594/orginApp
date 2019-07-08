@@ -1,62 +1,56 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
-import {HttpService} from "../../../../services/httpService";
+import {QueryPage} from "../../../commonStyle/query/query";
 import {StorageService} from "../../../../services/storageService";
+import {AlertController, App, LoadingController, NavController, NavParams} from "ionic-angular";
+import {HttpService} from "../../../../services/httpService";
 import {ScrapQueryDetailPage} from "../scrapQueryDetail/scrapQueryDetail";
 
 @Component({
-  selector: 'page-scrapQuery',
-  templateUrl: 'scrapQuery.html'
+  selector: 'page-query',
+  templateUrl: '../../../commonStyle/query/query.html'
 })
-export class ScrapQueryPage {
-  planStatus="";
-  planDetailList;
-  invoice=[];
-  loginUserCode;
-  loginDepartCode;
-  newDate;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public app:App,
-              public loadingCtrl:LoadingController,public alertCtrl:AlertController) {
-    this.loadData();
-  }
-  ionViewDidEnter(){
-
-  }
-  loadData(){
-    this.loginUserCode = this.storageService.read("loginUserCode");
-    this.loginDepartCode = this.storageService.read("loginDepartCode");
-    this.planStatus="invoice";
-    this.invoice["invoiceStatus"]="0";
-    let date = new Date();
-    this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1)).toISOString();
-    this.newDate = this.invoice["invoiceYM"];
-  }
-  searchForm(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration: 10000
-    });
-    loading.present();
-    let url;
-    url = "discardController.do?getInvoice";
-    if (!this.invoice["invoiceNumber"]){
-      this.invoice["invoiceNumber"]="";
-    }
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.loginDepartCode,userCode:this.loginUserCode,invoiceNumber:this.invoice["invoiceNumber"],invoiceStatus:this.invoice["invoiceStatus"],invoiceYM:this.invoice["invoiceYM"]}).subscribe(data=>{
-      if (data.success=="true"){
-        let alert = this.alertCtrl.create({
-          title:"查询成功！"
-        });
-        alert.present();
-        this.planDetailList=data.data;
-      }else {
-        alert(data.msg)
+export class ScrapQueryPage extends QueryPage{
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService,public alertCtrl?:AlertController) {
+    super(navCtrl,navParams,storageService);
+    this.data = {
+      pageName:"报废查询",
+      pageData:{
+        pageItem:[
+          {itemName:"单据编号", itemType:"input",inputType:"text",itemValue:"invoiceNumber"},
+          {itemName:"审批进度", itemType:"select", itemValue:"invoiceStatus",optionValueString:"optionValue",optionNameString:"optionName",
+            option:[
+              {optionName:"全部",optionValue:"0"},
+              {optionName:"新建",optionValue:"1"},
+              {optionName:"驳回",optionValue:"2"},
+              {optionName:"待审批",optionValue:"3"},
+              {optionName:"审批中",optionValue:"4"},
+              {optionName:"审批完成",optionValue:"5"},
+            ],
+          },
+          {itemName:"查询月份", itemType:"date",itemValue:"invoiceYM"},
+          {itemType:"card",
+            card:{
+              cardParent:[
+                {itemName:"单据编号", itemType:"label",itemValue:"invoiceNumber"},
+                {itemName:"单据状态", itemType:"label",itemValue:"invoiceStatus"},
+                {itemName:"制单单位", itemType:"label",itemValue:"departName"},
+                {itemName:"制单日期", itemType:"label",itemValue:"auditDate"},
+                {itemName:"制单人", itemType:"label",itemValue:"auditUser"},
+                {itemName:"原值合计", itemType:"label",itemValue:"originalValueSum"},
+                {itemName:"数量", itemType:"label",itemValue:"detailAmountSum"},
+                {itemName:"净值合计", itemType:"label",itemValue:"nowValueSum"},
+                {itemName:"累计折旧合计", itemType:"label",itemValue:"addDepreciateValueSum"},
+                {itemName:"减值准备合计", itemType:"label",itemValue:"devalueValueSum"},
+              ],
+            }
+          }
+        ]
       }
-      loading.dismiss();
-    })
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
+    this.searchFormUrl = "discardController.do?getInvoice";
+    this.nextPage = ScrapQueryDetailPage;
   }
-  invoiceDetail(invoice){
-    this.app.getRootNav().push(ScrapQueryDetailPage,{invoice:invoice})
-  }
-
 }
