@@ -56,6 +56,7 @@ import {ApplicationPage} from "../pages/commonStyle/application/application";
 import {ComponentsModule} from "../components/components.module";
 import {SelectFilterPage} from "../pages/commonStyle/selectFilter/selectFilter";
 import {ScreenOrientation} from "@ionic-native/screen-orientation";
+import {QueryPage} from "../pages/commonStyle/query/query";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import {ScreenOrientation} from "@ionic-native/screen-orientation";
     GasDataUploadPage,
     GasDataUploadDetailPage,
     ApplicationPage,
-    SelectFilterPage
+    SelectFilterPage,
+    QueryPage,
   ],
   imports: [
     BrowserModule,
@@ -157,7 +159,8 @@ import {ScreenOrientation} from "@ionic-native/screen-orientation";
     GasDataUploadPage,
     GasDataUploadDetailPage,
     ApplicationPage,
-    SelectFilterPage
+    SelectFilterPage,
+    QueryPage
   ],
   providers: [
     StatusBar,

@@ -1,5 +1,5 @@
 <!-- Generated template for the InputNormalComponent component -->
 <ion-item class="inputItem">
   <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
-  <ion-input [type]="inputType" [(ngModel)]="inputValue" (ionFocus)="inputFocus()" (ionBlur)="inputBlur()"></ion-input>
+  <ion-input [type]="inputType" [placeholder]="'请输入'+itemName" [(ngModel)]="inputValue" (ionFocus)="inputFocus()" (ionBlur)="inputBlur()"></ion-input>
 </ion-item>

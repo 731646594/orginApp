@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngFor="let item of pageData.pageItem">
+    <div *ngIf="item.itemType=='input'">
+      <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
+    </div>
+    <div *ngIf="item.itemType=='select'">
+      <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
+    </div>
+    <div *ngIf="item.itemType=='date'">
+      <date-normal [itemName]="item.itemName" [maxDate]="maxDate" [dateValue]="invoice[item.itemValue]" (backValue)="getDateValue($event,item.itemValue)"></date-normal>
+    </div>
+  </div>
+</ion-content>
