@@ -1,7 +1,7 @@
 <!-- Generated template for the SelectNormalComponent component -->
 <ion-item class="inputItem">
   <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
-   <ion-select class="formSelect" interface="popover" [(ngModel)]="selectValue">
+   <ion-select class="formSelect" interface="popover" [placeholder]="'请选择'+itemName" [(ngModel)]="selectValue">
     <ion-option *ngFor="let option of selectData;" [value]="option[optionValue]" (ionSelect)="returnSelect(option[optionValue],option[optionName])">{{option[optionName]}}</ion-option>
   </ion-select>
 </ion-item>

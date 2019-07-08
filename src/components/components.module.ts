@@ -9,6 +9,8 @@ import { CardNormalComponent } from './card-normal/card-normal';
 import { LabelNewlineComponent } from './label-newline/label-newline';
 import { CardSelectComponent } from './card-select/card-select';
 import { ScannerComponent } from './scanner/scanner';
+import { DateNormalComponent } from './date-normal/date-normal';
+import { CardSelectInputComponent } from './card-select-input/card-select-input';
 @NgModule({
 	declarations: [SelectFilterComponent,
     InputNormalComponent,
@@ -18,7 +20,9 @@ import { ScannerComponent } from './scanner/scanner';
     CardNormalComponent,
     LabelNewlineComponent,
     CardSelectComponent,
-    ScannerComponent],
+    ScannerComponent,
+    DateNormalComponent,
+    CardSelectInputComponent],
 	imports: [IonicModule],
 	exports: [SelectFilterComponent,
     InputNormalComponent,
@@ -28,6 +32,8 @@ import { ScannerComponent } from './scanner/scanner';
     CardNormalComponent,
     LabelNewlineComponent,
     CardSelectComponent,
-    ScannerComponent]
+    ScannerComponent,
+    DateNormalComponent,
+    CardSelectInputComponent]
 })
 export class ComponentsModule {}

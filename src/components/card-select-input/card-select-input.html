@@ -1,0 +1,36 @@
+<!-- Generated template for the CardSelectInputComponent component -->
+<div *ngFor="let detail of data;let i = index">
+  <div class="callContentBox">
+    <div class="callContentMiniBox">
+      <ion-list class="callContent">
+        <ion-list class="callList" (click)="displayContent(i)">
+          <div *ngFor="let parent of cardData.cardParent">
+            <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+          </div>
+        </ion-list>
+      </ion-list>
+      <div class="cardButton" item-end (click)="checkedItem(i)">
+        <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="cardCheckedIcon"></ion-icon>
+        <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
+      </div>
+    </div>
+    <ion-content class="callContent disContent">
+      <ion-list class="callList">
+        <div *ngFor="let child of cardData.cardChild">
+          <div *ngIf="child.itemType=='label'">
+            <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+          </div>
+          <div *ngIf="child.itemType=='date'">
+            <date-normal [itemName]="child.itemName" [maxDate]="maxDate" [dateValue]="detail[child.itemValue]" (backValue)="getDateValue($event,child.itemValue,i)"></date-normal>
+          </div>
+          <div *ngIf="child.itemType=='select'">
+            <select-normal [itemName]="child.itemName" [selectData]="child.option" [selectValue]="detail[child.itemValue]" [optionValue]="child.optionValueString" [optionName]="child.optionNameString" (backValue)="getSelectValue($event,child.itemValue,i)"></select-normal>
+          </div>
+          <div *ngIf="child.itemType=='textarea'">
+            <textarea class="cardSelectInputTextarea" [placeholder]="child.itemName" [(ngModel)]="detail[child.itemValue]" (focus)="inputFocus()" (blur)="inputBlur($event,child.itemValue,i)"></textarea>
+          </div>
+        </div>
+      </ion-list>
+    </ion-content>
+  </div>
+</div>

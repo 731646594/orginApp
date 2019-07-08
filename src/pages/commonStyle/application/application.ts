@@ -12,139 +12,55 @@ export class ApplicationPage {
   pageData;
   invoice=[];
   shape = "brief";
-  data={
-    pageName:"调拨申请",
-    pageData:{
-      segmentName:["单据", "明细"],
-      pageItem:[
-        [
-          {itemName:"单据类型", itemType:"select", itemValue:"invoiceType",
-            option:[
-              {optionName:"有形",optionValue:"1401"},
-              {optionName:"无形",optionValue:"1402"},
-              {optionName:"长(待)摊费用",optionValue:"1403"},
-              {optionName:"整体",optionValue:"1404"},
-            ],
-          },
-          {itemName:"调出单位",itemType:"selectFilter",dataName:"out",itemValue:["outDepartcode","outDepartname"]},
-          {itemName:"调入单位",itemType:"selectFilter",dataName:"in",itemValue:["inDepartcode","inDepartname"]},
-          {itemName:"调拨原因", itemType:"input",inputType:"text",itemValue:"reason"},
-          {itemName:"备注", itemType:"input",inputType:"text",itemValue:"remark"},
-          {itemName:"数量", itemType:"input",inputType:"number",itemValue:"allotAmount"},
-          {itemName:"原值", itemType:"input",inputType:"number",itemValue:"originalValue"},
-          {itemName:"净值", itemType:"input",inputType:"number",itemValue:"nowValue"},
-          {itemName:"累计折旧", itemType:"input",inputType:"number",itemValue:"addDepreciate"},
-          {itemName:"制单人", itemType:"label",itemValue:"createUserName"},
-          {itemName:"制单时间", itemType:"label",itemValue:"createTime"},
-          {itemName:"申请单位", itemType:"label",itemValue:"createDepart"},
-
-        ],
-        [
-          {itemType:"radioInput",
-            radio:[
-              {radioName:"资产条码",radioValue:"barCode"},
-              {radioName:"资产编码",radioValue:"assetsCode"},
-            ]
-          },
-          {itemType:"card",
-            card:{
-              cardParent:[
-                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
-                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
-              ],
-              cardChild:[
-                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
-                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
-                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
-                {itemName:"备注", itemType:"label",itemValue:"remark"},
-                {itemName:"存放地点", itemType:"label",itemValue:"storePlace"},
-                {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
-                {itemName:"车牌井号", itemType:"label",itemValue:"licenceNumber"},
-                {itemName:"制造厂家", itemType:"label",itemValue:"makeFactory"},
-                {itemName:"所属单位编码", itemType:"label",itemValue:"departCode"},
-                {itemName:"保管人", itemType:"label",itemValue:"userPerson"},
-                {itemName:"编码", itemType:"label",itemValue:"barCode"},
-                {itemName:"出厂编号", itemType:"label",itemValue:"productId"},
-                {itemName:"原值", itemType:"label",itemValue:"originalValue"},
-                {itemName:"净值", itemType:"label",itemValue:"nowValue"},
-                {itemName:"累计折旧", itemType:"label",itemValue:"addDepreciate"},
-                {itemName:"减值准备", itemType:"label",itemValue:"devalueValue"},
-                {itemName:"使用状态编码", itemType:"label",itemValue:"usedState"},
-                {itemName:"使用状态", itemType:"label",itemValue:"usedStateName"},
-              ]
-            }
-          }
-        ]
-      ],
-    }
-  };
+  data={};
   isFocus = false;
   searchDatas=[];
   radioValue;
   radioInput="";
-  radioInputPostUrl;
+  radioInputPostUrl="discardController.do?queryByCodeOrBar";
   userName;
   userCode;
   departName;
   departCode;
   selectFilterData=[];
-  constructor(public navCtrl: NavController,public navParams:NavParams,public alertCtrl:AlertController,
-              public storageService:StorageService,public events:Events,public app:App,public loadingCtrl:LoadingController,
-              public httpService:HttpService) {
+  censorshipUrl="";
+  saveInfoTableName=[];
+  uploadDataUrl="";
+  uploadDataToEAMUrl="";
+  sqlInvoiceTableName="";
+  sqlSearchDatasTableName="";
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public alertCtrl?:AlertController,
+              public storageService?:StorageService,public events?:Events,public app?:App,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService) {
     // PageUtil.pages["application"]=this;
     this.invoice=JSON.parse("{}");
-    this.pageName=this.data.pageName;
-    this.pageData=this.data.pageData;
+    // this.invoice["barCode"] = this.navParams.get("barCode");
     this.userName = this.storageService.read("loginUserName");
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
-    let date = new Date();
-    this.invoice["invoiceType"]="1401";
-    this.invoice["inDepartcode"]="";
-    this.invoice["allotAmount"]=0;
-    this.invoice["originalValue"]="0.00";
-    this.invoice["nowValue"]="0.00";
-    this.invoice["addDepreciate"]="0.00";
-    this.invoice["createUserName"]=this.userName;
-    this.invoice["createTime"]=date.toLocaleDateString();
-    this.invoice["createDepart"]=this.departName;
-    this.selectFilterData["in"]=[];
-    this.selectFilterData["out"]=[];
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("departListData",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.selectFilterData["in"] = JSON.parse(res.rows.item(0).stringData);
-        for(let i in this.selectFilterData["in"]){
-          if(this.selectFilterData["in"][i]["departcode"].lastIndexOf(this.departCode)>-1&&this.selectFilterData["in"][i]["marktail"] == "1"){
-            this.selectFilterData["out"].push(this.selectFilterData["in"][i]);
-          }
-        }
-      }
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));;
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("allotInvoice",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.invoice = JSON.parse(res.rows.item(0).stringData)
-      }
-    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("allotDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.searchDatas = JSON.parse(res.rows.item(0).stringData)
-      }
-    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
     this.events.subscribe("showFooter",(res) => {
       this.showFooter()
     });
     this.events.subscribe("hideFooter",(res) => {
       this.hideFooter();
     });
-    this.radioInputPostUrl="discardController.do?queryByCodeOrBar";
   }
   ionViewWillUnload(){
     this.events.unsubscribe("showFooter");
     this.events.unsubscribe("hideFooter")
   }
   ionViewDidEnter(){
-
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS(this.sqlInvoiceTableName,this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.invoice = JSON.parse(res.rows.item(0).stringData)
+      }
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS(this.sqlSearchDatasTableName,this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.searchDatas = JSON.parse(res.rows.item(0).stringData)
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
   }
   hideFooter(){
     this.isFocus=true;
@@ -164,7 +80,6 @@ export class ApplicationPage {
     this.radioValue = value.radioValue;
   }
   getRadioInputValue(value){
-    console.log(this.searchDatas.indexOf(value));
     for(let i in this.searchDatas){
       if (this.searchDatas[i].assetsCode == value.assetsCode){
         let alertCtrl = this.alertCtrl.create({
@@ -204,7 +119,7 @@ export class ApplicationPage {
   getScannerValue(value){
     this.radioInput = value;
   }
-  confirmChecked(){
+  confirmChecked():any{
     for(let index in this.searchDatas){
       if(this.searchDatas[index]["checkedIcon"]){
         return true;
@@ -245,10 +160,8 @@ export class ApplicationPage {
       duration:5000
     });
     loading.present();
-    let url;
-    url = "allotController.do?sendAllot";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+this.censorshipUrl,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
@@ -265,7 +178,8 @@ export class ApplicationPage {
     if (!this.confirmChecked()){
       return false;
     }
-    this.storageService.sqliteInsert("allotInvoice",this.userCode,JSON.stringify(this.invoice));
+    console.log(JSON.stringify(this.invoice))
+    this.storageService.sqliteInsert(this.saveInfoTableName[0],this.userCode,JSON.stringify(this.invoice));
     let list=[];
     for(let index in this.searchDatas){
       if(this.searchDatas[index]["checkedIcon"]){
@@ -273,7 +187,7 @@ export class ApplicationPage {
       }
     }
     this.searchDatas = list;
-    this.storageService.sqliteInsert("allotDetail",this.userCode,JSON.stringify(this.searchDatas));
+    this.storageService.sqliteInsert(this.saveInfoTableName[1],this.userCode,JSON.stringify(this.searchDatas));
     let alertCtrl = this.alertCtrl.create({
       title:"保存成功！"
     });
@@ -289,7 +203,7 @@ export class ApplicationPage {
     });
     loading.present();
     let url;
-    url = "allotController.do?add";
+    url = this.uploadDataUrl;
     this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,departName:this.departName,userCode:this.userCode,userName:this.userName,
       allotInvoiceDTO:this.invoice,eamDiscardInvoices:this.invoice,eamAllotDetal:this.searchDatas,eamDiscardDetails:this.searchDatas}).subscribe(data=>{
       if (data.success == "true"){
@@ -313,10 +227,8 @@ export class ApplicationPage {
       duration:5000
     });
     loading.present();
-    let url;
-    url = "allotController.do?confirm";
     let phoneInvoiceNumber = this.userCode+this.departCode+this.formatDateAndTimeToString(new Date());
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+this.uploadDataToEAMUrl,{departCode:this.departCode,phoneInvoiceNumber:phoneInvoiceNumber}).subscribe(data=>{
       if (data.success=="true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
