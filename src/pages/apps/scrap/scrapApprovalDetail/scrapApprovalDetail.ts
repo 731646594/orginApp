@@ -2,157 +2,49 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import {ApprovalPage} from "../../../commonStyle/approval/approval";
 
 @Component({
   selector: 'page-scrapApprovalDetail',
-  templateUrl: 'scrapApprovalDetail.html'
+  templateUrl: '../../../commonStyle/approval/approval.html'
 })
-export class ScrapApprovalDetailPage {
+export class ScrapApprovalDetailPage  extends ApprovalPage{
   invoice;
-  postUrl;
-  detailList;
-  detail=[];
-  isOnfocus=false;
-  isAgree=1;
-  isReasonModel=0;
-  detailReason="";
-  userName;
-  userCode;
-  departName;
-  departCode;
-  displayIndex;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
-    this.loadData();
-  }
-  ionViewDidEnter(){
-    // this.loadData();
-  }
-  loadData(){
-    this.userName = this.storageService.read("loginUserName");
-    this.userCode = this.storageService.read("loginUserCode");
-    this.departName = this.storageService.read("loginDepartName");
-    this.departCode = this.storageService.read("loginDepartCode");
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App) {
+    super(navCtrl,navParams,storageService);
     this.invoice = this.navParams.get("invoice");
     this.postUrl = "discardController.do?getDetail";
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:10000
-    });
-    loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
-      if (data.success == "true"){
-        this.detailList = data.data;
-      }else {
-        alert(data.msg);
-      }
-      loading.dismiss();
-    })
-  }
-
-  alertTextarea(){
-    this.isReasonModel=1;
-  }
-  cancelReasonModel(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"是否取消编辑原因？",
-      buttons: [
-        {
-          text:'取消',
-          handler:data=>{
-            console.log("取消");
+    this.postParams = {departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber};
+    this.postDataUrl = "discardController.do?approve";
+    this.data = {
+      pageName:"报废审批详情",
+      pageData: {
+        pageItem:[
+          { itemType:"card",card:{
+              cardParent:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+              ],
+              cardChild:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+                {itemName:"报废类型", itemType:"label",itemValue:"discardTypeName"},
+                {itemName:"报废原因", itemType:"label",itemValue:"discardReasonName"},
+                {itemName:"停产日期", itemType:"label",itemValue:"stopDate"},
+                {itemName:"申请单位", itemType:"label",itemValue:"departName"},
+              ],
+            }
           }
-        },
-        {
-          text:'确定',
-          handler:data=>{
-            this.isReasonModel=0;
-          }
-
-        }
-      ]
-    });
-    alertCtrl.present();
-  }
-  clearReason(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"是否取消清空编辑内容？",
-      buttons: [
-        {
-          text:'取消',
-          handler:data=>{
-            console.log("取消");
-          }
-        },
-        {
-          text:'确定',
-          handler:data=>{
-            this.detailReason="";
-          }
-
-        }
-      ]
-    });
-    alertCtrl.present();
-  }
-  saveReason(){
-    this.isReasonModel=0;
-  }
-  postData(){
-    let url;
-    url = "discardController.do?approve";
-    if (!this.detailReason){
-      this.detailReason = ""
-    }
-    let isAgree;
-    if (this.isAgree==1){
-      isAgree = "0";
-    }else if (this.isAgree==0){
-      isAgree = "1";
-      if (!this.detailReason){
-        let alert = this.alertCtrl.create({
-          title:"请输入驳回原因！"
-        });
-        alert.present();
-        return false;
+        ]
       }
-    }
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:this.invoice.invoiceNumber,approveResult:isAgree,opinion:this.detailReason}).subscribe(data=>{
-      if (data.success == "true"){
-        let alertCtrl = this.alertCtrl.create({
-          title:data.msg
-        });
-        alertCtrl.present()
-      }else {
-        alert(data.msg)
-      }
-      loading.dismiss()
-    })
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
   }
-  displayContent(index){
-    let content = document.getElementsByClassName("disContent");
-    if ((<HTMLElement>content[index]).style.display=="block"){
-      (<HTMLElement>content[index]).style.display="none";
-    }else {
-      if(this.displayIndex>=0){
-        (<HTMLElement>content[this.displayIndex]).style.display="none";
-        if(!this.detailList[index]["stopDate"]){
-          this.detailList[index]["stopDate"] = this.detailList[this.displayIndex]["stopDate"];
-        }
-        if(!this.detailList[index]["discardReasonCode"]){
-          this.detailList[index]["discardReasonCode"] = this.detailList[this.displayIndex]["discardReasonCode"];
-        }
-        if(!this.detailList[index]["discardMark"]){
-          this.detailList[index]["discardMark"] = this.detailList[this.displayIndex]["discardMark"];
-        }
-      }
-      (<HTMLElement>content[index]).style.display="block";
-      this.displayIndex = index;
-    }
+  getpostDataParams(){
+    this.postDataParams = {departCode:this.departCode,userCode:this.userCode,phoneInvoiceNumber:this.searchDatas[this.checkedIndex]["invoiceNumber"],approveResult:this.isAgreeString,opinion:this.detailReason}
   }
 }

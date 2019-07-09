@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="searchFormList">
+    <div *ngFor="let item of pageData.pageItem">
+      <div *ngIf="item.itemType=='card-select'">
+        <card-select [cardData]="item.card" [data]="searchDatas" (goNextPage)="getCardValue($event)" (backValue)="getCardSelectValue($event)"></card-select>
+      </div>
+      <div *ngIf="item.itemType=='card'">
+        <card-normal [cardData]="item.card" [data]="searchDatas"></card-normal>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding>
+  <div class="radioBox" radio-group [(ngModel)]="isAgree" *ngIf="!isReasonModel">
+    <ion-item class="radioItem">
+      <ion-label>同意：</ion-label>
+      <ion-radio value=1></ion-radio>
+    </ion-item>
+    <ion-item class="radioItem">
+      <ion-label>驳回:</ion-label>
+      <ion-radio value=0 (ionSelect)="alertTextarea()"></ion-radio>
+    </ion-item>
+    <button class="formFooterButton" (click)="alertTextarea()">
+      <ion-icon class="formFooterIcon" name="paper"></ion-icon><br>编辑原因
+    </button>
+    <button class="formFooterButton" (click)="postData()">
+      <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>确认
+    </button>
+  </div>
+  <div class="footerTextBox" *ngIf="isReasonModel">
+    <textarea class="footerTextarea" [(ngModel)]="detailReason" placeholder="请输入原因。"></textarea>
+    <div class="radioBox">
+      <button class="formFooterButton" (click)="cancelReasonModel()">
+        <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>取消
+      </button>
+      <button class="formFooterButton" (click)="clearReason()">
+        <ion-icon class="formFooterIcon" name="remove-circle"></ion-icon><br>清空
+      </button>
+      <button class="formFooterButton" (click)="saveReason()">
+        <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+      </button>
+    </div>
+  </div>
+</footer>

@@ -14,6 +14,7 @@ export class CardSelectComponent {
   @Input() cardData=[];
   @Input() data=[];
   @Output() backValue = new EventEmitter();
+  @Output() goNextPage = new EventEmitter();
   displayIndex;
   constructor() {
 
@@ -31,7 +32,7 @@ export class CardSelectComponent {
         this.displayIndex = index;
       }
     }else {
-      this.backValue.emit(index)
+      this.goNextPage.emit(index)
     }
   }
   checkedItem(index){

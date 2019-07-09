@@ -5,7 +5,12 @@
       <ion-list class="callContent">
         <ion-list class="callList" (click)="displayContent(i)">
           <div *ngFor="let parent of cardData.cardParent">
-            <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+            <div *ngIf="parent.itemValue.toLowerCase().indexOf('departname')==-1">
+              <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+            </div>
+            <div *ngIf="parent.itemValue.toLowerCase().indexOf('departname')>-1">
+              <label-right-show [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-right-show>
+            </div>
           </div>
         </ion-list>
       </ion-list>

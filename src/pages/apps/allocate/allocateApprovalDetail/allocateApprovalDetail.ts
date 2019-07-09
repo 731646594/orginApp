@@ -2,143 +2,60 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import {ApprovalPage} from "../../../commonStyle/approval/approval";
 
 @Component({
-  selector: 'page-allocateApprovalDetail',
-  templateUrl: 'allocateApprovalDetail.html'
+  selector: 'page-approval',
+  templateUrl: '../../../commonStyle/approval/approval.html'
 })
-export class AllocateApprovalDetailPage {
+export class AllocateApprovalDetailPage extends ApprovalPage{
   invoice;
-  postUrl;
-  detailList;
-  departCode;
-  userName;
-  userCode;
-  isAgree=1;
-  isReasonModel=0;
-  censorshipReason="";
-  displayIndex;
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public app:App,public alertCtrl:AlertController,public navParams:NavParams,public loadingCtrl:LoadingController) {
-    this.loadData();
-  }
-  ionViewDidEnter(){
-    // this.loadData();
-  }
-  loadData(){
-    this.userName = this.storageService.read("loginUserName");
-    this.userCode = this.storageService.read("loginUserCode");
-    this.departCode = this.storageService.read("loginDepartCode");
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
+              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App) {
+    super(navCtrl,navParams,storageService);
     this.invoice = this.navParams.get("invoice");
     this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:10000
-    });
-    loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
-      if (data.success == "true"){
-        this.detailList = data.data;
-      }else {
-        alert(data.msg);
-      }
-      loading.dismiss();
-    })
-  }
-  alertTextarea(){
-    this.isReasonModel=1;
-  }
-  cancelReasonModel(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"是否取消编辑原因？",
-      buttons: [
-        {
-          text:'取消',
-          handler:data=>{
-            console.log("取消");
+    this.postParams = {departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber};
+    this.postDataUrl = "allotController.do?allotAudit";
+    this.data = {
+      pageName:"调拨审批详情",
+      pageData: {
+        pageItem:[
+          { itemType:"card",card:{
+              cardParent:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+              ],
+              cardChild:[
+                {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+                {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+                {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+                {itemName:"备注", itemType:"label",itemValue:"remark"},
+                {itemName:"存放地点", itemType:"label",itemValue:"storePlace"},
+                {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
+                {itemName:"车牌井号", itemType:"label",itemValue:"licenceNumber"},
+                {itemName:"制造厂家", itemType:"label",itemValue:"makeFactory"},
+                {itemName:"所属单位编码", itemType:"label",itemValue:"departCode"},
+                {itemName:"保管人", itemType:"label",itemValue:"userPerson"},
+                {itemName:"编码", itemType:"label",itemValue:"barCode"},
+                {itemName:"出厂编号", itemType:"label",itemValue:"productId"},
+                {itemName:"原值", itemType:"label",itemValue:"originalValue"},
+                {itemName:"净值", itemType:"label",itemValue:"nowValue"},
+                {itemName:"累计折旧", itemType:"label",itemValue:"addDepreciate"},
+                {itemName:"减值准备", itemType:"label",itemValue:"devalueValue"},
+                {itemName:"使用状态编码", itemType:"label",itemValue:"usedState"},
+                {itemName:"使用状态", itemType:"label",itemValue:"usedStateName"},
+              ],
+            }
           }
-        },
-        {
-          text:'确定',
-          handler:data=>{
-            this.isReasonModel=0;
-          }
-
-        }
-      ]
-    });
-    alertCtrl.present();
-  }
-  clearReason(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"是否取消清空编辑内容？",
-      buttons: [
-        {
-          text:'取消',
-          handler:data=>{
-            console.log("取消");
-          }
-        },
-        {
-          text:'确定',
-          handler:data=>{
-            this.censorshipReason="";
-          }
-
-        }
-      ]
-    });
-    alertCtrl.present();
-  }
-  saveReason(){
-    this.isReasonModel=0;
-  }
-  postData(){
-    let url;
-    url = "allotController.do?allotAudit";
-    if (!this.censorshipReason){
-      this.censorshipReason = ""
-    }
-    let isAgree;
-    if (this.isAgree==1){
-      isAgree = "0";
-    }else if (this.isAgree==0){
-      isAgree = "1";
-      if (!this.censorshipReason){
-        let alert = this.alertCtrl.create({
-          title:"请输入驳回原因！"
-        });
-        alert.present();
-        return false;
+        ]
       }
-    }
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.invoice),approveResult:isAgree,opinion:this.censorshipReason}).subscribe(data=>{
-      if (data.success == "true"){
-        let alertCtrl = this.alertCtrl.create({
-          title:data.msg
-        });
-        alertCtrl.present()
-      }else {
-        alert(data.msg)
-      }
-      loading.dismiss();
-    })
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
   }
-  displayContent(index){
-    let content = document.getElementsByClassName("disContent");
-    if ((<HTMLElement>content[index]).style.display=="block"){
-      (<HTMLElement>content[index]).style.display="none";
-    }else {
-      if(this.displayIndex>=0){
-        (<HTMLElement>content[this.displayIndex]).style.display="none";
-      }
-      (<HTMLElement>content[index]).style.display="block";
-      this.displayIndex = index;
-    }
+  getpostDataParams(){
+    this.postDataParams = {departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.searchDatas[this.checkedIndex]),approveResult:this.isAgreeString,opinion:this.detailReason};
   }
 }
