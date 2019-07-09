@@ -63,24 +63,24 @@ export class InventoryEntryPage  extends InventoryPage{
     this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.selectFilterData["departments"] = JSON.parse(res.rows.item(0).stringData)["departments"];
-    //     if (this.selectFilterData["departments"]){
-    //       this.invoice["managerDepart"]=this.selectFilterData["departments"][0].departCode
-    //     }
-    //   }
-    // }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.selectFilterData["storePlaceData"] = JSON.parse(res.rows.item(0).stringData);
-    //   }
-    // }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0){
-    //     this.selectFilterData["lossReasonData"] = JSON.parse(res.rows.item(0).stringData);
-    //   }
-    // }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.selectFilterData["departments"] = JSON.parse(res.rows.item(0).stringData)["departments"];
+        if (this.selectFilterData["departments"]){
+          this.invoice["managerDepart"]=this.selectFilterData["departments"][0].departCode
+        }
+      }
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.selectFilterData["storePlaceData"] = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.selectFilterData["lossReasonData"] = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
     this.invoice["assetsStatus"]="010101";
     this.invoice["technicalCondition"]="01";
   }
