@@ -59,6 +59,7 @@ import {ScreenOrientation} from "@ionic-native/screen-orientation";
 import {QueryPage} from "../pages/commonStyle/query/query";
 import {QueryDetailPage} from "../pages/commonStyle/queryDetail/queryDetail";
 import {ApprovalPage} from "../pages/commonStyle/approval/approval";
+import {InventoryPage} from "../pages/commonStyle/inventory/inventory";
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import {ApprovalPage} from "../pages/commonStyle/approval/approval";
     SelectFilterPage,
     QueryPage,
     QueryDetailPage,
-    ApprovalPage
+    ApprovalPage,
+    InventoryPage
   ],
   imports: [
     BrowserModule,
@@ -166,7 +168,8 @@ import {ApprovalPage} from "../pages/commonStyle/approval/approval";
     SelectFilterPage,
     QueryPage,
     QueryDetailPage,
-    ApprovalPage
+    ApprovalPage,
+    InventoryPage
   ],
   providers: [
     StatusBar,

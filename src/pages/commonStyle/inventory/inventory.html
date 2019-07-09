@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{pageName}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="formInfoBox">
+    <div class="formInfoInput">
+      <div *ngFor="let item of pageData.pageItem;">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [nec]="item.nec" [searchButton]="item.searchButton" [inputType]="item.inputType" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)" (searchValue)="searchLocalPlanDetail()"></input-normal>
+        </div>
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec" [labelValue]="invoice[item.itemValue]"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [nec]="item.nec" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='selectFilter'">
+          <select-filter [itemName]="item.itemName" [nec]="item.nec" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-filter>
+        </div>
+      </div>
+      <ion-item class="inputItem imgItem">
+        <ion-label><span class="star">*</span>照片区:</ion-label>
+      </ion-item>
+      <div class="imgBox">
+        <div id="imgBox" *ngIf="pageName=='快速扫码'">
+        </div>
+        <div id="imgBox2" *ngIf="pageName=='盘盈录入'">
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="pickPhoto()">
+    <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
+  </button>
+  <button class="formFooterButton" (click)="scan()">
+    <ion-icon class="formFooterIcon" name="qr-scanner"></ion-icon><br>扫码
+  </button>
+  <button class="formFooterButton" (click)="saveInfo()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+</footer>

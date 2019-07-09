@@ -13,6 +13,7 @@ import {Component, Input} from '@angular/core';
 export class LabelNormalComponent {
   @Input() itemName="";
   @Input() labelValue="";
+  @Input() nec = -1;
   constructor() {
 
   }

@@ -1,5 +1,8 @@
 <!-- Generated template for the InputNormalComponent component -->
 <ion-item class="inputItem">
-  <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
+  <ion-label class="noFlexLabel"><span *ngIf="nec==0" class="star">*</span><span *ngIf="nec==1" class="star requireLabel">*</span>{{itemName+":"}}</ion-label>
   <ion-input [type]="inputType" [placeholder]="'请输入'+itemName " [(ngModel)]="inputValue" (ionFocus)="inputFocus()" (ionBlur)="inputBlur()"></ion-input>
+  <button *ngIf="searchButton" item-end class="formInputButton" (click)="searchInput()">
+    <ion-icon name="search"></ion-icon>
+  </button>
 </ion-item>

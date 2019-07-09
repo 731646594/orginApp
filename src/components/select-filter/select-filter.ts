@@ -17,6 +17,7 @@ export class SelectFilterComponent{
   @Input() optionValue="";
   @Input() optionName="";
   @Input() selectName = "";
+  @Input() nec = -1;
   @Output() backValue = new EventEmitter();
   selectedData;
   constructor(private modalCtrl:ModalController) {

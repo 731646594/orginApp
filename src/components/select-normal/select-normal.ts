@@ -16,6 +16,7 @@ export class SelectNormalComponent {
   @Input() optionValue="";
   @Input() optionName="";
   @Input() selectValue="";
+  @Input() nec = -1;
   @Output() backValue = new EventEmitter();
   selectedData;
   constructor() {

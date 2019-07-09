@@ -1,72 +1,88 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
-import {Camera,CameraOptions} from "@ionic-native/camera";
+import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
-import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
+import {InventoryPage} from "../../../commonStyle/inventory/inventory";
 
-let that;
 @Component({
-  selector: 'page-inventoryEntry',
-  templateUrl: 'inventoryEntry.html'
+  selector: 'page-inventory',
+  templateUrl: '../../../commonStyle/inventory/inventory.html'
 })
-export class InventoryEntryPage {
-  isOnfocus=false;
-  invoice=JSON;
-  i=0;
+export class InventoryEntryPage  extends InventoryPage{
   departments;
-  barCode;
-  assetsCode;
-  lossReasonData=[];
-  showLossReasonData=[];
-  storePlaceData=[];
-  showStorePlaceData=[];
-  loginDepartList;
-  departListData;
-  userCode;
-  lossReasonName;
-  storePlaceName;
-  constructor(public navCtrl:NavController,public storageService:StorageService, public app:App,public alertCtrl:AlertController,public barcodeScanner:BarcodeScanner,
-              public camera:Camera,public file:File, public actionSheetCtrl:ActionSheetController,public navParams:NavParams) {
-    that = this;
-    this.loadData();
-  }
-  ionViewDidEnter(){
-    // this.loadData();
-  }
-  loadData(){
-    this.invoice=JSON.parse("{}");
+  constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,public events?:Events,
+              public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
+    super(navCtrl,storageService,navParams,events);
     this.invoice["barCode"] = this.navParams.get("barCode");
-    this.userCode = this.storageService.read("loginUserCode");
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
+    this.data={
+      pageName:"盘盈录入",
+      pageData:{
+        pageItem:[
+          {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.selectFilterData["departments"],},
+          {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,itemValue:"barCode"},
+          {itemName:"资产名称", itemType:"input",inputType:"text",nec:1,itemValue:"assetsName"},
+          {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
+          {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:"lossReason",optionValueString:"complexcode",optionNameString:"complexname"},
+          {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:"storePlace",optionValueString:"complexcode",optionNameString:"complexname"},
+          {itemName:"保管人", itemType:"input",inputType:"text",nec:1,itemValue:"userPerson"},
+          {itemName:"使用状态", itemType:"select",nec:1, itemValue:"assetsStatus",optionValueString:"optionValue",optionNameString:"optionName",
+            option:[
+              {optionName:"生产经营用-科研",optionValue:"010101"},
+              {optionName:"生产经营用-其他",optionValue:"010102"},
+              {optionName:"非生产经营用",optionValue:"0102"},
+              {optionName:"季节性经营停用",optionValue:"0201"},
+              {optionName:"其他原因停用",optionValue:"0202"},
+              {optionName:"经营场所备用",optionValue:"0203"},
+              {optionName:"闲置",optionValue:"0204"},
+              {optionName:"租出",optionValue:"03"},
+              {optionName:"借出",optionValue:"04"},
+            ],
+          },
+          {itemName:"技术状况", itemType:"select",nec:1, itemValue:"technicalCondition",optionValueString:"optionValue",optionNameString:"optionName",
+            option:[
+              {optionName:"完好",optionValue:"01"},
+              {optionName:"带病运行",optionValue:"02"},
+              {optionName:"在修",optionValue:"03"},
+              {optionName:"待修",optionValue:"04"},
+              {optionName:"待报废",optionValue:"05"},
+              {optionName:"损毁",optionValue:"06"},
+              {optionName:"待处置",optionValue:"07"},
+              {optionName:"已处置",optionValue:"08"},
+            ],
+          },
+          {itemName:"备注", itemType:"input",inputType:"text",nec:0,itemValue:"remark"},
+        ]
       }
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.storePlaceData = JSON.parse(res.rows.item(0).stringData);
-        this.showStorePlaceData = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    if (this.departments){
-      this.invoice["managerDepart"]=this.departments[0].departCode
-    }
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.lossReasonData = JSON.parse(res.rows.item(0).stringData);
-        this.showLossReasonData = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
+    };
+    this.pageName = this.data["pageName"];
+    this.pageData = this.data["pageData"];
+    this.imgBox = "imgBox2";
+    this.selectFilterData["departments"]=[];
+    this.selectFilterData["storePlaceData"]=[];
+    this.selectFilterData["lossReasonData"]=[];
+    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+    //   if (res.rows.length>0){
+    //     this.selectFilterData["departments"] = JSON.parse(res.rows.item(0).stringData)["departments"];
+    //     if (this.selectFilterData["departments"]){
+    //       this.invoice["managerDepart"]=this.selectFilterData["departments"][0].departCode
+    //     }
+    //   }
+    // }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
+    //   if (res.rows.length>0){
+    //     this.selectFilterData["storePlaceData"] = JSON.parse(res.rows.item(0).stringData);
+    //   }
+    // }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("lossReasonData",this.userCode),[]).then(res=>{
+    //   if (res.rows.length>0){
+    //     this.selectFilterData["lossReasonData"] = JSON.parse(res.rows.item(0).stringData);
+    //   }
+    // }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
     this.invoice["assetsStatus"]="010101";
     this.invoice["technicalCondition"]="01";
-  }
-  inputOnfocus(){
-    this.isOnfocus=true;
-  }
-  inputOnblur(){
-    this.isOnfocus=false;
   }
   scan() {
     let options: BarcodeScannerOptions = {
@@ -94,102 +110,22 @@ export class InventoryEntryPage {
         alert.present();
       });
   }
-  pickPhoto(){
-    let actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: '拍摄照片',
-          icon: 'camera',
-          handler: () => {
-            this.openCamera(true);
-          }
-        },
-        {
-          text: '从相册中选择照片',
-          icon: 'images',
-          handler: () => {
-            this.openCamera(false);
-          }
-        },
-      ]
-    });
-    actionSheet.present();
-  }
-  openCamera(type) {
-    let sourceType;
-    if (type){
-      sourceType = this.camera.PictureSourceType.CAMERA;
-    }
-    else {
-      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
-    }
-    const options: CameraOptions = {
-      quality: 50,                                                   //相片质量 0 -100
-      destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true,                                       //是否保存到相册
-      sourceType: sourceType,         //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
-      correctOrientation: true
-    };
-
-    this.camera.getPicture(options).then((imageData) => {
-      this.resolveUri(imageData).then(url=>{
-        url.file((file)=>{
-          let reader = new FileReader();
-          reader.onloadend=(e)=>{
-            let node = document.getElementById("imgBox");
-            let base64Image=e.target['result'];
-            let div = document.createElement("div");
-            div.className = "imgInclusion";
-            div.innerHTML+=
-              "<img id=\"i"+this.i+"\" name=\"i"+this.i+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
-              "<img id=\"b"+this.i+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
-            node.appendChild(div);
-            document.getElementById("i"+that.i).onclick=function() {
-              try {
-                that.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
-              } catch (e) {
-                alert(e)
-              }
-            };
-            document.getElementById("b"+that.i).onclick=function(){
-              try {
-                node.removeChild(div);
-              }catch(e) {
-                alert(e)
-              }
-            };
-            this.i++;
-          };
-          reader.readAsDataURL(file);
-        },err=>{
-          alert(err)
-        });
-      },err=>{
-        alert(err)
-      })
-    }, (err) => {
-      // Handle error
-      alert(err)
-    });
-  }
-  //转换url
-  resolveUri(uri:string):Promise<any>{
-    return new Promise((resolve, reject) => {
-      this.file.resolveLocalFilesystemUrl(uri).then(filePath =>{
-        resolve(filePath);
-      }).catch(err =>{
-        reject(err);
-      });
-    })
-  }
   saveInfo(){
     if(!this.invoice["barCode"]){
-      let alert = this.alertCtrl.create({
+      let alertCtrl = this.alertCtrl.create({
         title:"请输入或扫描资产条码！"
       });
-      alert.present();
+      alertCtrl.present();
+      return false;
+    }
+    let j = this.pageData.pageItem.filter((item) => {
+      return (item.nec==1&&!this.invoice[item.itemValue]);
+    });
+    if (j.length>0){
+      let alertCtrl = this.alertCtrl.create({
+        title:"请填写"+j[0].itemName
+      });
+      alertCtrl.present();
       return false;
     }
     let invoiceList = [];
@@ -218,44 +154,5 @@ export class InventoryEntryPage {
       alertCtrl.present();
       this.navCtrl.pop();
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-  }
-  filterReasonString(ev: any) {
-    const val = ev.value;
-    let item = [];
-    if (val && val.trim() != '') {
-      for (let i in this.lossReasonData){
-        if(this.lossReasonData[i]["complexname"].indexOf(val)>=0){
-          item.push(this.lossReasonData[i])
-        }
-      }
-    }
-    else {
-      item = this.lossReasonData;
-    }
-    this.showLossReasonData = item;
-  }
-  selectLossReasonData(string){
-    this.lossReasonName = string;
-  }
-  filterPlaceString(ev: any) {
-    const val = ev.value;
-    let item = [];
-    if (val && val.trim() != '') {
-      for (let i in this.storePlaceData){
-        if(this.storePlaceData[i]["complexname"].indexOf(val)>=0){
-          item.push(this.storePlaceData[i])
-        }
-      }
-    }
-    else {
-      item = this.storePlaceData;
-    }
-    this.showStorePlaceData = item;
-  }
-  selectStorePlaceData(string){
-    this.storePlaceName = string;
-  }
-  getSelectValue(value,key){
-    this.invoice[key] = value["selectedValue"];
   }
 }
