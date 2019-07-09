@@ -27,20 +27,8 @@
         <ion-label><span class="star">*</span>规格型号:</ion-label>
         <ion-input [(ngModel)]="invoice.assetsStandard" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class=""><span class="star requireLabel">*</span>盘盈原因:</ion-label>
-        <ion-input (ionChange)="filterReasonString($event)" [(ngModel)]="lossReasonName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
-        <ion-select class="noSelectText" interface="popover" [(ngModel)]="invoice.lossReason">
-          <ion-option *ngFor="let lossReason of showLossReasonData" (ionSelect)="selectLossReasonData(lossReason.complexname)" [value]="lossReason.complexcode">{{lossReason.complexname}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class=""><span class="star requireLabel">*</span>存放地点:</ion-label>
-        <ion-input (ionChange)="filterPlaceString($event)" [(ngModel)]="storePlaceName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
-        <ion-select class="noSelectText" interface="popover" [(ngModel)]="invoice.storePlace">
-          <ion-option *ngFor="let storePlace of showStorePlaceData" (ionSelect)="selectStorePlaceData(storePlace.complexname)" [value]="storePlace.complexcode">{{storePlace.complexname}}</ion-option>
-        </ion-select>
-      </ion-item>
+      <select-filter-nec [itemName]="'盘盈原因'" [selectData]="lossReasonData" [selectName]="'请选择盘盈原因'" [optionValue]="'complexname'" [optionName]="'complexcode'" (backValue)="getSelectValue($event,'lossReason')"></select-filter-nec>
+      <select-filter-nec [itemName]="'存放地点'" [selectData]="storePlaceData" [selectName]="'请选择存放地点'" [optionValue]="'complexname'" [optionName]="'complexcode'" (backValue)="getSelectValue($event,'storePlace')"></select-filter-nec>
       <ion-item class="inputItem">
         <ion-label class=""><span class="star requireLabel">*</span>保管人&emsp;:</ion-label>
         <ion-input [(ngModel)]="invoice.userPerson" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>

@@ -48,13 +48,7 @@
         <ion-label><span class="star">*</span>车牌井号:</ion-label>
         <ion-input [(ngModel)]="invoice.licenceNumber" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class=""><span class="star requireLabel">*</span>存放地点:</ion-label>
-        <ion-input (ionChange)="filterString($event)" [(ngModel)]="storePlaceName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
-        <ion-select class="noSelectText" interface="popover" [(ngModel)]="invoice.storePlace">
-          <ion-option *ngFor="let storePlace of showStorePlaceData" (ionSelect)="selectStorePlace(storePlace.complexname)" [value]="storePlace.complexcode">{{storePlace.complexname}}</ion-option>
-        </ion-select>
-      </ion-item>
+      <select-filter-nec [itemName]="'存放地点'" [selectData]="storePlaceData" [selectName]="'请选择存放地点'" [optionValue]="'complexname'" [optionName]="'complexcode'" (backValue)="getSelectValue($event,'storePlace')"></select-filter-nec>
       <ion-item class="inputItem">
         <ion-label class=""><span class="star requireLabel">*</span>保管人&emsp;:</ion-label>
         <ion-input [(ngModel)]="invoice.userPerson" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>

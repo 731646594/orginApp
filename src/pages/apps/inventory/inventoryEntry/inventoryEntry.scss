@@ -1,10 +1,14 @@
 page-inventoryEntry{
+  .label-ios{
+    margin-right: 0;
+  }
   .formSelectLabel{
     flex: none;
   }
   .formSelect{
     width: 100%;
     max-width: 100%;
+    padding-left: 16px;
   }
   .formInfoBox{
     margin-bottom: 60px;
@@ -88,5 +92,7 @@ page-inventoryEntry{
     border: 0;
     font-size: 17px;
   }
-
+  select-filter-nec .labelNormal{
+    padding-left: 16px;
+  }
 }

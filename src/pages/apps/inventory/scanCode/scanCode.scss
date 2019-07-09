@@ -8,6 +8,7 @@ page-scanCode{
   .formSelect{
     width: 100%;
     max-width: 100%;
+    padding-left:16px;
   }
   .formInfoBox{
     margin-bottom: 60px;
@@ -92,5 +93,7 @@ page-scanCode{
     border: 0;
     font-size: 17px;
   }
-
+  select-filter-nec .labelNormal{
+    padding-left: 16px;
+  }
 }

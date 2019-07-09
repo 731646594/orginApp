@@ -255,5 +255,7 @@ export class InventoryEntryPage {
   selectStorePlaceData(string){
     this.storePlaceName = string;
   }
-
+  getSelectValue(value,key){
+    this.invoice[key] = value["selectedValue"];
+  }
 }
