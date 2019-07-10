@@ -5,32 +5,29 @@
 </ion-header>
 
 <ion-content>
-  <div class="planListBox">
-    <ion-list class="planList">
-      <ion-item class="inputItem" *ngFor="let planDetail of planDetailList;let i = index">
-        <div *ngIf="planDetail.planStatus=='new'">
-          盘盈
+  <div *ngFor="let planDetail of planDetailList;let i = index">
+    <div class="callContentBox">
+      <div class="callContentMiniBox">
+        <ion-list class="callContent">
+          <ion-list class="callList">
+            <ion-item *ngIf="planDetail.planStatus=='new'" class="inputItem">
+              <ion-label style="color: red">盘盈</ion-label>
+            </ion-item>
+            <ion-item *ngIf="planDetail.planStatus=='exist'" class="inputItem">
+              <ion-label style="color: green">盘点</ion-label>
+            </ion-item>
+            <label-normal [itemName]="'资产条码'" [labelValue]="planDetail.barCode"></label-normal>
+            <label-normal [itemName]="'资产编码'" [labelValue]="planDetail.assetsCode"></label-normal>
+            <label-normal [itemName]="'资产名称'" [labelValue]="planDetail.assetsName"></label-normal>
+            <label-right-show [itemName]="'保管单位'" [labelValue]="planDetail.departName"></label-right-show>
+            <label-normal [itemName]="'保管人'" [labelValue]="planDetail.userPerson"></label-normal>
+          </ion-list>
+        </ion-list>
+        <div class="cardButton"  style=""  item-end>
+          <ion-label (click)="testDelete(i)">删除</ion-label>
         </div>
-        <div *ngIf="planDetail.planStatus=='exist'">
-          盘点
-        </div>
-        <div>
-          资产条码：<input readonly class="readonlyInput" [(ngModel)]="planDetail.barCode">
-        </div>
-        <div>
-          资产编码：<input readonly class="readonlyInput" [(ngModel)]="planDetail.assetsCode">
-        </div>
-        <div>
-          资产名称：<input readonly class="readonlyInput" [(ngModel)]="planDetail.assetsName">
-        </div>
-        <div>
-          保管单位：<input readonly class="readonlyInput" [(ngModel)]="departName">
-        </div>
-        <div>
-          保管人：&emsp;<input readonly class="readonlyInput" [(ngModel)]="planDetail.userPerson">
-        </div>
-      </ion-item>
-    </ion-list>
+      </div>
+    </div>
   </div>
 </ion-content>
 <footer class="listFooter" padding >

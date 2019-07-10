@@ -1,22 +1,25 @@
 page-inventoryDataUpload{
-  .list-ios .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
-    padding-right: 0 !important;
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
   }
-  .list-md .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
-    padding-right: 0 !important;
+  .callContent{
+    width: 81%;
+  }
+  .callList{
+    padding-right: 0;
+  }
+  .cardButton{
+    background: red;
+    color: white;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    margin: auto auto auto 0;
   }
   .item-ios{
-    border-bottom: none !important;
-  }
-  .item-md{
-    border-bottom: none !important;
+    border: none !important;
   }
   .label-ios{
-    margin-right: 0 !important;;
-  }
-  .label-md{
     margin-right: 0 !important;;
   }
   .planListBox{
