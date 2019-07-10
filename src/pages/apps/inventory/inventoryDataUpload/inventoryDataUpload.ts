@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
-import {StorageService} from "../../../../services/storageService";
+import { StorageService} from "../../../../services/storageService";
 
 @Component({
   selector: 'page-inventoryDataUpload',
@@ -46,24 +46,50 @@ export class InventoryDataUploadPage {
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
   uploadList(){
-    let loadingCtrl = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:5000
+    if(this.planDetailList.length==0){
+      let alertCtrl = this.alertCtrl.create({
+        title: "没有可上传的数据！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+    let loading = this.loadingCtrl.create({
+      content:"上传进度：0%",
+      dismissOnPageChange:false,
     });
-    loadingCtrl.present();
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?uploadcheckplan",{userCode:this.userCode,departCode:this.departCode,uploadType:"",uploadFile:[],keyCode:"",data:""}).subscribe(data=>{
-      loadingCtrl.dismiss();
-      if (data.success=="true"){
-        let alert = this.alertCtrl.create({
-          title:data.msg
-        });
-        alert.present();
-        this.storageService.deleteUserTable("newPlanDetail",this.userCode);
-        this.storageService.deleteUserTable("existPlanDetail",this.userCode);
-      }else {
-        alert(data.msg)
-      }
-    })
+    loading.present();
+    let failLen=0;
+    let now: number = 0;
+    let index=0;
+    let i=0;
+    for(i=0;i<this.planDetailList.length;i++){
+      this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?uploadcheckplan",{userCode:this.userCode,departCode:this.departCode,uploadType:"",uploadFile:[],keyCode:"",data:""}).subscribe(data=>{
+        if (data.success=="true"){
+          let l = index-this.newPlanDetail.length;
+          if(l>0){
+            this.existPlanDetail.splice(l,1);
+            this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
+          }
+          else {
+            this.newPlanDetail.splice(index,1);
+            this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
+          }
+        }else {
+          failLen++;
+        }
+        now = (index+1)/this.planDetailList.length*100;
+        index++;
+        loading.setContent("上传进度："+Math.floor(now)+"%");
+        if (now == 100){
+          loading.dismiss();
+          let alertCtrl = this.alertCtrl.create({
+            title: "上传完成，失败" + failLen + "条"
+          });
+          alertCtrl.present();
+          this.loadData();
+        }
+      });
+    }
   }
   testDelete(index){
     let alertCtrl = this.alertCtrl.create({
