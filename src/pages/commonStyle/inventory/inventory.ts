@@ -213,6 +213,7 @@ export class InventoryPage {
           }
         }
       }
+      invoiceList["uploadFile"] = this.uploadFile;
       this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
       PageUtil.pages["home"].inventoryNum = willListLength;
       this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
@@ -242,8 +243,25 @@ export class InventoryPage {
     }).catch(e =>alert("erro2_5:"+JSON.stringify(e)));
     for(let i in  localPlanDetail){
       if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
-        this.invoice = localPlanDetail[i];
-        isSearch = true;
+        let alertCtrl = this.alertCtrl.create({
+          title:"已存在该盘点数据，是否重新盘点？",
+          buttons:[
+            {
+              text:"是",
+              handler:()=>{
+                this.invoice = localPlanDetail[i];
+                isSearch = true;
+              }
+            },
+            {
+              text:"否",
+              handler:()=>{
+                this.invoice["barCode"] = "";
+              }
+            }
+          ]
+        });
+        alertCtrl.present();
       }
     }
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{

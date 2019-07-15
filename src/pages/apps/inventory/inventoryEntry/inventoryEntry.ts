@@ -128,6 +128,13 @@ export class InventoryEntryPage  extends InventoryPage{
       alertCtrl.present();
       return false;
     }
+    if(this.uploadFile.length==0){
+      let alertCtrl = this.alertCtrl.create({
+        title:"请添加照片"
+      });
+      alertCtrl.present();
+      return false;
+    }
     let invoiceList = [];
     let isReplace = false;
     isReplace = false;
@@ -147,6 +154,7 @@ export class InventoryEntryPage  extends InventoryPage{
       }else {
         invoiceList[0]=this.invoice;
       }
+      invoiceList["uploadFile"] = this.uploadFile;
       this.storageService.sqliteInsert("newPlanDetail",this.userCode,JSON.stringify(invoiceList));
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
