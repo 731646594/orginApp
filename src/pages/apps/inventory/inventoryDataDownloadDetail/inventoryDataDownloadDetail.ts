@@ -42,10 +42,10 @@ export class InventoryDataDownloadDetailPage {
   downloadPlan1(item){
     let loading = this.loadingCtrl.create({
       content:"正在加载",
-      duration:10000
+      duration:5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController.do?phonecheckplandetailNew",{userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandetailNew.do",{userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item}).subscribe(data=>{
       if (data.success=="true"){
 
         this.downloadPlan2(data.data);
