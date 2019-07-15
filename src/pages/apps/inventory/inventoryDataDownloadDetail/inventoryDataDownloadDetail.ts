@@ -100,6 +100,8 @@ export class InventoryDataDownloadDetailPage {
           this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
           this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
+          this.storageService.deleteUserTable("existPlanDetail",this.userCode);
+          this.storageService.deleteUserTable("newPlanDetail",this.userCode);
           PageUtil.pages["home"].inventoryNum = data.length;
         };
         reader.readAsText(file);
@@ -130,7 +132,7 @@ export class InventoryDataDownloadDetailPage {
     }
     if(!isAlertOnce){
       let alertCtrl = this.alertCtrl.create({
-        title:"重新下载将清除已盘点的数据！",
+        title:"重新下载将清除已盘点、已盘盈和已下载的数据！",
         buttons:[
           {
             text:"否",

@@ -3,11 +3,12 @@ import {Http,Headers,RequestOptions} from '@angular/http';
 import "rxjs/add/operator/map";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storageService";
+import {AlertController} from "ionic-angular";
 
 @Injectable()
 export class HttpService {
 
-  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService){}
+  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController){}
 
   public getUrl(){
     let url=this.storageService.read("serverUrl");
@@ -40,15 +41,55 @@ export class HttpService {
   public post (url:string,body:any){
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
-    let options = new RequestOptions({ headers:headers});
+    let options = new RequestOptions({ headers:headers, withCredentials: true});
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json(),err=>console.log("error:"+err));
   }
-
+  public postData (url:string,body:any,successCallback){
+    var headers = new Headers();
+    headers.append('Content-Type','application/x-www-form-urlencoded');
+    let options = new RequestOptions({ headers:headers, withCredentials: true});
+    return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
+      (res)=>{
+        if(successCallback){
+          if(res["success"]){
+            successCallback(res);
+          }else{
+            this.errorCallback(res['msg']);
+          }
+        }
+      },(err)=>{
+        this.errorCallback(err);
+        console.log(JSON.stringify(err))
+        let errMsg = "网络通信异常"
+        switch (err.status) {
+          case 401:
+            errMsg = '无权限访问，或许登录信息已过期，请重新登录';
+            //跳转到登陆app
+            // this.app.getRootNav().push(HseLoginPage);
+            break;
+          case 404:
+            errMsg = '抱歉，后台服务找不到对应接口';
+            break;
+          case 0:
+            errMsg = '网络无法连接';
+          default:
+            break;
+        }
+        alert(errMsg)
+      }
+    );
+  };
   private transformRequest(obj){
     var str=[];
     for (var s in obj){
       str.push(encodeURIComponent(s)+"="+encodeURIComponent(obj[s]))
     }
     return str.join("&");
+  }
+  private errorCallback(msg){
+    let alertCtrl = this.alertCtrl.create({
+      title:msg
+    });
+    alertCtrl.present();
   }
 }

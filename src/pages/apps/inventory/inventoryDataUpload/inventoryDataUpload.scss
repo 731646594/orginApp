@@ -2,6 +2,9 @@ page-inventoryDataUpload{
   .scroll-content{
     background-color: rgb(246,246,246) ;
   }
+  .con{
+    margin-bottom: 60px;
+  }
   .callContent{
     width: 81%;
   }
@@ -20,7 +23,9 @@ page-inventoryDataUpload{
     border: none !important;
   }
   .label-ios{
-    margin-right: 0 !important;;
+    margin-right: 0 !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .planListBox{
     margin-bottom: 60px;
@@ -48,5 +53,12 @@ page-inventoryDataUpload{
     font-size: 2em;
     color: #4389e8;
     margin-bottom: 2px;
+  }
+  .planInfoBox{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
   }
 }

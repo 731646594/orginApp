@@ -39,7 +39,7 @@ export class HomePage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.httpService.post(this.httpService.getUrl()+"toDoController.do?tododetailcounts", {userCode:this.userCode,departCode:this.departCode}).subscribe((data)=>{
+    this.httpService.post(this.httpService.getUrl()+"toDoController/tododetailcounts.do", {userCode:this.userCode,departCode:this.departCode}).subscribe((data)=>{
       let todoList=[];
       if (data.success=="true"){
         for (let key in data.data[0]) {

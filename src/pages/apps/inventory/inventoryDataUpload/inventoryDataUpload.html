@@ -5,26 +5,33 @@
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let planDetail of planDetailList;let i = index">
-    <div class="callContentBox">
-      <div class="callContentMiniBox">
-        <ion-list class="callContent">
-          <ion-list class="callList">
-            <ion-item *ngIf="planDetail.planStatus=='new'" class="inputItem">
-              <ion-label style="color: red">盘盈</ion-label>
-            </ion-item>
-            <ion-item *ngIf="planDetail.planStatus=='exist'" class="inputItem">
-              <ion-label style="color: green">盘点</ion-label>
-            </ion-item>
-            <label-normal [itemName]="'资产条码'" [labelValue]="planDetail.barCode"></label-normal>
-            <label-normal [itemName]="'资产编码'" [labelValue]="planDetail.assetsCode"></label-normal>
-            <label-normal [itemName]="'资产名称'" [labelValue]="planDetail.assetsName"></label-normal>
-            <label-right-show [itemName]="'保管单位'" [labelValue]="planDetail.departName"></label-right-show>
-            <label-normal [itemName]="'保管人'" [labelValue]="planDetail.userPerson"></label-normal>
+  <div class="con">
+    <div class="planInfoBox">
+      <label-normal [itemName]="'盘点计划名称'" [labelValue]="planData.planName"></label-normal>
+      <label-normal [itemName]="'盘点计划编码'" [labelValue]="planData.planNumber"></label-normal>
+      <label-normal [itemName]="'盘点计划结束日期'" [labelValue]="planData.stopDate"></label-normal>
+    </div>
+    <div *ngFor="let planDetail of planDetailList;let i = index">
+      <div class="callContentBox">
+        <div class="callContentMiniBox">
+          <ion-list class="callContent">
+            <ion-list class="callList">
+              <ion-item *ngIf="planDetail.planStatus=='new'" class="inputItem">
+                <ion-label style="color: red">盘盈</ion-label>
+              </ion-item>
+              <ion-item *ngIf="planDetail.planStatus=='exist'" class="inputItem">
+                <ion-label style="color: green">盘点</ion-label>
+              </ion-item>
+              <label-normal [itemName]="'资产条码'" [labelValue]="planDetail.barCode"></label-normal>
+              <label-normal [itemName]="'资产编码'" [labelValue]="planDetail.assetsCode"></label-normal>
+              <label-normal [itemName]="'资产名称'" [labelValue]="planDetail.assetsName"></label-normal>
+              <label-right-show [itemName]="'保管单位'" [labelValue]="planDetail.departName"></label-right-show>
+              <label-normal [itemName]="'保管人'" [labelValue]="planDetail.userPerson"></label-normal>
+            </ion-list>
           </ion-list>
-        </ion-list>
-        <div class="cardButton"  style=""  item-end>
-          <ion-label (click)="testDelete(i)">删除</ion-label>
+          <div class="cardButton"  style=""  item-end>
+            <ion-label (click)="testDelete(i)">删除</ion-label>
+          </div>
         </div>
       </div>
     </div>

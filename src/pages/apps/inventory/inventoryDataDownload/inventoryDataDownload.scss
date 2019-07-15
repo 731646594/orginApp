@@ -1,22 +1,13 @@
 page-inventoryDataDownload{
   .list-ios .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
-    padding-right: 0 !important;
-  }
-  .list-md .item-block .item-inner{
-    border-bottom: 0.55px solid #c8c7cc !important;
+    border-bottom: 0 !important;
     padding-right: 0 !important;
   }
   .item-ios{
     border-bottom: none !important;
-  }
-  .item-md{
-    border-bottom: none !important;
+    padding-right: 16px;
   }
   .label-ios{
-    margin-right: 0 !important;;
-  }
-  .label-md{
     margin-right: 0 !important;;
   }
   .planButton{
@@ -28,9 +19,17 @@ page-inventoryDataDownload{
     font-size: 1.6em;
   }
   .planStatus{
-    font-size: 16px;
+    font-size: 15px;
+    color:white ;
+    padding: 3px;
+    border-radius: 5px;
+  }
+  .download{
+    background: rgba(0,0,0,0.3);
   }
   .readonlyInput{
     width: 56%;
+    display: inline-block;
+    vertical-align: bottom;
   }
 }

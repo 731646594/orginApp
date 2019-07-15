@@ -4,6 +4,7 @@ import { MenuPage } from '../commonStyle/menu/menu';
 import { HomePage } from '../home/home';
 // import {PageUtil} from "../../services/storageService";
 import {MinePage} from "../mine/mine/mine";
+import {StorageService} from "../../services/storageService";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -22,7 +23,7 @@ export class TabsPage {
   diaobo;
   tongji;
   jiayouzhan;
-  constructor() {
+  constructor(public storageService:StorageService) {
 
     // PageUtil.pages["tabs"]=this;
 
@@ -109,14 +110,17 @@ export class TabsPage {
         [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"]
       ]
     };
+    if(this.storageService.read("applyPageData")){
+      this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
+    }
     this.pageData2 = {
       pageName:"我的",
       pageData:[
         [
-          [2,null,"shezhi.png","服务器设置"],[3,null,"xiugai.png","修改密码"],[4,null,"qiehuan.png","切换单位"]
+          [2,"","shezhi.png","服务器设置"],[3,"","xiugai.png","修改密码"],[4,"","qiehuan.png","切换单位"]
         ],
         [
-          [6,null,"qingchu.png","清除数据"],[7,null,"gengxin.png","更新字典"],[5,null,"tuichu.png","退出登陆"]
+          [6,"","qingchu.png","清除数据"],[7,"","gengxin.png","更新字典"],[5,"","tuichu.png","退出登陆"]
         ]
       ]
     }

@@ -14,6 +14,7 @@ export class InventoryDataUploadPage {
   departCode;
   newPlanDetail=[];
   existPlanDetail=[];
+  planData=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
@@ -44,6 +45,11 @@ export class InventoryDataUploadPage {
         }
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.planData = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   uploadList(){
     if(this.planDetailList.length==0){

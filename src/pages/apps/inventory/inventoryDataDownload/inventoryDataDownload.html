@@ -12,15 +12,10 @@
           盘点计划编码：<input readonly class="readonlyInput" [(ngModel)]="plan.planNumber">
         </div>
         <div>
-          盘点计划名称：<input readonly class="readonlyInput" [(ngModel)]="plan.planName">
+          盘点计划名称：<span class="readonlyInput labelNormal" >{{plan.planName}}</span>
         </div>
         <div *ngIf="!plan.isDownLoad" class="planButton" item-end >
-          <ion-icon name="cloud-download" class="planIcon"></ion-icon>
-          <div class="planStatus">未下载</div>
-        </div>
-        <div *ngIf="plan.isDownLoad" class="planButton" item-end >
-          <ion-icon name="checkmark-circle" class="planIcon"></ion-icon>
-          <div class="planStatus">已下载</div>
+          <div class="planStatus download">上次下载</div>
         </div>
       </ion-item>
     </ion-list>

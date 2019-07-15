@@ -49,7 +49,7 @@ export class LoginPage {
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"appLoginController.do?login",
+    this.httpService.post(this.httpService.getUrl()+"appLoginController/login.do",
       {usercode:this.username,password:this.password}).subscribe((data)=>{
       if (data.success=="false"){
         loading.dismiss()
@@ -66,6 +66,7 @@ export class LoginPage {
         this.storageService.write("loginUserName",loginInfo[0].user.username);
         this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
         this.storageService.write("loginDepartList",this.departList);
+        this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
         this.depart = this.departList[0];
       }
       loading.dismiss()
@@ -79,10 +80,10 @@ export class LoginPage {
       duration: 10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"devWeeklyCheckController.do?getCheckListCols",{departCode:this.depart.departcode}).subscribe(data=>{
+    this.httpService.post(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode}).subscribe(data=>{
       if (data.success=="true"){
         this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
-        this.httpService.post(this.httpService.getUrl()+"devHandOverController.do?getCheckListCols",{departCode:this.depart.departcode}).subscribe(data2=>{
+        this.httpService.post(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode}).subscribe(data2=>{
           if (data2.success=="true"){
             this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
             loading.dismiss();
