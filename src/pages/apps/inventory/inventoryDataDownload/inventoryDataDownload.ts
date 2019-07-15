@@ -22,7 +22,7 @@ export class InventoryDataDownloadPage {
   loadData(){
     let loading = this.loadingCtrl.create({
       content:"正在加载",
-      duration:10000
+      duration:5000
     });
     loading.present();
     this.userCode = this.storageService.read("loginUserCode");

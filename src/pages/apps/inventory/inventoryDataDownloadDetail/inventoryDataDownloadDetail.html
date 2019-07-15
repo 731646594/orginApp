@@ -18,7 +18,7 @@
       <ion-item class="inputItem" *ngFor="let department of departments;let i = index">
         <ion-checkbox [checked]="department.checked" (click)="checkedOne(i)"></ion-checkbox>
         <ion-label>{{department.departName}}</ion-label>
-        <div *ngIf="!department.isDownLoad" class="planButton" item-end >
+        <div *ngIf="department.isDownLoad" class="planButton" item-end >
           <div class="planStatus download">上次下载</div>
         </div>
       </ion-item>
