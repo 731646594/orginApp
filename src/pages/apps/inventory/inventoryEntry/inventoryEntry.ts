@@ -119,7 +119,7 @@ export class InventoryEntryPage  extends InventoryPage{
       return false;
     }
     let j = this.pageData.pageItem.filter((item) => {
-      return (item.nec==1&&!this.invoice[item.itemValue]);
+      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
     });
     if (j.length>0){
       let alertCtrl = this.alertCtrl.create({
@@ -135,6 +135,7 @@ export class InventoryEntryPage  extends InventoryPage{
       alertCtrl.present();
       return false;
     }
+    this.invoice["uploadFile"] = this.uploadFile;
     let invoiceList = [];
     let isReplace = false;
     isReplace = false;
@@ -154,7 +155,6 @@ export class InventoryEntryPage  extends InventoryPage{
       }else {
         invoiceList[0]=this.invoice;
       }
-      invoiceList["uploadFile"] = this.uploadFile;
       this.storageService.sqliteInsert("newPlanDetail",this.userCode,JSON.stringify(invoiceList));
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"

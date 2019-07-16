@@ -43,7 +43,7 @@ export class InventoryPage {
   }
   ionViewWillUnload(){
     this.events.unsubscribe("showFooter");
-    this.events.unsubscribe("hideFooter")
+    this.events.unsubscribe("hideFooter");
   }
   ionViewDidEnter(){
 
@@ -175,6 +175,17 @@ export class InventoryPage {
       alert.present();
       return false;
     }
+    let j = this.pageData.pageItem.filter((item) => {
+      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+    });
+    if (j.length>0){
+      let alertCtrl = this.alertCtrl.create({
+        title:"请填写"+j[0].itemName
+      });
+      alertCtrl.present();
+      return false;
+    }
+    this.invoice["uploadFile"] = this.uploadFile;
     let invoiceList = [];
     let isReplace = false;
     let willList = [];
@@ -184,46 +195,43 @@ export class InventoryPage {
         willList = JSON.parse(res.rows.item(0).stringData);
         willListLength = JSON.parse(res.rows.item(0).stringData).length;
       }
-    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        invoiceList = JSON.parse(res.rows.item(0).stringData);
-        for (let i in invoiceList){
-          if (invoiceList[i]["barCode"] == this.invoice["barCode"]){
-            invoiceList[i] = this.invoice;
-            isReplace = true;
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          invoiceList = JSON.parse(res.rows.item(0).stringData);
+          for (let i in invoiceList){
+            if (invoiceList[i]["barCode"] == this.invoice["barCode"]){
+              invoiceList[i] = this.invoice;
+              isReplace = true;
+            }
           }
-        }
-        if (!isReplace){
+          if (!isReplace){
+            for (let i in willList){
+              if (willList[i]["barCode"] == this.invoice["barCode"]){
+                willList.splice(Number(i),1);
+                willListLength--;
+                invoiceList.push(this.invoice)
+              }
+            }
+          }
+        }else {
           for (let i in willList){
             if (willList[i]["barCode"] == this.invoice["barCode"]){
               willList.splice(Number(i),1);
               willListLength--;
-              invoiceList.push(this.invoice)
+              invoiceList[0]=this.invoice;
             }
           }
-
         }
-      }else {
-        for (let i in willList){
-          if (willList[i]["barCode"] == this.invoice["barCode"]){
-            willList.splice(Number(i),1);
-            willListLength--;
-            invoiceList[0]=this.invoice;
-          }
-        }
-      }
-      invoiceList["uploadFile"] = this.uploadFile;
-      this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
-      PageUtil.pages["home"].inventoryNum = willListLength;
-      this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
-      let alertCtrl = this.alertCtrl.create({
-        title:"保存成功！"
+        this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
+        PageUtil.pages["home"].inventoryNum = willListLength;
+        this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
+        let alertCtrl = this.alertCtrl.create({
+          title:"保存成功！"
+        });
+        alertCtrl.present();
+        this.navCtrl.pop();
       });
-      alertCtrl.present();
-      this.navCtrl.pop();
-    }).catch(e =>alert("erro2_4:"+JSON.stringify(e)));
-
+    });
   }
 
   searchLocalPlanDetail(){
@@ -239,61 +247,66 @@ export class InventoryPage {
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         localPlanDetail = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_5:"+JSON.stringify(e)));
-    for(let i in  localPlanDetail){
-      if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
-        let alertCtrl = this.alertCtrl.create({
-          title:"已存在该盘点数据，是否重新盘点？",
-          buttons:[
-            {
-              text:"是",
-              handler:()=>{
-                this.invoice = localPlanDetail[i];
-                isSearch = true;
-              }
-            },
-            {
-              text:"否",
-              handler:()=>{
-                this.invoice["barCode"] = "";
-              }
-            }
-          ]
-        });
-        alertCtrl.present();
-      }
-    }
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        localPlanDetail = JSON.parse(res.rows.item(0).stringData);
-      }
-    }).catch(e =>alert("erro2_6:"+JSON.stringify(e)));
-    for(let i in  localPlanDetail){
-      if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
-        this.invoice = localPlanDetail[i];
-        isSearch = true;
-      }
-    }
-    this.isDistinguish = true;
-    if (!isSearch){
-      let alertCtrl = this.alertCtrl.create({
-        title:"是否进入盘盈？",
-        buttons:[
-          {
-            text:"是",
-            handler:()=>{
-              this.isDistinguish = false;
-              this.app.getRootNav().push(this.nextPage,{barCode:this.invoice["barCode"]})
-            }
-          },
-          {
-            text:"否"
+        for(let i in  localPlanDetail){
+          if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
+            isSearch = true;
+            let alertCtrl = this.alertCtrl.create({
+              title:"已存在该盘点数据，是否重新盘点？",
+              buttons:[
+                {
+                  text:"是",
+                  handler:()=>{
+                    this.invoice = localPlanDetail[i];
+                    this.isDistinguish = true;
+                  }
+                },
+                {
+                  text:"否",
+                  handler:()=>{
+                    this.invoice["barCode"] = "";
+                  }
+                }
+              ]
+            });
+            alertCtrl.present();
+            return false;
           }
-        ]
+        }
+      }
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          localPlanDetail = JSON.parse(res.rows.item(0).stringData);
+          for(let i in  localPlanDetail){
+            if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
+              this.invoice = localPlanDetail[i];
+              isSearch = true;
+              this.isDistinguish = true;
+            }
+          }
+        }
+        if (!isSearch){
+          let alertCtrl = this.alertCtrl.create({
+            title:"是否进入盘盈？",
+            buttons:[
+              {
+                text:"是",
+                handler:()=>{
+                  this.isDistinguish = false;
+                  this.app.getRootNav().push(this.nextPage,{barCode:this.invoice["barCode"]})
+                }
+              },
+              {
+                text:"否",
+                handler:()=>{
+                  this.invoice["barCode"] = "";
+                }
+              }
+            ]
+          });
+          alertCtrl.present();
+        }
       });
-      alertCtrl.present();
-    }
+    });
   }
   hideFooter(){
     this.isFocus=true;
