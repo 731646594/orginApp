@@ -14,6 +14,7 @@ export class InventoryDataUploadPage {
   departCode;
   newPlanDetail=[];
   existPlanDetail=[];
+  willPlanDetail=[];
   planData=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
@@ -45,6 +46,11 @@ export class InventoryDataUploadPage {
         }
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.willPlanDetail = JSON.parse(res.rows.item(0).stringData);
+      }
+    }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.planData = JSON.parse(res.rows.item(0).stringData);
@@ -109,9 +115,11 @@ export class InventoryDataUploadPage {
           text:"是",
           handler:()=>{
             let l = index-this.newPlanDetail.length;
-            if(l>0){
+            if(l>=0){
+              this.willPlanDetail.push(this.existPlanDetail[l]);
               this.existPlanDetail.splice(l,1);
               this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
+              this.storageService.updateUserTable("willPlanDetail",this.userCode,JSON.stringify(this.willPlanDetail));
             }
             else {
               this.newPlanDetail.splice(index,1);
