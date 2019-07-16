@@ -45,9 +45,10 @@ export class InventoryDataDownloadDetailPage {
       duration:5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandetailNew.do",{userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item}).subscribe(data=>{
+    let params ={};
+    params = {userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item};
+    this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandetail.do",params).subscribe(data=>{
       if (data.success=="true"){
-
         this.downloadPlan2(data.data);
         loading.dismiss();
       }
@@ -100,8 +101,11 @@ export class InventoryDataDownloadDetailPage {
           this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
           this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
-          this.storageService.deleteUserTable("existPlanDetail",this.userCode);
-          this.storageService.deleteUserTable("newPlanDetail",this.userCode);
+          try {
+            this.storageService.deleteUserTable("existPlanDetail",this.userCode);
+            this.storageService.deleteUserTable("newPlanDetail",this.userCode);
+          }
+          catch {}
           PageUtil.pages["home"].inventoryNum = data.length;
         };
         reader.readAsText(file);
@@ -150,6 +154,8 @@ export class InventoryDataDownloadDetailPage {
         ]
       });
       alertCtrl.present();
+    }else {
+      this.downloadPlan1(item);
     }
   }
   checkedOne(index){
