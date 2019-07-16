@@ -7,36 +7,14 @@
 <ion-content>
   <div class="searchListBox">
     <ion-list class="searchList">
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">盘点计划编码：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.planNumber}}</ion-label>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">盘点计划名称：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.planName}}</ion-label>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">计划下达日期：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.startDate}}</ion-label>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">计划结束日期：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.stopDate}}</ion-label>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">操作人&emsp;：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.username}}</ion-label>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label  class="searchSelectLabel">盘点单位：</ion-label>
-        <ion-select  class="searchSelect" interface="popover" [(ngModel)]="departCode">
-          <ion-option *ngFor="let department of departments" [value]="department.departCode" (ionSelect)="selectDepart()">{{department.departName}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">资产总数：</ion-label>
-        <ion-label class="itemContentLabel">{{plan.number}}</ion-label>
-      </ion-item>
+      <div *ngFor="let item of pageData.pageItem;">
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="plan[item.itemValue]"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="item.itemValue" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="selectDepart($event)"></select-normal>
+        </div>
+      </div>
     </ion-list>
     <ion-toolbar class="searchToolbar">
       <ion-segment [(ngModel)]="planStatus">
@@ -51,101 +29,7 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-    <ion-list class="searchDetailList" *ngFor="let planDetail of planDetailList;let i = index" >
-      <ion-item class="inputItem miniContentBox" (click)="displayContent(i)">
-        <div class="itemContentDiv">
-          资产名称：{{planDetail.assetsName}}
-        </div>
-        <div class="itemContentDiv">
-          资产编码：{{planDetail.assetsCode}}
-        </div>
-        <div class="itemContentDiv">
-          规格型号：{{planDetail.assetsStandard}}
-        </div>
-      </ion-item>
-      <div class="disContent">
-        <ion-content>
-            <ion-list class="callList">
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">资产编码：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.assetsCode}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">资产名称：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.assetsName}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">资产条码：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.barCode}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">规格型号：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.assetsStandard}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">车牌井号：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.licenceNumber}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">保管人&emsp;：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.userPerson}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">存放地点：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.storePlaceName}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">出厂编号：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.productId}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">资产状态编码：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.assetsStatus}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">资产状态名称：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.assetsStatusName}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">使用状态编码：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.usedState}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">使用状态名称：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.usedStateName}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">技术状况：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.technicalCondition}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">制造厂家：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.makeFactory}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">备&emsp;&emsp;注：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.remark}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">净&emsp;&emsp;值：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.nowValue}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">原&emsp;&emsp;值：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.originalValue}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">所属单位编码：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.managerDepart}}</ion-label>
-              </ion-item>
-              <ion-item class="inputItem">
-                <ion-label class="noFlexLabel">所属单位名称：</ion-label>
-                <ion-label class="itemContentLabel">{{planDetail.managerDepartName}}</ion-label>
-              </ion-item>
-            </ion-list>
-        </ion-content>
-      </div>
-    </ion-list>
+    <card-normal [cardData]="pageData.cardItem" [data]="planDetailList"></card-normal>
     <ion-infinite-scroll (ionInfinite)="getMore($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>

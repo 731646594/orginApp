@@ -27,11 +27,11 @@ export class InventoryQueryPage {
   userCode;
   displayIndex;
   page=1;
+  pageData={};
   constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController) {
     this.loadData();
   }
   ionViewDidEnter(){
-
   }
   loadData(){
     this.userCode = this.storageService.read("loginUserCode");
@@ -62,9 +62,52 @@ export class InventoryQueryPage {
           this.departCode = this.departments[0]["departCode"];
         }
         this.planStatus = "will";
-        this.selectDepart();
+        this.selectDepart(this.departCode);
       }
       this.plan["username"]=this.storageService.read("loginUserName");
+      this.pageData={
+        pageItem:[
+          {itemName:"盘点计划编码", itemType:"label",itemValue:"planNumber"},
+          {itemName:"盘点计划名称", itemType:"label",itemValue:"planName"},
+          {itemName:"计划下达日期", itemType:"label",itemValue:"startDate"},
+          {itemName:"计划结束日期", itemType:"label",itemValue:"stopDate"},
+          {itemName:"操作人", itemType:"label",itemValue:"username"},
+          //departCode
+          {itemName:"盘点单位", itemType:"select",itemValue:this.departCode,optionValueString:"departCode",optionNameString:"departName",
+            option:this.departments,
+          },
+          {itemName:"资产总数", itemType:"label",itemValue:"number"},
+        ],
+        cardItem:{
+          cardParent:[
+            {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+            {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+            {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
+          ],
+          cardChild:[
+            {itemName:"资产编码", itemType:"label",itemValue:"assetsCode"},
+            {itemName:"资产名称", itemType:"label",itemValue:"assetsName"},
+            {itemName:"所属单位", itemType:"label",itemValue:"departName"},
+            {itemName:"资产条码", itemType:"label",itemValue:"barCode"},
+            {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
+            {itemName:"车牌井号", itemType:"label",itemValue:"licenceNumber"},
+            {itemName:"保管人", itemType:"label",itemValue:"userPerson"},
+            {itemName:"存放地点", itemType:"label",itemValue:"storePlace"},
+            {itemName:"出厂编号", itemType:"label",itemValue:"productId"},
+            {itemName:"资产状态编码", itemType:"label",itemValue:"assetsStatus"},
+            {itemName:"资产状态名称", itemType:"label",itemValue:"assetsStatusName"},
+            {itemName:"使用状态编码", itemType:"label",itemValue:"usedState"},
+            {itemName:"使用状态名称", itemType:"label",itemValue:"usedStateName"},
+            {itemName:"技术状况", itemType:"label",itemValue:"technicalCondition"},
+            {itemName:"制造厂家", itemType:"label",itemValue:"makeFactory"},
+            {itemName:"备注", itemType:"label",itemValue:"remark"},
+            {itemName:"原值", itemType:"label",itemValue:"originalValue"},
+            {itemName:"净值", itemType:"label",itemValue:"nowValue"},
+            {itemName:"所属单位编码", itemType:"label",itemValue:"managerDepart"},
+            {itemName:"所属单位名称", itemType:"label",itemValue:"managerDepartName"},
+          ]
+        }
+      }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   readData(){
@@ -119,7 +162,11 @@ export class InventoryQueryPage {
     infiniteScroll.complete();
 
   }
-  selectDepart(){
+  selectDepart(value){
+    if(value["selectedValue"]||value["selectedValue"]=="0")
+      this.departCode = value["selectedValue"];
+    else
+      this.departCode = value;
     this.existPlanDetail=[];
     this.willPlanDetail=[];
     this.newPlanDetail=[];
