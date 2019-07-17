@@ -176,7 +176,11 @@ export class InventoryPage {
       return false;
     }
     let j = this.pageData.pageItem.filter((item) => {
-      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+      if(item.itemValue.constructor==Array){
+        return (item.nec==1&&!this.invoice[item.itemValue[0]]&&this.invoice[item.itemValue[0]]!="0");
+      }else {
+        return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+      }
     });
     if (j.length>0){
       let alertCtrl = this.alertCtrl.create({
@@ -257,6 +261,7 @@ export class InventoryPage {
                   text:"是",
                   handler:()=>{
                     this.invoice = localPlanDetail[i];
+                    this.getAndShowPics(this.invoice["uploadFile"]);
                     this.isDistinguish = true;
                   }
                 },
@@ -279,6 +284,7 @@ export class InventoryPage {
           for(let i in  localPlanDetail){
             if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
               this.invoice = localPlanDetail[i];
+              this.getAndShowPics(this.invoice["uploadFile"]);
               isSearch = true;
               this.isDistinguish = true;
             }
@@ -308,6 +314,42 @@ export class InventoryPage {
       });
     });
   }
+  getAndShowPics(base64Images){
+    this.uploadFile=[];
+    let node = document.getElementById(this.imgBox);
+    let childs = node.childNodes;
+    for(let i = childs .length - 1; i >= 0; i--) {
+      node.removeChild(childs[i]);
+    }
+    this.i=0;
+    for (let i in base64Images){
+      let base64Image=base64Images[i];
+      let div = document.createElement("div");
+      div.className = "imgInclusion";
+      div.innerHTML+=
+        "<img id=\"i"+this.i+this.imgBox+"\" name=\"i"+this.i+this.imgBox+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
+        "<img id=\"b"+this.i+this.imgBox+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+      node.appendChild(div);
+      this.uploadFile.push(base64Image);
+      document.getElementById("i"+this.i+this.imgBox).onclick=(e)=> {
+        try {
+          this.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
+        } catch (e) {
+          alert(e)
+        }
+      };
+      document.getElementById("b"+this.i+this.imgBox).onclick=(e)=> {
+        try {
+          node.removeChild(div);
+          this.uploadFile.splice(parseInt((<HTMLElement>div.firstChild).id.slice(1)),1);
+        }catch(e) {
+          alert(e)
+        }
+      };
+      this.i++;
+    }
+
+  }
   hideFooter(){
     this.isFocus=true;
   }
@@ -320,5 +362,9 @@ export class InventoryPage {
   }
   getSelectValue(value,key){
     this.invoice[key] = value["selectedValue"];
+  }
+  getSelectFilterValue(value,key){
+    this.invoice[key[0]] = value["selectedValue"];
+    this.invoice[key[1]] = value["selectedName"];
   }
 }

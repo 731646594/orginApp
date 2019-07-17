@@ -121,7 +121,7 @@ export class MinePage {
       duration:10000
     });
     loadingCtrl.present();
-    this.httpService.post(this.httpService.getUrl()+"allotController.do?getDeparts",{userCode:this.userCode}).subscribe(data1=>{
+    this.httpService.post(this.httpService.getUrl()+"appLoginController/getDeparts.do",{userCode:this.userCode}).subscribe(data1=>{
       if (data1.success == "true"){
         this.storageService.sqliteInsert("departListData",this.userCode,JSON.stringify(data1.data));
         // this.storageService.write("departListData",data1.data);
@@ -134,7 +134,7 @@ export class MinePage {
         alert(data1.msg)
       }
     });
-    this.httpService.get(this.httpService.getUrl()+"dictionariesController.do?getPyyyDic",{}).subscribe(data2=> {
+    this.httpService.get(this.httpService.getUrl()+"dictionariesController/getPyyyDic.do",{}).subscribe(data2=> {
       if (data2.success == "success"){
         this.storageService.sqliteInsert("lossReasonData",this.userCode,JSON.stringify(data2.data));
         // this.storageService.write("lossReasonData",data2.data);
@@ -143,7 +143,7 @@ export class MinePage {
         alert(data2.msg)
       }
     });
-    this.httpService.get(this.httpService.getUrl()+"dictionariesController.do?getCfddDic",{}).subscribe(data3=> {
+    this.httpService.get(this.httpService.getUrl()+"dictionariesController/getCfddDic.do",{}).subscribe(data3=> {
       if (data3.success == "success"){
         this.storageService.sqliteInsert("storePlaceData",this.userCode,JSON.stringify(data3.data));
         // this.storageService.write("storePlaceData",data3.data);

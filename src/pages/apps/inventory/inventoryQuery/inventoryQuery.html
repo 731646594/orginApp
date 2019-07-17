@@ -30,7 +30,7 @@
       </ion-segment>
     </ion-toolbar>
     <card-normal [cardData]="pageData.cardItem" [data]="planDetailList"></card-normal>
-    <ion-infinite-scroll (ionInfinite)="getMore($event)">
+    <ion-infinite-scroll *ngIf="page>-1" (ionInfinite)="getMore($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>

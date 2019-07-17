@@ -34,6 +34,7 @@ export class InventoryQueryPage {
   ionViewDidEnter(){
   }
   loadData(){
+    this.pageData["pageItem"]=[];
     this.userCode = this.storageService.read("loginUserCode");
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
@@ -108,7 +109,7 @@ export class InventoryQueryPage {
           ]
         }
       }
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+    });
   }
   readData(){
     this.planDetailList = [];
@@ -123,6 +124,7 @@ export class InventoryQueryPage {
     for (let i = 0;i<10;i++){
       if(item[i]){
         this.planDetailList.push(item[i]);
+        this.page=1;
       }
       else {
         this.page=-1
@@ -139,12 +141,11 @@ export class InventoryQueryPage {
       item = this.newPlanDetail;
     }
     if (this.page==-1){
-      infiniteScroll.enable(false);
-      let toast = this.toastCtrl.create({
-        message: "这已经是最后一页了",
-        duration: 2000,
-      });
-      toast.present();
+      // let toast = this.toastCtrl.create({
+      //   message: "这已经是最后一页了",
+      //   duration: 2000,
+      // });
+      // toast.present();
     }else {
       let i = this.page*10;
       for (i;i<(this.page*10+10);i++){

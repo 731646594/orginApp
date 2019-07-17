@@ -39,7 +39,7 @@ export class ScanCodePage extends InventoryPage{
           {itemName:"资产名称", itemType:"label",nec:0,itemValue:"assetsName"},
           {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
           {itemName:"车牌井号", itemType:"input",inputType:"text",nec:0,itemValue:"licenceNumber"},
-          {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:"storePlace",optionValueString:"complexcode",optionNameString:"complexname"},
+          {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:["storePlace","storePlaceName"],optionValueString:"complexcode",optionNameString:"complexname"},
           {itemName:"保管人", itemType:"input",inputType:"text",nec:1,itemValue:"userPerson"},
           {itemName:"贴码状态", itemType:"select",nec:1, itemValue:"realcodeStatus",optionValueString:"optionValue",optionNameString:"optionName",
             option:[

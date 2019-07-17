@@ -21,12 +21,12 @@ export class InventoryEntryPage  extends InventoryPage{
       pageName:"盘盈录入",
       pageData:{
         pageItem:[
-          {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.selectFilterData["departments"],},
+          {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.departments,},
           {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,itemValue:"barCode"},
           {itemName:"资产名称", itemType:"input",inputType:"text",nec:1,itemValue:"assetsName"},
           {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
-          {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:"lossReason",optionValueString:"complexcode",optionNameString:"complexname"},
-          {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:"storePlace",optionValueString:"complexcode",optionNameString:"complexname"},
+          {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:["lossReason","lossReasonName"],optionValueString:"complexcode",optionNameString:"complexname"},
+          {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:["storePlace","storePlaceName"],optionValueString:"complexcode",optionNameString:"complexname"},
           {itemName:"保管人", itemType:"input",inputType:"text",nec:1,itemValue:"userPerson"},
           {itemName:"使用状态", itemType:"select",nec:1, itemValue:"assetsStatus",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
@@ -60,17 +60,18 @@ export class InventoryEntryPage  extends InventoryPage{
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
     this.imgBox = "imgBox2";
-    this.selectFilterData["departments"]=[];
+    // this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
-        this.selectFilterData["departments"] = JSON.parse(res.rows.item(0).stringData)["departments"];
-        if (this.selectFilterData["departments"]){
-          this.invoice["managerDepart"]=this.selectFilterData["departments"][0].departCode
+        this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
+        this.pageData.pageItem[0].option = this.departments;
+        if (this.departments){
+          this.invoice["managerDepart"]=this.departments[0].departCode;
         }
       }
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+    });
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("storePlaceData",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.selectFilterData["storePlaceData"] = JSON.parse(res.rows.item(0).stringData);
@@ -119,7 +120,11 @@ export class InventoryEntryPage  extends InventoryPage{
       return false;
     }
     let j = this.pageData.pageItem.filter((item) => {
-      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+      if(item.itemValue.constructor==Array){
+        return (item.nec==1&&!this.invoice[item.itemValue[0]]&&this.invoice[item.itemValue[0]]!="0");
+      }else {
+        return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+      }
     });
     if (j.length>0){
       let alertCtrl = this.alertCtrl.create({
