@@ -286,6 +286,7 @@ export class InventoryPage {
             if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
               this.invoice = localPlanDetail[i];
               this.getAndShowPics(this.invoice["uploadFile"]);
+              this.invoice["realcodeStatus"] = "0";
               isSearch = true;
               this.isDistinguish = true;
             }
