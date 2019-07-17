@@ -190,6 +190,7 @@ export class InventoryPage {
       return false;
     }
     this.invoice["uploadFile"] = this.uploadFile;
+    this.invoice["checkResult"] = "1";
     let invoiceList = [];
     let isReplace = false;
     let willList = [];

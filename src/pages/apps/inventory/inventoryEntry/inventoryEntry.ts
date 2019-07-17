@@ -141,6 +141,7 @@ export class InventoryEntryPage  extends InventoryPage{
       return false;
     }
     this.invoice["uploadFile"] = this.uploadFile;
+    this.invoice["checkResult"] = "3";
     let invoiceList = [];
     let isReplace = false;
     isReplace = false;
