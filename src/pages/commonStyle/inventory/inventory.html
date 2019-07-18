@@ -18,7 +18,7 @@
           <select-normal [itemName]="item.itemName" [nec]="item.nec" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
         </div>
         <div *ngIf="item.itemType=='selectFilter'">
-          <select-filter [itemName]="item.itemName" [nec]="item.nec" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectFilterValue($event,item.itemValue)"></select-filter>
+          <select-filter [itemName]="item.itemName" [nec]="item.nec" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-filter>
         </div>
       </div>
       <ion-item class="inputItem imgItem">

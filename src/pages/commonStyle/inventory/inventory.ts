@@ -363,10 +363,14 @@ export class InventoryPage {
     this.invoice[key] = value;
   }
   getSelectValue(value,key){
-    this.invoice[key] = value["selectedValue"];
-  }
-  getSelectFilterValue(value,key){
-    this.invoice[key[0]] = value["selectedValue"];
-    this.invoice[key[1]] = value["selectedName"];
+    if (key.constructor == Array){
+      this.invoice[key[0]] = value["selectedValue"];
+      this.invoice[key[1]] = value["selectedName"];
+    }else {
+      this.invoice[key] = value["selectedValue"];
+      if(key=="technicalCondition"){
+        this.invoice[key+"Name"] = value["selectedName"];
+      }
+    }
   }
 }

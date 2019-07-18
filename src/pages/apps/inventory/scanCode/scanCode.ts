@@ -23,7 +23,7 @@ export class ScanCodePage extends InventoryPage{
           {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,searchButton:true,itemValue:"barCode"},
           {itemName:"盘点单位", itemType:"label",nec:0,itemValue:"managerDepart"},
           {itemName:"资产编码", itemType:"label",nec:0,itemValue:"assetsCode"},
-          {itemName:"使用状态", itemType:"select",nec:1, itemValue:"assetsStatus",optionValueString:"optionValue",optionNameString:"optionName",
+          {itemName:"使用状态", itemType:"select",nec:1, itemValue:"usedStatus",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
               {optionName:"生产经营用-科研",optionValue:"010101"},
               {optionName:"生产经营用-其他",optionValue:"010102"},
@@ -64,9 +64,10 @@ export class ScanCodePage extends InventoryPage{
     };
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
-    this.invoice["assetsStatus"]="010101";
+    this.invoice["usedStatus"]="010101";
     this.invoice["realcodeStatus"]="0";
     this.invoice["technicalCondition"]="01";
+    this.invoice["technicalConditionName"]="完好";
     this.nextPage = InventoryEntryPage;
     this.selectFilterData["storePlaceData"]=[];
     this.imgBox = "imgBox";

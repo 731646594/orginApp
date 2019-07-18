@@ -28,7 +28,7 @@ export class InventoryEntryPage  extends InventoryPage{
           {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:["lossReason","lossReasonName"],optionValueString:"complexcode",optionNameString:"complexname"},
           {itemName:"存放地点", itemType:"selectFilter",nec:1,dataName:"storePlaceData", itemValue:["storePlace","storePlaceName"],optionValueString:"complexcode",optionNameString:"complexname"},
           {itemName:"保管人", itemType:"input",inputType:"text",nec:1,itemValue:"userPerson"},
-          {itemName:"使用状态", itemType:"select",nec:1, itemValue:"assetsStatus",optionValueString:"optionValue",optionNameString:"optionName",
+          {itemName:"使用状态", itemType:"select",nec:1, itemValue:"usedStatus",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
               {optionName:"生产经营用-科研",optionValue:"010101"},
               {optionName:"生产经营用-其他",optionValue:"010102"},
@@ -82,8 +82,9 @@ export class InventoryEntryPage  extends InventoryPage{
         this.selectFilterData["lossReasonData"] = JSON.parse(res.rows.item(0).stringData);
       }
     }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.invoice["assetsStatus"]="010101";
+    this.invoice["usedStatus"]="010101";
     this.invoice["technicalCondition"]="01";
+    this.invoice["technicalConditionName"]="完好";
   }
   scan() {
     let options: BarcodeScannerOptions = {

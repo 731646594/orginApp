@@ -76,10 +76,13 @@ export class InventoryDataUploadPage {
     let i=0;
     for(i=0;i<this.planDetailList.length;i++){
       let uploadType = 0;
-      if(this.planDetailList[index].uploadFile.length>0){
+      let uploadFile = [];
+      uploadFile = this.planDetailList[index].uploadFile;
+      if(uploadFile.length>0){
         uploadType = 2;
       }
-      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:this.planDetailList[index].uploadFile,data:this.planDetailList[index]}).subscribe(data=>{
+      delete this.planDetailList[index]["uploadFile"];
+      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(this.planDetailList[index])}).subscribe(data=>{
         if (data.success=="true"){
           let l = index-this.newPlanDetail.length;
           if(l>=0){
