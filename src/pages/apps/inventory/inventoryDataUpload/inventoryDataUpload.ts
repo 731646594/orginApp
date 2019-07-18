@@ -102,8 +102,11 @@ export class InventoryDataUploadPage {
         if (now == 100){
           loading.dismiss();
           let alertCtrl = this.alertCtrl.create({
-            title: "上传完成，失败" + failLen + "条"
+            title: "上传完成，失败" + failLen + "条！"
           });
+          if(failLen == 0){
+            alertCtrl.setTitle("上传成功！");
+          }
           alertCtrl.present();
           this.loadData();
         }

@@ -44,7 +44,7 @@ export class HttpService {
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json(),err=>console.log("error:"+err));
   }
-  public postData (url:string,body:any,successCallback){
+  public postData (url:string,body:any,successCallback,errorCallback?:any){
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
@@ -54,13 +54,16 @@ export class HttpService {
           if(res["success"]){
             successCallback(res);
           }else{
-            this.errorCallback(res['msg']);
+            if (errorCallback){
+              errorCallback(res['msg']);
+            }
+            else {
+              this.errorCallback(res['msg']);
+            }
           }
         }
       },(err)=>{
-        this.errorCallback(err);
-        console.log(JSON.stringify(err))
-        let errMsg = "网络通信异常"
+        let errMsg = "网络通信异常";
         switch (err.status) {
           case 401:
             errMsg = '无权限访问，或许登录信息已过期，请重新登录';
@@ -75,7 +78,7 @@ export class HttpService {
           default:
             break;
         }
-        alert(errMsg)
+        this.errorCallback(errMsg)
       }
     );
   };

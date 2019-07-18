@@ -90,7 +90,10 @@ export class InventoryDataDownloadDetailPage {
       if (timer) clearInterval(timer);
       loading.dismiss();
       this.storageService.write("JsonUrl",entry);
-      alert("下载成功");
+      let alertCtrl = this.alertCtrl.create({
+        title:"下载成功！"
+      });
+      alertCtrl.present();
       entry.file((file)=>{
         var reader = new FileReader();
         reader.onloadend=(e)=>{
