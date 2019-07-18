@@ -16,6 +16,7 @@ export class InventoryDataUploadPage {
   existPlanDetail=[];
   willPlanDetail=[];
   planData=[];
+  uploadFiles=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
@@ -28,6 +29,7 @@ export class InventoryDataUploadPage {
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
     let planDetailList = [];
+    this.uploadFiles = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
@@ -39,6 +41,8 @@ export class InventoryDataUploadPage {
           planDetailList = planDetailList.concat(this.existPlanDetail);
         }
         this.planDetailList = planDetailList.filter((item)=>{
+          this.uploadFiles.push(item["uploadFile"]);
+          delete item["uploadFile"];
           return !item["Uploaded"]
         })
       }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
@@ -74,12 +78,11 @@ export class InventoryDataUploadPage {
     for(i=0;i<this.planDetailList.length;i++){
       let uploadType = 0;
       let uploadFile = [];
-      uploadFile = this.planDetailList[index].uploadFile;
+      uploadFile = this.uploadFiles[i];
       if(uploadFile.length>0){
         uploadType = 2;
       }
-      delete this.planDetailList[index]["uploadFile"];
-      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(this.planDetailList[index])}).subscribe(data=>{
+      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(this.planDetailList[i])}).subscribe(data=>{
         if (data.success=="true"){
           let l = index-this.newPlanDetail.length;
           if(l>=0){

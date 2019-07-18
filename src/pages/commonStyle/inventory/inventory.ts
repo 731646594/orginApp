@@ -189,7 +189,8 @@ export class InventoryPage {
       alertCtrl.present();
       return false;
     }
-    this.invoice["uploadFile"] = this.uploadFile;
+    this.invoice["uploadFile"] = [];
+    this.invoice["uploadFile"] = this.invoice["uploadFile"].concat(this.uploadFile);
     this.invoice["checkResult"] = "1";
     let invoiceList = [];
     let isReplace = false;
