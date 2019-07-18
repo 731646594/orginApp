@@ -31,7 +31,12 @@ export class InventoryDataDownloadDetailPage {
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==this.plan["planNumber"]){
-          this.planDate = JSON.parse(res.rows.item(0).stringData);
+          let planDate = JSON.parse(res.rows.item(0).stringData);
+          for(let i in planDate.departments){
+            if (planDate.departments[i].departCode == this.planDate.departments[i].departCode&&planDate.departments[i].isDownLoad){
+              this.planDate.departments[i]["isDownLoad"] = true;
+            }
+          }
         }
       }
       this.departments = this.planDate.departments;
@@ -90,13 +95,15 @@ export class InventoryDataDownloadDetailPage {
         var reader = new FileReader();
         reader.onloadend=(e)=>{
           let data=JSON.parse(e.target['result']).data;
+          let departments = this.plan.departments;
           for (let i in this.departments){
             if(this.departments[i].checked){
-              this.departments[i].isDownLoad = true;
-              this.planDate.departments[i].isDownLoad = true;
+              departments[i]["isDownLoad"] = true;
               this.checkedOne(i);
             }
           }
+          this.departments = departments;
+          this.planDate.departments = departments;
           this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
           this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
@@ -120,7 +127,7 @@ export class InventoryDataDownloadDetailPage {
     let isAlertOnce = true;
     for (let i in this.departments){
       if(this.departments[i].checked){
-        if(this.departments[i].isDownLoad&&isAlertOnce){
+        if(this.departments[i]["isDownLoad"]&&isAlertOnce){
           isAlertOnce = false;
         }
         item.push(this.departments[i].departCode);
