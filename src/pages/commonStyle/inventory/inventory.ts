@@ -205,6 +205,7 @@ export class InventoryPage {
           invoiceList = JSON.parse(res.rows.item(0).stringData);
           for (let i in invoiceList){
             if (invoiceList[i]["barCode"] == this.invoice["barCode"]){
+              this.invoice["Uploaded"] = false;
               invoiceList[i] = this.invoice;
               isReplace = true;
             }

@@ -16,10 +16,10 @@
         <div class="callContentMiniBox">
           <ion-list class="callContent">
             <ion-list class="callList">
-              <ion-item *ngIf="planDetail.planStatus=='new'" class="inputItem">
+              <ion-item *ngIf="planDetail.checkResult=='3'" class="inputItem">
                 <ion-label style="color: red">盘盈</ion-label>
               </ion-item>
-              <ion-item *ngIf="planDetail.planStatus=='exist'" class="inputItem">
+              <ion-item *ngIf="planDetail.checkResult=='1'" class="inputItem">
                 <ion-label style="color: green">盘点</ion-label>
               </ion-item>
               <label-normal [itemName]="'资产条码'" [labelValue]="planDetail.barCode"></label-normal>

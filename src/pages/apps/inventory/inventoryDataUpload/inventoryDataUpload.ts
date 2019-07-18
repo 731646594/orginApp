@@ -27,25 +27,22 @@ export class InventoryDataUploadPage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.planDetailList = [];
+    let planDetailList = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
-        for (let i in this.newPlanDetail){
-          this.newPlanDetail[i]["planStatus"] = "new";
-          this.planDetailList.push(this.newPlanDetail[i]);
-        }
+        planDetailList = planDetailList.concat(this.newPlanDetail);
       }
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          this.existPlanDetail = JSON.parse(res.rows.item(0).stringData);
+          planDetailList = planDetailList.concat(this.existPlanDetail);
+        }
+        this.planDetailList = planDetailList.filter((item)=>{
+          return !item["Uploaded"]
+        })
+      }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.existPlanDetail = JSON.parse(res.rows.item(0).stringData);
-        for (let i in this.existPlanDetail){
-          this.existPlanDetail[i]["planStatus"] = "exist";
-          this.planDetailList.push(this.existPlanDetail[i]);
-        }
-      }
-    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.willPlanDetail = JSON.parse(res.rows.item(0).stringData);
@@ -86,11 +83,11 @@ export class InventoryDataUploadPage {
         if (data.success=="true"){
           let l = index-this.newPlanDetail.length;
           if(l>=0){
-            this.existPlanDetail.splice(l,1);
+            this.existPlanDetail[l]["Uploaded"]=true;
             this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
           }
           else {
-            this.newPlanDetail.splice(index,1);
+            this.newPlanDetail[l]["Uploaded"]=true;
             this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
           }
         }else {
