@@ -15,7 +15,6 @@ export class InventoryDataDownloadDetailPage {
   plan;
   planDate;
   departments=[];
-  isOldPlan = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public file:File,
               public fileTransfer:FileTransfer,public navParams:NavParams,public app:App) {
@@ -33,7 +32,6 @@ export class InventoryDataDownloadDetailPage {
       if (res.rows.length>0){
         if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==this.plan["planNumber"]){
           this.planDate = JSON.parse(res.rows.item(0).stringData);
-          this.isOldPlan = true;
         }
       }
       this.departments = this.planDate.departments;
@@ -95,6 +93,7 @@ export class InventoryDataDownloadDetailPage {
           for (let i in this.departments){
             if(this.departments[i].checked){
               this.departments[i].isDownLoad = true;
+              this.planDate.departments[i].isDownLoad = true;
               this.checkedOne(i);
             }
           }
@@ -144,10 +143,6 @@ export class InventoryDataDownloadDetailPage {
           {
             text:"是",
             handler:data=>{
-              if(!this.isOldPlan){
-                this.storageService.sqliteDrop("existPlanDetail",this.userCode);
-                this.storageService.sqliteDrop("newPlanDetail",this.userCode);
-              }
               this.downloadPlan1(item)
             }
           }

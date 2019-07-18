@@ -30,19 +30,6 @@ export class InventoryDataDownloadPage {
     this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandownload.do",{userCode:this.userCode,departCode:this.departCode}).subscribe(data=>{
       if (data.success == "true"){
         this.planList=data.data;
-        this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
-          if (res.rows.length>0){
-            for (let i=0;i<=this.planList.length;i++){
-              let plan;
-              plan = this.planList[i];
-              try {
-                if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==plan["planNumber"]){
-                  this.planList[i]["isDownLoad"]=true;
-                }
-              }catch {}
-            }
-          }
-        }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
       }else {
         alert(data.msg)
       }
