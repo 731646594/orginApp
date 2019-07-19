@@ -59,10 +59,13 @@ export class InventoryEntryPage  extends InventoryPage{
     };
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
-    this.imgBox = "imgBox2";
+    this.invoice["usedState"]="010101";
+    this.invoice["technicalCondition"]="01";
+    this.invoice["technicalConditionName"]="完好";
     // this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
+    this.imgBox = "imgBox2";
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
@@ -82,9 +85,7 @@ export class InventoryEntryPage  extends InventoryPage{
         this.selectFilterData["lossReasonData"] = JSON.parse(res.rows.item(0).stringData);
       }
     }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
-    this.invoice["usedState"]="010101";
-    this.invoice["technicalCondition"]="01";
-    this.invoice["technicalConditionName"]="完好";
+
   }
   scan() {
     let options: BarcodeScannerOptions = {
