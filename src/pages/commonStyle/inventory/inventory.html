@@ -22,7 +22,11 @@
         </div>
       </div>
       <ion-item class="inputItem imgItem">
-        <ion-label><span class="star">*</span>照片区:</ion-label>
+        <ion-label>
+          <span class="star" *ngIf="pageName=='快速扫码'">*</span>
+          <span class="star requireLabel" *ngIf="pageName=='盘盈录入'">*</span>
+          照片区:
+        </ion-label>
       </ion-item>
       <div class="imgBox">
         <div id="imgBox" *ngIf="pageName=='快速扫码'">

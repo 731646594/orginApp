@@ -236,7 +236,15 @@ export class InventoryPage {
           title:"保存成功！"
         });
         alertCtrl.present();
-        this.navCtrl.pop();
+        for(let key in this.invoice){
+          this.invoice[key] = "";
+        }
+        this.invoice["usedState"]="010101";
+        this.invoice["realcodeStatus"]="0";
+        this.invoice["technicalCondition"]="01";
+        this.invoice["technicalConditionName"]="完好";
+        this.getAndShowPics([]);
+        this.isDistinguish = false;
       });
     });
   }

@@ -22,7 +22,7 @@ export class InventoryEntryPage  extends InventoryPage{
       pageData:{
         pageItem:[
           {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.departments,},
-          {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,itemValue:"barCode"},
+          {itemName:"资产条码", itemType:"input",inputType:"text",nec:1,itemValue:"barCode"},
           {itemName:"资产名称", itemType:"input",inputType:"text",nec:1,itemValue:"assetsName"},
           {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
           {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:["lossReason","lossReasonName"],optionValueString:"complexcode",optionNameString:"complexname"},
@@ -168,7 +168,14 @@ export class InventoryEntryPage  extends InventoryPage{
         title:"保存成功！"
       });
       alertCtrl.present();
-      this.navCtrl.pop();
+      for(let key in this.invoice){
+        this.invoice[key] = "";
+      }
+      this.invoice["managerDepart"]=this.departments[0].departCode;
+      this.invoice["usedState"]="010101";
+      this.invoice["technicalCondition"]="01";
+      this.invoice["technicalConditionName"]="完好";
+      this.getAndShowPics([]);
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
 }
