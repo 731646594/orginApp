@@ -84,10 +84,10 @@ export class HomePage {
       this.app.getRootNav().push(AllocateApprovalPage)
     }
     else if(pageIndex == 7){
-      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"})
+      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调出确认",postUrl:"allotController/queryAllotOut.do",childPageName:"调出确认详情",childPostUrl:"allotController/allotOut.do"})
     }
     else if(pageIndex == 8){
-      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"})
+      this.app.getRootNav().push(TransferConfirmationPage,{pageName:"调入确认",postUrl:"allotController/queryAllotIn.do",childPageName:"调入确认详情",childPostUrl:"allotController/allotIn.do"})
     }
     else if(pageIndex == 9){
       this.app.getRootNav().push(ScrapApprovalPage)

@@ -128,11 +128,10 @@ export class MenuPage {
     }
     else if(page == 34){
       willGoPage = TransferConfirmationPage;
-      params = {pageName:"调出确认",postUrl:"allotController.do?queryAllotOut",childPageName:"调出确认详情",childPostUrl:"allotController.do?allotOut"}
-    }
+      params = {pageName:"调出确认",postUrl:"allotController/queryAllotOut.do",childPageName:"调出确认详情",childPostUrl:"allotController/allotOut.do"}    }
     else if(page == 35){
       willGoPage = TransferConfirmationPage;
-      params = {pageName:"调入确认",postUrl:"allotController.do?queryAllotIn",childPageName:"调入确认详情",childPostUrl:"allotController.do?allotIn"}
+      params = {pageName:"调入确认",postUrl:"allotController/queryAllotIn.do",childPageName:"调入确认详情",childPostUrl:"allotController/allotIn.do"}
     }
     else if(page == 41){
       willGoPage = AssetQuiryPage;
