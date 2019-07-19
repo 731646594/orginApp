@@ -25,6 +25,7 @@ export class GasDataUploadPage {
   photoShowArrary=[];
   signatureImage1;
   signatureImage2;
+  isHaveData = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,public app:App,public loadingCtrl:LoadingController,) {
     this.userCode = this.storageService.read("loginUserCode");
@@ -36,11 +37,13 @@ export class GasDataUploadPage {
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("zjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
         this.zjb = JSON.parse(res.rows.item(0).stringData);
+        this.isHaveData = true;
       }
     }).catch(e =>alert("erro21:"+JSON.stringify(e))  );
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("jjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
         this.jjb = JSON.parse(res.rows.item(0).stringData);
+        this.isHaveData = true;
       }
     }).catch(e =>alert("erro22:"+JSON.stringify(e))  )
   }
@@ -118,9 +121,16 @@ export class GasDataUploadPage {
     }
   }
   uploadGasInfo(){
-    if(!this.zjb&&!this.jjb){
+    if(!this.isHaveData){
       let alertCtrl = this.alertCtrl.create({
         title:"没有可上传的数据！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+    if(!this.checkedArray[0]&&!this.checkedArray[0]){
+      let alertCtrl = this.alertCtrl.create({
+        title:"未选择要上传的数据！"
       });
       alertCtrl.present();
       return false;
