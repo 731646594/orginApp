@@ -27,7 +27,8 @@ export class QueryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.invoice["invoiceStatus"] = "0";
     let date = new Date();
-    this.invoice["invoiceYM"] = new Date(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1)).toISOString();
+    // this.invoice["invoiceYM"] = new Date(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1)).toISOString();
+    this.invoice["invoiceYM"] = new Date(new Date().getTime()+8*60*60*1000).toISOString();
     this.maxDate = this.invoice["invoiceYM"];
 
   }

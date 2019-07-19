@@ -99,6 +99,9 @@ export class TransferConfirmationPage {
   }
 
   uploadData() {
+    if(!this.checkTransferCOnfirmation()){
+        return;
+    }
     let loadingCtrl = this.loadingCtrl.create({
       content: "请等待...",
       duration: 10000
@@ -150,5 +153,28 @@ export class TransferConfirmationPage {
   ionViewWillUnload() {
     this.events.unsubscribe('TransferConfirmationPage:refresh');
   }
+
+   checkTransferCOnfirmation():any{
+      if(this.pageName=="调出确认"){
+
+        let isExist = false;
+        for(let i = 0;i<this.censorshipList.length;i++){
+          let item = this.censorshipList[i];
+          if (item["checked"]) {
+            isExist = true;
+            return isExist;
+           }
+        }
+        if(!isExist){
+          let alertCtrl = this.alertCtrl.create({
+            title:"请选择调出确认的单据！"
+          });
+          alertCtrl.present();
+        }
+        return isExist;
+      }else{
+        return true;
+      }
+   }
 
 }

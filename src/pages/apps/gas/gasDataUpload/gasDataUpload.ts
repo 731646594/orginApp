@@ -118,6 +118,13 @@ export class GasDataUploadPage {
     }
   }
   uploadGasInfo(){
+    if(!this.zjb&&!this.jjb){
+      let alertCtrl = this.alertCtrl.create({
+        title:"没有可上传的数据！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     if (this.checkedArray[0]){
       this.uploading("devWeeklyCheckController.do?saveCheckForm",this.zjb,"zjb")
     }
