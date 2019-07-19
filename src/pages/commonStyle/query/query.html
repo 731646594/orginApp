@@ -15,7 +15,7 @@
         <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
       </div>
       <div *ngIf="item.itemType=='date'">
-        <date-normal [itemName]="item.itemName" [maxDate]="maxDate" [displayFormat]="'YYYY/MM'" [dateValue]="invoice[item.itemValue]" (backValue)="getDateValue($event,item.itemValue)"></date-normal>
+        <date-normal [itemName]="item.itemName" [maxDate]="maxDate" [displayFormat]="'YYYY-MM'"  [dateValue]="invoice[item.itemValue]" (backValue)="getDateValue($event,item.itemValue)"></date-normal>
       </div>
       <div *ngIf="item.itemType=='card'">
         <card-normal [cardData]="item.card" [data]="searchDatas" (backValue)="invoiceDetail($event)"></card-normal>

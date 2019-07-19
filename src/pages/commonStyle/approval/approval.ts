@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../services/httpService";
 import {StorageService} from "../../../services/storageService";
 
@@ -19,6 +19,7 @@ export class ApprovalPage {
   pageData;
   data={};
   postDataUrl="";
+  postApprovalUrl ="";
   postDataParams;
   nextPage;
   postUrl;
@@ -26,18 +27,19 @@ export class ApprovalPage {
   searchDatas=[];
   checkedIndex;
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App) {
+              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App,public events?: Events) {
     this.userCode = this.storageService.read("loginUserCode");
     this.userName = this.storageService.read("loginUserName");
     this.departCode = this.storageService.read("loginDepartCode");
   }
-  ionViewDidEnter(){
+  ionViewDidLoad(){
     let loading = this.loadingCtrl.create({
       content:"正在加载",
       duration:5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,this.postParams).subscribe(data=>{
+    console.log(this.httpService.getUrl()+this.postUrl)
+    this.httpService.postData(this.httpService.getUrl()+this.postUrl,this.postParams,data=>{
       if (data.success == "true"){
         this.searchDatas = data.data;
       }else {
@@ -46,6 +48,8 @@ export class ApprovalPage {
       loading.dismiss();
     })
   }
+
+
   getCardValue(index){
     this.app.getRootNav().push(this.nextPage,{invoice:this.searchDatas[index]});
   }
@@ -110,12 +114,20 @@ export class ApprovalPage {
   getpostDataParams(){
 
   }
-  postData(){
+
+  check():any{
     if(this.checkedIndex!=0&&!this.checkedIndex){
       let alertCtrl = this.alertCtrl.create({
         title:"请选择单据！"
       });
       alertCtrl.present();
+      return false;
+    }else{
+      return true;
+    }
+  }
+  postData(){
+    if(!this.check()){
       return false;
     }
     if (!this.detailReason){
@@ -139,14 +151,26 @@ export class ApprovalPage {
       duration:5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+this.postDataUrl,this.postDataParams).subscribe(data=>{
+    // this.httpService.post(this.httpService.getUrl()+this.postDataUrl,this.postDataParams).subscribe(data=>{
+    //   if (data.success == "true"){
+    //     let alertCtrl = this.alertCtrl.create({
+    //       title:data.msg
+    //     });
+    //     alertCtrl.present()
+    //     this.events.publish("ApprovalPage:refresh");
+    //   }else {
+    //     alert(data.msg)
+    //   }
+    //   loading.dismiss()
+    // })
+
+    this.httpService.postData(this.httpService.getUrl()+this.postDataUrl,this.postDataParams,data=>{
       if (data.success == "true"){
         let alertCtrl = this.alertCtrl.create({
           title:data.msg
         });
         alertCtrl.present()
-      }else {
-        alert(data.msg)
+        this.events.publish("ApprovalPage:refresh");
       }
       loading.dismiss()
     })

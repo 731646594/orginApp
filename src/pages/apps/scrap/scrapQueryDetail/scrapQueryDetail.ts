@@ -12,7 +12,8 @@ export class ScrapQueryDetailPage extends QueryDetailPage{
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
               public httpService?:HttpService){
     super(navCtrl,navParams,storageService);
-    this.postUrl = "discardController.do?getDetail";
+    // this.postUrl = "discardController.do?getDetail";
+    this.postUrl = "discardController/getDetail.do";
     this.data = {
       pageName:"报废查询详情",
       pageData: {

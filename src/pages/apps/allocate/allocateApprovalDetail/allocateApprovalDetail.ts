@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {ApprovalPage} from "../../../commonStyle/approval/approval";
@@ -11,12 +11,14 @@ import {ApprovalPage} from "../../../commonStyle/approval/approval";
 export class AllocateApprovalDetailPage extends ApprovalPage{
   invoice;
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App) {
-    super(navCtrl,navParams,storageService);
+              public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App,public events?: Events) {
+    super(navCtrl,navParams,storageService,loadingCtrl,httpService,alertCtrl,app,events);
     this.invoice = this.navParams.get("invoice");
-    this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
+    // this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
+    this.postUrl = "allotController/getByInvoiceNumber.do";
     this.postParams = {departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber};
-    this.postDataUrl = "allotController.do?allotAudit";
+    // this.postDataUrl = "allotController.do?allotAudit";
+    this.postDataUrl = "allotController/allotAudit.do";
     this.data = {
       pageName:"调拨审批详情",
       pageData: {
@@ -56,6 +58,10 @@ export class AllocateApprovalDetailPage extends ApprovalPage{
     this.pageData = this.data["pageData"];
   }
   getpostDataParams(){
-    this.postDataParams = {departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.searchDatas[this.checkedIndex]),approveResult:this.isAgreeString,opinion:this.detailReason};
+    this.postDataParams = {departCode:this.departCode,userCode:this.userCode,userName:this.userName,invoiceData:JSON.stringify(this.invoice),approveResult:this.isAgreeString,opinion:this.detailReason};
+  }
+
+  check(){
+    return true;
   }
 }

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
 import {HttpService} from "../../../services/httpService";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'page-query',
@@ -12,65 +13,101 @@ export class QueryPage {
   pageName;
   pageData;
   isFocus;
-  invoice=[];
+  invoice = [];
   maxDate;
   userCode;
   departCode;
   searchDatas;
   searchFormUrl;
   nextPage;
-  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public alertCtrl?:AlertController) {
+
+  constructor(public navCtrl?: NavController, public navParams?: NavParams, public storageService?: StorageService, public app?: App, public loadingCtrl?: LoadingController,
+              public httpService?: HttpService, public alertCtrl?: AlertController,public datePipe?:DatePipe) {
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.invoice["invoiceStatus"]="0";
+    this.invoice["invoiceStatus"] = "0";
     let date = new Date();
-    this.invoice["invoiceYM"]=new Date(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1)).toISOString();
+    this.invoice["invoiceYM"] = new Date(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1)).toISOString();
     this.maxDate = this.invoice["invoiceYM"];
-  }
-  ionViewDidEnter(){
 
   }
-  hideFooter(){
-    this.isFocus=true;
+
+  ionViewDidEnter() {
+
   }
-  showFooter(){
-    this.isFocus=false;
+
+  hideFooter() {
+    this.isFocus = true;
   }
-  getInputValue(value,key){
+
+  showFooter() {
+    this.isFocus = false;
+  }
+
+  getInputValue(value, key) {
     this.showFooter();
     this.invoice[key] = value;
   }
-  getSelectValue(value,key){
+
+  getSelectValue(value, key) {
     this.invoice[key[0]] = value["selectedValue"];
     this.invoice[key[1]] = value["selectedName"];
   }
-  getDateValue(value,key){
+
+  getDateValue(value, key) {
     this.invoice[key] = value;
   }
-  searchForm(){
+
+  searchForm() {
     let loading = this.loadingCtrl.create({
-      content:"请等待...",
+      content: "请等待...",
       duration: 5000
     });
     loading.present();
-    if (!this.invoice["invoiceNumber"]){
-      this.invoice["invoiceNumber"]="";
+    if (!this.invoice["invoiceNumber"]) {
+      this.invoice["invoiceNumber"] = "";
     }
-    this.httpService.post(this.httpService.getUrl()+this.searchFormUrl,{departCode:this.departCode,userCode:this.userCode,invoiceNumber:this.invoice["invoiceNumber"],invoiceStatus:this.invoice["invoiceStatus"],invoiceYM:this.invoice["invoiceYM"]}).subscribe(data=>{
-      if (data.success=="true"){
+
+    let invoiceYM= this.datePipe.transform(this.invoice["invoiceYM"],"yyyy-MM");
+
+    // this.httpService.post(this.httpService.getUrl() + this.searchFormUrl, {
+    //   departCode: this.departCode,
+    //   userCode: this.userCode,
+    //   invoiceNumber: this.invoice["invoiceNumber"],
+    //   invoiceStatus: this.invoice["invoiceStatus"],
+    //   invoiceYM: invoiceYM
+    // }).subscribe(data => {
+    //   if (data.success == "true") {
+    //     let alert = this.alertCtrl.create({
+    //       title: "查询成功！"
+    //     });
+    //     alert.present();
+    //     this.searchDatas = data.data;
+    //   } else {
+    //     alert(data.msg)
+    //   }
+    //   loading.dismiss();
+    // })
+
+    this.httpService.postData(this.httpService.getUrl() + this.searchFormUrl, {
+      departCode: this.departCode,
+      userCode: this.userCode,
+      invoiceNumber: this.invoice["invoiceNumber"],
+      invoiceStatus: this.invoice["invoiceStatus"],
+      invoiceYM: invoiceYM
+    },data => {
+      if (data.success == "true") {
         let alert = this.alertCtrl.create({
-          title:"查询成功！"
+          title: "查询成功！"
         });
         alert.present();
-        this.searchDatas=data.data;
-      }else {
-        alert(data.msg)
+        this.searchDatas = data.data;
       }
       loading.dismiss();
     })
   }
-  invoiceDetail(index){
-    this.app.getRootNav().push(this.nextPage,{invoice:this.searchDatas[index]})
+
+  invoiceDetail(index) {
+    this.app.getRootNav().push(this.nextPage, {invoice: this.searchDatas[index]})
   }
 }

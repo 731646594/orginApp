@@ -60,6 +60,7 @@ import {QueryPage} from "../pages/commonStyle/query/query";
 import {QueryDetailPage} from "../pages/commonStyle/queryDetail/queryDetail";
 import {ApprovalPage} from "../pages/commonStyle/approval/approval";
 import {InventoryPage} from "../pages/commonStyle/inventory/inventory";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -184,6 +185,7 @@ import {InventoryPage} from "../pages/commonStyle/inventory/inventory";
     HttpService,
     StorageService,
     ScreenOrientation,
+    DatePipe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

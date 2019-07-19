@@ -15,23 +15,26 @@ export class AllocateApplicationPage extends ApplicationPage{
     super(navCtrl,navParams,alertCtrl,storageService,events);
     let date = new Date();
     this.invoice["invoiceType"]="1401";
+    this.invoice["invoiceName"]="有形";
     this.invoice["inDepartcode"]="";
     this.invoice["allotAmount"]=0;
-    this.invoice["originalValue"]="0.00";
-    this.invoice["nowValue"]="0.00";
-    this.invoice["addDepreciate"]="0.00";
+    this.invoice["originalValueSum"]="0.00";
+    this.invoice["nowValueSum"]="0.00";
+    this.invoice["addDepreciateValueSum"]="0.00";
     this.invoice["createUserName"]=this.userName;
     this.invoice["createTime"]=date.toLocaleDateString();
-    this.invoice["createDepart"]=this.departName;
+    this.invoice["departCode"]=this.departCode
+    this.invoice["departName"]=this.departName;
     this.selectFilterData["in"]=[];
     this.selectFilterData["out"]=[];
+
     this.data={
       pageName:"调拨申请",
       pageData:{
         segmentName:["单据", "明细"],
         pageItem:[
           [
-            {itemName:"单据类型", itemType:"select", itemValue:"invoiceType",optionValueString:"optionValue",optionNameString:"optionName",
+            {itemName:"单据类型", itemType:"select", itemValue:"invoiceType",itemValueName:"invoiceName",optionValueString:"optionValue",optionNameString:"optionName",
               option:[
                 {optionName:"有形",optionValue:"1401"},
                 {optionName:"无形",optionValue:"1402"},
@@ -41,15 +44,15 @@ export class AllocateApplicationPage extends ApplicationPage{
             },
             {itemName:"调出单位",itemType:"selectFilter",optionValueString:"departcode",optionNameString:"departname",dataName:"out",itemValue:["outDepartcode","outDepartname"]},
             {itemName:"调入单位",itemType:"selectFilter",optionValueString:"departcode",optionNameString:"departname",dataName:"in",itemValue:["inDepartcode","inDepartname"]},
-            {itemName:"调拨原因", itemType:"input",inputType:"text",itemValue:"reason"},
+            {itemName:"调拨原因", itemType:"input",inputType:"text",itemValue:"allotReason"},
             {itemName:"备注", itemType:"input",inputType:"text",itemValue:"remark"},
-            {itemName:"数量", itemType:"input",inputType:"number",itemValue:"allotAmount"},
-            {itemName:"原值", itemType:"input",inputType:"number",itemValue:"originalValue"},
-            {itemName:"净值", itemType:"input",inputType:"number",itemValue:"nowValue"},
-            {itemName:"累计折旧", itemType:"input",inputType:"number",itemValue:"addDepreciate"},
+            {itemName:"数量", itemType:"label",inputType:"number",itemValue:"allotAmount"},
+            {itemName:"原值", itemType:"label",inputType:"number",itemValue:"originalValueSum"},
+            {itemName:"净值", itemType:"label",inputType:"number",itemValue:"nowValueSum"},
+            {itemName:"累计折旧", itemType:"label",inputType:"number",itemValue:"addDepreciateValueSum"},
             {itemName:"制单人", itemType:"label",itemValue:"createUserName"},
             {itemName:"制单时间", itemType:"label",itemValue:"createTime"},
-            {itemName:"申请单位", itemType:"label",itemValue:"createDepart"},
+            {itemName:"申请单位", itemType:"label",itemValue:"departName"},
 
           ],
           [
@@ -93,21 +96,61 @@ export class AllocateApplicationPage extends ApplicationPage{
     }
     this.pageName=this.data["pageName"];
     this.pageData=this.data["pageData"];
-    this.censorshipUrl="allotController.do?sendAllot";
+    // this.censorshipUrl="allotController.do?sendAllot";//原始
+    // this.censorshipUrl="allotController/sendAllot.do";
+    this.censorshipUrl="allotController/submitreview.do";//将单据发送到eam并送审
     this.saveInfoTableName=["allotInvoice","allotDetail"];
-    this.uploadDataUrl="allotController.do?add";
-    this.uploadDataToEAMUrl="allotController.do?confirm";
+    // this.uploadDataUrl="allotController.do?add";
+    this.uploadDataUrl="mobileallotController/add.do";
+    // this.uploadDataToEAMUrl="allotController.do?confirm";
+    this.uploadDataToEAMUrl="allotController/confirm.do";
     this.sqlInvoiceTableName="allotInvoice";
     this.sqlSearchDatasTableName="allotDetail";
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("departListData",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
-        this.selectFilterData["in"] = JSON.parse(res.rows.item(0).stringData);
-        for(let i in this.selectFilterData["in"]){
-          if(this.selectFilterData["in"][i]["departcode"].lastIndexOf(this.departCode)>-1&&this.selectFilterData["in"][i]["marktail"] == "1"){
-            this.selectFilterData["out"].push(this.selectFilterData["in"][i]);
+        // this.allData = JSON.parse(res.rows.item(0).stringData);
+        this.allData["in"] = JSON.parse(res.rows.item(0).stringData);
+        for(let i in this.allData["in"]){
+          if(this.allData["in"][i]["departcode"].lastIndexOf(this.departCode)>-1){
+            this.selectFilterData["out"].push(this.allData["in"][i]);
+          }
+        }
+
+        // this.selectFilterData["in"] = JSON.parse(res.rows.item(0).stringData);
+        for(let i in this.allData["in"]){
+          if(this.allData["in"][i]["marktail"] == "1"){
+            this.selectFilterData["in"].push(this.allData["in"][i]);
           }
         }
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));;
+  }
+
+
+  checkDepart(): any {
+    if(!this.invoice["inDepartcode"]){
+      let alertCtrl = this.alertCtrl.create({
+        title: "请选择调入单位！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+
+    if(!this.invoice["outDepartcode"]){
+      let alertCtrl = this.alertCtrl.create({
+        title: "请选择调出单位！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+
+    if(!this.invoice["allotReason"]){
+      let alertCtrl = this.alertCtrl.create({
+        title: "请选择调拨原因！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+    return true;
   }
 }

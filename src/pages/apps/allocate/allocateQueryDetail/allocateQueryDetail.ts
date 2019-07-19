@@ -12,7 +12,8 @@ export class AllocateQueryDetailPage extends QueryDetailPage{
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
               public httpService?:HttpService){
     super(navCtrl,navParams,storageService);
-    this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
+    // this.postUrl = "allotController.do?getByPhoneInvoiceNumber";//原始
+    this.postUrl = "allotController/getByInvoiceNumber.do";
     this.data = {
       pageName:"调拨查询详情",
       pageData: {

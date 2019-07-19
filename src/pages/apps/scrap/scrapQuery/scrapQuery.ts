@@ -4,6 +4,7 @@ import {StorageService} from "../../../../services/storageService";
 import {AlertController, App, LoadingController, NavController, NavParams} from "ionic-angular";
 import {HttpService} from "../../../../services/httpService";
 import {ScrapQueryDetailPage} from "../scrapQueryDetail/scrapQueryDetail";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'page-query',
@@ -11,8 +12,8 @@ import {ScrapQueryDetailPage} from "../scrapQueryDetail/scrapQueryDetail";
 })
 export class ScrapQueryPage extends QueryPage{
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public alertCtrl?:AlertController) {
-    super(navCtrl,navParams,storageService);
+              public httpService?:HttpService,public alertCtrl?:AlertController,public datePipe?:DatePipe) {
+    super(navCtrl,navParams,storageService,app,loadingCtrl,httpService,alertCtrl,datePipe);
     this.data = {
       pageName:"报废查询",
       pageData:{
@@ -50,7 +51,8 @@ export class ScrapQueryPage extends QueryPage{
     };
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
-    this.searchFormUrl = "discardController.do?getInvoice";
+    // this.searchFormUrl = "discardController.do?getInvoice";
+    this.searchFormUrl = "discardController/getInvoice.do";
     this.nextPage = ScrapQueryDetailPage;
   }
 }

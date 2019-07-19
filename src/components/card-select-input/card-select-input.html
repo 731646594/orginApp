@@ -21,7 +21,7 @@
             <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
           </div>
           <div *ngIf="child.itemType=='date'">
-            <date-normal [itemName]="child.itemName" [maxDate]="maxDate" [dateValue]="detail[child.itemValue]" [displayFormat]="'YYYY/MM/DD'" (backValue)="getDateValue($event,child.itemValue,i)"></date-normal>
+            <date-normal [itemName]="child.itemName" [maxDate]="maxDate" [dateValue]="detail[child.itemValue]" [displayFormat]="'YYYY-MM-DD'" (backValue)="getDateValue($event,child.itemValue,i)"></date-normal>
           </div>
           <div *ngIf="child.itemType=='select'">
             <select-normal [itemName]="child.itemName" [selectData]="child.option" [selectValue]="detail[child.itemValue]" [optionValue]="child.optionValueString" [optionName]="child.optionNameString" (backValue)="getSelectValue($event,child.itemValue,i)"></select-normal>

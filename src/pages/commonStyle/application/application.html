@@ -26,10 +26,10 @@
           <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]"></label-normal>
         </div>
         <div *ngIf="item.itemType=='select'">
-          <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue,item.itemValueName)"></select-normal>
         </div>
         <div *ngIf="item.itemType=='selectFilter'">
-          <select-filter [itemName]="item.itemName" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-filter>
+          <select-filter [itemName]="item.itemName" [selectData]="selectFilterData[item.dataName]" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue,null)"></select-filter>
         </div>
       </div>
     </div>
@@ -49,20 +49,24 @@
   </div>
 </ion-content>
 <footer class="formFooter" padding *ngIf="!isFocus">
+
+  <button class="formFooterButton" (click)="saveInfo()" *ngIf="shape=='brief'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+
   <button class="formFooterButton" (click)="censorship()" *ngIf="shape=='brief'">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>送审
   </button>
+  <!--2019/07/11 去掉-->
+<!--  <button class="formFooterButton" (click)="uploadData()" *ngIf="shape=='brief'">-->
+<!--    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传-->
+<!--  </button>-->
 
   <div style="width: 100%;" *ngIf="shape=='detailed'&&radioValue == 'barCode'">
     <scanner (backValue)="getScannerValue($event)"></scanner>
   </div>
-  <button class="formFooterButton" (click)="saveInfo()" *ngIf="shape=='detailed'">
-    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
-  </button>
-  <button class="formFooterButton" (click)="uploadData()" *ngIf="shape=='detailed'">
-    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传
-  </button>
-  <button class="formFooterButton" (click)="uploadDataToEAM()" *ngIf="shape=='detailed'">
-    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传到EAM
-  </button>
+  <!--2019/07/11 去掉-->
+<!--  <button class="formFooterButton" (click)="uploadDataToEAM()" *ngIf="shape=='detailed'">-->
+<!--    <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>上传到EAM-->
+<!--  </button>-->
 </footer>

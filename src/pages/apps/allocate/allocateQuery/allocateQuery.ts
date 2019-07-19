@@ -4,6 +4,7 @@ import {AlertController, App, LoadingController, NavController, NavParams} from 
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
 import {AllocateQueryDetailPage} from "../allocateQueryDetail/allocateQueryDetail";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'page-query',
@@ -11,8 +12,8 @@ import {AllocateQueryDetailPage} from "../allocateQueryDetail/allocateQueryDetai
 })
 export class AllocateQueryPage extends QueryPage{
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public alertCtrl?:AlertController) {
-    super(navCtrl,navParams,storageService);
+              public httpService?:HttpService,public alertCtrl?:AlertController,public datePipe?:DatePipe) {
+    super(navCtrl,navParams,storageService,app,loadingCtrl,httpService,alertCtrl,datePipe);
     this.data = {
       pageName:"调拨查询",
       pageData:{
@@ -53,7 +54,7 @@ export class AllocateQueryPage extends QueryPage{
     };
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
-    this.searchFormUrl = "allotController.do?getAllotInvoices";
+    this.searchFormUrl = "allotController/getAllotInvoices.do";
     this.nextPage = AllocateQueryDetailPage;
   }
 }

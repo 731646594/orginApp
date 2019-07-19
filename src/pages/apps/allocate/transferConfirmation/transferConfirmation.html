@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="censorshipListBox">
+  <div  [ngClass]="{'censorshipListBox':pageName=='调出确认'}">
     <ion-list class="censorshipList">
       <ion-item class="inputItem" *ngIf="!isHave">
         <ion-label>暂无数据</ion-label>
@@ -28,14 +28,14 @@
             明细数量：{{censorship.detailAmountSum?censorship.detailAmountSum:censorship.allotAmount}}
           </div>
         </div>
-        <div class="censorshipButton" item-end (click)="checkedItem(i)">
+        <div class="censorshipButton" *ngIf="pageName=='调出确认'"  item-end (click)="checkedItem(i)">
           <ion-icon name="checkmark-circle" class="censorshipIcon"></ion-icon>
         </div>
       </ion-item>
     </ion-list>
   </div>
 </ion-content>
-<footer class="detailFooter" padding>
+<footer class="detailFooter" padding *ngIf="pageName=='调出确认'" >
   <button class="detailFooterButton" (click)="uploadData()">
     <ion-icon class="detailFooterIcon" name="checkmark-circle"></ion-icon><br>确认
   </button>
