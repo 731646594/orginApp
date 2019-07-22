@@ -61,6 +61,7 @@ import {QueryDetailPage} from "../pages/commonStyle/queryDetail/queryDetail";
 import {ApprovalPage} from "../pages/commonStyle/approval/approval";
 import {InventoryPage} from "../pages/commonStyle/inventory/inventory";
 import {DatePipe} from "@angular/common";
+import {Network} from "@ionic-native/network";
 
 @NgModule({
   declarations: [
@@ -186,6 +187,7 @@ import {DatePipe} from "@angular/common";
     StorageService,
     ScreenOrientation,
     DatePipe,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

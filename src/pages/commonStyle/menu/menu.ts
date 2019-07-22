@@ -21,6 +21,7 @@ import {AllocateApplicationPage} from "../../apps/allocate/allocateApplication/a
 import {AllocateQueryPage} from "../../apps/allocate/allocateQuery/allocateQuery";
 import {AllocateApprovalPage} from "../../apps/allocate/allocateApproval/allocateApproval";
 import {TransferConfirmationPage} from "../../apps/allocate/transferConfirmation/transferConfirmation";
+import {Network} from "@ionic-native/network";
 
 @Component({
   selector: 'page-menu',
@@ -36,7 +37,7 @@ export class MenuPage {
   itemData=[];
   paramsData;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
-              public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
+              public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
 
   }
   ionViewDidEnter(){
@@ -68,6 +69,24 @@ export class MenuPage {
       });
       alertCtrl.present();
       return false;
+    }
+    if(page == 11||page == 16||page == 51||page == 52){
+      if(this.network.type != 'none'){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请切换到飞行模式！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+    }
+    else {
+      if(page !=12&&this.network.type == 'none'){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请恢复网络链接！"
+        });
+        alertCtrl.present();
+        return false;
+      }
     }
     //11:快速扫码
     //12:盘点查询
