@@ -2,6 +2,16 @@ page-approval{
   .scroll-content{
     background-color: rgb(246,246,246) ;
   }
+  .radioItem .item-inner{
+    padding: 0 !important;
+    border-bottom: 0 !important;
+  }
+  .radioItem .radio-ios{
+    margin-right: 0 !important;
+  }
+  .radioItem .radio-md{
+    margin-right: 0 !important;
+  }
   .searchFormList {
     margin-bottom: 60px;
   }
