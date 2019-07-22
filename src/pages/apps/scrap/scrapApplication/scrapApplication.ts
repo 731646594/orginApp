@@ -25,6 +25,7 @@ export class ScrapApplicationPage extends ApplicationPage{
     this.invoice["devalueValueSum"]="0.00";
     this.invoice["departCode"]=this.departCode;
     this.invoice["createuserid"]=this.userCode;
+    this.invoice["createUserName"]=this.userName;
     this.invoice["departName"] = this.departName;
     let dateStr= this.datePipe.transform(date,"yyyy-MM-dd");
     this.invoice["createdate"]=dateStr;
@@ -53,7 +54,7 @@ export class ScrapApplicationPage extends ApplicationPage{
             {itemName:"减值准备", itemType:"label",inputType:"number",itemValue:"devalueValueSum"},
             {itemName:"申请单位",itemType:"select",itemValue:"departCode",itemValueName:"departName",optionValueString:"departcode",optionNameString:"departname",
               option:this.selectFilterData["loginDepartList"]},
-            {itemName:"申请人", itemType:"label",itemValue:"createuserid"},
+            {itemName:"申请人", itemType:"label",itemValue:"createUserName"},
             {itemName:"申请时间", itemType:"label",itemValue:"createdate"},
           ],
           [
