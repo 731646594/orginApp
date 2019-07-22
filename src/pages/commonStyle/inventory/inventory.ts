@@ -378,7 +378,7 @@ export class InventoryPage {
       this.invoice[key[1]] = value["selectedName"];
     }else {
       this.invoice[key] = value["selectedValue"];
-      if(key=="technicalCondition"){
+      if(key=="technicalCondition"||key=="managerDepart"){
         this.invoice[key+"Name"] = value["selectedName"];
       }
     }

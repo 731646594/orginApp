@@ -21,7 +21,7 @@ export class ScanCodePage extends InventoryPage{
       pageData:{
         pageItem:[
           {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,searchButton:true,itemValue:"barCode"},
-          {itemName:"盘点单位", itemType:"label",nec:0,itemValue:"managerDepart"},
+          {itemName:"盘点单位", itemType:"label",nec:0,itemValue:"managerDepartName"},
           {itemName:"资产编码", itemType:"label",nec:0,itemValue:"assetsCode"},
           {itemName:"使用状态", itemType:"select",nec:1, itemValue:"usedState",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
