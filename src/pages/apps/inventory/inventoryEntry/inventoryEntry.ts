@@ -73,6 +73,7 @@ export class InventoryEntryPage  extends InventoryPage{
         this.pageData.pageItem[0].option = this.departments;
         if (this.departments){
           this.invoice["managerDepart"]=this.departments[0].departCode;
+          this.invoice["managerDepartName"]=this.departments[0].departName;
         }
       }
     });
