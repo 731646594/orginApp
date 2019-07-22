@@ -382,9 +382,13 @@
   flex: none;
 }
 .departNameDiv{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  direction: rtl;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-y: hidden;
+  text-overflow: clip;
+}
+.departNameDiv::-webkit-scrollbar {
+  display: none;    /* 隐藏滚动条 */
 }
 .detailDataLabel{
   margin-top: 6px;
