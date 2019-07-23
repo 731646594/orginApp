@@ -114,6 +114,10 @@ export class InventoryDataUploadPage {
     }
   }
   testDelete(index){
+    alert(index)
+    alert(this.newPlanDetail.length)
+    alert(this.existPlanDetail.length)
+    alert(this.willPlanDetail.length)
     let alertCtrl = this.alertCtrl.create({
       title:"是否删除该条数据？",
       buttons:[
