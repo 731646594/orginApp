@@ -28,6 +28,10 @@ export class InventoryDataUploadPage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
+    this.newPlanDetail = [];
+    this.existPlanDetail=[];
+    this.willPlanDetail=[];
+    this.planDetailList = [];
     let planDetailList = [];
     this.uploadFiles = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
@@ -114,10 +118,6 @@ export class InventoryDataUploadPage {
     }
   }
   testDelete(index){
-    alert(index)
-    alert(this.newPlanDetail.length)
-    alert(this.existPlanDetail.length)
-    alert(this.willPlanDetail.length)
     let alertCtrl = this.alertCtrl.create({
       title:"是否删除该条数据？",
       buttons:[
