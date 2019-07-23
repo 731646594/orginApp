@@ -72,11 +72,11 @@ export class GasDataUploadPage {
       if (name=="zjb"){
         content = document.getElementsByClassName("disContent")[0];
         this.itemName = "zjb";
-        url = "devWeeklyCheckController.do?getCheckListCols";
+        url = "devWeeklyCheckController/getCheckListCols.do";
       }else if (name=="jjb"){
         content = document.getElementsByClassName("disContent")[1];
         this.itemName = "jjb";
-        url = "devHandOverController.do?getCheckListCols";
+        url = "devHandOverController/getCheckListCols.do";
       }
       if ((<HTMLElement>content).style.display=="block"){
         (<HTMLElement>content).style.display="none";

@@ -60,6 +60,7 @@ export class InventoryEntryPage  extends InventoryPage{
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
     this.invoice["usedState"]="010101";
+    this.invoice["usedStateName"]="生产经营用-科研";
     this.invoice["technicalCondition"]="01";
     this.invoice["technicalConditionName"]="完好";
     // this.selectFilterData["departments"]=[];

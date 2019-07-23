@@ -49,7 +49,7 @@ export class WeeklyChecklistEntryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
-    this.nowDataTime = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+(new Date().getDate());
+    this.nowDataTime = new Date(new Date().getTime()+8*60*60*1000).toISOString();
     this.localData = this.navParams.get("Data");
     this.departListData = this.localData.fgsData;
     this.detailData = this.localData.detailData;

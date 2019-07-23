@@ -9,7 +9,7 @@
     <ion-list class="planList">
       <ion-item class="inputItem" *ngFor="let plan of planList" (click)="detailPage(plan)">
         <div>
-          盘点计划编码：<input readonly class="readonlyInput" [(ngModel)]="plan.planNumber">
+          盘点计划编码：<span class="readonlyInput labelNormal" >{{plan.planNumber}}</span>
         </div>
         <div>
           盘点计划名称：<span class="readonlyInput labelNormal" >{{plan.planName}}</span>

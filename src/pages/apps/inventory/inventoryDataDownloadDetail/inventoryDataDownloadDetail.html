@@ -8,10 +8,10 @@
   <div class="planListBox">
     <ion-item class="inputItem">
       <div>
-        盘点计划编码：<input readonly class="readonlyInput" [(ngModel)]="plan.planNumber">
+        盘点计划编码：<span class="readonlyInput labelNormal" >{{plan.planNumber}}</span>
       </div>
       <div>
-        盘点计划名称：<input readonly class="readonlyInput" [(ngModel)]="plan.planName">
+        盘点计划名称：<span class="readonlyInput labelNormal" >{{plan.planName}}</span>
       </div>
     </ion-item>
     <ion-list class="planList">
