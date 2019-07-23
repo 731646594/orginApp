@@ -121,8 +121,11 @@ export class InventoryDataDownloadDetailPage {
       })
 
     },(error)=>{
-      alert("下载失败,error："+JSON.stringify(error));
-      loading.dismiss();
+        let  alertCtrl = this.alertCtrl.create({
+          title:"下载失败,error："+JSON.stringify(error)
+        });
+        alertCtrl.present();
+        loading.dismiss();
     })
   }
   downloadPlan(){

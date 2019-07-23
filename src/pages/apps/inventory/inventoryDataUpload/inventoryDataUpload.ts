@@ -46,7 +46,6 @@ export class InventoryDataUploadPage {
         }
         this.planDetailList = planDetailList.filter((item)=>{
           this.uploadFiles.push(item["uploadFile"]);
-          delete item["uploadFile"];
           return !item["Uploaded"]
         })
       }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
@@ -86,7 +85,9 @@ export class InventoryDataUploadPage {
       if(uploadFile.length>0){
         uploadType = 2;
       }
-      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(this.planDetailList[i])}).subscribe(data=>{
+      let data = this.planDetailList[i];
+      delete data.uploadFile;
+      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(data)}).subscribe(data=>{
         if (data.success=="true"){
           let l = index-this.newPlanDetail.length;
           if(l>=0){
