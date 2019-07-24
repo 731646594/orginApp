@@ -81,7 +81,7 @@ export class AggregateQueryPage {
     if (whichChecked){
       body[whichChecked] = this.detail[whichChecked]
     }
-    this.httpService.post(this.httpService.getUrl()+url,body).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
         this.queryResult = data.data;
         this.shape = "result";

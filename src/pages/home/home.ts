@@ -40,7 +40,7 @@ export class HomePage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.httpService.post(this.httpService.getUrl()+"toDoController/tododetailcounts.do", {userCode:this.userCode,departCode:this.departCode}).subscribe((data)=>{
+    this.httpService.postData(this.httpService.getUrl()+"toDoController/tododetailcounts.do", {userCode:this.userCode,departCode:this.departCode},(data)=>{
       let todoList=[];
       if (data.success=="true"){
         for (let key in data.data[0]) {
@@ -52,8 +52,6 @@ export class HomePage {
         this.num4 = todoList[3][1];
         this.num5 = todoList[1][1];
       }
-    },err=>{
-      alert(err)
     });
     setTimeout(this.readInventoryNum,500)
   }

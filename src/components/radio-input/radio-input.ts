@@ -49,7 +49,7 @@ export class RadioInputComponent implements OnInit{
     this.departCode = this.storageService.read("loginDepartCode");
     let params = "{\"userCode\":\""+this.userCode+"\",\"departCode\":\""+this.departCode+"\",\""+this.radioValue+"\":\""+this.radioInput+"\"}";
     let paramsJson = JSON.parse(params);
-    this.httpService.post(this.httpService.getUrl()+this.postUrl,paramsJson).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+this.postUrl,paramsJson,data=>{
       if (data.success=="true"){
         this.backValue.emit(data.data);
       }

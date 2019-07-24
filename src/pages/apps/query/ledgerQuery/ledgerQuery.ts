@@ -62,7 +62,7 @@ export class LedgerQueryPage {
       this.userPerson = ""
     }
     body = {departCode:this.departCode,assetsType:this.assetsType,userPerson:this.userPerson,page:this.page,pageSize:this.pageSize};
-    this.httpService.post(this.httpService.getUrl()+url,body).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
         this.detail = data.data;
         this.detail["count"] = data.count;
@@ -84,7 +84,7 @@ export class LedgerQueryPage {
       this.userPerson = ""
     }
     body = {departCode:this.departCode,assetsType:this.assetsType,userPerson:this.userPerson,page:this.page,pageSize:this.pageSize};
-    this.httpService.post(this.httpService.getUrl()+url,body).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       console.log(data)
       if (data.success == "true"){
         for (let i in data.data){

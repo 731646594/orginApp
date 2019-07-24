@@ -46,11 +46,11 @@ export class LoginPage {
     }
     let loading = this.loadingCtrl.create({
       content:"请等待...",
-      duration:10000
+      duration:5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"appLoginController/login.do",
-      {usercode:this.username,password:this.password}).subscribe((data)=>{
+    this.httpService.postData(this.httpService.getUrl()+"appLoginController/login.do",
+      {usercode:this.username,password:this.password},(data)=>{
       if (data.success=="false"){
         loading.dismiss()
         let alert=this.alertCtrl.create({
@@ -70,20 +70,19 @@ export class LoginPage {
         this.depart = this.departList[0];
       }
       loading.dismiss()
-    },err=>{
-      alert(err)
     })
   }
   entry(){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
-      duration: 10000
+      duration: 5000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode}).subscribe(data=>{
+    this.downloadDictionaries();
+    this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
       if (data.success=="true"){
         this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
-        this.httpService.post(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode}).subscribe(data2=>{
+        this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode},data2=>{
           if (data2.success=="true"){
             this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
             loading.dismiss();
@@ -103,5 +102,33 @@ export class LoginPage {
   }
   serviceSetting(){
     this.app.getRootNav().push(ServerSettingPage);
+  }
+  downloadDictionaries(){
+    this.httpService.postData(this.httpService.getUrl()+"appLoginController/getDeparts.do",{userCode:this.username},data1=>{
+      if (data1.success == "true"){
+        this.storageService.sqliteInsert("departListData",this.username,JSON.stringify(data1.data));
+        // this.storageService.write("departListData",data1.data);
+      }else {
+        alert(data1.msg)
+      }
+    });
+    this.httpService.postData(this.httpService.getUrl()+"dictionariesController/getPyyyDic.do",{},data2=> {
+      if (data2.success == "success"){
+        this.storageService.sqliteInsert("lossReasonData",this.username,JSON.stringify(data2.data));
+        // this.storageService.write("lossReasonData",data2.data);
+      }
+      else {
+        alert(data2.msg)
+      }
+    });
+    this.httpService.postData(this.httpService.getUrl()+"dictionariesController/getCfddDic.do",{},data3=> {
+      if (data3.success == "success"){
+        this.storageService.sqliteInsert("storePlaceData",this.username,JSON.stringify(data3.data));
+        // this.storageService.write("storePlaceData",data3.data);
+      }
+      else {
+        alert(data3.msg)
+      }
+    });
   }
 }

@@ -186,11 +186,11 @@ export class ApplicationPage {
   //   });
   //   loading.present();
   //   let phoneInvoiceNumber = this.userCode + this.departCode + this.formatDateAndTimeToString(new Date());
-  //   this.httpService.post(this.httpService.getUrl() + this.censorshipUrl, {
+  //   this.httpService.postData(this.httpService.getUrl() + this.censorshipUrl, {
   //     departCode: this.departCode,
   //     userCode: this.userCode,
   //     phoneInvoiceNumber: phoneInvoiceNumber
-  //   }).subscribe(data => {
+  //   },data => {
   //     if (data.success == "true") {
   //       let alertCtrl = this.alertCtrl.create({
   //         title: data.msg
@@ -226,7 +226,7 @@ export class ApplicationPage {
     let phoneInvoiceNumber = this.userCode + this.departCode + this.formatDateAndTimeToString(new Date());
 
     this.setSelectValue();
-    // this.httpService.post(this.httpService.getUrl() + url, {
+    // this.httpService.postData(this.httpService.getUrl() + url, {
     //   departCode: this.departCode,
     //   departName: this.departName,
     //   userCode: this.userCode,
@@ -236,7 +236,7 @@ export class ApplicationPage {
     //   eamAllotDetails: JSON.stringify(this.searchDatas),
     //   eamDiscardDetails: JSON.stringify(this.searchDatas),
     //   phoneInvoiceNumber:phoneInvoiceNumber
-    // }).subscribe(data => {
+    // },data => {
     //   if (data.success == "true") {
     //     this.storageService.deleteUserTable(this.sqlInvoiceTableName,this.userCode);
     //     this.storageService.deleteUserTable(this.sqlSearchDatasTableName,this.userCode);
@@ -308,7 +308,7 @@ export class ApplicationPage {
     loading.present();
     let url;
     url = this.uploadDataUrl;
-    this.httpService.post(this.httpService.getUrl() + url, {
+    this.httpService.postData(this.httpService.getUrl() + url, {
       departCode: this.departCode,
       departName: this.departName,
       userCode: this.userCode,
@@ -317,7 +317,7 @@ export class ApplicationPage {
       eamDiscardInvoices: this.invoice,
       eamAllotDetal: this.searchDatas,
       eamDiscardDetails: this.searchDatas
-    }).subscribe(data => {
+    },data => {
       if (data.success == "true") {
         let alertCtrl = this.alertCtrl.create({
           title: data.msg
@@ -340,10 +340,10 @@ export class ApplicationPage {
     });
     loading.present();
     let phoneInvoiceNumber = this.userCode + this.departCode + this.formatDateAndTimeToString(new Date());
-    this.httpService.post(this.httpService.getUrl() + this.uploadDataToEAMUrl, {
+    this.httpService.postData(this.httpService.getUrl() + this.uploadDataToEAMUrl, {
       departCode: this.departCode,
       phoneInvoiceNumber: phoneInvoiceNumber
-    }).subscribe(data => {
+    },data => {
       if (data.success == "true") {
 
         let alertCtrl = this.alertCtrl.create({

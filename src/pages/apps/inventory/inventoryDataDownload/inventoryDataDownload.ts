@@ -27,7 +27,7 @@ export class InventoryDataDownloadPage {
     loading.present();
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandownload.do",{userCode:this.userCode,departCode:this.departCode}).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneController/phonecheckplandownload.do",{userCode:this.userCode,departCode:this.departCode},data=>{
       if (data.success == "true"){
         this.planList=data.data;
         this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{

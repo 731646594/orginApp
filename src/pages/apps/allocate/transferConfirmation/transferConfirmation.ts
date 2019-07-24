@@ -45,10 +45,10 @@ export class TransferConfirmationPage {
       duration: 10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl() + this.postUrl, {
+    this.httpService.postData(this.httpService.getUrl() + this.postUrl, {
       departCode: this.departCode,
       userCode: this.userCode
-    }).subscribe(data => {
+    },data => {
       if (data.success == "true") {
         this.censorshipList = data.data;
         if (this.censorshipList.length) {
@@ -113,12 +113,12 @@ export class TransferConfirmationPage {
         invoiceDatas.push(item);
       }
     })
-    // this.httpService.post(this.httpService.getUrl() + this.childPostUrl, {
+    // this.httpService.postData(this.httpService.getUrl() + this.childPostUrl, {
     //   departCode: this.departCode,
     //   userCode: this.userCode,
     //   userName: this.userName,
     //   invoiceDatas: JSON.stringify(invoiceDatas)
-    // }).subscribe(data => {
+    // },data => {
     //   this.loadData()
     //   if (data.success == "true") {
     //     let alertCtrl = this.alertCtrl.create({

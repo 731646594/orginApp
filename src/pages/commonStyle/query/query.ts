@@ -71,13 +71,13 @@ export class QueryPage {
 
     let invoiceYM= this.datePipe.transform(this.invoice["invoiceYM"],"yyyy-MM");
 
-    // this.httpService.post(this.httpService.getUrl() + this.searchFormUrl, {
+    // this.httpService.postData(this.httpService.getUrl() + this.searchFormUrl, {
     //   departCode: this.departCode,
     //   userCode: this.userCode,
     //   invoiceNumber: this.invoice["invoiceNumber"],
     //   invoiceStatus: this.invoice["invoiceStatus"],
     //   invoiceYM: invoiceYM
-    // }).subscribe(data => {
+    // },data => {
     //   if (data.success == "true") {
     //     let alert = this.alertCtrl.create({
     //       title: "查询成功！"

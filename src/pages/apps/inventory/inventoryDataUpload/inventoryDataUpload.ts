@@ -87,7 +87,7 @@ export class InventoryDataUploadPage {
       }
       let data = this.planDetailList[i];
       delete data.uploadFile;
-      this.httpService.post(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(data)}).subscribe(data=>{
+      this.httpService.postData(this.httpService.getUrl()+"cellPhoneController/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(data)},data=>{
         if (data.success=="true"){
           let l = index-this.newPlanDetail.length;
           if(l>=0){

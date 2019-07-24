@@ -151,7 +151,7 @@ export class ApprovalPage {
       duration:5000
     });
     loading.present();
-    // this.httpService.post(this.httpService.getUrl()+this.postDataUrl,this.postDataParams).subscribe(data=>{
+    // this.httpService.postData(this.httpService.getUrl()+this.postDataUrl,this.postDataParams,data=>{
     //   if (data.success == "true"){
     //     let alertCtrl = this.alertCtrl.create({
     //       title:data.msg

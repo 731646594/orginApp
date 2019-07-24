@@ -78,7 +78,7 @@ export class AssetQuiryPage {
       this.assetsCode = ""
     }
     body = {departCode:this.loginDepartCode,assetsCode:this.assetsCode,barCode:this.barCode};
-    this.httpService.post(this.httpService.getUrl()+url,body).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
         this.detail = data.data[0];
         this.plan = data.listRecord;

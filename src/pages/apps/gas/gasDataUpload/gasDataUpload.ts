@@ -103,7 +103,7 @@ export class GasDataUploadPage {
           duration: 10000
         });
         loading.present();
-        this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode}).subscribe(data=>{
+        this.httpService.postData(this.httpService.getUrl()+url,{departCode:this.departCode},data=>{
           if (data.success=="true"){
             let colsData = data.data.colsData;
             for (let i in colsData){
@@ -152,7 +152,7 @@ export class GasDataUploadPage {
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]}).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
           this.zjb=null;

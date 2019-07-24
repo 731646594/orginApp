@@ -28,7 +28,7 @@ export class QueryDetailPage {
       duration: 5000
     });
     loading.present();
-    // this.httpService.post(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber}).subscribe(data=>{
+    // this.httpService.postData(this.httpService.getUrl()+this.postUrl,{departCode:this.departCode,phoneInvoiceNumber:this.invoice.invoiceNumber,invoiceNumber:this.invoice.invoiceNumber},data=>{
     //   if (data.success == "true"){
     //     this.searchDatas = data.data;
     //   }else {

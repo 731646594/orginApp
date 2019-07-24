@@ -50,7 +50,7 @@ export class InventoryDataDownloadDetailPage {
     loading.present();
     let params ={};
     params = {userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item};
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneController/phonecheckplandetail.do",params).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneController/phonecheckplandetail.do",params,data=>{
       if (data.success=="true"){
         this.downloadPlan2(data.data);
         loading.dismiss();

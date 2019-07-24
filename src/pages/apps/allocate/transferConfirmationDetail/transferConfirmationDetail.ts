@@ -179,14 +179,14 @@ export class TransferConfirmationDetailPage {
     loadingCtrl.present();
     let invoiceDatas = new Array();
     invoiceDatas.push(this.invoice)
-    // this.httpService.post(this.httpService.getUrl() + this.childPostUrl, {
+    // this.httpService.postData(this.httpService.getUrl() + this.childPostUrl, {
     //   departCode: this.departCode,
     //   userCode: this.userCode,
     //   userName: this.userName,
     //   phoneInvoiceNumber: this.invoice.invoiceNumber,
     //   invoiceDatas: JSON.stringify(invoiceDatas),
     //   detailList:JSON.stringify(this.detailList)
-    // }).subscribe(data => {
+    // },data => {
     //   if (data.success == "true") {
     //     let alertCtrl = this.alertCtrl.create({
     //       title: data.msg

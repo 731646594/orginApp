@@ -55,7 +55,7 @@ export class GasDataUploadDetailPage {
       duration: 10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+url,{departCode:this.departCode}).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+url,{departCode:this.departCode},data=>{
       if (data.success=="true"){
         let colsData = data.data.colsData;
         for (let i in colsData){

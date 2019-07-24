@@ -46,8 +46,8 @@ export class ModifyPasswordPage {
       duration:10000
     });
     loading.present();
-    this.httpService.post(this.httpService.getUrl()+"appLoginController.do?modifyPassword",
-      {userid:this.userCode,password:this.oldPsw,passwordAgain:this.confirmPsw,passwordNew:this.newPsw}).subscribe((data)=>{
+    this.httpService.postData(this.httpService.getUrl()+"appLoginController.do?modifyPassword",
+      {userid:this.userCode,password:this.oldPsw,passwordAgain:this.confirmPsw,passwordNew:this.newPsw},(data)=>{
       loading.dismiss();
       if (data.success=="false"){
         let alert=this.alertCtrl.create({
@@ -62,8 +62,6 @@ export class ModifyPasswordPage {
         alert.present();
         this.navCtrl.pop();
       }
-    },err=>{
-      alert(err)
     })
   }
 }
