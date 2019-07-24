@@ -28,19 +28,22 @@ export class InventoryDataDownloadDetailPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.plan = this.navParams.get("plan");
     this.planDate = JSON.parse(JSON.stringify(this.plan));
+    this.departments = JSON.parse(JSON.stringify(this.planDate.departments));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
-        if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==this.plan["planNumber"]){
-          let planDate = JSON.parse(res.rows.item(0).stringData);
-          for(let i in planDate.departments){
-            if (planDate.departments[i].departCode == this.planDate.departments[i].departCode){
-              this.planDate.departments[i]["isDownLoad"] = true;
+        let planDate = JSON.parse(res.rows.item(0).stringData);
+        if (planDate["planNumber"]==this.plan["planNumber"]){
+          for(let i in this.departments){
+            for (let j in planDate.departments){
+              if (planDate.departments[j].departCode == this.departments[i].departCode){
+                this.departments[i]["isDownLoad"] = true;
+              }
             }
           }
         }
       }
-      this.departments = this.planDate.departments;
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+
+    })
   }
   downloadPlan1(item){
     let loading = this.loadingCtrl.create({
@@ -100,17 +103,17 @@ export class InventoryDataDownloadDetailPage {
         var reader = new FileReader();
         reader.onloadend=(e)=>{
           let data=JSON.parse(e.target['result']).data;
-          let departments = this.plan.departments;
-          this.plan.departments = [];
+          let departments = JSON.parse(JSON.stringify(this.plan.departments));
+          this.planDate.departments = [];
           for (let i in this.departments){
             if(this.departments[i].checked){
               departments[i]["isDownLoad"] = true;
-              this.plan.departments.push(this.departments[i]);
+              this.planDate.departments.push(this.departments[i]);
               this.checkedOne(i);
             }
           }
-          this.departments = departments;
-          this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.plan));
+          this.departments = JSON.parse(JSON.stringify(departments));
+          this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
           this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.deleteUserTable("existPlanDetail",this.userCode);

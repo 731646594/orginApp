@@ -51,7 +51,7 @@ export class HttpService {
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
       (res)=>{
         if(successCallback){
-          if(res["success"]){
+          if(res["success"]=="true"||res["success"]=="success"){
             successCallback(res);
           }else{
             if (errorCallback){
