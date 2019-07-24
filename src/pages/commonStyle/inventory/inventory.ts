@@ -237,9 +237,12 @@ export class InventoryPage {
         });
         alertCtrl.present();
         for(let key in this.invoice){
-          this.invoice[key] = "";
+          if (key != "storePlace"&&key != "storePlaceName"){
+            this.invoice[key] = "";
+          }
         }
         this.invoice["usedState"]="010101";
+        this.invoice["usedStateName"]="生产经营用-科研";
         this.invoice["realcodeStatus"]="0";
         this.invoice["technicalCondition"]="01";
         this.invoice["technicalConditionName"]="完好";
@@ -294,9 +297,13 @@ export class InventoryPage {
           localPlanDetail = JSON.parse(res.rows.item(0).stringData);
           for(let i in  localPlanDetail){
             if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
+              let storePlace = this.invoice["storePlace"];
+              let storePlaceName = this.invoice["storePlaceName"];
               this.invoice = localPlanDetail[i];
               this.getAndShowPics(this.invoice["uploadFile"]);
               this.invoice["realcodeStatus"] = "0";
+              this.invoice["storePlace"] = storePlace;
+              this.invoice["storePlaceName"] = storePlaceName;
               isSearch = true;
               this.isDistinguish = true;
             }

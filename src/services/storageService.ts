@@ -37,6 +37,7 @@ export class StorageService {
   }
 
   deleteUserTable(tableName,userCode){
+    this.createUserTable(tableName)
     this.AssetInventoryDatabase.executeSql('DELETE FROM '+tableName+' WHERE userCode=?;', [userCode]).then().catch(e => alert("erro5:"+JSON.stringify(e)));
   }
 

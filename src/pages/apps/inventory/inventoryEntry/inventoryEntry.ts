@@ -173,10 +173,14 @@ export class InventoryEntryPage  extends InventoryPage{
       });
       alertCtrl.present();
       for(let key in this.invoice){
-        this.invoice[key] = "";
+        if (key != "lossReason"&&key != "lossReasonName"&&key != "storePlace"&&key != "storePlaceName"){
+          this.invoice[key] = "";
+        }
       }
       this.invoice["managerDepart"]=this.departments[0].departCode;
+      this.invoice["managerDepartName"]=this.departments[0].departName;
       this.invoice["usedState"]="010101";
+      this.invoice["usedStateName"]="生产经营用-科研";
       this.invoice["technicalCondition"]="01";
       this.invoice["technicalConditionName"]="完好";
       this.getAndShowPics([]);
