@@ -70,7 +70,7 @@ export class AggregateQueryPage {
     loading.present();
     let url,body;
 
-    url = "summaryController.do?querySummary";
+    url = "summaryController/querySummary.do";
     let whichChecked;
     for (let i in  this.plan){
       if (this.plan[i] == true){

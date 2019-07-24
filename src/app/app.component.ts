@@ -11,7 +11,7 @@ import { LoginPage } from "../pages/mine/login/login";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService) {
     // let olog = console.error;
