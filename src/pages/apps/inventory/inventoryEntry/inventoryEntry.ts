@@ -70,7 +70,6 @@ export class InventoryEntryPage  extends InventoryPage{
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
-        this.departments = this.departments.filter((item)=>{return item.isDownLoad});
         this.pageData.pageItem[0].option = this.departments;
         if (this.departments){
           this.invoice["managerDepart"]=this.departments[0].departCode;
