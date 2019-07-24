@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {App, NavController} from 'ionic-angular';
+import {AlertController, App, NavController} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
 import {ScanCodePage} from "../apps/inventory/scanCode/scanCode";
@@ -10,6 +10,7 @@ import {InventoryDataDownloadPage} from "../apps/inventory/inventoryDataDownload
 import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allocateApplication";
 import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateApproval";
 import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
+import {Network} from "@ionic-native/network";
 let that;
 @Component({
   selector: 'page-home',
@@ -26,7 +27,7 @@ export class HomePage {
   num3;
   num4;
   num5;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,) {
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public alertCtrl:AlertController) {
 
   }
   ionViewDidEnter(){
@@ -65,6 +66,24 @@ export class HomePage {
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   willGoPage(pageIndex){
+    if(pageIndex == 1){
+      if(this.network.type != 'none'){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请切换到飞行模式！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+    }
+    else {
+      if(pageIndex !=4&&this.network.type == 'none'){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请恢复网络链接！"
+        });
+        alertCtrl.present();
+        return false;
+      }
+    }
     if (pageIndex==1){
       this.app.getRootNav().push(ScanCodePage)
     }

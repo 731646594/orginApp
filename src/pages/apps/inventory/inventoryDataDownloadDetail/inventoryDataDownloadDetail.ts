@@ -85,7 +85,9 @@ export class InventoryDataDownloadDetailPage {
       }
     },300);
     //android 存储externalDataDirectory,通用沙盒存储dataDirectory
-    fileTransferNow.download(url,
+    let serverUrl=this.storageService.read("serverUrl");
+    let strUrl=serverUrl["agreement"]+"://"+serverUrl["address"]+":"+serverUrl["port"]+"/"
+    fileTransferNow.download(strUrl+url,
       this.file.dataDirectory+"file.txt").then((entry)=>{
       if (timer) clearInterval(timer);
       loading.dismiss();
@@ -98,13 +100,16 @@ export class InventoryDataDownloadDetailPage {
         var reader = new FileReader();
         reader.onloadend=(e)=>{
           let data=JSON.parse(e.target['result']).data;
+          let departments = this.plan.departments;
           this.plan.departments = [];
           for (let i in this.departments){
             if(this.departments[i].checked){
+              departments[i]["isDownLoad"] = true;
               this.plan.departments.push(this.departments[i]);
               this.checkedOne(i);
             }
           }
+          this.departments = departments;
           this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.plan));
           this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
           this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
