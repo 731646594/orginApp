@@ -67,8 +67,12 @@ export class HttpService {
         let errMsg = "网络通信异常";
         switch (err.status) {
           case 401:
-            errMsg = '无权限访问，或许登录信息已过期，请重新登录';
+            errMsg = '登录信息已过期，请重新登录';
             //跳转到登陆app
+            this.storageService.remove("loginDepartName");
+            this.storageService.remove("loginDepartCode");
+            this.storageService.remove("loginUserName");
+            this.storageService.remove("loginUserCode");
             this.app.getRootNav().setRoot(LoginPage);
             break;
           case 404:
