@@ -6,20 +6,26 @@ import { StorageService } from "../services/storageService";
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from "../pages/mine/login/login";
-
+import {HttpService} from "../services/httpService";
+declare var wkWebView: any;
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService) {
-    // let olog = console.error;
-    // console.error = function() {
-    //   alert([].join.call(arguments, ''))
-    //   olog.apply(this, arguments);
-    //
-    // };
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService,httpService:HttpService) {
+    let olog = console.error;
+    console.error = function() {
+      alert([].join.call(arguments, ''))
+      olog.apply(this, arguments);
+
+    };
+    document.addEventListener('deviceready', () => {
+      httpService.getUrl();
+      let url = storageService.read("serverUrl");
+      wkWebView.injectCookie(url["agreement"]+"://"+url["address"]+"/");
+    });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
