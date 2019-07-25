@@ -89,11 +89,26 @@ export class MinePage {
       willGoPage = LoginPage;
     }
     else if(page == 5){
-      this.storageService.remove("loginDepartName");
-      this.storageService.remove("loginDepartCode");
-      this.storageService.remove("loginUserName");
-      this.storageService.remove("loginUserCode");
-      willGoPage = LoginPage;
+      let alertCtrl = this.alertCtrl.create({
+        title:"是否退出登录？",
+        buttons:[
+          {
+            text:"是",
+            handler:()=>{
+              this.storageService.remove("loginDepartName");
+              this.storageService.remove("loginDepartCode");
+              this.storageService.remove("loginUserName");
+              this.storageService.remove("loginUserCode");
+              willGoPage = null;
+              this.app.getRootNav().setRoot(LoginPage)
+            }
+          },
+          {
+            text:"否",
+          }
+        ]
+      });
+      alertCtrl.present();
     }
     else if(page == 6){
       this.storageService.clear();

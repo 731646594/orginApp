@@ -51,4 +51,14 @@ export class ScrapApprovalPage extends ApprovalPage{
     this.events.unsubscribe('ApprovalPage:refresh');
   }
 
+  /**
+   * 更新数量
+   */
+  retData(){
+    this.searchDatas.forEach(item=>{
+       item["allotAmount"] = item["detailAmountSum"]
+    })
+   console.log(this.searchDatas)
+  }
+
 }

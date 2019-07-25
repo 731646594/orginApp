@@ -3,12 +3,13 @@ import {Http,Headers,RequestOptions} from '@angular/http';
 import "rxjs/add/operator/map";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storageService";
-import {AlertController} from "ionic-angular";
+import {AlertController, App} from "ionic-angular";
+import {LoginPage} from "../pages/mine/login/login";
 
 @Injectable()
 export class HttpService {
 
-  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController){}
+  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App){}
 
   public getUrl(){
     let url=this.storageService.read("serverUrl");
@@ -68,7 +69,7 @@ export class HttpService {
           case 401:
             errMsg = '无权限访问，或许登录信息已过期，请重新登录';
             //跳转到登陆app
-            // this.app.getRootNav().push(HseLoginPage);
+            this.app.getRootNav().setRoot(LoginPage);
             break;
           case 404:
             errMsg = '抱歉，后台服务找不到对应接口';

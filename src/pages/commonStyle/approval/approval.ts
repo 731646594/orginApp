@@ -32,6 +32,11 @@ export class ApprovalPage {
     this.userName = this.storageService.read("loginUserName");
     this.departCode = this.storageService.read("loginDepartCode");
   }
+
+  retData(){
+
+  }
+
   ionViewDidLoad(){
     let loading = this.loadingCtrl.create({
       content:"正在加载",
@@ -42,12 +47,14 @@ export class ApprovalPage {
     this.httpService.postData(this.httpService.getUrl()+this.postUrl,this.postParams,data=>{
       if (data.success == "true"){
         this.searchDatas = data.data;
+        this.retData();
       }else {
         alert(data.msg);
       }
       loading.dismiss();
     })
   }
+
 
 
   getCardValue(index){
