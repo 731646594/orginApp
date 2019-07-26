@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../services/httpService";
 import {StorageService} from "../../../services/storageService";
 
@@ -26,7 +26,7 @@ export class ApprovalPage {
   postParams;
   searchDatas=[];
   checkedIndex;
-  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,
               public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App,public events?: Events) {
     this.userCode = this.storageService.read("loginUserCode");
     this.userName = this.storageService.read("loginUserName");
@@ -38,11 +38,6 @@ export class ApprovalPage {
   }
 
   ionViewDidLoad(){
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:5000
-    });
-    loading.present();
     console.log(this.httpService.getUrl()+this.postUrl)
     this.httpService.postData(this.httpService.getUrl()+this.postUrl,this.postParams,data=>{
       if (data.success == "true"){
@@ -51,8 +46,7 @@ export class ApprovalPage {
       }else {
         alert(data.msg);
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
 
@@ -153,11 +147,6 @@ export class ApprovalPage {
       }
     };
     this.getpostDataParams();
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:5000
-    });
-    loading.present();
     // this.httpService.postData(this.httpService.getUrl()+this.postDataUrl,this.postDataParams,data=>{
     //   if (data.success == "true"){
     //     let alertCtrl = this.alertCtrl.create({
@@ -179,7 +168,6 @@ export class ApprovalPage {
         alertCtrl.present()
         this.events.publish("ApprovalPage:refresh");
       }
-      loading.dismiss()
-    })
+    },true)
   }
 }

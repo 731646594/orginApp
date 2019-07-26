@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {QueryPage} from "../../../commonStyle/query/query";
-import {AlertController, App, LoadingController, NavController, NavParams} from "ionic-angular";
+import {AlertController, App, NavController, NavParams} from "ionic-angular";
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
 import {AllocateQueryDetailPage} from "../allocateQueryDetail/allocateQueryDetail";
@@ -11,9 +11,9 @@ import {DatePipe} from "@angular/common";
   templateUrl: '../../../commonStyle/query/query.html'
 })
 export class AllocateQueryPage extends QueryPage{
-  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,public loadingCtrl?:LoadingController,
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public app?:App,
               public httpService?:HttpService,public alertCtrl?:AlertController,public datePipe?:DatePipe) {
-    super(navCtrl,navParams,storageService,app,loadingCtrl,httpService,alertCtrl,datePipe);
+    super(navCtrl,navParams,storageService,app,httpService,alertCtrl,datePipe);
     this.data = {
       pageName:"调拨查询",
       pageData:{

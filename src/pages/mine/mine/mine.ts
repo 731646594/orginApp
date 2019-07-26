@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../../services/storageService";
 import {ServerSettingPage} from "../serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../modifyPassword/modifyPassword";
@@ -19,7 +19,7 @@ export class MinePage {
   pageData;
   itemData=[];
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
-              public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
+              public httpService:HttpService,public alertCtrl:AlertController) {
 
   }
   ionViewDidEnter(){
@@ -76,7 +76,8 @@ export class MinePage {
               this.storageService.remove("loginDepartCode");
               this.storageService.remove("loginUserName");
               this.storageService.remove("loginUserCode");
-              willGoPage = LoginPage;
+              willGoPage = null;
+              this.app.getRootNav().setRoot(LoginPage)
             }
           },
           {
@@ -106,16 +107,10 @@ export class MinePage {
 
   }
   downloadDictionaries(){
-    let loadingCtrl = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:10000
-    });
-    loadingCtrl.present();
     this.httpService.postData(this.httpService.getUrl()+"appLoginController/getDeparts.do",{userCode:this.userCode},data1=>{
       if (data1.success == "true"){
         this.storageService.sqliteInsert("departListData",this.userCode,JSON.stringify(data1.data));
         // this.storageService.write("departListData",data1.data);
-        loadingCtrl.dismiss();
         let alertCtrl = this.alertCtrl.create({
           title:"更新成功！"
         });
@@ -123,7 +118,7 @@ export class MinePage {
       }else {
         alert(data1.msg)
       }
-    });
+    },true);
     this.httpService.postData(this.httpService.getUrl()+"dictionariesController/getPyyyDic.do",{},data2=> {
       if (data2.success == "success"){
         this.storageService.sqliteInsert("lossReasonData",this.userCode,JSON.stringify(data2.data));
@@ -148,6 +143,6 @@ export class MinePage {
     this.storageService.remove("loginDepartCode");
     this.storageService.remove("loginUserName");
     this.storageService.remove("loginUserCode");
-    this.app.getRootNav().push(LoginPage)
+    this.app.getRootNav().setRoot(LoginPage)
   }
 }

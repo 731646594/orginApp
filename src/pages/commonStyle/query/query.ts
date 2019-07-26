@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
 import {HttpService} from "../../../services/httpService";
 import {DatePipe} from "@angular/common";
@@ -21,12 +21,12 @@ export class QueryPage {
   searchFormUrl;
   nextPage;
 
-  constructor(public navCtrl?: NavController, public navParams?: NavParams, public storageService?: StorageService, public app?: App, public loadingCtrl?: LoadingController,
+  constructor(public navCtrl?: NavController, public navParams?: NavParams, public storageService?: StorageService, public app?: App,
               public httpService?: HttpService, public alertCtrl?: AlertController,public datePipe?:DatePipe) {
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     this.invoice["invoiceStatus"] = "0";
-    let date = new Date();
+    // let date = new Date();
     // this.invoice["invoiceYM"] = new Date(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1)).toISOString();
     this.invoice["invoiceYM"] = new Date(new Date().getTime()+8*60*60*1000).toISOString();
     this.maxDate = this.invoice["invoiceYM"];
@@ -60,11 +60,6 @@ export class QueryPage {
   }
 
   searchForm() {
-    let loading = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 5000
-    });
-    loading.present();
     if (!this.invoice["invoiceNumber"]) {
       this.invoice["invoiceNumber"] = "";
     }
@@ -104,8 +99,7 @@ export class QueryPage {
         alert.present();
         this.searchDatas = data.data;
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
   invoiceDetail(index) {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
@@ -22,7 +22,7 @@ export class GasDataUploadDetailPage {
   signatureImage1;
   signatureImage2;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public navParams:NavParams,public app:App,public loadingCtrl:LoadingController,) {
+              public alertCtrl:AlertController,public navParams:NavParams,public app:App) {
     this.departCode = this.storageService.read("loginDepartCode");
     this.itemName = null;
     this.photoArrary = [];
@@ -49,12 +49,6 @@ export class GasDataUploadDetailPage {
         this.photoShowArrary[i] = this.photoArrary[i]
       }
     }
-
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration: 10000
-    });
-    loading.present();
     this.httpService.postData(this.httpService.getUrl()+url,{departCode:this.departCode},data=>{
       if (data.success=="true"){
         let colsData = data.data.colsData;
@@ -63,12 +57,10 @@ export class GasDataUploadDetailPage {
             this.colsItemName.push(colsData[i]["fields"][j].columnTitle)
           }
         }
-        loading.dismiss();
       }else {
         alert(data.msg);
-        loading.dismiss();
       }
-    });
+    },true);
   }
   ionViewDidEnter(){
 

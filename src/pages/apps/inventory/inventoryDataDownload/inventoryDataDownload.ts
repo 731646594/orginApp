@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import { App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {InventoryDataDownloadDetailPage} from "../inventoryDataDownloadDetail/inventoryDataDownloadDetail";
@@ -13,18 +13,13 @@ export class InventoryDataDownloadPage {
   userCode;
   departCode;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
+              public navParams:NavParams,public app:App) {
     // this.loadData();
   }
   ionViewDidEnter(){
     this.loadData();
   }
   loadData(){
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:5000
-    });
-    loading.present();
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/phonecheckplandownload.do",{userCode:this.userCode,departCode:this.departCode},data=>{
@@ -46,8 +41,7 @@ export class InventoryDataDownloadPage {
       }else {
         alert(data.msg)
       }
-      loading.dismiss();
-    });
+    },true);
 
   }
   detailPage(plan){

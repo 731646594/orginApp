@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
 import {HttpService} from "../../../services/httpService";
 
@@ -32,7 +32,7 @@ export class ApplicationPage {
   sqlSearchDatasTableName = "";
   allData = [];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
-              public storageService?: StorageService, public events?: Events, public app?: App, public loadingCtrl?: LoadingController,
+              public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService) {
     // PageUtil.pages["application"]=this;
     this.invoice = JSON.parse("{}");
@@ -216,11 +216,6 @@ export class ApplicationPage {
       return false;
     }
 
-    let loading = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 5000
-    });
-    loading.present();
     let url;
     url = this.censorshipUrl;
     let phoneInvoiceNumber = this.userCode + this.departCode + this.formatDateAndTimeToString(new Date());
@@ -269,8 +264,7 @@ export class ApplicationPage {
         });
         alertCtrl.present()
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
   saveInfo() {
@@ -301,11 +295,6 @@ export class ApplicationPage {
     if (!this.confirmChecked()) {
       return false;
     }
-    let loading = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 5000
-    });
-    loading.present();
     let url;
     url = this.uploadDataUrl;
     this.httpService.postData(this.httpService.getUrl() + url, {
@@ -326,19 +315,13 @@ export class ApplicationPage {
       } else {
         alert(data.msg)
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
   uploadDataToEAM() {
     if (!this.confirmChecked()) {
       return false;
     }
-    let loading = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 5000
-    });
-    loading.present();
     let phoneInvoiceNumber = this.userCode + this.departCode + this.formatDateAndTimeToString(new Date());
     this.httpService.postData(this.httpService.getUrl() + this.uploadDataToEAMUrl, {
       departCode: this.departCode,
@@ -353,7 +336,6 @@ export class ApplicationPage {
       } else {
         alert(data.msg)
       }
-      loading.dismiss();
-    })
+    },true)
   }
 }

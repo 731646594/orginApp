@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 // import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
@@ -27,7 +27,7 @@ export class GasDataUploadPage {
   signatureImage2;
   isHaveData = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public navParams:NavParams,public app:App,public loadingCtrl:LoadingController,) {
+              public alertCtrl:AlertController,public navParams:NavParams,public app:App) {
     this.userCode = this.storageService.read("loginUserCode");
     this.userName = this.storageService.read("loginUserName");
     this.departCode = this.storageService.read("loginDepartCode");
@@ -98,11 +98,6 @@ export class GasDataUploadPage {
         for(let i = 0;i<photoLen;i++){
           this.photoShowArrary[i] = this.photoArrary[i]
         }
-        let loading = this.loadingCtrl.create({
-          content:"请等待...",
-          duration: 10000
-        });
-        loading.present();
         this.httpService.postData(this.httpService.getUrl()+url,{departCode:this.departCode},data=>{
           if (data.success=="true"){
             let colsData = data.data.colsData;
@@ -111,12 +106,10 @@ export class GasDataUploadPage {
                 this.colsItemName.push(colsData[i]["fields"][j].columnTitle)
               }
             }
-            loading.dismiss();
           }else {
             alert(data.msg);
-            loading.dismiss();
           }
-        });
+        },true);
       }
     }
   }
@@ -147,11 +140,6 @@ export class GasDataUploadPage {
     alertCtrl.present();
   }
   uploading(url,data,name){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
     this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
@@ -164,8 +152,7 @@ export class GasDataUploadPage {
       }else{
         alert(data.msg)
       }
-      loading.dismiss()
-    })
+    },true)
   }
   showSign(imgData){
     this.app.getRootNav().push(ShowPicturePage,{picture:imgData});

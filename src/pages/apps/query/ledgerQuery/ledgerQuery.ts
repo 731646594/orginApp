@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams, ToastController} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 @Component({
@@ -25,7 +25,7 @@ export class LedgerQueryPage {
   userCode;
   displayIndex;
   queryResult = [];
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public loadingCtrl:LoadingController,
+  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public navParams:NavParams, public alertCtrl:AlertController, public toastCtrl:ToastController) {
     this.loadData();
   }
@@ -50,11 +50,6 @@ export class LedgerQueryPage {
     this.isOnfocus=false;
   }
   query(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
     let url,body;
     this.page=1;
     url = "cellPhoneControllerOffline/queryLedgerList.do";
@@ -73,8 +68,7 @@ export class LedgerQueryPage {
       }else {
         alert(data.msg)
       }
-      loading.dismiss();
-    })
+    },true)
   }
   getMore(infiniteScroll){
     this.page++;

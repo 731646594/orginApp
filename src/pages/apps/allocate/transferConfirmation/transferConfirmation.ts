@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {TransferConfirmationDetailPage} from "../transferConfirmationDetail/transferConfirmationDetail";
@@ -21,8 +21,7 @@ export class TransferConfirmationPage {
   departCode;
 
   constructor(public navCtrl: NavController, public httpService: HttpService, public storageService: StorageService,
-              public app: App, public alertCtrl: AlertController, public navParams: NavParams,
-              public loadingCtrl: LoadingController,public events: Events) {
+              public app: App, public alertCtrl: AlertController, public navParams: NavParams,public events: Events) {
     this.loadData();
     this.events.subscribe("TransferConfirmationPage:refresh",(data)=>{
       this.loadData()
@@ -40,11 +39,6 @@ export class TransferConfirmationPage {
     this.pageName = this.navParams.get("pageName");
     this.postUrl = this.navParams.get("postUrl");
     this.childPostUrl = this.navParams.get("childPostUrl");
-    let loading = this.loadingCtrl.create({
-      content: "正在加载",
-      duration: 10000
-    });
-    loading.present();
     this.httpService.postData(this.httpService.getUrl() + this.postUrl, {
       departCode: this.departCode,
       userCode: this.userCode
@@ -61,8 +55,7 @@ export class TransferConfirmationPage {
       } else {
         alert(data.msg);
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
   checkedItem(index) {
@@ -102,11 +95,6 @@ export class TransferConfirmationPage {
     if(!this.checkTransferCOnfirmation()){
         return;
     }
-    let loadingCtrl = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 10000
-    });
-    loadingCtrl.present();
     let invoiceDatas = new Array();
     this.censorshipList.forEach(item => {
       if (item["checked"]) {
@@ -146,8 +134,7 @@ export class TransferConfirmationPage {
 
         alertCtrl.present()
       }
-      loadingCtrl.dismiss()
-    })
+    },true)
   }
 
   ionViewWillUnload() {

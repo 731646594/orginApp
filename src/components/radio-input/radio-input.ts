@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AlertController, LoadingController} from "ionic-angular";
+import {AlertController} from "ionic-angular";
 import {StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
 /**
@@ -24,7 +24,7 @@ export class RadioInputComponent implements OnInit{
   placeholder="";
   userCode = "";
   departCode = "";
-  constructor(private loadingCtrl:LoadingController,private storageService:StorageService,
+  constructor(private storageService:StorageService,
               private httpService:HttpService,private alertCtrl:AlertController) {
 
   }
@@ -40,11 +40,6 @@ export class RadioInputComponent implements OnInit{
       alertCtrl.present();
       return false;
     }
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:5000
-    });
-    loading.present();
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     let params = "{\"userCode\":\""+this.userCode+"\",\"departCode\":\""+this.departCode+"\",\""+this.radioValue+"\":\""+this.radioInput+"\"}";
@@ -59,8 +54,7 @@ export class RadioInputComponent implements OnInit{
         });
         alertCtrl.present();
       }
-      loading.dismiss();
-    })
+    },true)
   }
   selectRadio(){
     if (this.radioValue && this.radioValue.trim() != '') {

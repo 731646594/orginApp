@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
+import {AlertController, App, NavController} from 'ionic-angular';
 import {HttpService} from "../../../services/httpService";
 import {StorageService} from "../../../services/storageService";
 
@@ -17,7 +17,7 @@ export class LoginPage {
   depart;
   departList=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public alertCtrl:AlertController,
-              public storageService:StorageService,public app:App,public loadingCtrl:LoadingController) {
+              public storageService:StorageService,public app:App) {
     this.loadData();
   }
   loadData(){
@@ -44,15 +44,9 @@ export class LoginPage {
       alert.present();
       return;
     }
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:5000
-    });
-    loading.present();
     this.httpService.postData(this.httpService.getUrl()+"appLoginController/login.do",
       {usercode:this.username,password:this.password},(data)=>{
       if (data.success=="false"){
-        loading.dismiss()
         let alert=this.alertCtrl.create({
           title:data.msg
         });
@@ -69,15 +63,9 @@ export class LoginPage {
         this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
         this.depart = this.departList[0];
       }
-      loading.dismiss()
-    })
+    },true)
   }
   entry(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration: 5000
-    });
-    loading.present();
     this.downloadDictionaries();
     this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
       if (data.success=="true"){
@@ -85,17 +73,14 @@ export class LoginPage {
         this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode},data2=>{
           if (data2.success=="true"){
             this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
-            loading.dismiss();
           }else {
             alert(data2.msg);
-            loading.dismiss();
           }
         });
       }else {
         alert(data.msg);
-        loading.dismiss();
       }
-    });
+    },true);
     this.storageService.write("loginDepartName",this.depart.shortname);
     this.storageService.write("loginDepartCode",this.depart.departcode);
     this.app.getRootNav().push(TabsPage);

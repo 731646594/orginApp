@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 
@@ -102,8 +102,7 @@ export class TransferConfirmationDetailPage {
     {optionValue:"099000000050023",optionName:"重庆销售仓储公司"},]
 
   constructor(public navCtrl: NavController, public httpService: HttpService, public storageService: StorageService,
-              public app: App, public alertCtrl: AlertController, public navParams: NavParams,
-              public loadingCtrl: LoadingController,public events: Events) {
+              public app: App, public alertCtrl: AlertController, public navParams: NavParams,public events: Events) {
     this.loadData();
   }
 
@@ -122,11 +121,6 @@ export class TransferConfirmationDetailPage {
     console.log(this.childPostUrl)
     // let url = "allotController.do?getByPhoneInvoiceNumber";
     let url = "allotController/getByInvoiceNumber.do";
-    let loading = this.loadingCtrl.create({
-      content: "正在加载",
-      duration: 10000
-    });
-    loading.present();
     this.httpService.postData(this.httpService.getUrl() + url, {
       departCode: this.departCode,
       phoneInvoiceNumber: this.invoice.invoiceNumber,
@@ -138,8 +132,7 @@ export class TransferConfirmationDetailPage {
       } else {
         alert(data.msg);
       }
-      loading.dismiss();
-    })
+    },true)
   }
 
   inputOnfocus() {
@@ -172,11 +165,6 @@ export class TransferConfirmationDetailPage {
       return;
     }
 
-    let loadingCtrl = this.loadingCtrl.create({
-      content: "请等待...",
-      duration: 10000
-    });
-    loadingCtrl.present();
     let invoiceDatas = new Array();
     invoiceDatas.push(this.invoice)
     // this.httpService.postData(this.httpService.getUrl() + this.childPostUrl, {
@@ -216,8 +204,7 @@ export class TransferConfirmationDetailPage {
       } else {
         alert(data.msg)
       }
-      loadingCtrl.dismiss();
-    })
+    },true)
   }
 
   /**

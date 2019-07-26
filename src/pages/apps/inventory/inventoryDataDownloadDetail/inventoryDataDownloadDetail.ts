@@ -46,23 +46,16 @@ export class InventoryDataDownloadDetailPage {
     })
   }
   downloadPlan1(item){
-    let loading = this.loadingCtrl.create({
-      content:"正在加载",
-      duration:5000
-    });
-    loading.present();
     let params ={};
     params = {userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item};
     this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/phonecheckplandetail.do",params,data=>{
       if (data.success=="true"){
         this.downloadPlan2(data.data);
-        loading.dismiss();
       }
       else {
         alert(data.msg);
-        loading.dismiss();
       }
-    })
+    },true)
   }
   downloadPlan2(url){
     const fileTransferNow: FileTransferObject = this.fileTransfer.create();

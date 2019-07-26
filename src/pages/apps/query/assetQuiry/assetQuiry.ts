@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
@@ -20,7 +20,7 @@ export class AssetQuiryPage {
   loginDepartCode;
 
   queryResult = [];
-  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,public loadingCtrl:LoadingController,
+  constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public navParams:NavParams,public barcodeScanner:BarcodeScanner, public alertCtrl:AlertController) {
     this.loginDepartCode = this.storageService.read("loginDepartCode");
   }
@@ -64,11 +64,6 @@ export class AssetQuiryPage {
       });
   }
   query(){
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
     let url,body;
     url = "cellPhoneControllerOffline/queryLedger.do";
     if (!this.barCode){
@@ -89,7 +84,6 @@ export class AssetQuiryPage {
       }else {
         alert(data.msg)
       }
-      loading.dismiss();
-    })
+    },true)
   }
 }

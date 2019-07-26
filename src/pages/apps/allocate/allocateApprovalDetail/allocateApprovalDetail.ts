@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {ApprovalPage} from "../../../commonStyle/approval/approval";
@@ -10,9 +10,9 @@ import {ApprovalPage} from "../../../commonStyle/approval/approval";
 })
 export class AllocateApprovalDetailPage extends ApprovalPage{
   invoice;
-  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,public loadingCtrl?:LoadingController,
+  constructor(public navCtrl?: NavController,public navParams?:NavParams,public storageService?:StorageService,
               public httpService?:HttpService,public alertCtrl?:AlertController,public app?:App,public events?: Events) {
-    super(navCtrl,navParams,storageService,loadingCtrl,httpService,alertCtrl,app,events);
+    super(navCtrl,navParams,storageService,httpService,alertCtrl,app,events);
     this.invoice = this.navParams.get("invoice");
     // this.postUrl = "allotController.do?getByPhoneInvoiceNumber";
     this.postUrl = "allotController/getByInvoiceNumber.do";

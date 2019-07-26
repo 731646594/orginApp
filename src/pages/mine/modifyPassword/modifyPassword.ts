@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, LoadingController, NavController} from 'ionic-angular';
+import {AlertController, NavController} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
 import {HttpService} from "../../../services/httpService";
 
@@ -13,7 +13,7 @@ export class ModifyPasswordPage {
   newPsw;
   confirmPsw;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
+              public alertCtrl:AlertController) {
     this.loadData();
   }
   loadData(){
@@ -41,14 +41,9 @@ export class ModifyPasswordPage {
       alert.present();
       return;
     }
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      duration:10000
-    });
-    loading.present();
+
     this.httpService.postData(this.httpService.getUrl()+"appLoginController.do?modifyPassword",
       {userid:this.userCode,password:this.oldPsw,passwordAgain:this.confirmPsw,passwordNew:this.newPsw},(data)=>{
-      loading.dismiss();
       if (data.success=="false"){
         let alert=this.alertCtrl.create({
           title:data.msg
@@ -62,6 +57,6 @@ export class ModifyPasswordPage {
         alert.present();
         this.navCtrl.pop();
       }
-    })
+    },true)
   }
 }
