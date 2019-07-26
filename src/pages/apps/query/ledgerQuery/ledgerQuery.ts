@@ -57,7 +57,7 @@ export class LedgerQueryPage {
     loading.present();
     let url,body;
     this.page=1;
-    url = "cellPhoneController/queryLedgerList.do";
+    url = "cellPhoneControllerOffline/queryLedgerList.do";
     if (!this.userPerson){
       this.userPerson = ""
     }
@@ -79,7 +79,7 @@ export class LedgerQueryPage {
   getMore(infiniteScroll){
     this.page++;
     let url,body;
-    url = "cellPhoneController/queryLedgerList.do";
+    url = "cellPhoneControllerOffline/queryLedgerList.do";
     if (!this.userPerson){
       this.userPerson = ""
     }

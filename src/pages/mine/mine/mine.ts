@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {StorageService} from "../../../services/storageService";
+import {PageUtil, StorageService} from "../../../services/storageService";
 import {ServerSettingPage} from "../serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../modifyPassword/modifyPassword";
 import {LoginPage} from "../login/login";
@@ -26,6 +26,7 @@ export class MinePage {
     this.loadData();
   }
   loadData(){
+    PageUtil.pages["mine"]=this;
     // let alertCtrl = this.alertCtrl.create({
     //   title:"清除成功",
     //   subTitle:"点击确定隐藏点击确点击确定隐藏点击确点击确定隐藏点击确点击确定隐藏点击确定隐藏点击确点击确定隐藏",
@@ -42,30 +43,6 @@ export class MinePage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.pageName = this.navParams.data.pageName;
     this.pageData = this.navParams.data.pageData;
-    if(this.pageName == "加油站管理"&&!this.itemData.length){
-      let loading = this.loadingCtrl.create({
-        content:"请等待...",
-        duration: 10000
-      });
-      loading.present();
-      this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController.do?getCheckListCols",{departCode:this.departCode},data=>{
-        if (data.success=="true"){
-          this.itemData.push(data.data);
-          this.httpService.postData(this.httpService.getUrl()+"devHandOverController.do?getCheckListCols",{departCode:this.departCode},data2=>{
-            if (data2.success=="true"){
-              this.itemData.push(data2.data);
-              loading.dismiss();
-            }else {
-              alert(data2.msg);
-              loading.dismiss();
-            }
-          });
-        }else {
-          alert(data.msg);
-          loading.dismiss();
-        }
-      });
-    }
   }
   appChoose(page,params){
 
@@ -99,8 +76,7 @@ export class MinePage {
               this.storageService.remove("loginDepartCode");
               this.storageService.remove("loginUserName");
               this.storageService.remove("loginUserCode");
-              willGoPage = null;
-              this.app.getRootNav().setRoot(LoginPage)
+              willGoPage = LoginPage;
             }
           },
           {
@@ -111,11 +87,10 @@ export class MinePage {
       alertCtrl.present();
     }
     else if(page == 6){
-      this.storageService.clear();
-      this.storageService.remove("loginDepartList");
-      this.storageService.dropUserTable("departListData");
-      this.storageService.dropUserTable("lossReasonData");
-      this.storageService.dropUserTable("storePlaceData");
+      this.storageService.remove("loginDepartName");
+      this.storageService.remove("loginDepartCode");
+      this.storageService.remove("loginUserName");
+      this.storageService.remove("loginUserCode");
       let alertCtrl = this.alertCtrl.create({
         title:"清除成功！"
       });
@@ -167,5 +142,12 @@ export class MinePage {
         alert(data3.msg)
       }
     });
+  }
+  backToLoginPage(){
+    this.storageService.remove("loginDepartName");
+    this.storageService.remove("loginDepartCode");
+    this.storageService.remove("loginUserName");
+    this.storageService.remove("loginUserCode");
+    this.app.getRootNav().push(LoginPage)
   }
 }

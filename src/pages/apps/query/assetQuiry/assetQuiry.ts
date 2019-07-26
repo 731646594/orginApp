@@ -70,7 +70,7 @@ export class AssetQuiryPage {
     });
     loading.present();
     let url,body;
-    url = "cellPhoneController/queryLedger.do";
+    url = "cellPhoneControllerOffline/queryLedger.do";
     if (!this.barCode){
       this.barCode = ""
     }

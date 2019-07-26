@@ -2,14 +2,13 @@ import {Injectable} from '@angular/core';
 import {Http,Headers,RequestOptions} from '@angular/http';
 import "rxjs/add/operator/map";
 import {HttpClient} from "@angular/common/http";
-import {StorageService} from "./storageService";
-import {AlertController, App} from "ionic-angular";
-import {LoginPage} from "../pages/mine/login/login";
+import {PageUtil, StorageService} from "./storageService";
+import {AlertController, App, LoadingController} from "ionic-angular";
 
 @Injectable()
 export class HttpService {
 
-  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App){}
+  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController){}
 
   public getUrl(){
     let url=this.storageService.read("serverUrl");
@@ -45,12 +44,22 @@ export class HttpService {
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json(),err=>console.log("error:"+err));
   }
-  public postData (url:string,body:any,successCallback,errorCallback?:any){
+  public postData (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      duration:5000
+    });
+    if (isLoading){
+      loading.present();
+    }
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
       (res)=>{
+        if (isLoading){
+          loading.dismiss();
+        }
         if(successCallback){
           if(res["success"]=="true"||res["success"]=="success"){
             successCallback(res);
@@ -64,16 +73,22 @@ export class HttpService {
           }
         }
       },(err)=>{
+        if (isLoading){
+          loading.dismiss();
+        }
         let errMsg = "网络通信异常";
         switch (err.status) {
           case 401:
             errMsg = '登录信息已过期，请重新登录';
             //跳转到登陆app
-            this.storageService.remove("loginDepartName");
-            this.storageService.remove("loginDepartCode");
-            this.storageService.remove("loginUserName");
-            this.storageService.remove("loginUserCode");
-            this.app.getRootNav().setRoot(LoginPage);
+            if (this.storageService.read("loginDepartName")){
+              this.storageService.remove("loginDepartName");
+              this.storageService.remove("loginDepartCode");
+              this.storageService.remove("loginUserName");
+              this.storageService.remove("loginUserCode");
+              PageUtil.pages["mine"].backToLoginPage();
+              //
+            }
             break;
           case 404:
             errMsg = '抱歉，后台服务找不到对应接口';
