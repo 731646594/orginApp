@@ -131,4 +131,8 @@ export class LedgerQueryPage {
       this.displayIndex = index;
     }
   }
+  getSelectValue(value) {
+    this.departCode = value["selectedValue"];
+    this.departName = value["selectedName"];
+  }
 }

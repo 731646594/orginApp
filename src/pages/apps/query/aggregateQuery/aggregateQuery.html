@@ -35,13 +35,7 @@
               <ion-option value="0108">待处置资产</ion-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label class="querySelectLabel">所属单位：</ion-label>
-            <ion-input (change)="filterDepartName($event)" [(ngModel)]="departName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
-            <ion-select class="noSelectText" interface="popover"  [(ngModel)]="departCode">
-              <ion-option *ngFor="let depart of lastDepartListData" [value]="depart.departcode" (ionSelect)="selectDepart(depart.departname)">{{depart.departname}}</ion-option>
-            </ion-select>
-          </ion-item>
+          <select-filter [itemName]="'所属单位'" [selectData]="lastDepartListData" [selectName]="departName" [optionValue]="'departcode'" [optionName]="'departname'" (backValue)="getSelectValue($event)"></select-filter>
         </ion-list>
         <ion-list>
           <ion-item>

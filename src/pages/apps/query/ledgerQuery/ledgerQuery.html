@@ -20,13 +20,7 @@
           <ion-option value="0108">待处置资产</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item class="inputItem">
-        <ion-label class="noFlexLabel">所属单位:</ion-label>
-        <ion-input (change)="filterDepartName($event)" [(ngModel)]="departName" (focus)="inputOnfocus()" (blur)="inputOnblur()" placeholder="请输入要筛选的字符"></ion-input>
-        <ion-select class="noSelectText" interface="popover"  [(ngModel)]="departCode">
-          <ion-option *ngFor="let depart of lastDepartListData" [value]="depart.departcode" (ionSelect)="selectDepart(depart.departname)">{{depart.departname}}</ion-option>
-        </ion-select>
-      </ion-item>
+      <select-filter [itemName]="'所属单位'" [selectData]="lastDepartListData" [selectName]="departName" [optionValue]="'departcode'" [optionName]="'departname'" (backValue)="getSelectValue($event)"></select-filter>
       <ion-item class="inputItem">
         <ion-label class="noFlexLabel">保管人&emsp;:</ion-label>
         <ion-input [(ngModel)]="userPerson"  (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
@@ -135,7 +129,7 @@
             <ion-item class="inputItem imgItem">
               <ion-label class="noFlexLabel">照片区&emsp;:</ion-label>
             </ion-item>
-            <div class="imgBox">
+            <div class="imgBox" *ngIf="detailInfo.imguUrl">
               <div id="imgBox">
                 <div class="imgInclusion">
                   <img class="imgShow" [src]="detailInfo.imguUrl">

@@ -355,5 +355,8 @@ export class AggregateQueryPage {
     chart3.setOption(option3);
     chart4.setOption(option4);
   }
-
+  getSelectValue(value) {
+    this.departCode = value["selectedValue"];
+    this.departName = value["selectedName"];
+  }
 }
