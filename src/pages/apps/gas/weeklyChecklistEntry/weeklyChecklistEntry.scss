@@ -43,6 +43,10 @@ page-weeklyChecklistEntry{
     width: 100%;
     max-width: 100%;
     margin: 6px 0;
+    height: 42px;
+    .select-text{
+      line-height: 18px;
+    }
   }
   .gasFooter{
     width: 100%;

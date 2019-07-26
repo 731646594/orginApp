@@ -116,7 +116,10 @@
           <ion-label class="noFlexLabel">照片区&emsp;:</ion-label>
         </ion-item>
         <div class="imgBox">
-          <div [id]="'imgBox'+pageIndex">
+          <div id="imgBox">
+            <div class="imgInclusion">
+              <img class="imgShow" [src]="detail.imguUrl">
+            </div>
           </div>
         </div>
       </ion-list>
