@@ -51,8 +51,7 @@ export class QueryPage {
   }
 
   getSelectValue(value, key) {
-    this.invoice[key[0]] = value["selectedValue"];
-    this.invoice[key[1]] = value["selectedName"];
+    this.invoice[key] = value["selectedValue"];
   }
 
   getDateValue(value, key) {
@@ -93,6 +92,30 @@ export class QueryPage {
       invoiceYM: invoiceYM
     },data => {
       if (data.success == "true") {
+        if(data.data[0]["invoiceStatus"]){
+          for (let i in data.data){
+            switch (data.data[i]["invoiceStatus"]){
+              case "0":
+                data.data[i]["invoiceStatus"] = "全部";
+                break;
+              case "1":
+                data.data[i]["invoiceStatus"] = "新建";
+                break;
+              case "2":
+                data.data[i]["invoiceStatus"] = "驳回";
+                break;
+              case "3":
+                data.data[i]["invoiceStatus"] = "待审批";
+                break;
+              case "4":
+                data.data[i]["invoiceStatus"] = "审批中";
+                break;
+              case "5":
+                data.data[i]["invoiceStatus"] = "审批完成";
+                break;
+            }
+          }
+        }
         let alert = this.alertCtrl.create({
           title: "查询成功！"
         });
