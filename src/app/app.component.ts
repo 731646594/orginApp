@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {App, Nav, Platform, ToastController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageService } from "../services/storageService";
@@ -13,8 +13,9 @@ declare var wkWebView: any;
 })
 export class MyApp {
   rootPage:any = LoginPage;
-
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService,httpService:HttpService) {
+  backButtonPressed: boolean = false;  //用于判断返回键是否触发
+  @ViewChild('myNav') nav: Nav;
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,app:App) {
     let olog = console.error;
     console.error = function() {
       alert([].join.call(arguments, ''))
@@ -31,9 +32,30 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleBlackTranslucent();
       splashScreen.hide();
+      // platform.registerBackButtonAction(() => {
+      //   return;
+      // });
       platform.registerBackButtonAction(() => {
-        return;
-      });
+        if (!this.nav.canGoBack()){
+          if (this.backButtonPressed){
+            platform.exitApp();
+          } else {
+            toastCtrl.create({
+              message: '再按一次退出应用',
+              duration: 2000,
+              position: 'bottom',
+              cssClass:"toastTextCenter"
+            }).present();
+            this.backButtonPressed = true;
+            setTimeout(() => {
+              this.backButtonPressed = false;
+            }, 2000)
+          }
+          return;
+        }
+
+        app.navPop();//剩余的情况全部使用全局路由进行操作
+      }, 999);
       if (storageService.read("loginUserName")&&storageService.read("loginDepartName")){
         this.rootPage = TabsPage;
       }else {
