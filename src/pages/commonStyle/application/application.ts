@@ -135,6 +135,11 @@ export class ApplicationPage {
 
   getScannerValue(value) {
     this.radioInput = value;
+    let params = "{\"userCode\":\""+this.userCode+"\",\"departCode\":\""+this.departCode+"\",\"barCode\":\""+this.radioInput+"\"}";
+    let paramsJson = JSON.parse(params);
+    this.httpService.postData(this.httpService.getUrl()+this.radioInputPostUrl,paramsJson,data=>{
+        this.getRadioInputValue(data.data);
+    },true)
   }
 
   confirmChecked(): any {
