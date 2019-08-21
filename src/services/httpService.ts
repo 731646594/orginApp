@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http,Headers,RequestOptions} from '@angular/http';
 import "rxjs/add/operator/map";
 import {HttpClient} from "@angular/common/http";
-import {PageUtil, StorageService} from "./storageService";
+import {StorageService} from "./storageService";
 import {AlertController, App, LoadingController} from "ionic-angular";
 
 @Injectable()
@@ -79,14 +79,14 @@ export class HttpService {
         let errMsg = "网络通信异常";
         switch (err.status) {
           case 401:
-            errMsg = '登录信息已过期，请重新登录';
-            //跳转到登陆app
+            errMsg = "";
+            //
             if (this.storageService.read("loginDepartName")){
-              this.storageService.remove("loginDepartName");
-              this.storageService.remove("loginDepartCode");
-              this.storageService.remove("loginUserName");
-              this.storageService.remove("loginUserCode");
-              PageUtil.pages["mine"].backToLoginPage();
+              this.postData(this.getUrl()+"appLoginController/login.do",
+                {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                    return;
+                },true)
+              //PageUtil.pages["mine"].backToLoginPage();
               //
             }
             break;
@@ -98,7 +98,9 @@ export class HttpService {
           default:
             break;
         }
-        this.errorCallback(errMsg)
+        if (errMsg!=""){
+          this.errorCallback(errMsg)
+        }
       }
     );
   };

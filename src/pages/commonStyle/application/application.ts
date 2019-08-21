@@ -31,6 +31,7 @@ export class ApplicationPage {
   sqlInvoiceTableName = "";
   sqlSearchDatasTableName = "";
   allData = [];
+  originInvoice = [];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService) {
@@ -58,11 +59,15 @@ export class ApplicationPage {
     this.storageService.getUserTable().executeSql(this.storageService.getSSS(this.sqlInvoiceTableName, this.userCode), []).then(res => {
       if (res.rows.length > 0) {
         this.invoice = JSON.parse(res.rows.item(0).stringData)
+      }else {
+        this.invoice = this.originInvoice;
       }
     }).catch(e => alert("erro2_2:" + JSON.stringify(e)));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS(this.sqlSearchDatasTableName, this.userCode), []).then(res => {
       if (res.rows.length > 0) {
         this.searchDatas = JSON.parse(res.rows.item(0).stringData)
+      }else {
+        this.searchDatas = [];
       }
     }).catch(e => alert("erro2_3:" + JSON.stringify(e)));
   }
@@ -267,7 +272,8 @@ export class ApplicationPage {
         let alertCtrl = this.alertCtrl.create({
           title: data.msg
         });
-        alertCtrl.present()
+        alertCtrl.present();
+        this.ionViewDidEnter();
       }
     },true)
   }

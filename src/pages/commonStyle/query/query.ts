@@ -20,7 +20,6 @@ export class QueryPage {
   searchDatas;
   searchFormUrl;
   nextPage;
-
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public storageService?: StorageService, public app?: App,
               public httpService?: HttpService, public alertCtrl?: AlertController,public datePipe?:DatePipe) {
     this.userCode = this.storageService.read("loginUserCode");
@@ -83,7 +82,6 @@ export class QueryPage {
     //   }
     //   loading.dismiss();
     // })
-
     this.httpService.postData(this.httpService.getUrl() + this.searchFormUrl, {
       departCode: this.departCode,
       userCode: this.userCode,
@@ -92,35 +90,44 @@ export class QueryPage {
       invoiceYM: invoiceYM
     },data => {
       if (data.success == "true") {
-        if(data.data[0]["invoiceStatus"]){
-          for (let i in data.data){
-            switch (data.data[i]["invoiceStatus"]){
-              case "0":
-                data.data[i]["invoiceStatus"] = "全部";
-                break;
-              case "1":
-                data.data[i]["invoiceStatus"] = "新建";
-                break;
-              case "2":
-                data.data[i]["invoiceStatus"] = "驳回";
-                break;
-              case "3":
-                data.data[i]["invoiceStatus"] = "待审批";
-                break;
-              case "4":
-                data.data[i]["invoiceStatus"] = "审批中";
-                break;
-              case "5":
-                data.data[i]["invoiceStatus"] = "审批完成";
-                break;
+        if(data.data.length>0){
+          if(data.data[0]["invoiceStatus"]){
+            for (let i in data.data){
+              switch (data.data[i]["invoiceStatus"]){
+                case "0":
+                  data.data[i]["invoiceStatus"] = "全部";
+                  break;
+                case "1":
+                  data.data[i]["invoiceStatus"] = "新建";
+                  break;
+                case "2":
+                  data.data[i]["invoiceStatus"] = "驳回";
+                  break;
+                case "3":
+                  data.data[i]["invoiceStatus"] = "待审批";
+                  break;
+                case "4":
+                  data.data[i]["invoiceStatus"] = "审批中";
+                  break;
+                case "5":
+                  data.data[i]["invoiceStatus"] = "审批完成";
+                  break;
+              }
             }
           }
+          let alert = this.alertCtrl.create({
+            title: "查询成功！"
+          });
+          alert.present();
+          this.searchDatas = data.data;
+        }else {
+          let alert = this.alertCtrl.create({
+            title: "查询无数据！"
+          });
+          alert.present();
+          this.searchDatas = [];
         }
-        let alert = this.alertCtrl.create({
-          title: "查询成功！"
-        });
-        alert.present();
-        this.searchDatas = data.data;
+
       }
     },true)
   }

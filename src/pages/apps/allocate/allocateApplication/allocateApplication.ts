@@ -23,8 +23,9 @@ export class AllocateApplicationPage extends ApplicationPage{
     this.invoice["addDepreciateValueSum"]="0.00";
     this.invoice["createUserName"]=this.userName;
     this.invoice["createTime"]=date.toLocaleDateString();
-    this.invoice["departCode"]=this.departCode
+    this.invoice["departCode"]=this.departCode;
     this.invoice["departName"]=this.departName;
+    this.originInvoice = this.invoice;
     this.selectFilterData["in"]=[];
     this.selectFilterData["out"]=[];
 
@@ -93,7 +94,7 @@ export class AllocateApplicationPage extends ApplicationPage{
           ]
         ],
       }
-    }
+    };
     this.pageName=this.data["pageName"];
     this.pageData=this.data["pageData"];
     // this.censorshipUrl="allotController.do?sendAllot";//原始

@@ -199,8 +199,9 @@ export class TransferConfirmationDetailPage {
         let alertCtrl = this.alertCtrl.create({
           title: data.msg
         });
-        alertCtrl.present()
+        alertCtrl.present();
         this.events.publish("TransferConfirmationPage:refresh");
+        this.navCtrl.pop();
       } else {
         alert(data.msg)
       }

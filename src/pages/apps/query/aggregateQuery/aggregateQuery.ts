@@ -172,6 +172,7 @@ export class AggregateQueryPage {
           },
           axisLabel: {
             interval: 0,
+            rotate:60
           }
         }
       ],
@@ -223,6 +224,7 @@ export class AggregateQueryPage {
           },
           axisLabel: {
             interval: 0,
+            rotate:60
           }
         }
       ],
@@ -274,6 +276,7 @@ export class AggregateQueryPage {
           },
           axisLabel: {
             interval: 0,
+            rotate:60
           }
         }
       ],
@@ -325,6 +328,7 @@ export class AggregateQueryPage {
           },
           axisLabel: {
             interval: 0,
+            rotate:60
           }
         }
       ],

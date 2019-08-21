@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, App, NavController, NavParams} from 'ionic-angular';
-import {PageUtil, StorageService} from "../../../services/storageService";
+import {StorageService} from "../../../services/storageService";
 import {ServerSettingPage} from "../serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../modifyPassword/modifyPassword";
 import {LoginPage} from "../login/login";
@@ -26,7 +26,7 @@ export class MinePage {
     this.loadData();
   }
   loadData(){
-    PageUtil.pages["mine"]=this;
+    // PageUtil.pages["mine"]=this;
     // let alertCtrl = this.alertCtrl.create({
     //   title:"清除成功",
     //   subTitle:"点击确定隐藏点击确点击确定隐藏点击确点击确定隐藏点击确点击确定隐藏点击确定隐藏点击确点击确定隐藏",
@@ -137,12 +137,5 @@ export class MinePage {
         alert(data3.msg)
       }
     });
-  }
-  backToLoginPage(){
-    this.storageService.remove("loginDepartName");
-    this.storageService.remove("loginDepartCode");
-    this.storageService.remove("loginUserName");
-    this.storageService.remove("loginUserCode");
-    this.app.getRootNav().setRoot(LoginPage)
   }
 }

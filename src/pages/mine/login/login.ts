@@ -59,6 +59,7 @@ export class LoginPage {
         this.departList = loginInfo[1].depart;
         this.storageService.write("loginUserName",loginInfo[0].user.username);
         this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
+        this.storageService.write("loginPassWord",this.password);
         this.storageService.write("loginDepartList",this.departList);
         this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
         this.depart = this.departList[0];
