@@ -36,12 +36,12 @@ export class LedgerQueryPage {
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.loginDepartName = this.storageService.read("loginDepartName");
     this.userCode = this.storageService.read("loginUserCode");
-    // this.storageService.getUserTable().executeSql(this.storageService.getSSS("departListData",this.userCode),[]).then(res=>{
-    //   if (res.rows.length>0) {
-    //     this.departListData = JSON.parse(res.rows.item(0).stringData);
-    //     this.lastDepartListData = JSON.parse(res.rows.item(0).stringData);
-    //   }
-    // })
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("departListData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0) {
+        this.departListData = JSON.parse(res.rows.item(0).stringData);
+        this.lastDepartListData = JSON.parse(res.rows.item(0).stringData);
+      }
+    })
   }
 
   inputOnfocus(){
