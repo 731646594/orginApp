@@ -15,6 +15,7 @@ export class InventoryDataDownloadDetailPage {
   plan;
   planDate;
   departments=[];
+  isDownloaded;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public file:File,
               public fileTransfer:FileTransfer,public navParams:NavParams,public app:App) {
@@ -27,6 +28,7 @@ export class InventoryDataDownloadDetailPage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departCode = this.storageService.read("loginDepartCode");
     this.plan = this.navParams.get("plan");
+    this.isDownloaded = this.navParams.get("isDownloaded");
     this.planDate = JSON.parse(JSON.stringify(this.plan));
     this.departments = JSON.parse(JSON.stringify(this.planDate.departments));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
@@ -158,7 +160,24 @@ export class InventoryDataDownloadDetailPage {
         ]
       });
       alertCtrl.present();
-    }else {
+    }else if(this.isDownloaded){
+      let alertCtrl = this.alertCtrl.create({
+        title:"已下载过盘点计划，再次下载会覆盖，是否继续？",
+        buttons:[
+          {
+            text:"否",
+          },
+          {
+            text:"是",
+            handler:data=>{
+              this.downloadPlan1(item)
+            }
+          }
+        ]
+      });
+      alertCtrl.present();
+    }
+    else {
       this.downloadPlan1(item);
     }
   }

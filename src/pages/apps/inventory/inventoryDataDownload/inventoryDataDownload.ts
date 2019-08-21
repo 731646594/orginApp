@@ -12,6 +12,7 @@ export class InventoryDataDownloadPage {
   planList;
   userCode;
   departCode;
+  isDownloaded = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public navParams:NavParams,public app:App) {
     // this.loadData();
@@ -33,6 +34,7 @@ export class InventoryDataDownloadPage {
               try {
                 if (JSON.parse(res.rows.item(0).stringData)["planNumber"]==plan["planNumber"]){
                   this.planList[i]["isDownLoad"]=true;
+                  this.isDownloaded = true;
                 }
               }catch {}
             }
@@ -45,6 +47,6 @@ export class InventoryDataDownloadPage {
 
   }
   detailPage(plan){
-    this.app.getRootNav().push(InventoryDataDownloadDetailPage,{plan:plan})
+    this.app.getRootNav().push(InventoryDataDownloadDetailPage,{plan:plan,isDownloaded:this.isDownloaded})
   }
 }
