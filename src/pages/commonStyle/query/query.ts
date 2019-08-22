@@ -112,6 +112,18 @@ export class QueryPage {
                 case "5":
                   data.data[i]["invoiceStatus"] = "审批完成";
                   break;
+                case "D5":
+                  data.data[i]["invoiceStatus"] = "批复文号维护";
+                  break;
+                case "D6":
+                  data.data[i]["invoiceStatus"] = "折旧回冲";
+                  break;
+                case "D7":
+                  data.data[i]["invoiceStatus"] = "报废处理";
+                  break;
+                case null:
+                  data.data[i]["invoiceStatus"] = "处理完成";
+                  break;
               }
             }
           }
