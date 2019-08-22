@@ -75,12 +75,20 @@ export class AssetQuiryPage {
     body = {departCode:this.loginDepartCode,assetsCode:this.assetsCode,barCode:this.barCode};
     this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
-        this.detail = data.data[0];
-        this.plan = data.listRecord;
-        let alert = this.alertCtrl.create({
-          title:"查询成功！"
-        });
-        alert.present();
+        if (data.data.length>0){
+          this.detail = data.data[0];
+          this.plan = data.listRecord;
+          let alert = this.alertCtrl.create({
+            title:"查询成功！"
+          });
+          alert.present();
+        }else {
+          let alert = this.alertCtrl.create({
+            title:"查询无数据！"
+          });
+          alert.present();
+        }
+
       }else {
         alert(data.msg)
       }
