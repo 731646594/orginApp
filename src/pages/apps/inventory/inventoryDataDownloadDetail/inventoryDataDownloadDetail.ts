@@ -48,82 +48,78 @@ export class InventoryDataDownloadDetailPage {
     })
   }
   downloadPlan1(item){
-    let params ={};
-    params = {userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item};
-    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/phonecheckplandetail.do",params,data=>{
-      if (data.success=="true"){
-        this.downloadPlan2(data.data);
-      }
-      else {
-        alert(data.msg);
-      }
-    },true)
-  }
-  downloadPlan2(url){
-    const fileTransferNow: FileTransferObject = this.fileTransfer.create();
     //读取进度条
     let loading = this.loadingCtrl.create({
       content:"下载进度：0%",
       dismissOnPageChange:false,
     });
     loading.present();
-
-    let  now: number = 0;
-
-    fileTransferNow.onProgress(progressEvent=>{
-      // alert(progressEvent.lengthComputable);
-      if (progressEvent.lengthComputable){
-        now = progressEvent.loaded/progressEvent.total*100;
-      }
-    });
-    let timer = setInterval(()=>{
-      loading.setContent("下载进度："+Math.floor(now)+"%");
-      if (now >= 99){
-        clearInterval(timer);
-      }
-    },300);
-    //android 存储externalDataDirectory,通用沙盒存储dataDirectory
-    let serverUrl=this.storageService.read("serverUrl");
-    let strUrl=serverUrl["agreement"]+"://"+serverUrl["address"]+":"+serverUrl["port"]+"/"
-    fileTransferNow.download(strUrl+url,
-      this.file.dataDirectory+"file.txt").then((entry)=>{
-      if (timer) clearInterval(timer);
-      loading.dismiss();
-      this.storageService.write("JsonUrl",entry);
-      let alertCtrl = this.alertCtrl.create({
-        title:"下载成功！"
-      });
-      alertCtrl.present();
-      entry.file((file)=>{
-        var reader = new FileReader();
-        reader.onloadend=(e)=>{
-          let data=JSON.parse(e.target['result']).data;
-          let departments = JSON.parse(JSON.stringify(this.plan.departments));
-          this.planDate.departments = [];
-          for (let i in this.departments){
-            if(this.departments[i].checked){
-              departments[i]["isDownLoad"] = true;
-              this.planDate.departments.push(this.departments[i]);
-              this.checkedOne(i);
-            }
+    let params ={};
+    params = {userCode:this.userCode,departCode:this.departCode,planNumber:this.plan.planNumber,startDate:this.plan.startDate,stopDate:this.plan.stopDate,departCodeList:item};
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/phonecheckplandetail.do",params,data=>{
+      if (data.success=="true"){
+        let url = data.data;
+        const fileTransferNow: FileTransferObject = this.fileTransfer.create();
+        let  now: number = 0;
+        fileTransferNow.onProgress(progressEvent=>{
+          // alert(progressEvent.lengthComputable);
+          if (progressEvent.lengthComputable){
+            now = progressEvent.loaded/progressEvent.total*100;
           }
-          this.departments = JSON.parse(JSON.stringify(departments));
-          this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
-          this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
-          this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
-          this.storageService.deleteUserTable("existPlanDetail",this.userCode);
-          this.storageService.deleteUserTable("newPlanDetail",this.userCode);
-          PageUtil.pages["home"].inventoryNum = data.length;
-        };
-        reader.readAsText(file);
-      })
-
-    },(error)=>{
-        let  alertCtrl = this.alertCtrl.create({
-          title:"下载失败,error："+JSON.stringify(error)
         });
-        alertCtrl.present();
-        loading.dismiss();
+        let timer = setInterval(()=>{
+          loading.setContent("下载进度："+Math.floor(now)+"%");
+          if (now >= 99){
+            clearInterval(timer);
+          }
+        },300);
+        //android 存储externalDataDirectory,通用沙盒存储dataDirectory
+        let serverUrl=this.storageService.read("serverUrl");
+        let strUrl=serverUrl["agreement"]+"://"+serverUrl["address"]+":"+serverUrl["port"]+"/"
+        fileTransferNow.download(strUrl+url,
+          this.file.dataDirectory+"file.txt").then((entry)=>{
+          if (timer) clearInterval(timer);
+          loading.dismiss();
+          this.storageService.write("JsonUrl",entry);
+          let alertCtrl = this.alertCtrl.create({
+            title:"下载成功！"
+          });
+          alertCtrl.present();
+          entry.file((file)=>{
+            var reader = new FileReader();
+            reader.onloadend=(e)=>{
+              let data=JSON.parse(e.target['result']).data;
+              let departments = JSON.parse(JSON.stringify(this.plan.departments));
+              this.planDate.departments = [];
+              for (let i in this.departments){
+                if(this.departments[i].checked){
+                  departments[i]["isDownLoad"] = true;
+                  this.planDate.departments.push(this.departments[i]);
+                  this.checkedOne(i);
+                }
+              }
+              this.departments = JSON.parse(JSON.stringify(departments));
+              this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
+              this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
+              this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));
+              this.storageService.deleteUserTable("existPlanDetail",this.userCode);
+              this.storageService.deleteUserTable("newPlanDetail",this.userCode);
+              PageUtil.pages["home"].inventoryNum = data.length;
+            };
+            reader.readAsText(file);
+          })
+
+        },(error)=>{
+          let  alertCtrl = this.alertCtrl.create({
+            title:"下载失败,error："+JSON.stringify(error)
+          });
+          alertCtrl.present();
+          loading.dismiss();
+        })
+      }
+      else {
+        alert(data.msg);
+      }
     })
   }
   downloadPlan(){
