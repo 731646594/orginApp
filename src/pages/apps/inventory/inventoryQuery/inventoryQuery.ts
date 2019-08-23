@@ -98,8 +98,8 @@ export class InventoryQueryPage {
             {itemName:"技术状况", itemType:"label",itemValue:"technicalConditionName"},
             // {itemName:"制造厂家", itemType:"label",itemValue:"makeFactory"},
             {itemName:"备注", itemType:"label",itemValue:"remark"},
-            {itemName:"原值", itemType:"label",itemValue:"originalValue"},
-            {itemName:"净值", itemType:"label",itemValue:"nowValue"},
+            // {itemName:"原值", itemType:"label",itemValue:"originalValue"},
+            // {itemName:"净值", itemType:"label",itemValue:"nowValue"},
             // {itemName:"所属单位编码", itemType:"label",itemValue:"managerDepart"},
             // {itemName:"所属单位名称", itemType:"label",itemValue:"managerDepartName"},
           ]
