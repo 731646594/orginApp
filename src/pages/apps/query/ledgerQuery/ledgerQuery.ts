@@ -60,13 +60,22 @@ export class LedgerQueryPage {
     body = {departCode:this.departCode,assetsType:this.assetsType,userPerson:this.userPerson,page:this.page,pageSize:this.pageSize};
     this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
-        this.detail = data.data;
-        this.detail["count"] = data.count;
-        let alert = this.alertCtrl.create({
-          title:"查询成功！"
-        });
-        alert.present();
-        this.isNewSearch = true;
+        if(data.data.length>0){
+          this.detail = data.data;
+          this.detail["count"] = data.count;
+          let alert = this.alertCtrl.create({
+            title:"查询成功！"
+          });
+          alert.present();
+          this.isNewSearch = true;
+        }else {
+          this.detail = [];
+          this.detail["count"] = null;
+          let alert = this.alertCtrl.create({
+            title:"查询无数据！"
+          });
+          alert.present();
+        }
       }else {
         alert(data.msg)
       }

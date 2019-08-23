@@ -78,12 +78,22 @@ export class AggregateQueryPage {
     }
     this.httpService.postData(this.httpService.getUrl()+url,body,data=>{
       if (data.success == "true"){
-        this.queryResult = data.data;
-        this.shape = "result";
-        let alert = this.alertCtrl.create({
-          title:"查询成功！"
-        });
-        alert.present();
+        if(data.data.length>0){
+          this.queryResult = data.data;
+          this.shape = "result";
+          let alert = this.alertCtrl.create({
+            title:"查询成功！"
+          });
+          alert.present();
+        }else {
+          this.queryResult = [];
+          this.shape = "detail";
+          let alert = this.alertCtrl.create({
+            title:"查询无数据！"
+          });
+          alert.present();
+        }
+
       }else {
         alert(data.msg)
       }
