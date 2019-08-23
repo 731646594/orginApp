@@ -48,8 +48,8 @@ export class InventoryDataUploadPage {
           this.uploadFiles.push(item["uploadFile"]);
           return !item["Uploaded"]
         })
-      }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+      });
+    });
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.willPlanDetail = JSON.parse(res.rows.item(0).stringData);
@@ -81,8 +81,8 @@ export class InventoryDataUploadPage {
     for(i=0;i<this.planDetailList.length;i++){
       let uploadType = 0;
       let uploadFile = [];
-      uploadFile = this.uploadFiles[i];
-      if(uploadFile.length>0){
+      if (this.uploadFiles[i].length>0){
+        uploadFile = this.uploadFiles[i];
         uploadType = 2;
       }
       let data = this.planDetailList[i];

@@ -80,7 +80,7 @@ export class MenuPage {
       }
     }
     else {
-      if(page !=12&&this.network.type == 'none'){
+      if(page !=12&&page !=14&&this.network.type == 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请恢复网络链接！"
         });
