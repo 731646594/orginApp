@@ -22,7 +22,7 @@ export class InventoryEntryPage  extends InventoryPage{
       pageData:{
         pageItem:[
           {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.departments,},
-          {itemName:"资产条码", itemType:"input",inputType:"text",nec:1,itemValue:"barCode"},
+          {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,itemValue:"barCode"},
           {itemName:"资产名称", itemType:"input",inputType:"text",nec:1,itemValue:"assetsName"},
           {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
           {itemName:"盘盈原因", itemType:"selectFilter",nec:1,dataName:"lossReasonData", itemValue:["lossReason","lossReasonName"],optionValueString:"complexcode",optionNameString:"complexname"},
@@ -123,13 +123,6 @@ export class InventoryEntryPage  extends InventoryPage{
       });
   }
   saveInfo(){
-    if(!this.invoice["barCode"]){
-      let alertCtrl = this.alertCtrl.create({
-        title:"请输入或扫描资产条码！"
-      });
-      alertCtrl.present();
-      return false;
-    }
     let j = this.pageData.pageItem.filter((item) => {
       if(item.itemValue.constructor==Array){
         return (item.nec==1&&!this.invoice[item.itemValue[0]]&&this.invoice[item.itemValue[0]]!="0");

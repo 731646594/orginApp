@@ -59,6 +59,7 @@ export class ScanCodePage extends InventoryPage{
               {optionName:"已处置",optionValue:"08"},
             ],
           },
+          {itemName:"备注", itemType:"input",inputType:"text",nec:0,itemValue:"remark"},
         ]
       }
     };
