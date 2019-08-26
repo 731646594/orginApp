@@ -44,8 +44,11 @@ export class InventoryDataUploadPage {
           this.existPlanDetail = JSON.parse(res.rows.item(0).stringData);
           planDetailList = planDetailList.concat(this.existPlanDetail);
         }
-        this.planDetailList = planDetailList.filter((item)=>{
-          this.uploadFiles.push(item["uploadFile"]);
+        this.planDetailList = planDetailList.filter((item,i)=>{
+          if (item["uploadFile"]&&item["uploadFile"].length>0){
+            this.uploadFiles.push(item["uploadFile"]);
+          }
+          item["realIndex"] = i;
           return !item["Uploaded"]
         })
       });
@@ -81,15 +84,15 @@ export class InventoryDataUploadPage {
     for(i=0;i<this.planDetailList.length;i++){
       let uploadType = 0;
       let uploadFile = [];
-      if (this.uploadFiles[i].length>0){
+      if (this.uploadFiles[i]&&this.uploadFiles[i].length>0){
         uploadFile = this.uploadFiles[i];
         uploadType = 2;
       }
-      let data = this.planDetailList[i];
-      delete data.uploadFile;
-      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:JSON.stringify(data)},data=>{
+      let data = JSON.stringify(this.planDetailList[i]);
+      // delete data.uploadFile;
+      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:data},data=>{
         if (data.success=="true"){
-          let l = index-this.newPlanDetail.length;
+          let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
           if(l>=0){
             this.existPlanDetail[l]["Uploaded"]=true;
             this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
