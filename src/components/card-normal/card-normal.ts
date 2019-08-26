@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ShowPicturePage} from "../../pages/commonStyle/showPicture/showPicture";
+import {App} from "ionic-angular";
 
 /**
  * Generated class for the CardNormalComponent component.
@@ -15,7 +17,7 @@ export class CardNormalComponent {
   @Input() data=[];
   @Output() backValue = new EventEmitter();
   displayIndex;
-  constructor() {
+  constructor(private app:App) {
 
   }
   displayContent(index){
@@ -35,5 +37,7 @@ export class CardNormalComponent {
       this.backValue.emit(index);
     }
   }
-
+  showImg(src){
+    this.app.getRootNav().push(ShowPicturePage,{picture:src})
+  }
 }

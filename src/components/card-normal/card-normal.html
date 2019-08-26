@@ -20,6 +20,14 @@
         <div *ngFor="let child of cardData.cardChild">
           <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
         </div>
+        <div *ngIf="detail.uploadFile&&detail.uploadFile.length>0">
+          <label-newline [itemName]="'图片区'" ></label-newline>
+          <div class="imgBox">
+            <div class="imgInclusion" *ngFor="let img of detail.uploadFile">
+              <img class="imgShow" (click)="showImg(img)" [src]="img">
+            </div>
+          </div>
+        </div>
       </ion-list>
     </ion-content>
   </div>

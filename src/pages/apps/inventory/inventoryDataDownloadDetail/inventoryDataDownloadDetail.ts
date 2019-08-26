@@ -117,9 +117,13 @@ export class InventoryDataDownloadDetailPage {
           loading.dismiss();
         })
       }
-      else {
-        alert(data.msg);
-      }
+
+    },false, (err)=> {
+      let  alertCtrl = this.alertCtrl.create({
+        title:"下载失败,"+JSON.stringify(err).substring(1,JSON.stringify(err).length-1)
+      });
+      alertCtrl.present();
+      loading.dismiss();
     })
   }
   downloadPlan(){

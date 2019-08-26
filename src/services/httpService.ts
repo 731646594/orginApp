@@ -47,7 +47,7 @@ export class HttpService {
   public postData (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
-      duration:5000
+      // duration:5000
     });
     if (isLoading){
       loading.present();
@@ -99,7 +99,12 @@ export class HttpService {
             break;
         }
         if (errMsg!=""){
-          this.errorCallback(errMsg)
+          if (errorCallback){
+            errorCallback(errMsg);
+          }
+          else {
+            this.errorCallback(errMsg);
+          }
         }
       }
     );

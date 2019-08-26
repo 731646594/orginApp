@@ -127,6 +127,11 @@ page-ledgerQuery{
     padding-bottom: 16px;
     background-color: white;
   }
+  .disContent{
+    ion-content{
+      height: 370px;
+    }
+  }
   .content-ios {
     background-color: #f6f6f6;
   }

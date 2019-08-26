@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {ActionSheetController, AlertController, App, Events, Navbar, NavController, NavParams} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
 import {Camera,CameraOptions} from "@ionic-native/camera";
@@ -10,6 +10,7 @@ import {ShowPicturePage} from "../../commonStyle/showPicture/showPicture";
   templateUrl: 'inventory.html'
 })
 export class InventoryPage {
+  @ViewChild(Navbar) navBar: Navbar;
   userCode;
   isFocus=false;
   invoice=JSON;
@@ -46,7 +47,56 @@ export class InventoryPage {
     this.events.unsubscribe("hideFooter");
   }
   ionViewDidEnter(){
+    this.navBar.backButtonClick = this.backButtonClick;
+  }
+  backButtonClick = (e: UIEvent) => {
+    // to do what you want
+    if (this.invoice["barCode"]) {
+      let alertCtrl = this.alertCtrl.create({
+        title: "数据未保存，是否返回？",
+        buttons: [
+          {
+            text: "是",
+            handler: () => {
+              this.navCtrl.pop();
+            }
+          },
+          {
+            text: "否",
+            handler: () => {
 
+            }
+          }
+        ]
+      });
+      alertCtrl.present();
+    }else {
+      this.navCtrl.pop();
+    }
+  };
+  scanCheck(){
+    if (this.invoice["barCode"]) {
+      let alertCtrl = this.alertCtrl.create({
+        title: "数据未保存，是否扫码？",
+        buttons: [
+          {
+            text: "是",
+            handler: () => {
+              this.scan()
+            }
+          },
+          {
+            text: "否",
+            handler: () => {
+
+            }
+          }
+        ]
+      });
+      alertCtrl.present();
+    }else {
+      this.scan()
+    }
   }
   scan() {
     let options: BarcodeScannerOptions = {
