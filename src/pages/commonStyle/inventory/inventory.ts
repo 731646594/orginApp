@@ -239,6 +239,16 @@ export class InventoryPage {
       alertCtrl.present();
       return false;
     }
+    let  regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
+      regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+
+    if(regEn.test( this.invoice["remark"]) || regCn.test(this.invoice["remark"])) {
+      let alertCtrl = this.alertCtrl.create({
+        title:"备注不能包含特殊字符"
+      });
+      alertCtrl.present();
+      return false;
+    }
     this.invoice["uploadFile"] = [];
     this.invoice["uploadFile"] = this.invoice["uploadFile"].concat(this.uploadFile);
     this.invoice["checkResult"] = "1";
