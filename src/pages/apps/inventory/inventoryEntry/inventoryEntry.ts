@@ -63,6 +63,7 @@ export class InventoryEntryPage  extends InventoryPage{
     this.invoice["usedStateName"]="生产经营用-科研";
     this.invoice["technicalCondition"]="01";
     this.invoice["technicalConditionName"]="完好";
+    this.invoice["realcodeStatus"]="1";
     // this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
