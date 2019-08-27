@@ -138,16 +138,6 @@ export class InventoryEntryPage  extends InventoryPage{
       alertCtrl.present();
       return false;
     }
-    let  regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
-      regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-
-    if(regEn.test( this.invoice["remark"]) || regCn.test(this.invoice["remark"])) {
-      let alertCtrl = this.alertCtrl.create({
-        title:"备注不能包含特殊字符"
-      });
-      alertCtrl.present();
-      return false;
-    }
     if(this.uploadFile.length==0){
       let alertCtrl = this.alertCtrl.create({
         title:"请添加照片"
