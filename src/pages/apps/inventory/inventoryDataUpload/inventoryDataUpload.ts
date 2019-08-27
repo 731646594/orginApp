@@ -93,12 +93,12 @@ export class InventoryDataUploadPage {
       this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:data},data=>{
         if (data.success=="true"){
           let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
-          if(l>=0){
+          if(l>-1){
             this.existPlanDetail[l]["Uploaded"]=true;
             this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
           }
           else {
-            this.newPlanDetail[l]["Uploaded"]=true;
+            this.newPlanDetail[this.planDetailList[index].realIndex]["Uploaded"]=true;
             this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
           }
         }else {
@@ -128,15 +128,15 @@ export class InventoryDataUploadPage {
         {
           text:"是",
           handler:()=>{
-            let l = index-this.newPlanDetail.length;
-            if(l>=0){
+            let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
+            if(l>-1){
               this.willPlanDetail.push(this.existPlanDetail[l]);
               this.existPlanDetail.splice(l,1);
               this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
               this.storageService.updateUserTable("willPlanDetail",this.userCode,JSON.stringify(this.willPlanDetail));
             }
             else {
-              this.newPlanDetail.splice(index,1);
+              this.newPlanDetail.splice(this.planDetailList[index].realIndex,1);
               this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
             }
             this.loadData();

@@ -64,12 +64,14 @@ export class InventoryEntryPage  extends InventoryPage{
     this.invoice["technicalCondition"]="01";
     this.invoice["technicalConditionName"]="完好";
     this.invoice["realcodeStatus"]="1";
+    this.invoice["departCode"] = this.storageService.read("loginDepartCode");
     // this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
     this.imgBox = "imgBox2";
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
+        this.invoice["planNumber"] = JSON.parse(res.rows.item(0).stringData)["planNumber"];
         this.departments = JSON.parse(res.rows.item(0).stringData)["departments"];
         this.pageData.pageItem[0].option = this.departments;
         if (this.departments){
