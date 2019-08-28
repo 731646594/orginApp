@@ -64,7 +64,6 @@ export class InventoryEntryPage  extends InventoryPage{
     this.invoice["technicalCondition"]="01";
     this.invoice["technicalConditionName"]="完好";
     this.invoice["realcodeStatus"]="1";
-    this.invoice["departCode"] = this.storageService.read("loginDepartCode");
     // this.selectFilterData["departments"]=[];
     this.selectFilterData["storePlaceData"]=[];
     this.selectFilterData["lossReasonData"]=[];
@@ -150,6 +149,7 @@ export class InventoryEntryPage  extends InventoryPage{
     this.invoice["uploadFile"] = [];
     this.invoice["uploadFile"] = this.invoice["uploadFile"].concat(this.uploadFile);
     this.invoice["checkResult"] = "3";
+    this.invoice["departCode"] = this.invoice["managerDepart"];
     let invoiceList = [];
     let isReplace = false;
     isReplace = false;
