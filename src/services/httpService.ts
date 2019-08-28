@@ -84,7 +84,7 @@ export class HttpService {
             if (this.storageService.read("loginDepartName")){
               this.postData(this.getUrl()+"appLoginController/login.do",
                 {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
-                    return;
+                  this.postData(url,body,successCallback,isLoading,errorCallback)
                 },true)
               //PageUtil.pages["mine"].backToLoginPage();
               //
