@@ -151,7 +151,10 @@ export class ApplicationPage {
           this.getRadioInputValue(data.data);
       },true)
     }else {
-      return false;
+      let alertCtrl = this.alertCtrl.create({
+        title: "请扫描条码"
+      });
+      alertCtrl.present();
     }
   }
 
