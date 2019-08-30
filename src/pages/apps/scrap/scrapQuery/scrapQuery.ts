@@ -30,7 +30,7 @@ export class ScrapQueryPage extends QueryPage{
               {optionName:"批复文号维护",optionValue:"D5"},
               {optionName:"折旧回冲",optionValue:"D6"},
               {optionName:"报废处理",optionValue:"D7"},
-              {optionName:"处理完成",optionValue:null},
+              {optionName:"处理完成",optionValue:"null"},
             ],
           },
           {itemName:"查询月份", itemType:"date",itemValue:"invoiceYM"},

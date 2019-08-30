@@ -166,12 +166,12 @@ export class ChangeShiftsEntryPage {
         this.beforeShow()
       })
       .catch((err) => {
-        const alert = this.alertCtrl.create({
-          title: 'Attention!',
-          subTitle: err,
-          buttons: ['Close']
-        });
-        alert.present();
+        // const alert = this.alertCtrl.create({
+        //   title: 'Attention!',
+        //   subTitle: err,
+        //   buttons: ['Close']
+        // });
+        // alert.present();
       });
   }
   pickPhoto(){

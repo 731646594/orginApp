@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
-import {AlertController} from "ionic-angular";
+// import {AlertController} from "ionic-angular";
 
 /**
  * Generated class for the ScannerComponent component.
@@ -14,7 +14,7 @@ import {AlertController} from "ionic-angular";
 })
 export class ScannerComponent {
   @Output() backValue = new EventEmitter();
-  constructor(private barcodeScanner:BarcodeScanner,private alertCtrl:AlertController) {
+  constructor(private barcodeScanner:BarcodeScanner) {
 
   }
   scan() {
@@ -35,12 +35,12 @@ export class ScannerComponent {
         this.backValue.emit(data.text);
       })
       .catch((err) => {
-        const alert = this.alertCtrl.create({
-          title: 'Attention!',
-          subTitle: err,
-          buttons: ['Close']
-        });
-        alert.present();
+        // const alert = this.alertCtrl.create({
+        //   title: 'Attention!',
+        //   subTitle: err,
+        //   buttons: ['Close']
+        // });
+        // alert.present();
       });
   }
 }

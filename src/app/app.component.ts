@@ -16,12 +16,12 @@ export class MyApp {
   backButtonPressed: boolean = false;  //用于判断返回键是否触发
   @ViewChild('myNav') nav: Nav;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,app:App) {
-    let olog = console.error;
-    console.error = function() {
-      alert([].join.call(arguments, ''))
-      olog.apply(this, arguments);
-
-    };
+    // let olog = console.error;
+    // console.error = function() {
+    //   alert([].join.call(arguments, ''))
+    //   olog.apply(this, arguments);
+    //
+    // };
     document.addEventListener('deviceready', () => {
       httpService.getUrl();
       let url = storageService.read("serverUrl");

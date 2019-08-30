@@ -61,7 +61,12 @@ export class QueryPage {
     if (!this.invoice["invoiceNumber"]) {
       this.invoice["invoiceNumber"] = "";
     }
-
+    let status;
+    if (this.invoice["invoiceStatus"] == "null") {
+      status = null;
+    }else {
+      status = this.invoice["invoiceStatus"];
+    }
     let invoiceYM= this.datePipe.transform(this.invoice["invoiceYM"],"yyyy-MM");
 
     // this.httpService.postData(this.httpService.getUrl() + this.searchFormUrl, {
@@ -86,12 +91,12 @@ export class QueryPage {
       departCode: this.departCode,
       userCode: this.userCode,
       invoiceNumber: this.invoice["invoiceNumber"],
-      invoiceStatus: this.invoice["invoiceStatus"],
+      invoiceStatus: status,
       invoiceYM: invoiceYM
     },data => {
       if (data.success == "true") {
         if(data.data.length>0){
-          if(data.data[0]["invoiceStatus"]){
+          if(data.data[0]["invoiceStatus"]||data.data[0]["invoiceStatus"]==null){
             for (let i in data.data){
               switch (data.data[i]["invoiceStatus"]){
                 case "0":

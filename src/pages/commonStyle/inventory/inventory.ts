@@ -117,12 +117,12 @@ export class InventoryPage {
         this.searchLocalPlanDetail();
       })
       .catch((err) => {
-        const alert = this.alertCtrl.create({
-          title: 'Attention!',
-          subTitle: err,
-          buttons: ['Close']
-        });
-        alert.present();
+        // const alert = this.alertCtrl.create({
+        //   title: 'Attention!',
+        //   subTitle: err,
+        //   buttons: ['Close']
+        // });
+        // alert.present();
       });
   }
   pickPhoto(){

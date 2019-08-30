@@ -25,7 +25,13 @@ export class AllocateApplicationPage extends ApplicationPage{
     this.invoice["createTime"]=date.toLocaleDateString();
     this.invoice["departCode"]=this.departCode;
     this.invoice["departName"]=this.departName;
-    this.originInvoice = this.invoice;
+    this.invoice["allotReason"] = "";
+    this.invoice["remark"] = "";
+    this.invoice["outDepartcode"] = "";
+    this.invoice["outDepartname"] = "";
+    this.invoice["inDepartcode"] = "";
+    this.invoice["inDepartname"] = "";
+    this.originInvoice = JSON.parse(JSON.stringify(this.invoice));
     this.selectFilterData["in"]=[];
     this.selectFilterData["out"]=[];
 

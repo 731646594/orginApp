@@ -29,7 +29,7 @@ export class ScrapApplicationPage extends ApplicationPage{
     this.invoice["departName"] = this.departName;
     let dateStr= this.datePipe.transform(date,"yyyy-MM-dd");
     this.invoice["createdate"]=dateStr;
-    this.originInvoice = this.invoice;
+    this.originInvoice = JSON.parse(JSON.stringify(this.invoice));
     // alert(this.userCode +dateStr)
     this.selectFilterData["loginDepartList"]=[];
     if (this.storageService.read("loginDepartList")){

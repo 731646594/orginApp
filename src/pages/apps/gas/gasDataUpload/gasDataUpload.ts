@@ -134,10 +134,6 @@ export class GasDataUploadPage {
     if (this.checkedArray[1]){
       this.uploading("devHandOverController.do?saveCheckForm",this.jjb,"jjb")
     }
-    let alertCtrl = this.alertCtrl.create({
-      title:"上传成功！"
-    });
-    alertCtrl.present();
   }
   uploading(url,data,name){
     this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]},data=>{
@@ -149,6 +145,10 @@ export class GasDataUploadPage {
           this.jjb=null;
           this.storageService.deleteUserTable("jjb",this.userCode);
         }
+        let alertCtrl = this.alertCtrl.create({
+          title:"上传成功！"
+        });
+        alertCtrl.present();
       }else{
         alert(data.msg)
       }

@@ -60,7 +60,11 @@ export class ApplicationPage {
       if (res.rows.length > 0) {
         this.invoice = JSON.parse(res.rows.item(0).stringData)
       }else {
-        this.invoice = this.originInvoice;
+        this.invoice = JSON.parse(JSON.stringify(this.originInvoice));
+        if (this.sqlInvoiceTableName == "allotInvoice"){
+          this.data["pageData"]["pageItem"][0][1].itemValue = ["outDepartcode","outDepartname"];
+          this.data["pageData"]["pageItem"][0][2].itemValue = ["inDepartcode","inDepartname"];
+        }
       }
     }).catch(e => alert("erro2_2:" + JSON.stringify(e)));
     this.storageService.getUserTable().executeSql(this.storageService.getSSS(this.sqlSearchDatasTableName, this.userCode), []).then(res => {
@@ -139,12 +143,16 @@ export class ApplicationPage {
   }
 
   getScannerValue(value) {
-    this.radioInput = value;
-    let params = "{\"userCode\":\""+this.userCode+"\",\"departCode\":\""+this.departCode+"\",\"barCode\":\""+this.radioInput+"\"}";
-    let paramsJson = JSON.parse(params);
-    this.httpService.postData(this.httpService.getUrl()+this.radioInputPostUrl,paramsJson,data=>{
-        this.getRadioInputValue(data.data);
-    },true)
+    if (value){
+      this.radioInput = value;
+      let params = "{\"userCode\":\""+this.userCode+"\",\"departCode\":\""+this.departCode+"\",\"barCode\":\""+this.radioInput+"\"}";
+      let paramsJson = JSON.parse(params);
+      this.httpService.postData(this.httpService.getUrl()+this.radioInputPostUrl,paramsJson,data=>{
+          this.getRadioInputValue(data.data);
+      },true)
+    }else {
+      return false;
+    }
   }
 
   confirmChecked(): any {
