@@ -13,8 +13,8 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
-      this.setUrl("http","192.168.10.194","8080","plamassets");
-      return "http://192.168.10.194:8080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.123","9081","plamassets");
+      return "http://210.12.193.123:9081/plamassets/mobile/";
     }
     let strUrl=url["agreement"]+"://"+url["address"]+":"+url["port"]+"/"+url["serviceName"]+"/mobile/";
     return strUrl;
