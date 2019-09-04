@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, App, NavController, NavParams, ToastController} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 @Component({
   selector: 'page-ledgerQuery',
   templateUrl: 'ledgerQuery.html'
@@ -26,11 +27,13 @@ export class LedgerQueryPage {
   displayIndex;
   queryResult = [];
   isNewSearch = true;
+  imgUrl = "";
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public navParams:NavParams, public alertCtrl:AlertController, public toastCtrl:ToastController) {
     this.loadData();
   }
   loadData(){
+    this.imgUrl = this.storageService.read('serverUrl')['agreement']+'://'+this.storageService.read('serverUrl')['address']+':'+this.storageService.read('serverUrl')['port']+'/';
     this.departCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
@@ -62,6 +65,15 @@ export class LedgerQueryPage {
       if (data.success == "true"){
         if(data.data.length>0){
           this.detail = data.data;
+          for (let i in this.detail){
+            if (this.detail[i]["imguUrl"]){
+              let len = this.detail[i]["imguUrl"].length-1;
+              this.detail[i]["imguUrl"] = this.detail[i]["imguUrl"].substring(0,len);
+              this.detail[i]["imgUrlArr"] = this.detail[i]["imguUrl"].split(";");
+            }else {
+              this.detail[i]["imgUrlArr"] = []
+            }
+          }
           this.detail["count"] = data.count;
           let alert = this.alertCtrl.create({
             title:"查询成功！"
@@ -93,6 +105,13 @@ export class LedgerQueryPage {
       console.log(data)
       if (data.success == "true"){
         for (let i in data.data){
+          if (data.data[i]["imguUrl"]){
+            let len = data.data[i]["imguUrl"].length-1;
+            data.data[i]["imguUrl"] = data.data[i]["imguUrl"].substring(0,len);
+            data.data[i]["imgUrlArr"] = data.data[i]["imguUrl"].split(";");
+          }else {
+            data.data[i]["imgUrlArr"] = []
+          }
           this.detail.push(data.data[i])
         }
       }else {
@@ -145,5 +164,8 @@ export class LedgerQueryPage {
   getSelectValue(value) {
     this.departCode = value["selectedValue"];
     this.departName = value["selectedName"];
+  }
+  showImg(src){
+    this.app.getRootNav().push(ShowPicturePage,{picture:src})
   }
 }

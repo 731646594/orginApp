@@ -32,7 +32,7 @@
     <ion-list class="switchList switchBox infoList" *ngFor="let detailInfo of detail;let i = index" >
       <ion-item class="inputItem miniContentBox" (click)="displayContent(i)">
         <div class="imgItemStartBox" item-start >
-          <img class="imgItemStart" [src]="detailInfo.imguUrl" onerror="this.src='assets/imgs/default.png'">
+          <img class="imgItemStart" [src]="imgUrl+detailInfo.imgUrlArr[0]" onerror="this.src='assets/imgs/default.png'">
         </div>
         <div class="itemContentDiv">
           资产编号：{{detailInfo.assetsCode}}
@@ -131,8 +131,8 @@
             </ion-item>
             <div class="imgBox" *ngIf="detailInfo.imguUrl">
               <div id="imgBox">
-                <div class="imgInclusion">
-                  <img class="imgShow" [src]="detailInfo.imguUrl">
+                <div class="imgInclusion" *ngFor="let imgSrc of detailInfo.imgUrlArr">
+                  <img class="imgShow" (click)="showImg(imgUrl+imgSrc)" [src]="imgUrl+imgSrc">
                 </div>
               </div>
             </div>

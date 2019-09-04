@@ -16,7 +16,6 @@ export class InventoryDataUploadPage {
   existPlanDetail=[];
   willPlanDetail=[];
   planData=[];
-  uploadFiles=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
@@ -33,7 +32,6 @@ export class InventoryDataUploadPage {
     this.willPlanDetail=[];
     this.planDetailList = [];
     let planDetailList = [];
-    this.uploadFiles = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
@@ -45,9 +43,6 @@ export class InventoryDataUploadPage {
           planDetailList = planDetailList.concat(this.existPlanDetail);
         }
         this.planDetailList = planDetailList.filter((item,i)=>{
-          if (item["uploadFile"]&&item["uploadFile"].length>0){
-            this.uploadFiles.push(item["uploadFile"]);
-          }
           item["realIndex"] = i;
           return !item["Uploaded"]
         })
@@ -83,14 +78,11 @@ export class InventoryDataUploadPage {
     let i=0;
     for(i=0;i<this.planDetailList.length;i++){
       let uploadType = 0;
-      let uploadFile = [];
-      if (this.uploadFiles[i]&&this.uploadFiles[i].length>0){
-        uploadFile = this.uploadFiles[i];
+      if (this.planDetailList[i].uploadFile.length>0){
         uploadType = 2;
       }
       let data = JSON.stringify(this.planDetailList[i]);
-      // delete data.uploadFile;
-      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:uploadFile,data:data},data=>{
+      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:this.planDetailList[i].uploadFile,data:data},data=>{
         if (data.success=="true"){
           let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
           if(l>-1){

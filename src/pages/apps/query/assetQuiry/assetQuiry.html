@@ -117,8 +117,8 @@
         </ion-item>
         <div class="imgBox" *ngIf="detail.imguUrl">
           <div id="imgBox">
-            <div class="imgInclusion">
-              <img class="imgShow" [src]="detail.imguUrl">
+            <div class="imgInclusion" *ngFor="let imgSrc of detail.imgUrlArr">
+              <img class="imgShow" (click)="showImg(imgUrl+imgSrc)" [src]="imgUrl+imgSrc">
             </div>
           </div>
         </div>

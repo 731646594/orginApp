@@ -158,7 +158,7 @@ export class InventoryEntryPage  extends InventoryPage{
       if (res.rows.length>0){
         invoiceList = JSON.parse(res.rows.item(0).stringData);
         for (let i in invoiceList){
-          if (invoiceList[i]["barCode"] == this.invoice["barCode"]){
+          if (this.invoice["barCode"]&&(invoiceList[i]["barCode"] == this.invoice["barCode"])){
             invoiceList[i] = this.invoice;
             isReplace = true;
           }

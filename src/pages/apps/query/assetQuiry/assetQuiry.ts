@@ -3,6 +3,7 @@ import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
+import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 @Component({
   selector: 'page-assetQuiry',
   templateUrl: 'assetQuiry.html'
@@ -20,9 +21,11 @@ export class AssetQuiryPage {
   loginDepartCode;
 
   queryResult = [];
+  imgUrl = "";
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public app:App,public navParams:NavParams,public barcodeScanner:BarcodeScanner, public alertCtrl:AlertController) {
     this.loginDepartCode = this.storageService.read("loginDepartCode");
+    this.imgUrl = this.storageService.read('serverUrl')['agreement']+'://'+this.storageService.read('serverUrl')['address']+':'+this.storageService.read('serverUrl')['port']+'/';
   }
 
   inputOnfocus(){
@@ -77,6 +80,13 @@ export class AssetQuiryPage {
       if (data.success == "true"){
         if (data.data.length>0){
           this.detail = data.data[0];
+          if (this.detail["imguUrl"]){
+            let len = this.detail["imguUrl"].length-1;
+            this.detail["imguUrl"] = this.detail["imguUrl"].substring(0,len);
+            this.detail["imgUrlArr"] = this.detail["imguUrl"].split(";");
+          }else {
+            this.detail["imgUrlArr"] = []
+          }
           this.plan = data.listRecord;
           let alert = this.alertCtrl.create({
             title:"查询成功！"
@@ -93,5 +103,8 @@ export class AssetQuiryPage {
         alert(data.msg)
       }
     },true)
+  }
+  showImg(src){
+    this.app.getRootNav().push(ShowPicturePage,{picture:src})
   }
 }
