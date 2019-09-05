@@ -4,7 +4,7 @@
 <ion-content style="background: rgba(0,0,0,0.25);">
   <div class="backgroundBox" (click)="back()">
     <div class="contentBox" (click)="$event.cancelBubble=true;">
-      <ion-searchbar (ionInput)="getItems($event)" (ionFocus)="hideFooter()" (ionBlur)="showFooter()" placeholder="请输入要筛选的字符"></ion-searchbar>
+      <ion-searchbar (ionInput)="getItems($event)" (ionFocus)="hideFooter()" (ionBlur)="showFooter()" [placeholder]="placeholderString"></ion-searchbar>
       <ion-content>
         <ion-list class="selectBox">
           <ion-item *ngFor="let item of showData;let i = index">
