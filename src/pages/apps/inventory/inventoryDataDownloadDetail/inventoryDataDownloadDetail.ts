@@ -16,6 +16,9 @@ export class InventoryDataDownloadDetailPage {
   planDate;
   departments=[];
   isDownloaded;
+  isOnfocus=false;
+  displayArray = [];
+  searchValue;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public file:File,
               public fileTransfer:FileTransfer,public navParams:NavParams,public app:App) {
@@ -201,5 +204,26 @@ export class InventoryDataDownloadDetailPage {
         this.departments[i].checked = true;
       }
     }
+  }
+  searchDepart(){
+    if (this.searchValue){
+      for (let i in this.departments){
+        this.displayArray[i] = true;
+        if (this.departments[i].departName.indexOf(this.searchValue)>-1){
+          this.displayArray[i] = false;
+        }
+      }
+    }else {
+      for (let i in this.departments){
+        this.displayArray[i] = false;
+      }
+    }
+
+  }
+  inputOnfocus(){
+    this.isOnfocus=true;
+  }
+  inputOnblur(){
+    this.isOnfocus=false;
   }
 }

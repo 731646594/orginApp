@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController} from 'ionic-angular';
+import {AlertController, App, NavController, NavParams} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../services/storageService";
 import {HttpService} from "../../services/httpService";
 import {ScanCodePage} from "../apps/inventory/scanCode/scanCode";
@@ -27,7 +27,9 @@ export class HomePage {
   num3;
   num4;
   num5;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public alertCtrl:AlertController) {
+  pageData;
+  pageItem;
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController) {
 
   }
   ionViewDidEnter(){
@@ -40,6 +42,18 @@ export class HomePage {
     this.userCode = this.storageService.read("loginUserCode");
     this.departName = this.storageService.read("loginDepartName");
     this.departCode = this.storageService.read("loginDepartCode");
+    this.pageData = this.navParams.data.pageData;
+    let pageItem = []
+    this.pageData.filter((value,index)=>{
+      for (let i in value[1].pageData){
+        for (let j in value[1].pageData[i]){
+          if (value[1].pageData[i][j].length>0){
+            pageItem.push(value[1].pageData[i][j])
+          }
+        }
+      }
+    })
+    this.pageItem = pageItem;
     this.httpService.postData(this.httpService.getUrl()+"toDoController/tododetailcounts.do", {userCode:this.userCode,departCode:this.departCode},(data)=>{
       let todoList=[];
       if (data.success=="true"){
@@ -63,7 +77,14 @@ export class HomePage {
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
-  willGoPage(pageIndex){
+  willGoPage(pageIndex,canIn){
+    if(canIn=="0"){
+      let alertCtrl = this.alertCtrl.create({
+        title:"您无权访问该功能！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     if(pageIndex == 1){
       if(this.network.type != 'none'){
         let alertCtrl = this.alertCtrl.create({

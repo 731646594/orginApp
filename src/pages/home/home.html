@@ -9,17 +9,17 @@
 <ion-content>
   <div class="appsButtonBigBox">
     <div class="appsButtonBox">
-      <button class="appsButton" (click)="willGoPage(1)">
+      <button class="appsButton" (click)="willGoPage(1,pageItem[0][4])">
         <div class="appsButtonIconBox2" >
           <img src="assets/homePageImgs/saoyisao.png">
         </div><br>快速扫码
       </button>
-      <button class="appsButton" (click)="willGoPage(2)">
+      <button class="appsButton" (click)="willGoPage(2,pageItem[9][4])">
         <div class="appsButtonIconBox2" >
           <img src="assets/homePageImgs/dbsq.png">
         </div><br>调拨申请
       </button>
-      <button class="appsButton" (click)="willGoPage(3)">
+      <button class="appsButton" (click)="willGoPage(3,pageItem[6][4])">
         <div class="appsButtonIconBox2" >
           <img src="assets/homePageImgs/bfsq.png">
         </div><br>报废申请</button>
@@ -28,7 +28,7 @@
   <div class="splitBar"></div>
   <div class="appsButtonBigBox">
     <div class="appsButtonBox">
-      <button class="appsButton" (click)="willGoPage(4)">
+      <button class="appsButton" (click)="willGoPage(4,pageItem[1][4])">
         <ion-badge  *ngIf="inventoryNum!=0&&inventoryNum<100" item-end>{{inventoryNum}}</ion-badge>
         <ion-badge  *ngIf="inventoryNum>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
@@ -36,7 +36,7 @@
         </div>
         <br>正在盘点
       </button>
-      <button class="appsButton" (click)="willGoPage(5)">
+      <button class="appsButton" (click)="willGoPage(5,pageItem[2][4])">
         <ion-badge *ngIf="num1!=0&&num1<100" item-end>{{num1}}</ion-badge>
         <ion-badge  *ngIf="num1>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
@@ -44,7 +44,7 @@
         </div>
         <br>未盘计划
       </button>
-      <button class="appsButton" (click)="willGoPage(6)">
+      <button class="appsButton" (click)="willGoPage(6,pageItem[10][4])">
         <ion-badge *ngIf="num2!=0&&num2<100" item-end>{{num2}}</ion-badge>
         <ion-badge  *ngIf="num2>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
@@ -54,7 +54,7 @@
       </button>
     </div>
     <div class="appsButtonBox">
-      <button class="appsButton" (click)="willGoPage(7)">
+      <button class="appsButton" (click)="willGoPage(7,pageItem[11][4])">
         <ion-badge *ngIf="num3!=0&&num3<100" item-end>{{num3}}</ion-badge>
         <ion-badge  *ngIf="num3>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
@@ -62,7 +62,7 @@
         </div>
         <br>调出确认
       </button>
-      <button class="appsButton" (click)="willGoPage(8)">
+      <button class="appsButton" (click)="willGoPage(8,pageItem[12][4])">
         <ion-badge *ngIf="num4!=0&&num4<100" item-end>{{num4}}</ion-badge>
         <ion-badge  *ngIf="num4>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
@@ -70,7 +70,7 @@
         </div>
         <br>调入确认
       </button>
-      <button class="appsButton" (click)="willGoPage(9)">
+      <button class="appsButton" (click)="willGoPage(9,pageItem[7][4])">
         <ion-badge *ngIf="num5!=0&&num5<100" item-end>{{num5}}</ion-badge>
         <ion-badge  *ngIf="num5>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" >
