@@ -155,7 +155,7 @@ export class InventoryPage {
       sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
     }
     const options: CameraOptions = {
-      quality: 50,                                                   //相片质量 0 -100
+      quality: 20,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -176,6 +176,13 @@ export class InventoryPage {
             div.innerHTML+=
               "<img id=\"i"+this.i+this.imgBox+"\" name=\"i"+this.i+this.imgBox+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
               "<img id=\"b"+this.i+this.imgBox+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+            if (this.uploadFile.length==4){
+              let alertCtrl = this.alertCtrl.create({
+                title:"照片数量不能大于4张"
+              });
+              alertCtrl.present();
+              return false;
+            }
             node.appendChild(div);
             this.uploadFile.push(base64Image);
             document.getElementById("i"+this.i+this.imgBox).onclick=(e)=> {

@@ -81,8 +81,10 @@ export class InventoryDataUploadPage {
       if (this.planDetailList[i].uploadFile.length>0){
         uploadType = 2;
       }
-      let data = JSON.stringify(this.planDetailList[i]);
-      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:this.planDetailList[i].uploadFile,data:data},data=>{
+      let data = Object.assign({},this.planDetailList[i]);
+      delete data.uploadFile;
+      let dataString = JSON.stringify(data)
+      this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:this.planDetailList[i].uploadFile,data:dataString},data=>{
         if (data.success=="true"){
           let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
           if(l>-1){
@@ -110,6 +112,12 @@ export class InventoryDataUploadPage {
           alertCtrl.present();
           this.loadData();
         }
+      },false,(err)=>{
+        loading.dismiss();
+        let alertCtrl = this.alertCtrl.create({
+          title:err
+        });
+        alertCtrl.present();
       });
     }
   }
