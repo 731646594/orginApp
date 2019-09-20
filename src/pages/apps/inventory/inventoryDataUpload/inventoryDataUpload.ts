@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import { StorageService} from "../../../../services/storageService";
+import {File} from "@ionic-native/file";
 
 @Component({
   selector: 'page-inventoryDataUpload',
@@ -16,8 +17,12 @@ export class InventoryDataUploadPage {
   existPlanDetail=[];
   willPlanDetail=[];
   planData=[];
+  planIndex = 0;
+  failLen = 0;
+  imgIndex = 0;
+  uploadFile = []
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
+              public alertCtrl:AlertController,public file:File,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -59,7 +64,7 @@ export class InventoryDataUploadPage {
       }
     }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
-  async uploadList(){
+  uploadList(){
     if(this.planDetailList.length==0){
       let alertCtrl = this.alertCtrl.create({
         title: "没有可上传的数据！"
@@ -69,57 +74,90 @@ export class InventoryDataUploadPage {
     }
     let loading = this.loadingCtrl.create({
       content:"上传进度：0%",
-      dismissOnPageChange:false,
+      dismissOnPageChange:true
     });
     loading.present();
-    let failLen=0;
+    this.uploadSinglePlan(loading);
+  }
+  uploadSinglePlan(loading){
     let now: number = 0;
-    let index=0;
-    let i=0;
-    for(i=0;i<this.planDetailList.length;i++){
-      let uploadType = 0;
-      if (this.planDetailList[i].uploadFile.length>0){
-        uploadType = 2;
+    let uploadType = 0;
+    this.uploadFile=[];
+    this.imgIndex = 0;
+    if (this.planDetailList[this.planIndex].uploadFile.length>0){
+      uploadType = 2;
+      this.getBase64Pics(this.planDetailList[this.planIndex].uploadFile,now,loading,uploadType);
+    }else {
+      this.postPlan(now,loading,uploadType)
+    }
+
+  }
+  postPlan(now,loading,uploadType){
+    let data = Object.assign({},this.planDetailList[this.planIndex]);
+    delete data.uploadFile;
+    let dataString = JSON.stringify(data)
+    alert("len:"+this.uploadFile.length)
+    this.httpService.post(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString}).subscribe(data=>{
+      if (data.success=="true"){
+        let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
+        if(l>-1){
+          this.existPlanDetail[l]["Uploaded"]=true;
+          this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
+        }
+        else {
+          this.newPlanDetail[this.planDetailList[this.planIndex].realIndex]["Uploaded"]=true;
+          this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
+        }
+      }else {
+        this.failLen++;
       }
-      let data = Object.assign({},this.planDetailList[i]);
-      delete data.uploadFile;
-      let dataString = JSON.stringify(data)
-      await this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile:this.planDetailList[i].uploadFile,data:dataString},data=>{
-        if (data.success=="true"){
-          let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
-          if(l>-1){
-            this.existPlanDetail[l]["Uploaded"]=true;
-            this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
-          }
-          else {
-            this.newPlanDetail[this.planDetailList[index].realIndex]["Uploaded"]=true;
-            this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
-          }
-        }else {
-          failLen++;
-        }
-        now = (index+1)/this.planDetailList.length*100;
-        index++;
-        loading.setContent("上传进度："+Math.floor(now)+"%");
-        if (now == 100){
-          loading.dismiss();
-          let alertCtrl = this.alertCtrl.create({
-            title: "上传完成，失败" + failLen + "条！"
-          });
-          if(failLen == 0){
-            alertCtrl.setTitle("上传成功！");
-          }
-          alertCtrl.present();
-          this.loadData();
-        }
-      },false,(err)=>{
+      now = (this.planIndex+1)/this.planDetailList.length*100;
+      this.planIndex++;
+      loading.setContent("上传进度："+Math.floor(now)+"%");
+      if (now == 100){
         loading.dismiss();
         let alertCtrl = this.alertCtrl.create({
-          title:err
+          title: "上传完成，失败" + this.failLen + "条！"
         });
+        if(this.failLen == 0){
+          alertCtrl.setTitle("上传成功！");
+        }
         alertCtrl.present();
+        this.loadData();
+      }else {
+        this.uploadSinglePlan(loading)
+      }
+    },(err)=>{
+      loading.dismiss();
+      let alertCtrl = this.alertCtrl.create({
+        title:err
       });
-    }
+      alertCtrl.present();
+    });
+  }
+  getBase64Pics(base64Images,now,loading,uploadType){
+      let imageData = base64Images[this.imgIndex]
+      this.resolveUri(imageData).then(url=> {
+        url.file((file)=> {
+          let reader = new FileReader();
+          reader.onloadend=(e)=>{
+            let base64Image = e.target['result'];
+            this.uploadFile.push(base64Image);
+            this.imgIndex++;
+            if (base64Images.length==this.uploadFile.length){
+              this.postPlan(now,loading,uploadType)
+            }else {
+              this.getBase64Pics(base64Images,now,loading,uploadType)
+            }
+          };
+          reader.readAsDataURL(file);
+        }, err => {
+          alert(err)
+        });
+      },err=>{
+        alert(err)
+      })
+
   }
   testDelete(index){
     let alertCtrl = this.alertCtrl.create({
@@ -149,5 +187,15 @@ export class InventoryDataUploadPage {
     });
     alertCtrl.present();
 
+  }
+  //转换url
+  resolveUri(uri:string):Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.file.resolveLocalFilesystemUrl(uri).then(filePath =>{
+        resolve(filePath);
+      }).catch(err =>{
+        reject(err);
+      });
+    })
   }
 }

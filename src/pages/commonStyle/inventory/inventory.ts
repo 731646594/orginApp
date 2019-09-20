@@ -184,7 +184,7 @@ export class InventoryPage {
               return false;
             }
             node.appendChild(div);
-            this.uploadFile.push(base64Image);
+            this.uploadFile.push(imageData);
             document.getElementById("i"+this.i+this.imgBox).onclick=(e)=> {
               try {
                 this.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
@@ -398,33 +398,47 @@ export class InventoryPage {
       node.removeChild(childs[i]);
     }
     this.i=0;
-    for (let i in base64Images){
-      let base64Image=base64Images[i];
-      let div = document.createElement("div");
-      div.className = "imgInclusion";
-      div.innerHTML+=
-        "<img id=\"i"+this.i+this.imgBox+"\" name=\"i"+this.i+this.imgBox+"\" class=\"imgShow\" src=\""+base64Image+"\">" +
-        "<img id=\"b"+this.i+this.imgBox+"\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
-      node.appendChild(div);
-      this.uploadFile.push(base64Image);
-      document.getElementById("i"+this.i+this.imgBox).onclick=(e)=> {
-        try {
-          this.app.getRootNav().push(ShowPicturePage,{picture:base64Image})
-        } catch (e) {
-          alert(e)
-        }
-      };
-      document.getElementById("b"+this.i+this.imgBox).onclick=(e)=> {
-        try {
-          node.removeChild(div);
-          this.uploadFile.splice(parseInt((<HTMLElement>div.firstChild).id.slice(1)),1);
-        }catch(e) {
-          alert(e)
-        }
-      };
-      this.i++;
+    if (base64Images.length>0){
+      for (let i in base64Images){
+        let imageData = base64Images[i]
+        this.resolveUri(imageData).then(url=> {
+          url.file((file) => {
+            let reader = new FileReader();
+            reader.onloadend = (e) => {
+              let base64Image = e.target['result'];
+              let div = document.createElement("div");
+              div.className = "imgInclusion";
+              div.innerHTML +=
+                "<img id=\"i" + this.i + this.imgBox + "\" name=\"i" + this.i + this.imgBox + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
+                "<img id=\"b" + this.i + this.imgBox + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+              node.appendChild(div);
+              this.uploadFile.push(base64Images[i]);
+              document.getElementById("i" + this.i + this.imgBox).onclick = (e) => {
+                try {
+                  this.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
+                } catch (e) {
+                  alert(e)
+                }
+              };
+              document.getElementById("b" + this.i + this.imgBox).onclick = (e) => {
+                try {
+                  node.removeChild(div);
+                  this.uploadFile.splice(parseInt((<HTMLElement>div.firstChild).id.slice(1)), 1);
+                } catch (e) {
+                  alert(e)
+                }
+              };
+              this.i++;
+            };
+            reader.readAsDataURL(file);
+          }, err => {
+            alert(err)
+          });
+        },err=>{
+          alert(err)
+        })
+      }
     }
-
   }
   hideFooter(){
     this.isFocus=true;
