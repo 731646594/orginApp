@@ -70,7 +70,7 @@ export class MenuPage {
       alertCtrl.present();
       return false;
     }
-    if(page == 11||page == 16||page == 51||page == 52){
+    if(this.storageService.getDevice()!=2&&(page == 11||page == 16||page == 51||page == 52)){
       if(this.network.type != 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请切换到飞行模式！"

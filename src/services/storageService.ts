@@ -9,7 +9,10 @@ export class StorageService {
   AssetInventoryDatabase:SQLiteObject;
 
   constructor(public sqlite:SQLite) { }
-
+  getDevice(){
+    return 1;//手机
+    // return 2;//防爆手持机
+  }
   initDatabase(){
     this.sqlite.create({
       name:'AssetInventory.db',
