@@ -106,7 +106,7 @@ export class InventoryEntryPage  extends InventoryPage{
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.invoice["barCode"] = data.text;
+        this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
         if(!this.invoice["barCode"]){
           let alert = this.alertCtrl.create({
             title:"请输入或扫描资产条码！"

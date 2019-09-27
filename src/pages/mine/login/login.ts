@@ -83,6 +83,7 @@ export class LoginPage {
       }
     },true);
     this.storageService.write("loginDepartName",this.depart.shortname);
+    this.storageService.write("loginDepartLongName",this.depart.departname);
     this.storageService.write("loginDepartCode",this.depart.departcode);
     this.app.getRootNav().push(TabsPage);
   }

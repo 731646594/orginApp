@@ -113,7 +113,7 @@ export class InventoryPage {
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.invoice["barCode"] = data.text;
+        this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
         this.searchLocalPlanDetail();
       })
       .catch((err) => {

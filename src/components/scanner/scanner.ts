@@ -32,7 +32,7 @@ export class ScannerComponent {
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.backValue.emit(data.text);
+        this.backValue.emit(data.text.replace(/\s+/g,"").replace("\u0008", ""));
       })
       .catch((err) => {
         // const alert = this.alertCtrl.create({

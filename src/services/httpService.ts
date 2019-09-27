@@ -16,6 +16,10 @@ export class HttpService {
       this.setUrl("http","210.12.193.123","9081","plamassets");
       return "http://210.12.193.123:9081/plamassets/mobile/";
     }
+    if (this.storageService.getDevice()==2){
+      this.setUrl("http","114.116.135.83","8080","plamassets");
+      return "http://114.116.135.83:8080/plamassets/mobile/";
+    }
     let strUrl=url["agreement"]+"://"+url["address"]+":"+url["port"]+"/"+url["serviceName"]+"/mobile/";
     return strUrl;
   }

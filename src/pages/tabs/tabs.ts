@@ -23,6 +23,7 @@ export class TabsPage {
   diaobo;
   tongji;
   jiayouzhan;
+  jianweixiu;
   constructor(public storageService:StorageService) {
 
     // PageUtil.pages["tabs"]=this;
@@ -54,6 +55,12 @@ export class TabsPage {
     //51:周检表录入
     //52:交接班录入
     //53:数据上传
+    //61:维修申请
+    //62:维修申请补录
+    //63:维修审批
+    //64:维修验收
+    //65:维修验收审批
+    //66:维修单据查询
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
@@ -102,12 +109,22 @@ export class TabsPage {
         ]
       ]
     };
-
+    this.jianweixiu = {
+      pageName:"检维修管理",
+      pageData:[
+        [
+          [61,"","luruzhong.png","维修申请","1"],[62,"","diaoboshengqing.png","维修申请补录","1"],[63,"","diaoboshenpi.png","维修审批","1"]
+        ],
+        [
+          [64,"","shangchuan.png","维修验收","1"],[65,"","diaobochaxun.png","维修验收审批","1"],[66,"","zichanchaxun.png","维修单据查询","1"]
+        ]
+      ]
+    };
     this.pageData1 = {
       pageName:"应用",
       pageData:[
         [1,this.pandian,"","资产盘点"],[1,this.baofei,"","报废管理"],[1,this.diaobo,"","调拨管理"],
-        [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"]
+        [1,this.tongji,"","统计查询"],[1,this.jianweixiu,"","检维修管理"],[1,{},"","设备保养管理"]
       ]
     };
     if(this.storageService.read("applyPageData")){
