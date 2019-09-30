@@ -357,7 +357,9 @@ export class InventoryPage {
               let storePlace = this.invoice["storePlace"];
               let storePlaceName = this.invoice["storePlaceName"];
               this.invoice = localPlanDetail[i];
-              this.getAndShowPics(this.invoice["uploadFile"]);
+              if (this.invoice["uploadFile"]){
+                this.getAndShowPics(this.invoice["uploadFile"]);
+              }
               this.invoice["realcodeStatus"] = "0";
               this.invoice["storePlace"] = storePlace;
               this.invoice["storePlaceName"] = storePlaceName;
