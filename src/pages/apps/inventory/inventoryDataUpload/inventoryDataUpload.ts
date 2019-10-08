@@ -36,6 +36,8 @@ export class InventoryDataUploadPage {
     this.existPlanDetail=[];
     this.willPlanDetail=[];
     this.planDetailList = [];
+    this.planIndex = 0;
+    this.failLen = 0;
     let planDetailList = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
@@ -96,7 +98,6 @@ export class InventoryDataUploadPage {
     let data = Object.assign({},this.planDetailList[this.planIndex]);
     delete data.uploadFile;
     let dataString = JSON.stringify(data)
-    alert("len:"+this.uploadFile.length)
     this.httpService.post(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString}).subscribe(data=>{
       if (data.success=="true"){
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;

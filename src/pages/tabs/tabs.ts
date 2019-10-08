@@ -24,6 +24,7 @@ export class TabsPage {
   tongji;
   jiayouzhan;
   jianweixiu;
+  shebeibaoyang;
   constructor(public storageService:StorageService) {
 
     // PageUtil.pages["tabs"]=this;
@@ -61,6 +62,12 @@ export class TabsPage {
     //64:维修验收
     //65:维修验收审批
     //66:维修单据查询
+    //67:外委派单
+    //68:外委开始维修
+    //69:外委办结
+    //71:外委派单
+    //72:开始保养
+    //73:保养办结
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
@@ -117,6 +124,17 @@ export class TabsPage {
         ],
         [
           [64,"","shangchuan.png","维修验收","1"],[65,"","diaobochaxun.png","维修验收审批","1"],[66,"","zichanchaxun.png","维修单据查询","1"]
+        ],
+        [
+          [67,"","shujushangchuan.png","外委派单","1"],[68,"","baofeishengqing.png","外委开始维修","1"],[69,"","baofeishenpi.png","外委办结","1"]
+        ]
+      ]
+    };
+    this.shebeibaoyang = {
+      pageName:"设备保养管理",
+      pageData:[
+        [
+          [71,"","zhoujian.png","外委派单","1"],[72,"","jiaojie.png","开始保养","1"],[73,"","shujushangchuan.png","保养办结","1"]
         ]
       ]
     };
@@ -124,7 +142,7 @@ export class TabsPage {
       pageName:"应用",
       pageData:[
         [1,this.pandian,"","资产盘点"],[1,this.baofei,"","报废管理"],[1,this.diaobo,"","调拨管理"],
-        [1,this.tongji,"","统计查询"],[1,this.jianweixiu,"","检维修管理"],[1,{},"","设备保养管理"]
+        [1,this.tongji,"","统计查询"],[1,this.jianweixiu,"","检维修管理"],[1,this.shebeibaoyang,"","设备保养管理"]
       ]
     };
     if(this.storageService.read("applyPageData")){
