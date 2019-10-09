@@ -396,7 +396,7 @@ export class InventoryPage {
     this.uploadFile=[];
     let node = document.getElementById(this.imgBox);
     let childs = node.childNodes;
-    for(let i = childs .length - 1; i >= 0; i--) {
+    for(let i = childs .length - 1; i >= 2; i--) {
       node.removeChild(childs[i]);
     }
     this.i=0;
