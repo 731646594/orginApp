@@ -13,10 +13,10 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
-      // this.setUrl("http","210.12.193.123","9081","plamassets");
-      // return "http://210.12.193.123:9081/plamassets/mobile/";
-      this.setUrl("http","210.12.193.92","9080","plamassets");
-      return "http://210.12.193.92:9080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.123","9081","plamassets");
+      return "http://210.12.193.123:9081/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.92","9080","plamassets");
+      // return "http://210.12.193.92:9080/plamassets/mobile/";
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");

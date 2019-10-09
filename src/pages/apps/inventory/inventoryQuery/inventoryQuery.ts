@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {App, NavController, ToastController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
+import {File} from "@ionic-native/file";
 @Component({
   selector: 'page-inventoryQuery',
   templateUrl: 'inventoryQuery.html'
@@ -28,7 +29,7 @@ export class InventoryQueryPage {
   displayIndex;
   page=1;
   pageData={};
-  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController) {
+  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController,public file:File) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -119,6 +120,23 @@ export class InventoryQueryPage {
     }
     for (let i = 0;i<10;i++){
       if(item[i]){
+        for (let j in item[i].uploadFile) {
+          let imageData = item[i].uploadFile[j];
+          this.resolveUri(imageData).then(url => {
+            url.file((file) => {
+              let reader = new FileReader();
+              reader.onloadend = (e) => {
+                let base64Image = e.target['result'];
+                item[i].uploadFile[j] = base64Image;
+              };
+              reader.readAsDataURL(file);
+            }, err => {
+              alert(err)
+            });
+          }, err => {
+            alert(err)
+          })
+        }
         this.planDetailList.push(item[i]);
         this.page=1;
       }
@@ -146,6 +164,23 @@ export class InventoryQueryPage {
       let i = this.page*10;
       for (i;i<(this.page*10+10);i++){
         if(item[i]){
+          for (let j in item[i].uploadFile) {
+            let imageData = item[i].uploadFile[j];
+            this.resolveUri(imageData).then(url => {
+              url.file((file) => {
+                let reader = new FileReader();
+                reader.onloadend = (e) => {
+                  let base64Image = e.target['result'];
+                  item[i].uploadFile[j] = base64Image;
+                };
+                reader.readAsDataURL(file);
+              }, err => {
+                alert(err)
+              });
+            }, err => {
+              alert(err)
+            })
+          }
           this.planDetailList.push(item[i]);
         }
         else {
@@ -158,6 +193,16 @@ export class InventoryQueryPage {
     }
     infiniteScroll.complete();
 
+  }
+  //转换url
+  resolveUri(uri:string):Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.file.resolveLocalFilesystemUrl(uri).then(filePath =>{
+        resolve(filePath);
+      }).catch(err =>{
+        reject(err);
+      });
+    })
   }
   selectDepart(value){
     if(value["selectedValue"]||value["selectedValue"]=="0")

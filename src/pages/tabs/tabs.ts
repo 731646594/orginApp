@@ -126,7 +126,7 @@ export class TabsPage {
           [64,"","shangchuan.png","维修验收","1"],[65,"","diaobochaxun.png","维修验收审批","1"],[66,"","zichanchaxun.png","维修单据查询","1"]
         ],
         [
-          [67,"","shujushangchuan.png","外委派单","1"],[68,"","baofeishengqing.png","外委开始维修","1"],[69,"","baofeishenpi.png","外委办结","1"]
+          [67,"","shujushangchuan.png","维修外委派单","1"],[68,"","baofeishengqing.png","开始维修","1"],[69,"","baofeishenpi.png","维修办结","1"]
         ]
       ]
     };
@@ -134,7 +134,7 @@ export class TabsPage {
       pageName:"设备保养管理",
       pageData:[
         [
-          [71,"","zhoujian.png","外委派单","1"],[72,"","jiaojie.png","开始保养","1"],[73,"","shujushangchuan.png","保养办结","1"]
+          [71,"","diaochu.png","保养外委派单","1"],[72,"","taizhangchaxun.png","开始保养","1"],[73,"","chaxun.png","保养办结","1"]
         ]
       ]
     };

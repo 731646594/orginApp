@@ -76,7 +76,7 @@ export class InventoryDataUploadPage {
     }
     let loading = this.loadingCtrl.create({
       content:"上传进度：0%",
-      dismissOnPageChange:true
+      dismissOnPageChange:false,
     });
     loading.present();
     this.uploadSinglePlan(loading);
@@ -114,7 +114,7 @@ export class InventoryDataUploadPage {
       }
       now = (this.planIndex+1)/this.planDetailList.length*100;
       this.planIndex++;
-      loading.setContent("上传进度："+Math.floor(now)+"%");
+      document.getElementsByClassName("loading-content")[0].innerHTML = "上传进度："+Math.floor(now)+"%";
       if (now == 100){
         loading.dismiss();
         let alertCtrl = this.alertCtrl.create({
