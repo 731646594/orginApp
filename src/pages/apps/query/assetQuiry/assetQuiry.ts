@@ -26,8 +26,11 @@ export class AssetQuiryPage {
               public app:App,public navParams:NavParams,public barcodeScanner:BarcodeScanner, public alertCtrl:AlertController) {
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.imgUrl = this.storageService.read('serverUrl')['agreement']+'://'+this.storageService.read('serverUrl')['address']+':'+this.storageService.read('serverUrl')['port']+'/';
+    if (this.navParams.get("barCode")){
+      this.barCode = this.navParams.get("barCode");
+      this.query();
+    }
   }
-
   inputOnfocus(){
     this.isOnfocus=true;
   }
@@ -49,7 +52,14 @@ export class AssetQuiryPage {
     this.barcodeScanner
       .scan(options)
       .then((data) => {
-        this.barCode = data.text;
+        if(data.text){
+          this.barCode = data.text;
+        }else {
+          let alertCtrl = this.alertCtrl.create({
+            title:"请扫描条码"
+          });
+          alertCtrl.present();
+        }
         // const alert = this.alertCtrl.create({
         //   title: 'Scan Results',
         //   subTitle: data.text,
