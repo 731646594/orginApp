@@ -11,6 +11,7 @@ import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allo
 import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateApproval";
 import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
+import {BackgroundMode} from "@ionic-native/background-mode";
 let that;
 @Component({
   selector: 'page-home',
@@ -29,8 +30,8 @@ export class HomePage {
   num5;
   pageData;
   pageItem;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController) {
-
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController,private backgroundMode: BackgroundMode,) {
+    this.backgroundMode.enable();
   }
   ionViewDidEnter(){
     this.loadData();
