@@ -90,7 +90,7 @@ export class InventoryQueryPage {
             {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
             {itemName:"车牌井号", itemType:"label",itemValue:"licenceNumber"},
             {itemName:"保管人", itemType:"label",itemValue:"userPerson"},
-            {itemName:"存放地点", itemType:"label",itemValue:"storePlaceName"},
+            {itemName:"存放地点", itemType:"label",itemValue:"storePlace"},
             // {itemName:"出厂编号", itemType:"label",itemValue:"productId"},
             // {itemName:"资产状态编码", itemType:"label",itemValue:"assetsStatus"},
             {itemName:"资产状态名称", itemType:"label",itemValue:"assetsStatusName"},

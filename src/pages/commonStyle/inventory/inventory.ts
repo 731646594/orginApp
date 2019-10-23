@@ -357,17 +357,11 @@ export class InventoryPage {
           localPlanDetail = JSON.parse(res.rows.item(0).stringData);
           for(let i in  localPlanDetail){
             if (this.invoice["barCode"] == localPlanDetail[i]["barCode"]){
-              let storePlace = this.invoice["storePlace"];
-              let storePlaceName = this.invoice["storePlaceName"];
               this.invoice = localPlanDetail[i];
               if (this.invoice["uploadFile"]){
                 this.getAndShowPics(this.invoice["uploadFile"]);
               }
               this.invoice["realcodeStatus"] = "0";
-              this.invoice["storePlace"] = storePlace;
-              if(!storePlaceName){
-                this.invoice["storePlaceName"] = storePlace;
-              }
               isSearch = true;
               this.isDistinguish = true;
             }
@@ -459,7 +453,7 @@ export class InventoryPage {
   }
   getSelectValue(value,key){
     if (key.constructor == Array){
-      this.invoice[key[0]] = value["selectedValue"];
+      this.invoice[key[0]] = value["selectedName"];
       this.invoice[key[1]] = value["selectedName"];
     }else {
       this.invoice[key] = value["selectedValue"];
