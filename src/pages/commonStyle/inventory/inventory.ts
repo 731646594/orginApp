@@ -365,7 +365,9 @@ export class InventoryPage {
               }
               this.invoice["realcodeStatus"] = "0";
               this.invoice["storePlace"] = storePlace;
-              this.invoice["storePlaceName"] = storePlaceName;
+              if(!storePlaceName){
+                this.invoice["storePlaceName"] = storePlace;
+              }
               isSearch = true;
               this.isDistinguish = true;
             }
