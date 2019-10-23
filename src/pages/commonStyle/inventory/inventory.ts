@@ -292,10 +292,6 @@ export class InventoryPage {
         this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
         PageUtil.pages["home"].inventoryNum = willListLength;
         this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
-        let alertCtrl = this.alertCtrl.create({
-          title:"保存成功！"
-        });
-        alertCtrl.present();
         for(let key in this.invoice){
           this.invoice[key] = "";
         }
@@ -304,8 +300,15 @@ export class InventoryPage {
         this.invoice["realcodeStatus"]="0";
         this.invoice["technicalCondition"]="01";
         this.invoice["technicalConditionName"]="完好";
+        this.invoice["storePlace"] = "";
+        this.invoice["storePlaceName"] = "";
+        document.getElementsByClassName("select-text")[1].innerHTML="";
         this.getAndShowPics([]);
         this.isDistinguish = false;
+        let alertCtrl = this.alertCtrl.create({
+          title:"保存成功！"
+        });
+        alertCtrl.present();
       });
     });
   }
@@ -333,6 +336,7 @@ export class InventoryPage {
                   text:"是",
                   handler:()=>{
                     this.invoice = localPlanDetail[i];
+                    document.getElementsByClassName("select-text")[1].innerHTML = this.invoice["storePlaceName"];
                     this.getAndShowPics(this.invoice["uploadFile"]);
                     this.isDistinguish = true;
                   }
@@ -361,6 +365,7 @@ export class InventoryPage {
               }
               this.invoice["realcodeStatus"] = "0";
               this.invoice["storePlaceName"] = this.invoice["storePlace"];
+              document.getElementsByClassName("select-text")[1].innerHTML = this.invoice["storePlaceName"];
               isSearch = true;
               this.isDistinguish = true;
             }
@@ -454,6 +459,7 @@ export class InventoryPage {
     if (key.constructor == Array){
       this.invoice[key[0]] = value["selectedName"];
       this.invoice[key[1]] = value["selectedName"];
+      document.getElementsByClassName("select-text")[1].innerHTML = value["selectedName"];
     }else {
       this.invoice[key] = value["selectedValue"];
       if(key=="technicalCondition"||key=="managerDepart"||key == "usedState"){
