@@ -297,9 +297,7 @@ export class InventoryPage {
         });
         alertCtrl.present();
         for(let key in this.invoice){
-          if (key != "storePlace"&&key != "storePlaceName"){
-            this.invoice[key] = "";
-          }
+          this.invoice[key] = "";
         }
         this.invoice["usedState"]="010101";
         this.invoice["usedStateName"]="生产经营用-科研";
