@@ -362,6 +362,7 @@ export class InventoryPage {
                 this.getAndShowPics(this.invoice["uploadFile"]);
               }
               this.invoice["realcodeStatus"] = "0";
+              this.invoice["storePlaceName"] = this.invoice["storePlace"];
               isSearch = true;
               this.isDistinguish = true;
             }
