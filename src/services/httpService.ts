@@ -13,7 +13,7 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
-      //湖北
+      //湖北petrochina.hbxs.zcpd
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
@@ -28,12 +28,15 @@ export class HttpService {
       //广西
       // this.setUrl("http","210.12.193.61","9081","plamassets");
       // return "http://210.12.193.61:9081/plamassets/mobile/";
-      //冀东
+      //冀东petrochina.jdyt.zcpd
       // this.setUrl("http","127.0.0.1","10401","plamassets");
       // return "http://127.0.0.1:10401/plamassets/mobile/";
       //天津
       this.setUrl("http","210.12.194.121","9080","plamassets");
       return "http://210.12.194.121:9080/plamassets/mobile/"
+      //浙江油田petrochina.zjytcwc.jxkh
+      // this.setUrl("http","127.0.0.1","10610","plamassets");
+      // return "http://127.0.0.1:10610/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");
