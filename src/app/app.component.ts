@@ -25,7 +25,7 @@ export class MyApp {
     document.addEventListener('deviceready', () => {
       httpService.getUrl();
       let url = storageService.read("serverUrl");
-      wkWebView.injectCookie(url["agreement"]+"://"+url["address"]+"/");
+      // wkWebView.injectCookie(url["agreement"]+"://"+url["address"]+"/");
     });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
