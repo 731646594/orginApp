@@ -1,0 +1,56 @@
+<ion-header>
+
+</ion-header>
+<ion-content style="background: rgba(0,0,0,0.25);">
+  <div class="backgroundBox" (click)="back()">
+    <div class="contentBox" (click)="$event.cancelBubble=true;">
+      <div class="searchButton">
+        <ion-item class="inputItem">
+          <ion-select class="noPaddingLeft maxWidthSelect" interface="popover" (ionChange)="changeSearchSelect($event)" [ngModel]="searchSelect">
+            <ion-option *ngFor="let con of searchCon" [value]="con.value">{{con.text}}</ion-option>
+          </ion-select>
+          <ion-input class="readonlyInput" placeholder="请输入搜索内容" (ionFocus)="hideFooter()" (ionBlur)="showFooter()" [(ngModel)]="searchValue"></ion-input>
+        </ion-item>
+        <ion-item class="iconItem">
+          <ion-icon item-end name="search" (click)="searchFun()"></ion-icon>
+        </ion-item>
+      </div>
+      <div  *ngFor="let detail of filterData;let i = index">
+        <div class="flexBox">
+          <ion-list class="callContent">
+            <ion-list class="callList" (click)="displayContent(i)">
+              <ion-item class="inputItem" *ngFor="let pItem of item.parent">
+                <ion-label class="noFlexLabel" *ngIf="pItem.itemName">{{pItem.itemName}}</ion-label>
+                <ion-label class="scrollLabel">{{detail[pItem.itemValue]}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-list>
+          <div class="cardButton" item-end (click)="checkedItemRadio(i)">
+            <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="cardCheckedIcon"></ion-icon>
+            <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
+          </div>
+        </div>
+        <ion-content class="disContentAlertPage" *ngIf="item.children">
+          <ion-item class="inputItem" *ngFor="let cItem of item.children">
+            <ion-label class="noFlexLabel">{{cItem.itemName}}</ion-label>
+            <ion-label class="scrollLabel">{{detail[cItem.itemValue]}}</ion-label>
+          </ion-item>
+        </ion-content>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" *ngIf="!isOnfocus">
+  <button class="formFooterButton" *ngIf="upperButton == true" (click)="goTosj()">
+    <ion-icon class="formFooterIcon" name="arrow-dropup-circle"></ion-icon>
+    <br>上级
+  </button>
+  <button class="formFooterButton" *ngIf="lowerButton == true" (click)="goToxj()">
+    <ion-icon class="formFooterIcon" name="arrow-dropdown-circle"></ion-icon>
+    <br>下级
+  </button>
+  <button class="formFooterButton" (click)="returnSelect()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon>
+    <br>确定
+  </button>
+</footer>

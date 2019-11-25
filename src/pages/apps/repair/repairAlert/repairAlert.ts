@@ -22,6 +22,7 @@ export class RepairAlertPage{
   checkBox = false;
   url;
   body;
+  bodyOrgin;
   page=1;
   pageSize =20;
   isNewSearch = true;
@@ -45,7 +46,8 @@ export class RepairAlertPage{
     this.searchSelect = this.navParams.get("content").searchSelect;
     this.url = this.navParams.get("content").url;
     this.item = this.navParams.get("content").item;
-    this.body = this.navParams.get("content").body;
+    this.bodyOrgin = this.navParams.get("content").body;
+    this.body = JSON.parse(JSON.stringify(this.bodyOrgin))
     this.filterData = JSON.parse(JSON.stringify(this.data));
   }
   ionViewDidEnter(){
@@ -144,11 +146,13 @@ export class RepairAlertPage{
       alertCtrl.present();
       return false;
     }
+    let body = JSON.parse(JSON.stringify(this.bodyOrgin))
     if (this.searchSelect=="0"){
-      this.body["sbmcSearch"]=this.searchValue
+      body["sbmcSearch"]=this.searchValue
     }else {
-      this.body["sbbmSearch"]=this.searchValue
+      body["sbbmSearch"]=this.searchValue
     }
+    this.body = JSON.parse(JSON.stringify(body));
     this.goToPost(this.url,this.body)
   }
   returnSelect(){

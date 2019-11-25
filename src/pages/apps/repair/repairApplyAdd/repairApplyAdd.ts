@@ -39,14 +39,17 @@ export class RepairApplyAddPage {
     let date = new Date();
     this.invoice["sqsj"] = this.datePipe.transform(date,"yyyy-MM-dd hh-mm");
     this.invoice["sqrmc"] = this.storageService.read("loginUserName");
+    this.invoice["sqrbm"] = this.storageService.read("loginUserCode");
     let str = JSON.stringify(this.storageService.read("loginDepartLongName"));
     str = str.substring(1,str.length-1);
     this.invoice["sqdwmc"] = str;
+    this.invoice["sqdwbm"] = this.storageService.read("loginDepartCode");
     this.invoice["sscs"] = "福建";
     if (str.indexOf("/")>-1){
       this.invoice["sqdwmc"] = str.substring(str.lastIndexOf("/")+1,str.length);
       this.invoice["sscs"] = str.substring(str.indexOf("/")+1,str.indexOf("/",str.indexOf("/")+1));
     }
+    this.invoice["djly"] = 2;
     if(this.navParams.get("data")){
       this.invoice = this.navParams.get("data");
       this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
@@ -454,18 +457,56 @@ export class RepairApplyAddPage {
     })
   }
   saveInfo(){
-    if(this.data.length==0){
+    let departCode = "";
+    departCode = this.storageService.read("loginDepartCode");
+    if (
+      (departCode.indexOf("13710001300040003")==-1)&&
+      (departCode.indexOf("13710001300040002")==-1)&&
+      (departCode.indexOf("13710001300040001")==-1)&&
+      (departCode.indexOf("137100002")==-1)&&
+      (departCode.indexOf("137100010")==-1)&&
+      (departCode.indexOf("137100005")==-1)&&
+      (departCode.indexOf("137100003")==-1)&&
+      (departCode.indexOf("137100004")==-1)&&
+      (departCode.indexOf("137100006")==-1)&&
+      (departCode.indexOf("137100009")==-1)&&
+      (departCode.indexOf("137100007")==-1)&&
+      (departCode.indexOf("137100008")==-1)&&
+      (this.invoice["zfyl1"] == "05")
+    ){
       let alertCtrl = this.alertCtrl.create({
-        title:"请添加主设备"
+        title:"当前单位不能选择外包维修！"
       });
       alertCtrl.present();
       return false;
     }
-    this.invoice["djzt"] = 1;
+    if((this.invoice["sfscfj"] != 1) && (this.invoice["zfyl1"] == "04")){
+      let alertCtrl = this.alertCtrl.create({
+        title:"大维修必须上传图片！"
+      });
+      alertCtrl.present();
+      return false;
+    }
+    if(this.data.length==0){
+      let alertCtrl = this.alertCtrl.create({
+        title:"请添加主设备！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     let listWxfs = this.storageService.read("listWxfs");
     for(let i in listWxfs){
       if (listWxfs[i].complexcode == this.invoice["zfyl1"]){
         this.invoice["wxfs"] = listWxfs[i].complexname;
+      }
+    }
+    for (let i in this.data){
+      if (this.invoice["zfyl1"] == "05"&&this.data[i]["zfyl10"]!="是"){
+        let alertCtrl = this.alertCtrl.create({
+          title:"外包维修不能包含非外包设备！"
+        });
+        alertCtrl.present();
+        return false;
       }
     }
     let j = this.pageData.pageItem[0].filter((item) => {

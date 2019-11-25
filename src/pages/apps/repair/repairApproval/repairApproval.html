@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      单据审批
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar class="headToolbar">
+    <ion-segment [(ngModel)]="shape" (ionChange)="changeTab()">
+      <ion-segment-button value="brief" >
+        {{pageData.segmentName[0]}}
+      </ion-segment-button>
+      <ion-segment-button value="detailed" >
+        {{pageData.segmentName[1]}}
+      </ion-segment-button>
+      <ion-segment-button *ngIf="pageData.segmentName[2]" value="supplier" >
+        {{pageData.segmentName[2]}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox" [ngSwitch]="shape">
+    <div *ngSwitchCase="'brief'">
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
+        </div>
+      </div>
+      <ion-item class="inputItem imgItem" *ngIf="invoice.sfscfj == 1">
+        <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>
+      </ion-item>
+      <div class="imgBox" *ngIf="invoice.sfscfj == 1">
+        <div id="imgBox">
+        </div>
+      </div>
+    </div>
+    <div class="detailTab" *ngSwitchCase="'detailed'">
+      <div *ngFor="let item of pageData.pageItem[1];">
+        <div *ngFor="let detail of detailData;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <div *ngIf="child.itemType == 'label'">
+                    <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                  </div>
+                  <div *ngIf="child.itemType == 'table'">
+                    <div class="tableBox">
+                      <div class="flexBox">
+                        <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                          <ion-label>{{tableT.colName}}</ion-label>
+                        </div>
+                      </div>
+                      <div *ngFor="let tableC of tableData">
+                        <div class="flexBox">
+                          <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                            <ion-label>{{tableC[tableT.colValue]}}</ion-label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detailTab" *ngSwitchCase="'supplier'">
+      <div *ngFor="let item of pageData.pageItem[2];">
+        <div *ngFor="let detail of data;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent supplierContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="passForm()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>通过
+  </button>
+  <button class="formFooterButton" (click)="rejectForm()">
+    <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>驳回
+  </button>
+</footer>

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      供应商评价
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <div class="contentBox">
+    <div  style="background: white;border-radius: 5px;margin-bottom: 10px" *ngFor="let data of insertCspjData;let i = index">
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [inputType]="'number'" [nec]="item.nec" [inputValue]="data[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,i,item.itemValue)"></input-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [nec]="item.nec" [selectValue]="data[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,i,item.itemValue)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='star'">
+          <ion-item class="inputItem">
+            <ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>
+            <ion-label class="labelNormal">
+              <span *ngFor="let light of lightStar[i];let index = index" (click)="lightingStar(index,i)">
+                <ion-icon class="formFooterIcon" [name]="light"></ion-icon>
+              </span>
+            </ion-label>
+          </ion-item>
+        </div>
+      </div>
+      <div class="cardButton" item-end  (click)="deleteForm(i)">
+        <button ion-button small color="danger">删除</button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="addForm()">
+    <ion-icon class="formFooterIcon" name="add-circle"></ion-icon><br>新增
+  </button>
+  <button class="formFooterButton" (click)="saveForm()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+</footer>
