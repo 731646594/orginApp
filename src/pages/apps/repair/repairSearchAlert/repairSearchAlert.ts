@@ -77,7 +77,7 @@ export class RepairSearchAlertPage{
     this.data[name] = value["selectedName"]
   }
   returnSelect(){
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairQueryAppContoller.do?prepairOrderDetail",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devRepairQueryAppContoller.do?prepairOrderDetail",{
       prepairOrderNum:this.data["wxdh"],
       orderStatus:this.data["djzt"],
       applyComCode:this.data["departCode"],
@@ -129,7 +129,7 @@ export class RepairSearchAlertPage{
         url:url
       }
     }
-    this.httpService.postData(this.httpService.getUrl2() + url, body, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + url, body, (data)=> {
       let data1 = data.obj.rows;
       let body = {data:data1,content:content}
       this.createDictionariesPage(RepairSearchFilterAlertPage,body,name,value)

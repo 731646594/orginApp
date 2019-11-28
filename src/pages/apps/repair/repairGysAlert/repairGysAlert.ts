@@ -64,7 +64,7 @@ export class RepairGysAlertPage{
   }
   getMore() {
     this.page++;
-    this.httpService.postData(this.httpService.getUrl2() + this.url, {dataobj:this.body,page:this.page,rows:this.pageSize}, data => {
+    this.httpService.postData2(this.httpService.getUrl2() + this.url, {dataobj:this.body,page:this.page,rows:this.pageSize}, data => {
       if (!data.obj.rows[0]) {
         this.isNewSearch = false;
         if (this.page > 1) {
@@ -105,7 +105,7 @@ export class RepairGysAlertPage{
   goToPost(){
     this.page = 1;
     this.body = "gyszt = '0' and instr(wxdwbm,"+this.storageService.read("loginDepartCode")+") > 0 and "+this.searchSelect+" like '%"+this.searchValue+"%'";
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?gysList", {dataobj:"gyszt = '0' and instr(wxdwbm,"+this.storageService.read("loginDepartCode")+") > 0 and "+this.searchSelect+" like '%"+this.searchValue+"%'"}, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?gysList", {dataobj:"gyszt = '0' and instr(wxdwbm,"+this.storageService.read("loginDepartCode")+") > 0 and "+this.searchSelect+" like '%"+this.searchValue+"%'"}, (data)=> {
       let rows = data.obj.rows;
       this.filterData = [];
       this.isNewSearch = false;

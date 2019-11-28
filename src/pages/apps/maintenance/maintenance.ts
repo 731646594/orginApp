@@ -268,7 +268,7 @@ export class MaintenancePage {
     })
   }
   showMaintenanceStandard(){
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?getMaintenanceStandard",{checkCode:this.invoice["checkCode"]},(data)=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?getMaintenanceStandard",{checkCode:this.invoice["checkCode"]},(data)=>{
       this.maintenanceStandardData = data.obj;
       let modal = this.modalCtrl.create(MaintenanceAlertPage,{data:this.maintenanceStandardData},{
       });
@@ -295,7 +295,7 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?saveMaintenancePicketing",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?saveMaintenancePicketing",{
       userCode:this.storageService.read("loginUserCode"),
       userName:this.storageService.read("loginUserName"),
       maintenanceNumberDetail:this.invoice["maintenanceNumberDetail"],
@@ -328,7 +328,7 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancer",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancer",{
       maintenanceNumberDetail:this.invoice["maintenanceNumberDetail"],
       id:this.invoice["id"],
       jcxx:this.invoice["jcxx"],
@@ -385,7 +385,7 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",{
       id:this.invoice["id"],
       maintenanceAmount:this.invoice["maintenanceAmount"],
       maintenancePosition:this.invoice["maintenancePosition"],

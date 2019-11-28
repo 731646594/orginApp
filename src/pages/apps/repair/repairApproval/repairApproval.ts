@@ -33,7 +33,7 @@ export class RepairApprovalPage {
               public camera?: Camera, public file?: File, public modalCtrl?: ModalController) {
     that = this;
     this.invoice = this.navParams.get("data");
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
       let temp = data.obj;
       temp.djFormData["djztName"] = ConfigProvider.djztName(temp.djFormData["djzt"]);
       if(temp.djFormData["djly"])
@@ -160,7 +160,7 @@ export class RepairApprovalPage {
     }
   }
   getWxHistory(i){
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
       this.detailData[i].wxCount = data3.obj.wxCount;
       this.detailData[i].sumMoney = data3.obj.sumMoney;
       this.tableData[i] = data3.obj.wxHistory;
@@ -233,7 +233,7 @@ export class RepairApprovalPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2() + "lhd/app/rewriteDevJWXGLSHController.do?pass", {
+              this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/rewriteDevJWXGLSHController.do?pass", {
                 dataobj: JSON.stringify([this.invoice]),
                 yj: e.reason,
                 flag:3
@@ -276,7 +276,7 @@ export class RepairApprovalPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?reject",{dataobj:JSON.stringify([this.invoice]),yj:e.reason,flag:3},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?reject",{dataobj:JSON.stringify([this.invoice]),yj:e.reason,flag:3},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"驳回成功！"

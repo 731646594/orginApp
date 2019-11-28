@@ -45,7 +45,7 @@ export class RepairExternalPage {
     if (this.pageName == "开始维修"||this.pageName == "维修办结"){
       url = "lhd/app/devPeripheryRepairController.do?getPeripheryRepairDetail"
     }
-    this.httpService.postData(this.httpService.getUrl2()+url,{wxdh:this.invoice["WXDH"],departCode:this.storageService.read("loginDepartCode"),id:this.invoice["ID"]},(data)=> {
+    this.httpService.postData22(this.httpService.getUrl2()+url,{wxdh:this.invoice["WXDH"],departCode:this.storageService.read("loginDepartCode"),id:this.invoice["ID"]},(data)=> {
       console.log(data);
       let temp = data.obj;
       if (this.pageName == "维修办结"){
@@ -178,7 +178,7 @@ export class RepairExternalPage {
 
   }
   getWxHistory(i){
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
       this.detailData[i].wxCount = data3.obj.wxCount;
       this.detailData[i].sumMoney = data3.obj.sumMoney;
       this.tableData[i] = data3.obj.wxHistory;
@@ -221,7 +221,7 @@ export class RepairExternalPage {
     }
   }
   showDictionaries(value){
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devPeripheryRepairController.do?getSparePartsList", {}, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devPeripheryRepairController.do?getSparePartsList", {}, (data)=> {
       let data1 = data.obj;
       let content = {
         searchCon:[
@@ -321,7 +321,7 @@ export class RepairExternalPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryPicketing",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryPicketing",{
       userCode:this.storageService.read("loginUserCode"),
       userName:this.storageService.read("loginUserName"),
       wxdh:this.invoice["wxdh"],
@@ -345,7 +345,7 @@ export class RepairExternalPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryRepair",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryRepair",{
       wxdh:this.invoice["wxdh"],
       id:this.invoice["id"],
       jcxx:this.invoice["zfyl17"]
@@ -373,7 +373,7 @@ export class RepairExternalPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryRepairFinish",{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryRepairFinish",{
       wxdh:this.invoice["wxdh"],
       id:this.invoice["id"],
       bjmc:this.invoice["bjmc"],

@@ -36,7 +36,7 @@ export class RepairAcceptancePage {
               public camera?: Camera, public file?: File, public modalCtrl?: ModalController) {
     that = this;
     this.invoice = this.navParams.get("data");
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
       let temp = data.obj;
       temp.djFormData["djztName"] = ConfigProvider.djztName(temp.djFormData["djzt"]);
       if(temp.djFormData["djly"])
@@ -195,7 +195,7 @@ export class RepairAcceptancePage {
     this.events.unsubscribe("saveInsertCspjData");
   }
   getWxHistory(i){
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
       this.detailData[i].wxCount = data3.obj.wxCount;
       this.detailData[i].sumMoney = data3.obj.sumMoney;
       this.tableData[i] = data3.obj.wxHistory;
@@ -311,7 +311,7 @@ export class RepairAcceptancePage {
     }
     console.log(body);
     body["flag"] = 4;
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
       });

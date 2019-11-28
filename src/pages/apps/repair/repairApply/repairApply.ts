@@ -45,11 +45,11 @@ export class RepairApplyPage {
     //   this.listUrl = "/lhd/app/devRepairController.do?datagrid"
     // }
     if (this.pageName == "维修申请"||this.pageName == "维修申请补录"||this.pageName == "维修审批"||this.pageName == "维修验收审批") {
-      this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {}, data => {
+      this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {}, data => {
         this.storageService.write("listJjcd", data.obj.zd.listJjcd);
         this.storageService.write("listWxfs", data.obj.zd.listWxfs);
       }, false);
-      this.httpService.postData(this.httpService.getUrl2() + "lhd/app/rewriteDevWXYSFJController.do?datagrid", {
+      this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/rewriteDevWXYSFJController.do?datagrid", {
         queryfilter: JSON.stringify({ysdwbm: this.storageService.read("loginDepartCode") + "%"}),
         rows: "全部"
       }, (data) => {
@@ -57,7 +57,7 @@ export class RepairApplyPage {
           data.obj.rows[i]["yslbName"] = ConfigProvider.yslbName(data.obj.rows[i]["yslb"])
         }
         this.storageService.write("WXYS", data.obj.rows);
-        this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?gysList", {dataobj: "(gyszt = '0' and instr(wxdwbm,'" + this.storageService.read("loginDepartCode") + "') > 0)"}, (data2) => {
+        this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?gysList", {dataobj: "(gyszt = '0' and instr(wxdwbm,'" + this.storageService.read("loginDepartCode") + "') > 0)"}, (data2) => {
           this.storageService.write("GYS", data2.obj.rows)
         }, false);
       }, false);
@@ -80,7 +80,7 @@ export class RepairApplyPage {
       this.listUrl = "lhd/app/devRepairQueryAppContoller.do?prepairOrderDetail"
       this.page = 1;
       this.isNewSearch = true;
-      this.httpService.postData(this.httpService.getUrl2()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode},data=>{
+      this.httpService.postData2(this.httpService.getUrl2()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode},data=>{
         this.itemData = data.obj.rows;
         for (let i in this.itemData){
           this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["djzt"])
@@ -172,7 +172,7 @@ export class RepairApplyPage {
         if (this.pageName == "保养办结"){
           body["byType"] = 2
         }
-        this.httpService.postData(this.httpService.getUrl2()+this.listUrl,body,data=>{
+        this.httpService.postData2(this.httpService.getUrl2()+this.listUrl,body,data=>{
           this.itemData = data.obj;
           if (this.pageName == "保养外委派单"){
             this.itemData = data.obj.planList;
@@ -206,7 +206,7 @@ export class RepairApplyPage {
       else {
         this.page = 1;
         this.isNewSearch = true;
-        this.httpService.postData(this.httpService.getUrl2()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode},data=>{
+        this.httpService.postData2(this.httpService.getUrl2()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode},data=>{
           this.itemData = data.obj.rows;
           for (let i in this.itemData){
             this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["djzt"])
@@ -246,7 +246,7 @@ export class RepairApplyPage {
     }
   }
   submitForm(detail){
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?report",{dataobj:JSON.stringify([detail]),departName:this.storageService.read("loginDepartName"),departcode:this.storageService.read("loginDepartCode")},data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?report",{dataobj:JSON.stringify([detail]),departName:this.storageService.read("loginDepartName"),departcode:this.storageService.read("loginDepartCode")},data=>{
       console.log(data)
       let alertCtrl = this.alertCtrl.create({
         title:"上报成功！"
@@ -263,7 +263,7 @@ export class RepairApplyPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
       console.log(data)
       let alertCtrl = this.alertCtrl.create({
         title:"作废成功！"
@@ -280,7 +280,7 @@ export class RepairApplyPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?banjieLC",{dataobj:JSON.stringify(detail)},data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?banjieLC",{dataobj:JSON.stringify(detail)},data=>{
       console.log(data)
       let alertCtrl = this.alertCtrl.create({
         title:"办结成功！"
@@ -302,7 +302,7 @@ export class RepairApplyPage {
     if (detail.djzt == 1){
       url = "lhd/app/rewriteDevJWXGLDJController.do?report";
       body = {dataobj:JSON.stringify([detail]),departName:this.storageService.read("loginDepartName"),departcode:this.storageService.read("loginDepartCode")}
-      this.httpService.postData(this.httpService.getUrl2()+url,body,data=>{
+      this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
         console.log(data)
         let alertCtrl = this.alertCtrl.create({
           title:"上报成功！"
@@ -335,7 +335,7 @@ export class RepairApplyPage {
           {
             text:"确定",
             handler:(e)=>{
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?pass",{dataobj:JSON.stringify([detail]),yj:"",submitUserType:e},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?pass",{dataobj:JSON.stringify([detail]),yj:"",submitUserType:e},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"上报成功！"
@@ -359,7 +359,7 @@ export class RepairApplyPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
       console.log(data)
       let alertCtrl = this.alertCtrl.create({
         title:"作废成功！"
@@ -392,7 +392,7 @@ export class RepairApplyPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?backReport",{dataobj:JSON.stringify([detail]),thyy:e.reason},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?backReport",{dataobj:JSON.stringify([detail]),thyy:e.reason},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"退回成功！"
@@ -431,7 +431,7 @@ export class RepairApplyPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2() + "lhd/app/rewriteDevJWXGLSHController.do?pass", {
+              this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/rewriteDevJWXGLSHController.do?pass", {
                 dataobj: JSON.stringify([detail]),
                 yj: e.reason
                 ,flag:3
@@ -474,7 +474,7 @@ export class RepairApplyPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?reject",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:3},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?reject",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:3},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"驳回成功！"
@@ -501,7 +501,7 @@ export class RepairApplyPage {
     if (detail.djzt == 2){
       url = "lhd/app/rewriteDevJWXGLQRController.do?reAttest"
     }
-    this.httpService.postData(this.httpService.getUrl2()+url,{dataobj:JSON.stringify([detail])},data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+url,{dataobj:JSON.stringify([detail])},data=>{
       console.log(data)
       let alertCtrl = this.alertCtrl.create({
         title:"上报成功！"
@@ -548,7 +548,7 @@ export class RepairApplyPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLQRController.do?pass",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:5},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLQRController.do?pass",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:5},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"通过成功！"
@@ -594,7 +594,7 @@ export class RepairApplyPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLQRController.do?reject",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:5},data=>{
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLQRController.do?reject",{dataobj:JSON.stringify([detail]),yj:e.reason,flag:5},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"驳回成功！"
@@ -632,7 +632,7 @@ export class RepairApplyPage {
     let url,body;
     url = this.listUrl;
     body = {page:this.page,rows:this.pageSize,funccode:this.funccode};
-    this.httpService.postData(this.httpService.getUrl2()+url,body,data=>{
+    this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
       console.log(data)
       for (let i in data.obj.rows){
         data.obj.rows[i]["djztName"] = ConfigProvider.djztName(data.obj.rows[i]["djzt"])

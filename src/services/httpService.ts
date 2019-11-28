@@ -88,8 +88,75 @@ export class HttpService {
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
+    return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
+      (res)=>{
+        if (isLoading){
+          loading.dismiss();
+        }
+        if(successCallback){
+          if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+            successCallback(res);
+          }else{
+            if (errorCallback){
+              errorCallback(res['msg']);
+            }
+            else {
+              this.errorCallback(res['msg']);
+            }
+          }
+        }
+      },(err)=>{
+        if (isLoading){
+          loading.dismiss();
+        }
+        let errMsg = "网络通信异常";
+        switch (err.status) {
+          case 401:
+            errMsg = "";
+            //
+            if (this.storageService.read("loginDepartName")){
+              this.postData(this.getUrl()+"appLoginController/login.do",
+                {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                  this.postData(url,body,successCallback,isLoading,errorCallback)
+                },true)
+              //PageUtil.pages["mine"].backToLoginPage();
+              //
+            }
+            break;
+          case 404:
+            errMsg = '抱歉，后台服务找不到对应接口';
+            break;
+          case 0:
+            errMsg = '网络无法连接';
+          default:
+            break;
+        }
+        if (errMsg!=""){
+          if (errorCallback){
+            errorCallback(errMsg);
+          }
+          else {
+            this.errorCallback(errMsg);
+          }
+        }
+      }
+    );
+  };
+  public postData2 (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      // duration:5000
+    });
+    if (isLoading){
+      loading.present();
+    }
+    var headers = new Headers();
+    headers.append('Content-Type','application/x-www-form-urlencoded');
+    let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (this.storageService.read("token"))
       body.token = this.storageService.read("token");
+    if (this.storageService.read("loginDepartCode"))
+      body.departCode = this.storageService.read("loginDepartCode");
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
       (res)=>{
         if (isLoading){

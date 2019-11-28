@@ -37,7 +37,7 @@ export class RepairBjAlertPage{
       this.data = this.navParams.get("data");
       this.filterData = JSON.parse(JSON.stringify(this.data));
     }else {
-      this.httpService.postData(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", {bjcj:1}, (data)=> {
+      this.httpService.postData2(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", {bjcj:1}, (data)=> {
         this.data = data.obj;
         this.filterData = JSON.parse(JSON.stringify(this.data));
       },true);
@@ -95,7 +95,7 @@ export class RepairBjAlertPage{
     }else if (this.searchSelect=="bjbm"){
       body={bjbm:"%"+this.searchValue+"%"}
     }
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", body, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", body, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
     },true);
@@ -116,7 +116,7 @@ export class RepairBjAlertPage{
   goTosj(){
     let url = "lhd/common/sparepartCatalogController.do?findCodeUp";
     let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
-    this.httpService.postData(this.httpService.getUrl2() + url, bodyJson, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
     },true);
@@ -125,7 +125,7 @@ export class RepairBjAlertPage{
     // this.checkedData
     let url = "lhd/common/sparepartCatalogController.do?findCodeDown";
     let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
-    this.httpService.postData(this.httpService.getUrl2() + url, bodyJson, (data)=> {
+    this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
     },true);

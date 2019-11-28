@@ -86,7 +86,7 @@ export class RepairSearchFilterAlertPage{
   goToPost(){
     let body = {};
     body[this.searchSelect] = this.searchValue;
-    this.httpService.postData(this.httpService.getUrl2()+this.url,body,(data)=>{
+    this.httpService.postData2(this.httpService.getUrl2()+this.url,body,(data)=>{
       let temp = data.obj.rows;
       for (let i in temp){
         temp[i]["djztName"] = ConfigProvider.djztName(temp[i]["djzt"])
@@ -120,7 +120,7 @@ export class RepairSearchFilterAlertPage{
     body[this.searchSelect] = this.searchValue;
     body["page"] = this.page;
     body["rows"] = 20;
-    this.httpService.postData(this.httpService.getUrl2() + this.url, body, data => {
+    this.httpService.postData2(this.httpService.getUrl2() + this.url, body, data => {
       if (!data.obj.rows[0]) {
         this.isNewSearch = false;
         if (this.page > 1) {

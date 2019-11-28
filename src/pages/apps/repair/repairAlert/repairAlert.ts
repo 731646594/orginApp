@@ -102,7 +102,7 @@ export class RepairAlertPage{
   }
   goToPost(url,bodyJson){
     this.page = 1;
-    this.httpService.postData(this.httpService.getUrl2() + url, {dataobj:JSON.stringify(bodyJson),page:this.page,rows:this.pageSize},
+    this.httpService.postData2(this.httpService.getUrl2() + url, {dataobj:JSON.stringify(bodyJson),page:this.page,rows:this.pageSize},
       (data)=>{
         let rows = data.obj.rows;
         this.filterData = [];
@@ -118,7 +118,7 @@ export class RepairAlertPage{
   }
   getMore() {
     this.page++;
-    this.httpService.postData(this.httpService.getUrl2() + this.url, {dataobj:JSON.stringify(this.body),page:this.page,rows:this.pageSize}, data => {
+    this.httpService.postData2(this.httpService.getUrl2() + this.url, {dataobj:JSON.stringify(this.body),page:this.page,rows:this.pageSize}, data => {
       if (!data.obj.rows[0]) {
         this.isNewSearch = false;
         if (this.page > 1) {

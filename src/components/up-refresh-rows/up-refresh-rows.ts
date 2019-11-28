@@ -30,7 +30,7 @@ export class UpRefreshRowsComponent {
   public getMore(infiniteScroll, loading?: boolean) {
     this.page++;
     this.body[this.pageKey] = this.page;
-    this.httpService.postData(this.httpService.getUrl2() + this.url, this.body, data => {
+    this.httpService.postData2(this.httpService.getUrl2() + this.url, this.body, data => {
       if (!data.obj.rows[0]) {
         this.isNewSearch = false;
         if (this.page > 1) {

@@ -52,7 +52,7 @@ export class RepairApplyAddPage {
     this.invoice["djly"] = 2;
     if(this.navParams.get("data")){
       this.invoice = this.navParams.get("data");
-      this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
+      this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
         let temp = data.obj;
         temp.djFormData["djztName"] = ConfigProvider.djztName(temp.djFormData["djzt"]);
         this.invoice = temp.djFormData;
@@ -84,7 +84,7 @@ export class RepairApplyAddPage {
                 alertCtrl.present();
                 return false;
               }
-              that.httpService.postData(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId:that.listBase64[id.slice(1)].attachId}, (data)=>{
+              that.httpService.postData2(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId:that.listBase64[id.slice(1)].attachId}, (data)=>{
                 node.removeChild(div);
                 that.listBase64.splice(parseInt(id.slice(1)), 1);
               },true)
@@ -249,7 +249,7 @@ export class RepairApplyAddPage {
               return false;
             }
             if (this.navParams.get("data")){
-              this.httpService.postData(this.httpService.getUrl2() + "/lhd/app/devRepairController.do?addAttach", {wxdh:this.invoice["wxdh"],base64:base64Image}, (data)=>{
+              this.httpService.postData2(this.httpService.getUrl2() + "/lhd/app/devRepairController.do?addAttach", {wxdh:this.invoice["wxdh"],base64:base64Image}, (data)=>{
                 node.appendChild(div);
                 this.listBase64.push(base64Image);
                 let attachId = data.obj;
@@ -270,7 +270,7 @@ export class RepairApplyAddPage {
                       alertCtrl.present();
                       return false;
                     }
-                    that.httpService.postData(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId:attachId}, (data)=>{
+                    that.httpService.postData2(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId:attachId}, (data)=>{
                       node.removeChild(div);
                       that.listBase64.splice(parseInt(id.slice(1)), 1);
                     },true)
@@ -368,7 +368,7 @@ export class RepairApplyAddPage {
                 return false;
               }
               if (isUrl) {
-                that.httpService.postData(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId: that.listBase64[id.slice(1)].attachId}, (data) => {
+                that.httpService.postData2(that.httpService.getUrl2() + "lhd/app/devRepairController.do?deleteAttach", {attachId: that.listBase64[id.slice(1)].attachId}, (data) => {
                   node.removeChild(div);
                   that.listBase64.splice(parseInt(id.slice(1)), 1);
                 }, true)
@@ -532,7 +532,7 @@ export class RepairApplyAddPage {
     }
     body["flag"] = 1;
     console.log(body);
-    this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
       });
