@@ -11,13 +11,13 @@ export class HttpService {
   constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController){}
 
   public getUrl2(){
-    let url=this.storageService.read("serverUrl2");
-    return "http://192.168.0.233:8081/EquipmentManager/"
+    let url=this.storageService.read("systemUrl");
+    return url
   }
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
-      //李霏
+      //98
       this.setUrl("http","192.168.0.98","8088","plamassets");
       return "http://192.168.0.98:8088/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
@@ -89,9 +89,7 @@ export class HttpService {
     headers.append('Content-Type','application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (this.storageService.read("token"))
-      body.token = this.storageService.read("token")
-    if (this.storageService.read("loginDepartCode"))
-      body.departCode = this.storageService.read("loginDepartCode")
+      body.token = this.storageService.read("token");
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
       (res)=>{
         if (isLoading){
