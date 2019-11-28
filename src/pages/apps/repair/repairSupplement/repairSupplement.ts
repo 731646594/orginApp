@@ -563,6 +563,7 @@ export class RepairSupplementPage {
       body["csxxData"]=JSON.stringify(this.data);
     }
     console.log(body);
+    body["flag"] = 2;
     this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"

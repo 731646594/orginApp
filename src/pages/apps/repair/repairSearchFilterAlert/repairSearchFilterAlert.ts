@@ -5,14 +5,15 @@ import {
 } from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
+import * as $ from 'jquery';
 import {ConfigProvider} from "../../../../services/config";
 @Component({
-  selector: 'page-repairBjAlert',
-  templateUrl: 'repairBjAlert.html'
+  selector: 'page-repairSearchFilterAlert',
+  templateUrl: 'repairSearchFilterAlert.html'
 })
-export class RepairBjAlertPage{
+export class RepairSearchFilterAlertPage{
   data;
-  filterData;
+  filterData=[];
   item;
   checkedData = null;
   searchValue = "";
@@ -20,8 +21,8 @@ export class RepairBjAlertPage{
   searchSelect;
   displayIndex;
   isNewSearch = true;
-  upperButton = false;
-  lowerButton = true;
+  url = "";
+  page = 1;
   constructor(
     public storageService?: StorageService,
     public events?: Events,
@@ -33,21 +34,23 @@ export class RepairBjAlertPage{
     public navCtrl?: NavController,
     public navParams?: NavParams,
     public viewCtrl?:ViewController) {
-    if (this.navParams.get("data").length>0){
-      this.data = this.navParams.get("data");
-      this.filterData = JSON.parse(JSON.stringify(this.data));
-    }else {
-      this.httpService.postData(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", {bjcj:1}, (data)=> {
-        this.data = data.obj;
-        this.filterData = JSON.parse(JSON.stringify(this.data));
-      },true);
-    }
+    this.data = this.navParams.get('data');
     this.searchCon = this.navParams.get("content").searchCon;
     this.searchSelect = this.navParams.get("content").searchSelect;
+    if(this.searchSelect == "complexName"){
+      this.isNewSearch = false;
+    }
+    this.url = this.navParams.get("content").url;
     this.item = this.navParams.get("content").item;
+    this.filterData = JSON.parse(JSON.stringify(this.data));
   }
   ionViewDidEnter(){
-
+    let div = $(".contentBox")[2];
+    div.addEventListener('scroll',(e)=>{
+      if((div.scrollHeight-div.scrollTop==div.clientHeight)&&this.isNewSearch){
+        this.getMore();
+      }
+    })
   }
   back(){
     let modelData: string = '-1';
@@ -65,14 +68,6 @@ export class RepairBjAlertPage{
     }
     this.filterData[index]["checkedIcon"] = true;
     this.checkedData = this.filterData[index];
-    this.upperButton = true;
-    this.lowerButton = true;
-    if (this.checkedData.bjcj==1){
-      this.upperButton = false;
-    }
-    if (this.checkedData.sfmx==1){
-      this.lowerButton = false;
-    }
   }
   displayContent(index){
     let content = document.getElementsByClassName("disContentAlertPage");
@@ -90,14 +85,20 @@ export class RepairBjAlertPage{
   }
   goToPost(){
     let body = {};
-    if (this.searchSelect=="bjmc"){
-      body={bjmc:this.searchValue+"%"}
-    }else if (this.searchSelect=="bjbm"){
-      body={bjbm:"%"+this.searchValue+"%"}
-    }
-    this.httpService.postData(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", body, (data)=> {
-      this.data = data.obj;
-      this.filterData = JSON.parse(JSON.stringify(this.data));
+    body[this.searchSelect] = this.searchValue;
+    this.httpService.postData(this.httpService.getUrl2()+this.url,body,(data)=>{
+      let temp = data.obj.rows;
+      for (let i in temp){
+        temp[i]["djztName"] = ConfigProvider.djztName(temp[i]["djzt"])
+      }
+      this.page = 1;
+      let div = $(".contentBox")[2];
+      this.filterData = [];
+      if (temp[0]){
+        div.scrollTop = 0;
+        this.filterData = temp;
+        this.isNewSearch = true;
+      }
     },true);
   }
   changeSearchSelect(value){
@@ -113,27 +114,37 @@ export class RepairBjAlertPage{
     }
     this.goToPost()
   }
-  goTosj(){
-    let url = "lhd/common/sparepartCatalogController.do?findCodeUp";
-    let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
-    this.httpService.postData(this.httpService.getUrl2() + url, bodyJson, (data)=> {
-      this.data = data.obj;
-      this.filterData = JSON.parse(JSON.stringify(this.data));
-    },true);
-  }
-  goToxj(){
-    // this.checkedData
-    let url = "lhd/common/sparepartCatalogController.do?findCodeDown";
-    let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
-    this.httpService.postData(this.httpService.getUrl2() + url, bodyJson, (data)=> {
-      this.data = data.obj;
-      this.filterData = JSON.parse(JSON.stringify(this.data));
-    },true);
+  getMore() {
+    this.page++;
+    let body = {};
+    body[this.searchSelect] = this.searchValue;
+    body["page"] = this.page;
+    body["rows"] = 20;
+    this.httpService.postData(this.httpService.getUrl2() + this.url, body, data => {
+      if (!data.obj.rows[0]) {
+        this.isNewSearch = false;
+        if (this.page > 1) {
+          let toast = this.toastCtrl.create({
+            message: "这已经是最后一页了",
+            duration: 2000,
+          });
+          toast.present();
+        }
+        return false;
+
+      } else {
+        let temp = data.obj.rows;
+        for (let i in temp){
+          temp[i]["djztName"] = ConfigProvider.djztName(temp[i]["djzt"])
+        }
+        this.filterData = this.filterData.concat(temp);
+      }
+    }, true)
   }
   returnSelect(){
     if (!this.checkedData){
       let alertCtrl = this.alertCtrl.create({
-        title:"请选择备件"
+        title:"请选择"
       });
       alertCtrl.present();
       return false

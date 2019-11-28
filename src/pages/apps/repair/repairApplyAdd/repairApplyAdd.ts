@@ -37,7 +37,7 @@ export class RepairApplyAddPage {
     this.invoice["djztName"] = "新增";
     this.invoice["wxdh"] = "自动生成";
     let date = new Date();
-    this.invoice["sqsj"] = this.datePipe.transform(date,"yyyy-MM-dd hh-mm");
+    this.invoice["sqsj"] = this.datePipe.transform(date,"yyyy-MM-dd hh:mm:ss");
     this.invoice["sqrmc"] = this.storageService.read("loginUserName");
     this.invoice["sqrbm"] = this.storageService.read("loginUserCode");
     let str = JSON.stringify(this.storageService.read("loginDepartLongName"));
@@ -530,6 +530,7 @@ export class RepairApplyAddPage {
       }
       body["listBase64"] = JSON.stringify(this.listBase64);
     }
+    body["flag"] = 1;
     console.log(body);
     this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({

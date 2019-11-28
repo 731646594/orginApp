@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      单据验收审批
+      单据查询
     </ion-title>
   </ion-navbar>
   <ion-toolbar class="headToolbar">
@@ -25,7 +25,7 @@
         <div *ngIf="item.itemType=='label'">
           <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
         </div>
-        <div *ngIf="item.itemType=='textarea-readonly'" class="whiteBackground">
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
           <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
           <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
         </div>
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div *ngSwitchCase="'supplier'">
+    <div class="detailTab" *ngSwitchCase="'supplier'">
       <div *ngFor="let item of pageData.pageItem[2];">
         <div *ngFor="let detail of data;let i = index">
           <div class="callContentBox detailCallContentBox">
@@ -109,11 +109,3 @@
     </div>
   </div>
 </ion-content>
-<footer class="formFooter" padding>
-  <button class="formFooterButton" (click)="passForm()">
-    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>通过
-  </button>
-  <button class="formFooterButton" (click)="rejectForm()">
-    <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>驳回
-  </button>
-</footer>

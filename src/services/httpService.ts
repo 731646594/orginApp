@@ -10,9 +10,16 @@ export class HttpService {
 
   constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController){}
 
+  public getUrl2(){
+    let url=this.storageService.read("serverUrl2");
+    return "http://192.168.0.233:8081/EquipmentManager/"
+  }
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
+      //李霏
+      this.setUrl("http","192.168.0.98","8088","plamassets");
+      return "http://192.168.0.98:8088/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
@@ -32,8 +39,8 @@ export class HttpService {
       // this.setUrl("http","127.0.0.1","10401","plamassets");
       // return "http://127.0.0.1:10401/plamassets/mobile/";
       //天津
-      this.setUrl("http","210.12.194.121","9080","plamassets");
-      return "http://210.12.194.121:9080/plamassets/mobile/"
+      // this.setUrl("http","210.12.194.121","9080","plamassets");
+      // return "http://210.12.194.121:9080/plamassets/mobile/"
       //浙江油田petrochina.zjytcwc.jxkh
       // this.setUrl("http","127.0.0.1","10610","plamassets");
       // return "http://127.0.0.1:10610/plamassets/mobile/"
@@ -81,13 +88,17 @@ export class HttpService {
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
+    if (this.storageService.read("token"))
+      body.token = this.storageService.read("token")
+    if (this.storageService.read("loginDepartCode"))
+      body.departCode = this.storageService.read("loginDepartCode")
     return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
       (res)=>{
         if (isLoading){
           loading.dismiss();
         }
         if(successCallback){
-          if(res["success"]=="true"||res["success"]=="success"){
+          if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
             successCallback(res);
           }else{
             if (errorCallback){

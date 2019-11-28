@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox">
+    <div>
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [nec]="item.nec" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
+        </div>
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [nec]="item.nec" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue,item.itemValueName)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='filter'">
+          <ion-item class="inputItem" (click)="showDictionaries(item.itemValue)">
+            <ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>
+            <ion-label class="labelNormal">{{invoice[item.itemValue]}}</ion-label>
+          </ion-item>
+        </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea class="formTextarea" [(ngModel)]="invoice[item.itemValue]" [placeholder]="'请输入'+item.itemName" (focus)="hideFooter()" (blur)="showFooter()"></textarea>
+        </div>
+        <div *ngIf="item.itemType=='textarea-readonly'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
+        </div>
+        <div *ngIf="item.itemType=='photo'">
+          <ion-item class="inputItem imgItem">
+            <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>
+          </ion-item>
+          <div class="imgBox">
+            <div id="imgBox">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="showMaintenanceStandard()">
+    <ion-icon class="formFooterIcon" name="document"></ion-icon><br>查看保养标准
+  </button>
+  <button class="formFooterButton" (click)="dispatchForm()" *ngIf="pageName == '保养外委派单'&&invoice['djztName']=='未派单'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起派单
+  </button>
+  <button class="formFooterButton" (click)="enterForm()" *ngIf="pageName == '开始保养'&&invoice['checkDateName']=='未保养'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>开始保养
+  </button>
+  <button class="formFooterButton" (click)="pickPhoto()" *ngIf="pageName == '保养办结'">
+    <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
+  </button>
+  <button class="formFooterButton" (click)="finishForm()" *ngIf="pageName == '保养办结'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保养办结
+  </button>
+</footer>

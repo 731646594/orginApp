@@ -1,0 +1,29 @@
+page-repairApply{
+  .scroll-content {
+    background-color: rgb(246, 246, 246) !important;
+  }
+  .callContent{
+    width: 100%;
+    max-width: 100%;
+  }
+  .contentBox{
+    margin-bottom: 60px;
+  }
+  .buttonBox{
+    display: flex;
+    width: 100%;
+    .button-ios{
+      padding: 0 0.5em;
+      height: 30px;
+      font-size: 1.3rem;
+      width: 100%;
+      margin:0 5px;
+    }
+    .button-ios:first-child{
+      margin-left: 0;
+    }
+    .button-ios:last-child{
+      margin-right: 0;
+    }
+  }
+}

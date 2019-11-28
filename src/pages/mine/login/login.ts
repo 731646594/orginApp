@@ -62,6 +62,7 @@ export class LoginPage {
         this.storageService.write("loginPassWord",this.password);
         this.storageService.write("loginDepartList",this.departList);
         this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
+        this.storageService.write("token",loginInfo[4].token);
         this.depart = this.departList[0];
       }
     },true)

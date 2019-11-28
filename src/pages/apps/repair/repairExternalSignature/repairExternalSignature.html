@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>油站经理签字</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div>
+    <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
+  </div>
+  <div>
+    <img [src]="signatureImage" *ngIf="signatureImage">
+  </div>
+</ion-content>
+<footer class="gasFooter" padding *ngIf="!isOnfocus">
+  <button class="gasFooterButton" (click)="drawClear()">
+    <ion-icon class="gasFooterIcon" name="trash"></ion-icon><br>清除
+  </button>
+  <button class="gasFooterButton" (click)="drawComplete()">
+    <ion-icon class="gasFooterIcon" name="checkmark-circle"></ion-icon><br>确认
+  </button>
+</footer>

@@ -13,6 +13,7 @@ import { DateNormalComponent } from './date-normal/date-normal';
 import { CardSelectInputComponent } from './card-select-input/card-select-input';
 import { LabelRightShowComponent } from './label-right-show/label-right-show';
 import { SelectFilterNecComponent } from './select-filter-nec/select-filter-nec';
+import {UpRefreshRowsComponent} from "./up-refresh-rows/up-refresh-rows";
 @NgModule({
 	declarations: [SelectFilterComponent,
     InputNormalComponent,
@@ -26,7 +27,9 @@ import { SelectFilterNecComponent } from './select-filter-nec/select-filter-nec'
     DateNormalComponent,
     CardSelectInputComponent,
     LabelRightShowComponent,
-    SelectFilterNecComponent],
+    SelectFilterNecComponent,
+    UpRefreshRowsComponent,
+  ],
 	imports: [IonicModule],
 	exports: [SelectFilterComponent,
     InputNormalComponent,
@@ -40,6 +43,8 @@ import { SelectFilterNecComponent } from './select-filter-nec/select-filter-nec'
     DateNormalComponent,
     CardSelectInputComponent,
     LabelRightShowComponent,
-    SelectFilterNecComponent]
+    SelectFilterNecComponent,
+    UpRefreshRowsComponent,
+  ]
 })
 export class ComponentsModule {}

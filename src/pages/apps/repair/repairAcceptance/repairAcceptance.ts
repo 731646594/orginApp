@@ -30,8 +30,6 @@ export class RepairAcceptancePage {
   listBase64=[];
   insertCspj = [];
   insertCspjIndex= "";
-  checkedData;
-  lightStar = ["star-outline","star-outline","star-outline","star-outline","star-outline"]
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService, public datePipe?: DatePipe, public actionSheetCtrl?: ActionSheetController,
@@ -74,7 +72,7 @@ export class RepairAcceptancePage {
         let div = document.createElement("div");
         div.className = "imgInclusion";
         div.innerHTML +=
-          "<img id=\"i" + this.i + "\" name=\"i" + this.i + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
+          "<img id=\"i" + this.i + "\" name=\"i" + this.i + "\" class=\"imgShow\" src=\"" + base64Image + "\">"
         node.appendChild(div);
         document.getElementById("i" + this.i).onclick = function () {
           try {
@@ -251,7 +249,7 @@ export class RepairAcceptancePage {
           let div = document.createElement("div");
           div.className = "imgInclusion";
           div.innerHTML +=
-            "<img id=\"i" + j + "\" name=\"i" + j + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
+            "<img id=\"i" + j + "\" name=\"i" + j + "\" class=\"imgShow\" src=\"" + base64Image + "\">"
             node.appendChild(div);
           document.getElementById("i" + j).onclick = function () {
             try {
@@ -312,6 +310,7 @@ export class RepairAcceptancePage {
       body["insertCspj"]=JSON.stringify(temp);
     }
     console.log(body);
+    body["flag"] = 4;
     this.httpService.postData(this.httpService.getUrl2()+"lhd/app/devRepairController.do?saveGrid",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"

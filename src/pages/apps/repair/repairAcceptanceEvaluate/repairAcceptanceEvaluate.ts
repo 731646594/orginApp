@@ -18,8 +18,6 @@ export class RepairAcceptanceEvaluatePage {
   pageData;
   insertCspjData = [];
   insertCspjModal = {};
-  insertCspjIndex= 0;
-  checkedData;
   lightStar = [];
 
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,

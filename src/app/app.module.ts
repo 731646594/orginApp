@@ -62,6 +62,25 @@ import {ApprovalPage} from "../pages/commonStyle/approval/approval";
 import {InventoryPage} from "../pages/commonStyle/inventory/inventory";
 import {DatePipe} from "@angular/common";
 import {Network} from "@ionic-native/network";
+import {RepairApplyPage} from "../pages/apps/repair/repairApply/repairApply";
+import {RepairApplyAddPage} from "../pages/apps/repair/repairApplyAdd/repairApplyAdd";
+import {RepairAlertPage} from "../pages/apps/repair/repairAlert/repairAlert";
+import {RepairSupplementPage} from "../pages/apps/repair/repairSupplement/repairSupplement";
+import {RepairSupplementAlertPage} from "../pages/apps/repair/repairSupplementAlert/repairSupplementAlert";
+import {RepairBjAlertPage} from "../pages/apps/repair/repairBjAlert/repairBjAlert";
+import {RepairGysAlertPage} from "../pages/apps/repair/repairGysAlert/repairGysAlert";
+import {RepairApprovalPage} from "../pages/apps/repair/repairApproval/repairApproval";
+import {RepairAcceptancePage} from "../pages/apps/repair/repairAcceptance/repairAcceptance";
+import {RepairAcceptanceApprovalPage} from "../pages/apps/repair/repairAcceptanceApproval/repairAcceptanceApproval";
+import {RepairAcceptanceEvaluatePage} from "../pages/apps/repair/repairAcceptanceEvaluate/repairAcceptanceEvaluate";
+import {RepairSearchPage} from "../pages/apps/repair/repairSearch/repairSearch";
+import {RepairSearchAlertPage} from "../pages/apps/repair/repairSearchAlert/repairSearchAlert";
+import {RepairSearchFilterAlertPage} from "../pages/apps/repair/repairSearchFilterAlert/repairSearchFilterAlert";
+import {RepairExternalPage} from '../pages/apps/repair/repairExternal/repairExternal';
+import {RepairExternalSignaturePage} from "../pages/apps/repair/repairExternalSignature/repairExternalSignature";
+import {MaintenancePage} from "../pages/apps/maintenance/maintenance";
+import {MaintenanceAlertPage} from "../pages/apps/maintenance/maintenanceAlert/maintenanceAlert";
+import {FileOpener} from "@ionic-native/file-opener";
 
 @NgModule({
   declarations: [
@@ -107,7 +126,25 @@ import {Network} from "@ionic-native/network";
     QueryPage,
     QueryDetailPage,
     ApprovalPage,
-    InventoryPage
+    InventoryPage,
+    RepairApplyPage,
+    RepairApplyAddPage,
+    RepairAlertPage,
+    RepairSupplementPage,
+    RepairSupplementAlertPage,
+    RepairBjAlertPage,
+    RepairGysAlertPage,
+    RepairApprovalPage,
+    RepairAcceptancePage,
+    RepairAcceptanceApprovalPage,
+    RepairAcceptanceEvaluatePage,
+    RepairSearchPage,
+    RepairSearchAlertPage,
+    RepairSearchFilterAlertPage,
+    RepairExternalPage,
+    RepairExternalSignaturePage,
+    MaintenancePage,
+    MaintenanceAlertPage
   ],
   imports: [
     BrowserModule,
@@ -171,7 +208,25 @@ import {Network} from "@ionic-native/network";
     QueryPage,
     QueryDetailPage,
     ApprovalPage,
-    InventoryPage
+    InventoryPage,
+    RepairApplyPage,
+    RepairApplyAddPage,
+    RepairAlertPage,
+    RepairSupplementPage,
+    RepairSupplementAlertPage,
+    RepairBjAlertPage,
+    RepairGysAlertPage,
+    RepairApprovalPage,
+    RepairAcceptancePage,
+    RepairAcceptanceApprovalPage,
+    RepairAcceptanceEvaluatePage,
+    RepairSearchPage,
+    RepairSearchAlertPage,
+    RepairSearchFilterAlertPage,
+    RepairExternalPage,
+    RepairExternalSignaturePage,
+    MaintenancePage,
+    MaintenanceAlertPage
   ],
   providers: [
     StatusBar,
@@ -181,6 +236,7 @@ import {Network} from "@ionic-native/network";
     BarcodeScanner,
     Camera,
     File,
+    FileOpener,
     FileTransfer,
     FileTransferObject,
     HttpService,

@@ -1,19 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      单据验收审批
+      {{pageName}}
     </ion-title>
   </ion-navbar>
-  <ion-toolbar class="headToolbar">
+  <ion-toolbar *ngIf="pageName=='维修办结'" class="headToolbar">
     <ion-segment [(ngModel)]="shape" (ionChange)="changeTab()">
       <ion-segment-button value="brief" >
         {{pageData.segmentName[0]}}
       </ion-segment-button>
       <ion-segment-button value="detailed" >
         {{pageData.segmentName[1]}}
-      </ion-segment-button>
-      <ion-segment-button *ngIf="pageData.segmentName[2]" value="supplier" >
-        {{pageData.segmentName[2]}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -22,18 +19,49 @@
   <div class="contentBox" [ngSwitch]="shape">
     <div *ngSwitchCase="'brief'">
       <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [nec]="item.nec" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
+        </div>
         <div *ngIf="item.itemType=='label'">
           <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [nec]="item.nec" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue,item.itemValueName)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='filter'">
+          <ion-item class="inputItem" (click)="showDictionaries(item.itemValue)">
+            <ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>
+            <ion-label class="labelNormal">{{invoice[item.itemValue]}}</ion-label>
+          </ion-item>
+        </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea class="formTextarea" [(ngModel)]="invoice[item.itemValue]" (focus)="hideFooter()" (blur)="showFooter()"></textarea>
         </div>
         <div *ngIf="item.itemType=='textarea-readonly'" class="whiteBackground">
           <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
           <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
         </div>
+        <div *ngIf="item.itemType=='sign'">
+          <ion-item class="inputItem imgItem">
+            <ion-label><span class="star requireLabel">*</span>油站经理签字:</ion-label>
+          </ion-item>
+          <div id="handoverSign" class="addIcon" *ngIf="signatureImage == ''">
+            <ion-icon name="add" (click)="signature()"></ion-icon>
+          </div>
+          <div class="imgBox" *ngIf="signatureImage != ''">
+            <span class="star">*</span>
+            <div class="imgInclusion">
+              <img class="imgShow" (click)="showSign()" src="{{signatureImage}}">
+              <img id="signDelete1" class="imgDeleteButton" (click)="deleteImg()" src='assets/imgs/delete.png'>
+            </div>
+          </div>
+        </div>
       </div>
-      <ion-item class="inputItem imgItem" *ngIf="invoice.sfscfj == 1">
+      <ion-item class="inputItem imgItem" *ngIf="this.invoice.sfscfj == 1">
         <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>
       </ion-item>
-      <div class="imgBox" *ngIf="invoice.sfscfj == 1">
+      <div class="imgBox" *ngIf="this.invoice.sfscfj == 1">
         <div id="imgBox">
         </div>
       </div>
@@ -80,40 +108,16 @@
         </div>
       </div>
     </div>
-    <div *ngSwitchCase="'supplier'">
-      <div *ngFor="let item of pageData.pageItem[2];">
-        <div *ngFor="let detail of data;let i = index">
-          <div class="callContentBox detailCallContentBox">
-            <div class="callContentMiniBox">
-              <ion-list class="callContent">
-                <ion-list class="callList" (click)="displayContent(i)">
-                  <div *ngFor="let parent of item.card.cardParent">
-                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
-                  </div>
-                </ion-list>
-              </ion-list>
-              <div class="cardButton" item-end  (click)="gotoEvaluate(i)">
-                <button ion-button small>评价</button>
-              </div>
-            </div>
-            <ion-content *ngIf="item.card.cardChild" class="callContent disContent supplierContent">
-              <ion-list class="callList">
-                <div *ngFor="let child of item.card.cardChild">
-                  <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
-                </div>
-              </ion-list>
-            </ion-content>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </ion-content>
-<footer class="formFooter" padding>
-  <button class="formFooterButton" (click)="passForm()">
-    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>通过
+<footer class="formFooter" padding *ngIf="!isFocus&&isShowFooter">
+  <button class="formFooterButton" (click)="dispatchForm()" *ngIf="pageName == '维修外委派单'&&invoice['djzt']==9">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起派单
   </button>
-  <button class="formFooterButton" (click)="rejectForm()">
-    <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>驳回
+  <button class="formFooterButton" (click)="enterForm()" *ngIf="pageName == '开始维修'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起进场
+  </button>
+  <button class="formFooterButton" (click)="saveForm()" *ngIf="pageName == '维修办结'">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存单据
   </button>
 </footer>

@@ -10,13 +10,13 @@ import {Camera} from "@ionic-native/camera";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 import {File} from "@ionic-native/file";
 import {ConfigProvider} from "../../../../services/config";
-import * as $ from "jquery";
+import {RepairAcceptanceEvaluatePage} from "../repairAcceptanceEvaluate/repairAcceptanceEvaluate";
 let that;
 @Component({
-  selector: 'page-repairApproval',
-  templateUrl: 'repairApproval.html'
+  selector: 'page-repairSearch',
+  templateUrl: 'repairSearch.html'
 })
-export class RepairApprovalPage {
+export class RepairSearchPage {
   shape = "brief";
   isFocus = false;
   pageData;
@@ -27,6 +27,7 @@ export class RepairApprovalPage {
   displayIndex;
   tableData=[];
   listBase64=[];
+  insertCspj = [];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService, public datePipe?: DatePipe, public actionSheetCtrl?: ActionSheetController,
@@ -47,11 +48,17 @@ export class RepairApprovalPage {
         temp.djFormData["wsyysze"] = temp.ysmx["wsyysze"];
       }
       this.invoice = temp.djFormData;
-      $(".inputSpec").eq(0).children("input").val(this.invoice["rgfwf"]);
-      $(".inputSpec").eq(1).children("input").val(this.invoice["wxbjjehj"]);
-      // this.invoice["ygwxzz"] = this.invoice["rgfwf"] + this.invoice["wxbjjehj"];
+      if(temp.cspj){
+        this.insertCspj=temp.cspj;
+      }
+      this.invoice["ysrmc"] = this.storageService.read("loginUserName");
+      let date = new Date();
+      this.invoice["wxjsrq"] = this.datePipe.transform(date,"yyyy-MM-dd");
+      this.invoice["yssj"] = this.datePipe.transform(date,"yyyy-MM-dd");
       this.detailData = this.detailData.concat(temp.listMainEquip);
-      this.data = this.data.concat(temp.listCsxx);
+      if (temp.listCsxx.length>0){
+        this.data = this.data.concat(temp.listCsxx);
+      }
       for (let i in this.detailData){
         this.getWxHistory(i)
       }
@@ -77,7 +84,7 @@ export class RepairApprovalPage {
 
     },true)
     this.pageData = {
-      segmentName:["单据信息", "主设备"],
+      segmentName:["单据信息", "主设备",""],
       pageItem:[
         [
           {itemName:"维修单号", itemType:"label",itemValue:"wxdh",nec:0},
@@ -89,9 +96,9 @@ export class RepairApprovalPage {
           {itemName:"联系电话", itemType:"label",itemValue:"zfyl8",nec:0},
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
           {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
-          {itemName:"故障描述", itemType:"textarea-readonly",itemValue:"wxms",nec:0},
+          {itemName:"故障描述", itemType:"label",itemValue:"wxms",nec:0},
           {itemName:"单据来源", itemType:"label", itemValue:"djlyName",nec:0},
-          {itemName:"维修预算", itemType:"filter", itemValue:"ysze",nec:1},
+          {itemName:"维修预算", itemType:"label", itemValue:"ysze",nec:0,},
           {itemName:"已占用预算", itemType:"label",itemValue:"yzyysze",nec:0},
           {itemName:"已使用预算", itemType:"label",itemValue:"ysyysze",nec:0},
           {itemName:"未使用预算", itemType:"label", itemValue:"wsyysze",nec:0},
@@ -99,13 +106,13 @@ export class RepairApprovalPage {
           {itemName:"预算类别", itemType:"label",itemValue:"yslbName",nec:0},
           {itemName:"预算单位", itemType:"label", itemValue:"ysdwmc",nec:0},
           {itemName:"预算年度", itemType:"label",itemValue:"ysnd",nec:0},
-          {itemName:"项目名称", itemType:"input",itemValue:"xmmc",nec:1},
-          {itemName:"人工及配件费用", itemType:"input-spec",itemValue:"rgfwf",nec:1},
-          {itemName:"备件", itemType:"filter2",itemValue:"bjmc",nec:1},
-          {itemName:"备件费用", itemType:"input-spec",itemValue:"wxbjjehj",nec:0},
+          {itemName:"项目名称", itemType:"label",itemValue:"xmmc",nec:0},
+          {itemName:"人工及配件费用", itemType:"label",itemValue:"rgfwf",nec:0},
+          {itemName:"备件", itemType:"label",itemValue:"bjmc",nec:0},
+          {itemName:"备件费用", itemType:"label",itemValue:"wxbjjehj",nec:0},
           {itemName:"预估维修总值", itemType:"label",itemValue:"ygwxzz",nec:0},
-          {itemName:"监控防范措施", itemType:"textarea",itemValue:"jkffcs",nec:0},
-          {itemName:"整改措施", itemType:"textarea",itemValue:"zgcs",nec:0},
+          {itemName:"监控防范措施", itemType:"textarea",itemValue:"textarea-readonly",nec:0},
+          {itemName:"整改措施", itemType:"textarea",itemValue:"textarea-readonly",nec:0},
         ],
         [
           {itemType:"card",
@@ -119,8 +126,8 @@ export class RepairApprovalPage {
                 {itemName:"所属单位", itemType:"label",itemValue:"ssdwmc"},
                 {itemName:"资产类型", itemType:"label",itemValue:"sblxmc"},
                 {itemName:"资产类别", itemType:"label",itemValue:"zclbmc"},
-                // {itemName:"资产名称", itemType:"label",itemValue:"zcmc"},
-                // {itemName:"自编码", itemType:"label",itemValue:"zczbm"},
+                // {itemName:"资产名称", itemType:"label",itemValue:"assetsStandard"},
+                // {itemName:"自编码", itemType:"label",itemValue:"licenceNumber"},
                 {itemName:"特种设备", itemType:"label",itemValue:"tssb"},
                 {itemName:"规格型号", itemType:"label",itemValue:"ggxhmc"},
                 {itemName:"历史维修信息",itemType:"label", itemValue:"makeFactory"},
@@ -142,7 +149,7 @@ export class RepairApprovalPage {
             card:{
               cardParent:[
                 {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
-                {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
+                {itemName:"厂商单位名称", itemType:"label",itemValue:"csdwmc"},
               ],
               cardChild:[
                 {itemName:"厂商地址", itemType:"label",itemValue:"csdz"},
@@ -155,9 +162,12 @@ export class RepairApprovalPage {
         ]
       ],
     }
-    if (this.invoice["wxfs"]=="供应商维修"){
-      this.pageData.segmentName =["单据信息", "主设备","供应商"]
+    if (this.invoice["zfyl1"] == "03"||this.invoice["zfyl1"] == "05"){
+      this.pageData.segmentName =["单据信息", "主设备","供应商"];
     }
+  }
+  ionViewDidLoad() {
+
   }
   getWxHistory(i){
     this.httpService.postData(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.detailData[i])}, (data3)=> {
@@ -209,86 +219,9 @@ export class RepairApprovalPage {
       },100)
     }
   }
-  passForm(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"通过",
-      cssClass:"alertMiddle",
-      inputs:[
-        {
-          name:"reason",
-          placeholder:"请输入通过意见",
-        }
-      ],
-      buttons:[
-        {
-          text:"取消",
-        },
-        {
-          text:"确定",
-          handler:(e)=>{
-            if (!e.reason){
-              let alertCtrl1 = this.alertCtrl.create({
-                title:"通过意见不能为空！"
-              });
-              alertCtrl1.present();
-              return false;
-            }else {
-              this.httpService.postData(this.httpService.getUrl2() + "lhd/app/rewriteDevJWXGLSHController.do?pass", {
-                dataobj: JSON.stringify([this.invoice]),
-                yj: e.reason,
-                flag:3
-              }, data => {
-                console.log(data)
-                let alertCtrl = this.alertCtrl.create({
-                  title: "通过成功！"
-                });
-                alertCtrl.present();
-                this.app.getRootNav().pop()
-              }, true)
-            }
-          }
-        }
-      ]
-    })
-    alertCtrl.present();
-  }
-  rejectForm(){
-    let alertCtrl = this.alertCtrl.create({
-      title:"驳回",
-      cssClass:"alertMiddle",
-      inputs:[
-        {
-          name:"reason",
-          placeholder:"请输入驳回意见",
-        }
-      ],
-      buttons:[
-        {
-          text:"取消",
-        },
-        {
-          text:"确定",
-          handler:(e)=>{
-            if (!e.reason){
-              let alertCtrl1 = this.alertCtrl.create({
-                title:"驳回意见不能为空！"
-              });
-              alertCtrl1.present();
-              return false;
-            }else {
-              this.httpService.postData(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLSHController.do?reject",{dataobj:JSON.stringify([this.invoice]),yj:e.reason,flag:3},data=>{
-                console.log(data)
-                let alertCtrl = this.alertCtrl.create({
-                  title:"驳回成功！"
-                });
-                alertCtrl.present();
-                this.app.getRootNav().pop()
-              },true)
-            }
-          }
-        }
-      ]
-    })
-    alertCtrl.present();
+  gotoEvaluate(index){
+    let date = new Date();
+    let dateString = this.datePipe.transform(date,"yyyy-MM-dd");
+    this.app.getRootNav().push(RepairAcceptanceEvaluatePage,{data:this.insertCspj[this.data[index].csxh],modal:""})
   }
 }

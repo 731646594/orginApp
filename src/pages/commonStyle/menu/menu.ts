@@ -22,6 +22,7 @@ import {AllocateQueryPage} from "../../apps/allocate/allocateQuery/allocateQuery
 import {AllocateApprovalPage} from "../../apps/allocate/allocateApproval/allocateApproval";
 import {TransferConfirmationPage} from "../../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
+import {RepairApplyPage} from "../../apps/repair/repairApply/repairApply";
 
 @Component({
   selector: 'page-menu',
@@ -62,7 +63,7 @@ export class MenuPage {
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
-  appChoose(page,params,canIn){
+  appChoose(page,params,canIn,funccode){
     if(canIn=="0"){
       let alertCtrl = this.alertCtrl.create({
         title:"您无权访问该功能！"
@@ -108,6 +109,18 @@ export class MenuPage {
     //51:周检表录入
     //52:交接班录入
     //53:数据上传
+    //61:维修申请
+    //62:维修申请补录
+    //63:维修审批
+    //64:维修验收
+    //65:维修验收审批
+    //66:维修单据查询
+    //67:外委派单
+    //68:外委开始维修
+    //69:外委办结
+    //71:外委派单
+    //72:开始保养
+    //73:保养办结
     let willGoPage = null;
     if(page == 11){
       willGoPage = ScanCodePage;
@@ -171,6 +184,54 @@ export class MenuPage {
     }
     else if(page == 53){
       willGoPage = GasDataUploadPage;
+    }
+    else if(page == 61){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修申请",funccode:funccode};
+    }
+    else if(page == 62){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修申请补录",funccode:funccode};
+    }
+    else if(page == 63){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修审批",funccode:funccode};
+    }
+    else if(page == 64){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修验收",funccode:funccode};
+    }
+    else if(page == 65){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修验收审批",funccode:funccode};
+    }
+    else if(page == 66){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修单据查询",funccode:funccode};
+    }
+    else if(page == 67){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修外委派单",funccode:funccode};
+    }
+    else if(page == 68){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"开始维修",funccode:funccode};
+    }
+    else if(page == 69){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"维修办结",funccode:funccode};
+    }
+    else if(page == 71){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"保养外委派单",funccode:funccode};
+    }
+    else if(page == 72){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"开始保养",funccode:funccode};
+    }
+    else if(page == 73){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"保养办结",funccode:funccode};
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
