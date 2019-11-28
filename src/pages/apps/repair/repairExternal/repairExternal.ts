@@ -45,7 +45,7 @@ export class RepairExternalPage {
     if (this.pageName == "开始维修"||this.pageName == "维修办结"){
       url = "lhd/app/devPeripheryRepairController.do?getPeripheryRepairDetail"
     }
-    this.httpService.postData22(this.httpService.getUrl2()+url,{wxdh:this.invoice["WXDH"],departCode:this.storageService.read("loginDepartCode"),id:this.invoice["ID"]},(data)=> {
+    this.httpService.postData2(this.httpService.getUrl2()+url,{wxdh:this.invoice["WXDH"],departCode:this.storageService.read("loginDepartCode"),id:this.invoice["ID"]},(data)=> {
       console.log(data);
       let temp = data.obj;
       if (this.pageName == "维修办结"){
