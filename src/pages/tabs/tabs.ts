@@ -25,6 +25,8 @@ export class TabsPage {
   jiayouzhan;
   jianweixiu;
   shebeibaoyang;
+  isShowHome = true;
+  isShowOther = true;
   constructor(public storageService:StorageService) {
 
     // PageUtil.pages["tabs"]=this;
@@ -142,11 +144,14 @@ export class TabsPage {
       pageName:"应用",
       pageData:[
         [1,this.pandian,"","资产盘点"],[1,this.baofei,"","报废管理"],[1,this.diaobo,"","调拨管理"],
-        [1,this.tongji,"","统计查询"],[1,this.jianweixiu,"","检维修管理"],[1,this.shebeibaoyang,"","设备保养管理"]
+        [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"],[1,this.jianweixiu,"","检维修管理"],[1,this.shebeibaoyang,"","设备保养管理"]
       ]
     };
     if(this.storageService.read("applyPageData")){
       this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
+      if (this.pageData1.pageData.length==1){
+        this.isShowHome = false
+      }
     }
     this.pageData2 = {
       pageName:"我的",
