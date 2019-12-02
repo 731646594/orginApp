@@ -12,6 +12,8 @@ import { ModifyPasswordPage } from '../pages/mine/modifyPassword/modifyPassword'
 import { ServerSettingPage } from "../pages/mine/serverSetting/serverSetting";
 import { ShowPicturePage } from "../pages/commonStyle/showPicture/showPicture";
 import { ScanCodePage } from "../pages/apps/inventory/scanCode/scanCode";
+import {RFIDScanPage} from "../pages/apps/inventory/RFIDScan/RFIDScan";
+import {RFIDScanListPage} from "../pages/apps/inventory/RFIDScanList/RFIDScanList";
 import { InventoryEntryPage } from "../pages/apps/inventory/inventoryEntry/inventoryEntry";
 import { InventoryQueryPage } from "../pages/apps/inventory/inventoryQuery/inventoryQuery";
 import { InventoryDataUploadPage } from "../pages/apps/inventory/inventoryDataUpload/inventoryDataUpload";
@@ -94,6 +96,8 @@ import {FileOpener} from "@ionic-native/file-opener";
     ServerSettingPage,
     ShowPicturePage,
     ScanCodePage,
+    RFIDScanPage,
+    RFIDScanListPage,
     InventoryEntryPage,
     InventoryQueryPage,
     InventoryDataUploadPage,
@@ -176,6 +180,8 @@ import {FileOpener} from "@ionic-native/file-opener";
     ServerSettingPage,
     ShowPicturePage,
     ScanCodePage,
+    RFIDScanPage,
+    RFIDScanListPage,
     InventoryEntryPage,
     InventoryQueryPage,
     InventoryDataUploadPage,

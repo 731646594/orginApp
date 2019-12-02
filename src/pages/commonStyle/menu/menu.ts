@@ -23,6 +23,7 @@ import {AllocateApprovalPage} from "../../apps/allocate/allocateApproval/allocat
 import {TransferConfirmationPage} from "../../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
 import {RepairApplyPage} from "../../apps/repair/repairApply/repairApply";
+import {RFIDScanPage} from "../../apps/inventory/RFIDScan/RFIDScan";
 
 @Component({
   selector: 'page-menu',
@@ -95,6 +96,7 @@ export class MenuPage {
     //14:本地下载查询
     //15:数据上传
     //16:盘盈录入
+    //17:RFID
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -139,6 +141,9 @@ export class MenuPage {
     }
     else if(page == 16){
       willGoPage = InventoryEntryPage;
+    }
+    else if(page == 17){
+      willGoPage = RFIDScanPage;
     }
     else if(page == 21){
       willGoPage = ScrapApplicationPage;

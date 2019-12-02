@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>RFID标签盘点</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="formInfoBox">
+    <div class="chartBox">
+      <div id="chart1" class="chart"></div>
+    </div>
+    <div class="formInfoInput">
+      <div class="labelInlineBox">
+        <ion-label class="noFlexLabel centerText" (click)="nextPage('scan')">{{"已扫描:"+numList['scan']}}</ion-label>
+      </div>
+      <div class="labelInlineBox" *ngFor="let item of pageItem;">
+        <ion-label class="noFlexLabel centerText" (click)="nextPage(item.itemValue)">{{item.itemName+":"+numList[item.itemValue]}}</ion-label>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<footer class="formFooter" padding>
+  <button class="formFooterButton" (click)="beginScan()">
+    <ion-icon class="formFooterIcon" name="qr-scanner"></ion-icon><br>开始
+  </button>
+  <button class="formFooterButton" (click)="stopScan()">
+    <ion-icon class="formFooterIcon" name="stopwatch"></ion-icon><br>停止
+  </button>
+  <button class="formFooterButton" (click)="cal()">
+    <ion-icon class="formFooterIcon" name="calculator"></ion-icon><br>计算
+  </button>
+</footer>
