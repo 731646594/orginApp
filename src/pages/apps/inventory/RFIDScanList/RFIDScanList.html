@@ -6,8 +6,9 @@
 
 <ion-content>
   <div class="formInfoBox">
-    <div class="formInfoInput">
-
-    </div>
+    <card-normal [cardData]="cardItem" [data]="filterData" (backValue)="getSelectIndex($event)"></card-normal>
+    <ion-infinite-scroll *ngIf="page>-1" (ionInfinite)="getMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>

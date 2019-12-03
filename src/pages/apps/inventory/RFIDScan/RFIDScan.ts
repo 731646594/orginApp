@@ -19,16 +19,64 @@ export class RFIDScanPage{
     {itemName:"已盘",itemValue:"exist"},
     {itemName:"盘盈",itemValue:"new"}
   ];
-  numList = {};
+  numList = {
+    scan:0,
+    will:0,
+    exist:0,
+    new:0,
+    all:0,
+  };
+  userCode;
+  allPlan=[];
+  willPlan=[];
+  willMap={};
+  existPlan=[];
+  existMap={};
+  newPlan=[];
+  newMap={};
+  scanPlan=[];
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
     that = this;
-    this.numList["scan"] = 100;
-    this.numList["will"] = 555;
-    this.numList["exist"] = 312;
-    this.numList["new"] = 50;
-    this.numList["all"] = this.numList["will"]+this.numList["exist"]+this.numList["new"];
+    this.userCode = this.storageService.read("loginUserCode");
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.willPlan = JSON.parse(res.rows.item(0).stringData);
+        this.numList["will"] = this.willPlan.length;
+        for (let i in this.willPlan){
+          this.willMap[this.willPlan['barCode']] = this.willPlan[i]
+        }
+      }
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          this.existPlan = JSON.parse(res.rows.item(0).stringData);
+          this.numList["exist"] = this.willPlan.length;
+          for (let i in this.existPlan){
+            this.existMap[this.existPlan['barCode']] = this.existPlan[i]
+          }
+        }
+        this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+          if (res.rows.length>0){
+            this.newPlan = JSON.parse(res.rows.item(0).stringData);
+            this.numList["new"] = this.willPlan.length;
+            for (let i in this.newPlan){
+              this.newMap[this.newPlan['barCode']] = this.newPlan[i]
+            }
+          }
+          this.allPlan = this.allPlan.concat(this.willPlan).concat(this.existPlan).concat(this.newPlan);
+          this.numList["all"] = this.numList["will"]+this.numList["exist"]+this.numList["new"];
+          if (this.numList["all"]==0){
+            let alertCtrl = this.alertCtrl.create({
+              title:"请先下载盘点计划！"
+            });
+            alertCtrl.present();
+            this.app.getRootNav().pop();
+            return false;
+          }
+        });
+      });
+    });
   }
   ionViewDidEnter(){
     this.drawChart();
@@ -125,21 +173,47 @@ export class RFIDScanPage{
     chart1.setOption(option1);
   }
   nextPage(value){
-    console.log(value)
-    this.app.getRootNav().push(RFIDScanListPage,{data:value});
+    let plan = [];
+    if (value=="all"){
+      plan = this.allPlan;
+    }else if(value=="will"){
+      plan = this.willPlan;
+    }else if(value=="exist"){
+      plan = this.existPlan;
+    }else if(value=="new"){
+      plan = this.newPlan;
+    }else if(value=="scan"){
+      plan = this.scanPlan;
+    }
+    this.app.getRootNav().push(RFIDScanListPage,{data:plan});
   }
   beginScan(){
-    this.numList["scan"]++;
-    this.drawChart();
+    let barCode = this.getScanValue();
+    let isInScan = false;
+    for (let i in this.scanPlan){
+      if (barCode == this.scanPlan[i].barCode){
+        isInScan = true;
+      }
+    }
+    if (!isInScan){
+      if (this.willMap[barCode]){
+        this.scanPlan.push(this.willMap[barCode])
+      }else if (this.newMap[barCode]){
+        this.scanPlan.push(this.newMap[barCode])
+      }else {
+        this.scanPlan.push({barCode:barCode,checkResult:"3"})
+      }
+      this.numList["scan"]++;
+      this.drawChart();
+    }
   }
   stopScan(){
-    
+
   }
   cal(){
-    this.numList["exist"]+=this.numList["scan"]/2;
-    this.numList["new"]+= this.numList["scan"]/2;
-    this.numList["all"] = this.numList["will"]+this.numList["exist"]+this.numList["new"];
-    this.numList["scan"] = 0;
     this.drawChart();
+  }
+  getScanValue(){
+    return "1";
   }
 }
