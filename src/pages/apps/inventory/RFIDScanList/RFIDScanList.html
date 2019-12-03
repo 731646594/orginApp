@@ -6,9 +6,19 @@
 
 <ion-content>
   <div class="formInfoBox">
-    <card-normal [cardData]="cardItem" [data]="filterData" (backValue)="getSelectIndex($event)"></card-normal>
+    <div *ngIf="type!='scan'">
+      <card-normal [cardData]="cardItem" [data]="filterData" (backValue)="getSelectIndex($event)"></card-normal>
+    </div>
+    <div *ngIf="type=='scan'">
+        <card-select [cardData]="cardItem" [data]="filterData" (goNextPage)="getSelectIndex($event)" (backValue)="getDeleteIndex($event)"></card-select>
+      </div>
     <ion-infinite-scroll *ngIf="page>-1" (ionInfinite)="getMore($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
 </ion-content>
+<footer class="formFooter" *ngIf="type=='scan'" padding>
+    <button class="formFooterButton" (click)="deleteItem()">
+      <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>删除
+    </button>
+  </footer>

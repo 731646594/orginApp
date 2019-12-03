@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
-import {StorageService} from "../../../../services/storageService";
+import {PageUtil,StorageService} from "../../../../services/storageService";
 import {BarcodeScanner,} from "@ionic-native/barcode-scanner";
 import {File} from "@ionic-native/file";
 import {ScanCodePage} from "../scanCode/scanCode";
@@ -15,13 +15,12 @@ export class RFIDScanListPage{
   page = 0;
   filterData=[];
   cardItem;
+  userCode;
+  type = "";
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
-    if (this.navParams.get("data")){
-      this.data = this.navParams.get("data");
-      this.getData();
-    }
+    this.type = this.navParams.get("type");
     this.cardItem={
       cardParent:[
         {itemName:"资产条码", itemType:"label",itemValue:"barCode"},
@@ -29,6 +28,59 @@ export class RFIDScanListPage{
         {itemName:"规格型号", itemType:"label",itemValue:"assetsStandard"},
         {itemName:"资产状态", itemType:"label",itemValue:"checkResultName"},
       ]
+    }
+  }
+  ionViewDidEnter(){
+    this.userCode = this.storageService.read("loginUserCode");
+    if(this.type=="will"){
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          this.data = JSON.parse(res.rows.item(0).stringData);
+          this.getData();
+        }
+      });
+    }else if(this.type=="exist"){
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          this.data = JSON.parse(res.rows.item(0).stringData);
+          this.getData();
+        }
+      });
+    }else if(this.type=="new"){
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          this.data = JSON.parse(res.rows.item(0).stringData);
+          this.getData();
+        }
+      });
+    }else if(this.type=="all"){
+      let data1 = [];
+      let data2 = [];
+      let data3 = [];
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+        if (res.rows.length>0){
+          data1 = JSON.parse(res.rows.item(0).stringData);
+          this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+            if (res.rows.length>0){
+              data2 = JSON.parse(res.rows.item(0).stringData);
+              this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+                if (res.rows.length>0){
+                  data3 = JSON.parse(res.rows.item(0).stringData);
+                }
+                this.data = [];
+                this.data = this.data.concat(data1).concat(data2).concat(data3);
+                this.getData();
+              });
+            }
+          });
+        }
+      });
+    }else{
+      this.data = []
+      PageUtil.pages["RFIDScan"].ionViewDidEnter();
+      PageUtil.pages["RFIDScan"].beginScan();
+      this.data = PageUtil.pages["RFIDScan"].scanPlan;
+      this.getData();
     }
   }
   getMore(infiniteScroll){
@@ -58,6 +110,23 @@ export class RFIDScanListPage{
     }
   }
   getSelectIndex(index){
-    alert(this.filterData[index].barCode)
+    if(this.filterData[index].checkResultName=="未盘"||this.filterData[index].checkResultName=="已盘"){
+      this.app.getRootNav().push(ScanCodePage,{barCode:this.filterData[index].barCode})
+    }
+    else if(this.filterData[index].checkResultName=="盘盈"){
+      this.app.getRootNav().push(InventoryEntryPage,{barCode:this.filterData[index].barCode})
+    }
+  }
+  getDeleteIndex(index){
+
+  }
+  deleteItem(){
+    for(let i=0;i<this.filterData.length;i++){
+      if(this.filterData[i].checkedIcon){
+        this.filterData.splice(i,1);
+        PageUtil.pages["RFIDScan"].scanPlan.splice(i,1);
+        PageUtil.pages["RFIDScan"].numList["scan"]--;
+      }
+    }
   }
 }

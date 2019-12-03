@@ -78,5 +78,9 @@ export class ScanCodePage extends InventoryPage{
         this.selectFilterData["storePlaceData"] = JSON.parse(res.rows.item(0).stringData);
       }
     }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
+    if(this.navParams.get("barCode")){
+      this.invoice["barCode"] = this.navParams.get("barCode");
+      this.searchLocalPlanDetail()
+    }
   }
 }

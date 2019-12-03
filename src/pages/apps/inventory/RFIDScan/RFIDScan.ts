@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
-import {StorageService} from "../../../../services/storageService";
+import {PageUtil,StorageService} from "../../../../services/storageService";
 import {BarcodeScanner,} from "@ionic-native/barcode-scanner";
 import {File} from "@ionic-native/file";
 import {RFIDScanListPage} from "../RFIDScanList/RFIDScanList";
@@ -35,10 +35,14 @@ export class RFIDScanPage{
   newPlan=[];
   newMap={};
   scanPlan=[];
+  isScaning = false;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
     that = this;
+    PageUtil.pages["RFIDScan"]=this;
+  }
+  ionViewDidEnter(){
     this.userCode = this.storageService.read("loginUserCode");
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
@@ -51,7 +55,7 @@ export class RFIDScanPage{
       this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
         if (res.rows.length>0){
           this.existPlan = JSON.parse(res.rows.item(0).stringData);
-          this.numList["exist"] = this.willPlan.length;
+          this.numList["exist"] = this.existPlan.length;
           for (let i in this.existPlan){
             this.existMap[this.existPlan['barCode']] = this.existPlan[i]
           }
@@ -59,11 +63,12 @@ export class RFIDScanPage{
         this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
           if (res.rows.length>0){
             this.newPlan = JSON.parse(res.rows.item(0).stringData);
-            this.numList["new"] = this.willPlan.length;
+            this.numList["new"] = this.newPlan.length;
             for (let i in this.newPlan){
               this.newMap[this.newPlan['barCode']] = this.newPlan[i]
             }
           }
+          this.allPlan = [];
           this.allPlan = this.allPlan.concat(this.willPlan).concat(this.existPlan).concat(this.newPlan);
           this.numList["all"] = this.numList["will"]+this.numList["exist"]+this.numList["new"];
           if (this.numList["all"]==0){
@@ -74,12 +79,10 @@ export class RFIDScanPage{
             this.app.getRootNav().pop();
             return false;
           }
+          this.drawChart();
         });
       });
     });
-  }
-  ionViewDidEnter(){
-    this.drawChart();
   }
   drawChart(){
     const ec = echarts as any;
@@ -173,47 +176,72 @@ export class RFIDScanPage{
     chart1.setOption(option1);
   }
   nextPage(value){
-    let plan = [];
-    if (value=="all"){
-      plan = this.allPlan;
-    }else if(value=="will"){
-      plan = this.willPlan;
-    }else if(value=="exist"){
-      plan = this.existPlan;
-    }else if(value=="new"){
-      plan = this.newPlan;
-    }else if(value=="scan"){
-      plan = this.scanPlan;
-    }
-    this.app.getRootNav().push(RFIDScanListPage,{data:plan});
+    this.app.getRootNav().push(RFIDScanListPage,{type:value});
   }
   beginScan(){
-    let barCode = this.getScanValue();
-    let isInScan = false;
-    for (let i in this.scanPlan){
-      if (barCode == this.scanPlan[i].barCode){
-        isInScan = true;
+    this.isScaning = true;
+    this.getScan();
+    this.drawChart();
+  }
+  stopScan(){
+    this.isScaning = false;
+  }
+  cal(){
+    let haveNew = false;
+    for(let i in this.scanPlan){
+      if(this.scanPlan[i].checkResult==''){
+        this.scanPlan[i].checkResult = "1";
+        for(let j = 0; j<this.willPlan.length;j++){
+          if(this.willPlan[j].barCode == this.scanPlan[i].barCode){
+            this.willPlan.splice(j,1);
+          }
+        }
+        this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(this.willPlan));
+        this.existPlan.push(this.scanPlan[i]);
+        this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(this.existPlan));
+      }else{
+        haveNew = true;
       }
     }
-    if (!isInScan){
+    let alertCtrl = this.alertCtrl.create({
+      title:"请填写已扫描中剩余的盘盈数据！"
+    });
+    alertCtrl.present();
+    this.drawChart();
+  }
+  getScanValue(barCode){
+    if(this.scanPlan.length>0){
+      for (let i in this.scanPlan){
+        if (barCode != this.scanPlan[i].barCode){
+          if (this.willMap[barCode]){
+            this.scanPlan.push(this.willMap[barCode])
+          }else if (this.newMap[barCode]){
+              
+          }else if (this.existMap[barCode]){
+            
+          }else {
+            this.scanPlan.push({barCode:barCode,checkResult:"3"})
+          }
+          this.numList["scan"]++;
+        }
+      }
+    }else{
       if (this.willMap[barCode]){
         this.scanPlan.push(this.willMap[barCode])
       }else if (this.newMap[barCode]){
-        this.scanPlan.push(this.newMap[barCode])
+          
+      }else if (this.existMap[barCode]){
+        
       }else {
         this.scanPlan.push({barCode:barCode,checkResult:"3"})
       }
       this.numList["scan"]++;
-      this.drawChart();
     }
   }
-  stopScan(){
-
-  }
-  cal(){
-    this.drawChart();
-  }
-  getScanValue(){
-    return "1";
+  getScan(){
+    if (this.isScaning){
+      let barCode = "1"
+      this.getScanValue(barCode)
+    }
   }
 }
