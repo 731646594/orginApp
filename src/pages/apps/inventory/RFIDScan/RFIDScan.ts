@@ -203,10 +203,12 @@ export class RFIDScanPage{
         haveNew = true;
       }
     }
-    let alertCtrl = this.alertCtrl.create({
-      title:"请填写已扫描中剩余的盘盈数据！"
-    });
-    alertCtrl.present();
+    if(haveNew){
+      let alertCtrl = this.alertCtrl.create({
+        title:"请填写已扫描中剩余的盘盈数据！"
+      });
+      alertCtrl.present();
+    }
     this.drawChart();
   }
   getScanValue(barCode){

@@ -70,20 +70,23 @@ export class LoginPage {
   }
   entry(){
     this.downloadDictionaries();
-    this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
-      if (data.success=="true"){
-        this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
-        this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode},data2=>{
-          if (data2.success=="true"){
-            this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
-          }else {
-            alert(data2.msg);
-          }
-        });
-      }else {
-        alert(data.msg);
-      }
-    },true);
+    let pageData1 = JSON.parse(this.storageService.read("applyPageData"));
+    if (pageData1.pageData.length!=1){
+      this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
+        if (data.success=="true"){
+          this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
+          this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode},data2=>{
+            if (data2.success=="true"){
+              this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
+            }else {
+              alert(data2.msg);
+            }
+          });
+        }else {
+          alert(data.msg);
+        }
+      },true);
+    }
     this.storageService.write("loginDepartName",this.depart.shortname);
     this.storageService.write("loginDepartLongName",this.depart.departname);
     this.storageService.write("loginDepartCode",this.depart.departcode);

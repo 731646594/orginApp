@@ -44,6 +44,7 @@ export class TabsPage {
     //14:本地下载查询
     //15:数据上传
     //16:盘盈录入
+    //17:RFID
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -79,6 +80,9 @@ export class TabsPage {
         [
           [14,"","chaxun.png","本地下载查询","1"],[15,"","shangchuan.png","数据上传","1"],[16,"","luruzhong.png","盘盈录入","1"]
         ],
+        [
+          [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+        ]
       ]
     };
     this.baofei = {
