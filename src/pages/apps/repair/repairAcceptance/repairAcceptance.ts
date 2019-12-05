@@ -123,7 +123,7 @@ export class RepairAcceptancePage {
               {optionName:"增值税普通发票",optionValue:1},
               {optionName:"增值税专用发票",optionValue:2},
             ],},
-          {itemName:"验收金额", itemType:"input",itemValue:"sjwxzz",nec:1},
+          {itemName:"验收金额", itemType:"input",inputType:"number",itemValue:"sjwxzz",nec:1},
           {itemName:"验收结论", itemType:"textarea",itemValue:"ysjl",nec:1},
 
         ],

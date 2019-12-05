@@ -169,7 +169,7 @@ export class RepairExternalPage {
       this.pageData.pageItem[0][11] = {itemName:"相应时间", itemType:"label",itemValue:"xysj",nec:0};
       this.pageData.pageItem[0][12] = {itemName:"进场信息", itemType:"textarea-readonly",itemValue:"zfyl17",nec:0};
       this.pageData.pageItem[0][13] = {itemName:"进场时间", itemType:"label",itemValue:"zfyl16",nec:0};
-      this.pageData.pageItem[0][14] = {itemName:"备件", itemType:"filter",itemValue:"bjmc",nec:1};
+      this.pageData.pageItem[0][14] = {itemName:"备件", itemType:"filter",itemValue:"bjmc",nec:0};
       this.pageData.pageItem[0][15] = {itemName:"恢复时间", itemType:"label",itemValue:"hfsj",nec:1};
       this.pageData.pageItem[0][16] = {itemName:"油站经理签字", itemType:"sign",itemValue:"sign",nec:1};
     }
