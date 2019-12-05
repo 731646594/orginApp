@@ -36,4 +36,20 @@ page-repairApplyAdd{
   .text-input{
     margin-left: 0 !important;
   }
+  .tableBox{
+    overflow-x: auto;
+    margin-left: 16px;
+  }
+  .flexBox{
+    display: -webkit-box;
+  }
+  .flexCon{
+    width: 30%;
+    ion-label{
+      white-space: normal;
+    }
+  }
+  .flexCon:nth-child(3){
+    width: 40%;
+  }
 }

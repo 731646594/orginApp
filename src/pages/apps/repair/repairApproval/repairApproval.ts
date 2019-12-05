@@ -90,7 +90,7 @@ export class RepairApprovalPage {
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
           {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
           {itemName:"故障描述", itemType:"textarea-readonly",itemValue:"wxms",nec:0},
-          {itemName:"备注", itemType:"label",itemValue:"remark",nec:0},
+          {itemName:"备注", itemType:"label",itemValue:"bjxx",nec:0},
           {itemName:"单据来源", itemType:"label", itemValue:"djlyName",nec:0},
           {itemName:"维修预算", itemType:"filter", itemValue:"ysze",nec:1},
           {itemName:"已占用预算", itemType:"label",itemValue:"yzyysze",nec:0},

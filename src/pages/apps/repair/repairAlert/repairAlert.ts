@@ -37,18 +37,16 @@ export class RepairAlertPage{
               public navCtrl?: NavController,
               public navParams?: NavParams,
               public viewCtrl?:ViewController) {
-    this.data = this.navParams.get('data');
-    if (this.navParams.get('checkBox')){
-      this.checkBox = true;
-      this.checkedData = "";
-    }
+    this.httpService.postData2(this.httpService.getUrl2() + "/lhd/app/devRepairController.do?equipmentListDdpart", {},(data)=>{
+      this.data = data.obj.rows;
+      this.filterData = JSON.parse(JSON.stringify(this.data));
+      this.url = "/lhd/app/devRepairController.do?equipmentListDdpart";
+    },true)
     this.searchCon = this.navParams.get("content").searchCon;
     this.searchSelect = this.navParams.get("content").searchSelect;
-    this.url = this.navParams.get("content").url;
     this.item = this.navParams.get("content").item;
     this.bodyOrgin = this.navParams.get("content").body;
     this.body = JSON.parse(JSON.stringify(this.bodyOrgin))
-    this.filterData = JSON.parse(JSON.stringify(this.data));
   }
   ionViewDidEnter(){
     let div = $(".contentBox")[2];
@@ -102,8 +100,9 @@ export class RepairAlertPage{
   }
   goToPost(url,bodyJson){
     this.page = 1;
-    this.httpService.postData2(this.httpService.getUrl2() + url, {dataobj:JSON.stringify(bodyJson),page:this.page,rows:this.pageSize},
+    this.httpService.postData2(this.httpService.getUrl2() + this.navParams.get("content").url, {dataobj:JSON.stringify(bodyJson),page:this.page,rows:this.pageSize},
       (data)=>{
+        this.url = this.navParams.get("content").url;
         let rows = data.obj.rows;
         this.filterData = [];
         this.isNewSearch = false;

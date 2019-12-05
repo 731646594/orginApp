@@ -26,6 +26,7 @@ export class RepairApplyAddPage {
   i = 0;
   displayIndex;
   listBase64=[];
+  tableData=[];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService,public datePipe?:DatePipe,public actionSheetCtrl?:ActionSheetController,
@@ -37,7 +38,7 @@ export class RepairApplyAddPage {
     this.invoice["djztName"] = "新增";
     this.invoice["wxdh"] = "自动生成";
     let date = new Date();
-    this.invoice["sqsj"] = this.datePipe.transform(date,"yyyy-MM-dd hh:mm:ss");
+    this.invoice["sqsj"] = this.datePipe.transform(date,"yyyy-MM-dd HH:mm:ss");
     this.invoice["sqrmc"] = this.storageService.read("loginUserName");
     this.invoice["sqrbm"] = this.storageService.read("loginUserCode");
     let str = JSON.stringify(this.storageService.read("loginDepartLongName"));
@@ -57,6 +58,9 @@ export class RepairApplyAddPage {
         temp.djFormData["djztName"] = ConfigProvider.djztName(temp.djFormData["djzt"]);
         this.invoice = temp.djFormData;
         this.data = this.data.concat(temp.listMainEquip);
+        for (let i in this.data){
+          this.getWxHistory(i)
+        }
         this.listBase64 = this.listBase64.concat(temp.imgUrl);
         let node = document.getElementById("imgBox");
         for (let j in this.listBase64){
@@ -115,7 +119,7 @@ export class RepairApplyAddPage {
             option:listJjcd,
           },
           {itemName:"故障描述", itemType:"textarea",itemValue:"wxms",nec:1},
-          {itemName:"备注", itemType:"input",itemValue:"remark",nec:0},
+          {itemName:"备注", itemType:"input",itemValue:"bjxx",nec:0},
           {itemName:"是否上传附件", itemType:"select", itemValue:"sfscfj",nec:1,itemValueName:"sfscfj",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
               {optionName:"是",optionValue:1},
@@ -139,6 +143,16 @@ export class RepairApplyAddPage {
                 // {itemName:"自编码", itemType:"label",itemValue:"zczbm"},
                 {itemName:"特种设备", itemType:"label",itemValue:"tssb"},
                 {itemName:"规格型号", itemType:"label",itemValue:"ggxhmc"},
+                {itemName:"历史维修信息",itemType:"label", itemValue:"makeFactory"},
+                {itemName:"\u00A0\u00A0\u00A0\u00A0设备总维修次数",itemType:"label", itemValue:"wxCount"},
+                {itemName:"\u00A0\u00A0\u00A0\u00A0总维修金额",itemType:"label", itemValue:"sumMoney"},
+                {itemName:"历史维修信息明细",itemType:"label", itemValue:"makeFactory"},
+                {itemType:"table",tableItem:[
+                    {colName:"维修日期",colValue:"wxrq"},
+                    {colName:"维修金额",colValue:"zfyl1"},
+                    {colName:"故障描述",colValue:"zfyl2"},
+                  ]
+                }
               ]
             }
           }
@@ -155,6 +169,13 @@ export class RepairApplyAddPage {
   ionViewWillUnload() {
     this.events.unsubscribe("showFooter");
     this.events.unsubscribe("hideFooter")
+  }
+  getWxHistory(i){
+    this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?queryLsxx", {dataobj:JSON.stringify(this.data[i])}, (data3)=> {
+      this.data[i].wxCount = data3.obj.wxCount;
+      this.data[i].sumMoney = data3.obj.sumMoney;
+      this.tableData[i] = data3.obj.wxHistory;
+    },false);
   }
   displayContent(index){
     let content = document.getElementsByClassName("disContent");

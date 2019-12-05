@@ -113,7 +113,7 @@ export class RepairSupplementPage {
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
           {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
           {itemName:"故障描述", itemType:"textarea-readonly",itemValue:"wxms",nec:0},
-          {itemName:"备注", itemType:"label",itemValue:"remark",nec:0},
+          {itemName:"备注", itemType:"label",itemValue:"bjxx",nec:0},
           {itemName:"单据来源", itemType:"label", itemValue:"djlyName",nec:0},
           {itemName:"维修预算", itemType:"filter", itemValue:"ysze",nec:1},
           {itemName:"已占用预算", itemType:"label",itemValue:"yzyysze",nec:0},
@@ -127,6 +127,32 @@ export class RepairSupplementPage {
           {itemName:"人工及配件费用", itemType:"input-spec",itemValue:"rgfwf",nec:1},
           {itemName:"备件", itemType:"filter2",itemValue:"bjmc",nec:0},
           {itemName:"备件费用", itemType:"input-spec",itemValue:"wxbjjehj",nec:0},
+          {itemName:"问题来源", itemType:"select", itemValue:"wtly",nec:1,itemValueName:"wtly",optionValueString:"complexcode",optionNameString:"complexname",
+            option:[
+              {complexname:"巡检",complexcode:"01"},
+              {complexname:"交班检查",complexcode:"02"},
+              {complexname:"周检",complexcode:"03"},
+              {complexname:"月检",complexcode:"04"},
+              {complexname:"季检",complexcode:"05"},
+              {complexname:"年检",complexcode:"06"},
+              {complexname:"专项检查",complexcode:"07"},
+              {complexname:"上级检查",complexcode:"08"},
+              {complexname:"政府来文",complexcode:"09"},
+              {complexname:"其他",complexcode:"10"},
+            ],
+          },
+          {itemName:"问题类别", itemType:"select", itemValue:"wtlb",nec:1,itemValueName:"wtlb",optionValueString:"complexcode",optionNameString:"complexname",
+            option:[
+              {complexname:"油站运营类",complexcode:"01"},
+              {complexname:"油站信息类",complexcode:"02"},
+              {complexname:"油站办公类",complexcode:"03"},
+              {complexname:"油库运营类",complexcode:"04"},
+              {complexname:"油库信息类",complexcode:"05"},
+              {complexname:"油库办公类",complexcode:"06"},
+              {complexname:"机关办公类",complexcode:"07"},
+              {complexname:"机关信息类",complexcode:"08"},
+            ],
+          },
           {itemName:"预估维修总值", itemType:"label",itemValue:"ygwxzz",nec:0},
           {itemName:"监控防范措施", itemType:"textarea",itemValue:"jkffcs",nec:0},
           {itemName:"整改措施", itemType:"textarea",itemValue:"zgcs",nec:0},
@@ -220,6 +246,9 @@ export class RepairSupplementPage {
   getInputValue(value,key){
     this.showFooter();
     this.invoice[key] = value;
+  }
+  getSelectValue(value, key,keyName) {
+    this.invoice[keyName] = value["selectedValue"];
   }
   hideFooter() {
     this.isFocus = true;
