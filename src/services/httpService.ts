@@ -17,6 +17,9 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
+      //庞为
+      this.setUrl("http","192.168.0.212","81","plamassets");
+      return "http://192.168.0.212:81/plamassets/mobile/";
       //98
       // this.setUrl("http","192.168.0.98","8088","plamassets");
       // return "http://192.168.0.98:8088/plamassets/mobile/";
@@ -45,8 +48,8 @@ export class HttpService {
       // this.setUrl("http","127.0.0.1","10610","plamassets");
       // return "http://127.0.0.1:10610/plamassets/mobile/"
       //黑龙江销售
-      this.setUrl("http","210.12.194.210","9080","plamassets");
-      return "http://210.12.194.210:9080/plamassets/mobile/"
+      // this.setUrl("http","210.12.194.210","9080","plamassets");
+      // return "http://210.12.194.210:9080/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");
