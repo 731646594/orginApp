@@ -197,18 +197,21 @@ export class ChangeShiftsEntryPage {
   }
   openCamera(type) {
     let sourceType;
+    let saveToPhotoAlbum;
     if (type){
       sourceType = this.camera.PictureSourceType.CAMERA;
+      saveToPhotoAlbum = true;
     }
     else {
-      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
+      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+      saveToPhotoAlbum = false;
     }
     const options: CameraOptions = {
       quality: 50,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true,                                       //是否保存到相册
+      saveToPhotoAlbum: saveToPhotoAlbum,                                       //是否保存到相册
       sourceType: sourceType,         //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
       correctOrientation: true
     };
