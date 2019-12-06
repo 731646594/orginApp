@@ -290,7 +290,9 @@ export class InventoryPage {
           }
         }
         this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(willList));
-        PageUtil.pages["home"].inventoryNum = willListLength;
+        if (PageUtil.pages["home"]){
+          PageUtil.pages["home"].inventoryNum = willListLength;
+        }
         this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
         for(let key in this.invoice){
           this.invoice[key] = "";
