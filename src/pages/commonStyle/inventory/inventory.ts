@@ -457,7 +457,7 @@ export class InventoryPage {
   }
   getSelectValue(value,key){
     if (key.constructor == Array){
-      this.invoice[key[0]] = value["selectedName"];
+      this.invoice[key[0]] = value["selectedValue"];
       this.invoice[key[1]] = value["selectedName"];
       document.getElementsByClassName("select-text")[1].innerHTML = value["selectedName"];
     }else {
