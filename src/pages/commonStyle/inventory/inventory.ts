@@ -307,7 +307,7 @@ export class InventoryPage {
         this.invoice["technicalConditionName"]="完好";
         this.invoice["storePlace"] = "";
         this.invoice["storePlaceName"] = "";
-        document.getElementsByClassName("select-text")[1].innerHTML="";
+        document.getElementById("storePlace").getElementsByClassName("select-text")[0].innerHTML = "";
         this.getAndShowPics([]);
         this.isDistinguish = false;
         let alertCtrl = this.alertCtrl.create({
@@ -341,7 +341,7 @@ export class InventoryPage {
                   text:"是",
                   handler:()=>{
                     this.invoice = localPlanDetail[i];
-                    document.getElementsByClassName("select-text")[1].innerHTML = this.invoice["storePlaceName"];
+                    document.getElementById("storePlace").getElementsByClassName("select-text")[0].innerHTML = this.invoice["storePlaceName"];
                     this.getAndShowPics(this.invoice["uploadFile"]);
                     this.isDistinguish = true;
                   }
@@ -370,7 +370,7 @@ export class InventoryPage {
               }
               this.invoice["realcodeStatus"] = "0";
               this.invoice["storePlaceName"] = this.invoice["storePlace"];
-              document.getElementsByClassName("select-text")[1].innerHTML = this.invoice["storePlaceName"];
+              document.getElementById("storePlace").getElementsByClassName("select-text")[0].innerHTML = this.invoice["storePlaceName"];
               isSearch = true;
               this.isDistinguish = true;
             }
