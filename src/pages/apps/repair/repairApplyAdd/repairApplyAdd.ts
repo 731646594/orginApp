@@ -119,7 +119,7 @@ export class RepairApplyAddPage {
             option:listJjcd,
           },
           {itemName:"故障描述", itemType:"textarea",itemValue:"wxms",nec:1},
-          {itemName:"备注", itemType:"input",itemValue:"bjxx",nec:0},
+          {itemName:"备注", itemType:"input",itemValue:"bzxx",nec:0},
           {itemName:"是否上传附件", itemType:"select", itemValue:"sfscfj",nec:1,itemValueName:"sfscfj",optionValueString:"optionValue",optionNameString:"optionName",
             option:[
               {optionName:"是",optionValue:1},

@@ -459,7 +459,7 @@ export class InventoryPage {
     if (key.constructor == Array){
       this.invoice[key[0]] = value["selectedValue"];
       this.invoice[key[1]] = value["selectedName"];
-      document.getElementsByClassName("select-text")[1].innerHTML = value["selectedName"];
+      document.getElementById(key[0]).getElementsByClassName("select-text")[0].innerHTML = value["selectedName"];
     }else {
       this.invoice[key] = value["selectedValue"];
       if(key=="technicalCondition"||key=="managerDepart"||key == "usedState"){
