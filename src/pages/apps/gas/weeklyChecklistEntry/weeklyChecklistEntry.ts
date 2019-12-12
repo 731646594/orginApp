@@ -275,8 +275,8 @@ export class WeeklyChecklistEntryPage {
       alertCtrl.present();
       return false;
     }
-    this.storageData["departcode"]=this.departCode;
-    this.storageData["departname"]=this.departName;
+    this.storageData["fgsbm"]=this.departCode;
+    this.storageData["fgsmc"]=this.departName;
     this.storageData["yzbm"]=this.gasStationCode;
     this.storageData["yzmc"]=this.gasStationName;
     this.storageData = JSON.stringify(this.storageData);

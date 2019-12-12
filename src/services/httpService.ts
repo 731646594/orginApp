@@ -23,8 +23,8 @@ export class HttpService {
     let url=this.storageService.read("serverUrl");
     if (!url){
       //庞为
-      this.setUrl("http","192.168.0.212","81","plamassets");
-      return "http://192.168.0.212:81/plamassets/mobile/";
+      // this.setUrl("http","192.168.0.212","81","plamassets");
+      // return "http://192.168.0.212:81/plamassets/mobile/";
       //98
       // this.setUrl("http","192.168.0.98","8088","plamassets");
       // return "http://192.168.0.98:8088/plamassets/mobile/";
@@ -53,8 +53,8 @@ export class HttpService {
       // this.setUrl("http","127.0.0.1","10610","plamassets");
       // return "http://127.0.0.1:10610/plamassets/mobile/"
       //黑龙江销售
-      // this.setUrl("http","210.12.194.210","9080","plamassets");
-      // return "http://210.12.194.210:9080/plamassets/mobile/"
+      this.setUrl("http","210.12.194.210","9080","plamassets");
+      return "http://210.12.194.210:9080/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");
@@ -188,6 +188,113 @@ export class HttpService {
                   },true)
                 //PageUtil.pages["mine"].backToLoginPage();
               }
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
+            }
+          }
+        }
+      );
+    }
+  };
+  public postJson (url:string,Json:any,successCallback,isLoading?:any,errorCallback?:any){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      // duration:5000
+    });
+    if (isLoading){
+      loading.present();
+    }
+    var headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('type','app');
+    let options = new RequestOptions({ headers:headers, withCredentials: true});
+    if (!this.platform.is("mobileweb")){
+      this.nativeHttp.setDataSerializer('json');
+      this.nativeHttp.post(url, Json, {type:"app"})
+        .then(data => {
+          let res = JSON.parse(data.data);
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        })
+        .catch(error => {
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (error.status) {
+            case 401:
+              errMsg = "登录超时，请重新登录";
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
+            }
+          }
+        })
+    }
+    else {
+      return this.http.post(url,Json,options).map(res=>res.json()).subscribe(
+        (res)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        },(err)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (err.status) {
+            case 401:
+              errMsg = "登录超时，请重新登录";
               break;
             case 404:
               errMsg = '抱歉，后台服务找不到对应接口';
