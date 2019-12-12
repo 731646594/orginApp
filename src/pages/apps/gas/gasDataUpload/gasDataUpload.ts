@@ -15,9 +15,7 @@ export class GasDataUploadPage {
   departName;
   departCode;
   zjb=[];
-  zjbString = "";
   jjb=[];
-  jjbString = "";
   item=[];
   colItem=[];
   itemName;
@@ -38,14 +36,12 @@ export class GasDataUploadPage {
     this.photoArrary = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("zjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
-        this.zjbString = res.rows.item(0).stringData;
         this.zjb = JSON.parse(res.rows.item(0).stringData);
         this.isHaveData = true;
       }
     }).catch(e =>alert("erro21:"+JSON.stringify(e))  );
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("jjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
-        this.jjbString = res.rows.item(0).stringData;
         this.jjb = JSON.parse(res.rows.item(0).stringData);
         this.isHaveData = true;
       }
@@ -140,12 +136,8 @@ export class GasDataUploadPage {
     }
   }
   uploading(url,data,name){
-    let json = "";
-    if(name=="zjb"){
-      json = this.zjbString
-    }else {
-      json = this.jjbString
-    }
+    let json = JSON.parse(JSON.stringify(data));
+    delete json.uploadFile;
     this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:json,uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
