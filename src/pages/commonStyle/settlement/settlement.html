@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox">
+    <div *ngFor="let detail of itemData;let i = index">
+      <div class="callContentBox">
+        <div class="callContentMiniBox">
+          <ion-list class="callContent">
+            <ion-list class="callList" (click)="showForm(detail)">
+              <div *ngFor="let parent of cardData.cardParent">
+                <div *ngIf="parent.itemName != '单据状态'">
+                  <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                </div>
+                <div *ngIf="parent.itemName == '单据状态'">
+                  <label-normal [itemName]="parent.itemName" [labelValue]="detail['djztName']"></label-normal>
+                </div>
+              </div>
+              <div class="buttonBox">
+                <button ion-button (click)="submitForm(detail);$event.stopPropagation();">通过</button>
+                <button ion-button color="danger" (click)="deleteForm(detail);$event.stopPropagation();">驳回</button>
+              </div>
+            </ion-list>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll *ngIf="isNewSearch&&(pageName != '')" (ionInfinite)="getMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>

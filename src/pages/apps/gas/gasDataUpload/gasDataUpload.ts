@@ -15,7 +15,9 @@ export class GasDataUploadPage {
   departName;
   departCode;
   zjb=[];
+  zjbString = "";
   jjb=[];
+  jjbString = "";
   item=[];
   colItem=[];
   itemName;
@@ -36,12 +38,14 @@ export class GasDataUploadPage {
     this.photoArrary = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("zjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
+        this.zjbString = res.rows.item(0).stringData;
         this.zjb = JSON.parse(res.rows.item(0).stringData);
         this.isHaveData = true;
       }
     }).catch(e =>alert("erro21:"+JSON.stringify(e))  );
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("jjb",this.userCode),[]).then(res =>{
       if (res.rows.length>0){
+        this.jjbString = res.rows.item(0).stringData;
         this.jjb = JSON.parse(res.rows.item(0).stringData);
         this.isHaveData = true;
       }
@@ -129,22 +133,42 @@ export class GasDataUploadPage {
       return false;
     }
     if (this.checkedArray[0]){
-      this.uploading("devWeeklyCheckController.do?saveCheckForm",this.zjb,"zjb")
+      this.uploading("devWeeklyCheckController/saveCheckForm.do",this.zjb,"zjb")
     }
     if (this.checkedArray[1]){
-      this.uploading("devHandOverController.do?saveCheckForm",this.jjb,"jjb")
+      this.uploading("devHandOverController/saveCheckForm.do",this.jjb,"jjb")
     }
   }
   uploading(url,data,name){
-    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:data,uploadFile:data["uploadFile"]},data=>{
+    let json = "";
+    if(name=="zjb"){
+      json = this.zjbString
+    }else {
+      json = this.jjbString
+    }
+    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:json,uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
-          this.zjb=null;
+          this.zjb=[];
           this.storageService.deleteUserTable("zjb",this.userCode);
         }else {
-          this.jjb=null;
+          this.jjb=[];
           this.storageService.deleteUserTable("jjb",this.userCode);
         }
+        this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.departCode},data=>{
+          if (data.success=="true"){
+            this.storageService.sqliteInsert("weeklyData",this.userCode,JSON.stringify(data.data));
+            this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.departCode},data2=>{
+              if (data2.success=="true"){
+                this.storageService.sqliteInsert("handoverData",this.userCode,JSON.stringify(data2.data));
+              }else {
+                alert(data2.msg);
+              }
+            },false);
+          }else {
+            alert(data.msg);
+          }
+        },false);
         let alertCtrl = this.alertCtrl.create({
           title:"上传成功！"
         });

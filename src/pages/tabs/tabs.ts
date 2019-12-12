@@ -25,6 +25,7 @@ export class TabsPage {
   jiayouzhan;
   jianweixiu;
   shebeibaoyang;
+  danjujiesuanguanli;
   isShowHome = true;
   isShowOther = true;
   constructor(public storageService:StorageService) {
@@ -71,6 +72,11 @@ export class TabsPage {
     //71:外委派单
     //72:开始保养
     //73:保养办结
+    //81:勘探部项目款审批
+    //82:工程竣工决算款审批
+    //83:进度款审批
+    //84:一厂/三厂进度款审批
+    //85:储气库投资表审批
     this.pandian = {
       pageName:"资产盘点",
       pageData:[
@@ -144,16 +150,28 @@ export class TabsPage {
         ]
       ]
     };
+    this.danjujiesuanguanli = {
+      pageName:"结算单据管理",
+      pageData:[
+        [
+          [81,"","baofeishenpi.png","勘探部项目款审批","1"],[82,"","diaobochaxun.png","工程竣工决算款审批","1"],[83,"","chaxun.png","进度款审批","1"]
+        ],
+        [
+          [84,"","luruzhong.png","一厂/三厂进度款审批","1"], [85,"","zichanchaxun.png","储气库投资表审批","1"], []
+        ]
+      ]
+    };
     this.pageData1 = {
       pageName:"应用",
       pageData:[
         [1,this.pandian,"","资产盘点"],[1,this.baofei,"","报废管理"],[1,this.diaobo,"","调拨管理"],
-        [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"],[1,this.jianweixiu,"","检维修管理"],[1,this.shebeibaoyang,"","设备保养管理"]
+        [1,this.tongji,"","统计查询"],[1,this.jiayouzhan,"","加油站管理"],[1,this.jianweixiu,"","检维修管理"],
+        [1,this.shebeibaoyang,"","设备保养管理"],[1,this.danjujiesuanguanli,"","结算单据管理"]
       ]
     };
     if(this.storageService.read("applyPageData")){
       this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
-      if (this.pageData1.pageData.length==1){
+      if (this.pageData1.pageData.length==2){
         this.isShowHome = false
       }
     }

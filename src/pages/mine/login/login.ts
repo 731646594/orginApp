@@ -62,16 +62,17 @@ export class LoginPage {
         this.storageService.write("loginPassWord",this.password);
         this.storageService.write("loginDepartList",this.departList);
         this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
-        this.storageService.write("token",loginInfo[4].token);
-        this.storageService.write("systemUrl",loginInfo[5].systemUrl);
+        if (loginInfo[4]){
+          this.storageService.write("token",loginInfo[4].token);
+          this.storageService.write("systemUrl",loginInfo[5].systemUrl);
+        }
         this.depart = this.departList[0];
       }
     },true)
   }
   entry(){
     this.downloadDictionaries();
-    let pageData1 = JSON.parse(this.storageService.read("applyPageData"));
-    if (pageData1.pageData.length!=1){
+    if (this.storageService.read("serverUrl")=="http://210.12.193.61:9081/plamassets/mobile/"){
       this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
         if (data.success=="true"){
           this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));

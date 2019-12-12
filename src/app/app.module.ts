@@ -83,6 +83,9 @@ import {RepairExternalSignaturePage} from "../pages/apps/repair/repairExternalSi
 import {MaintenancePage} from "../pages/apps/maintenance/maintenance";
 import {MaintenanceAlertPage} from "../pages/apps/maintenance/maintenanceAlert/maintenanceAlert";
 import {FileOpener} from "@ionic-native/file-opener";
+import {ProspectingPage} from "../pages/apps/settlement/prospecting/prospecting";
+import {SettlementPage} from "../pages/commonStyle/settlement/settlement";
+import {HTTP} from "@ionic-native/http";
 
 @NgModule({
   declarations: [
@@ -148,7 +151,9 @@ import {FileOpener} from "@ionic-native/file-opener";
     RepairExternalPage,
     RepairExternalSignaturePage,
     MaintenancePage,
-    MaintenanceAlertPage
+    MaintenanceAlertPage,
+    SettlementPage,
+    ProspectingPage
   ],
   imports: [
     BrowserModule,
@@ -232,7 +237,9 @@ import {FileOpener} from "@ionic-native/file-opener";
     RepairExternalPage,
     RepairExternalSignaturePage,
     MaintenancePage,
-    MaintenanceAlertPage
+    MaintenanceAlertPage,
+    SettlementPage,
+    ProspectingPage,
   ],
   providers: [
     StatusBar,
@@ -250,6 +257,7 @@ import {FileOpener} from "@ionic-native/file-opener";
     ScreenOrientation,
     DatePipe,
     Network,
+    HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

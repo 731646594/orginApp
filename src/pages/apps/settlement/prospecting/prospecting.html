@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar class="headToolbar">
+    <ion-segment [(ngModel)]="shape">
+      <ion-segment-button value="brief" >
+        {{pageData.segmentName[0]}}
+      </ion-segment-button>
+      <ion-segment-button value="detailed" >
+        {{pageData.segmentName[1]}}
+      </ion-segment-button>
+      <ion-segment-button value="more" >
+        {{pageData.segmentName[2]}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox" [ngSwitch]="shape">
+    <div *ngSwitchCase="'brief'">
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngFor="let detail of briefData;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent wxCardParent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <div *ngIf="child.itemType == 'label'">
+                    <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                  </div>
+                  <div *ngIf="child.itemType == 'table'">
+                    <div class="tableBox">
+                      <div class="flexBox">
+                        <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                          <ion-label>{{tableT.colName}}</ion-label>
+                        </div>
+                      </div>
+                      <div *ngFor="let tableC of briefTableData">
+                        <div class="flexBox">
+                          <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                            <ion-label>{{tableC[tableT.colValue]}}</ion-label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detailTab" *ngSwitchCase="'detailed'">
+      <div *ngFor="let item of pageData.pageItem[1];">
+        <div *ngFor="let detail of detailedData;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent wxCardParent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <div *ngIf="child.itemType == 'label'">
+                    <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                  </div>
+                  <div *ngIf="child.itemType == 'table'">
+                    <div class="tableBox">
+                      <div class="flexBox">
+                        <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                          <ion-label>{{tableT.colName}}</ion-label>
+                        </div>
+                      </div>
+                      <div *ngFor="let tableC of detailedTableData">
+                        <div class="flexBox">
+                          <div class="flexCon" *ngFor="let tableT of child.tableItem">
+                            <ion-label>{{tableC[tableT.colValue]}}</ion-label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'more'">
+      <div *ngFor="let item of pageData.pageItem[2];">
+        <div *ngFor="let detail of moreData;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent supplierContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding>
+  <button class="formFooterButton" *ngIf="shape=='brief'||shape=='detailed'">
+    合计<br>
+      <div class="callContentMiniBox">
+        <ion-list class="callContent" style="width: 100%;max-width: 100%;overflow-x: auto;">
+          <ion-list class="callList" style="display: flex;padding: 0">
+            <div *ngFor="let parent of sumItem">
+              <label-normal [itemName]="parent.itemName" [labelValue]="sumData[parent.itemValue]"></label-normal>
+            </div>
+          </ion-list>
+        </ion-list>
+      </div>
+  </button>
+</footer>

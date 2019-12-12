@@ -24,6 +24,7 @@ import {TransferConfirmationPage} from "../../apps/allocate/transferConfirmation
 import {Network} from "@ionic-native/network";
 import {RepairApplyPage} from "../../apps/repair/repairApply/repairApply";
 import {RFIDScanPage} from "../../apps/inventory/RFIDScan/RFIDScan";
+import {SettlementPage} from "../settlement/settlement";
 
 @Component({
   selector: 'page-menu',
@@ -123,6 +124,11 @@ export class MenuPage {
     //71:外委派单
     //72:开始保养
     //73:保养办结
+    //81:勘探部项目款审批
+    //82:工程竣工决算款审批
+    //83:进度款审批
+    //84:一厂/三厂进度款审批
+    //85:储气库投资表审批
     let willGoPage = null;
     if(page == 11){
       willGoPage = ScanCodePage;
@@ -237,6 +243,26 @@ export class MenuPage {
     else if(page == 73){
       willGoPage = RepairApplyPage;
       params = {pageName:"保养办结",funccode:funccode};
+    }
+    else if(page == 81){
+      willGoPage = SettlementPage;
+      params = {pageName:"勘探部项目款审批"};
+    }
+    else if(page == 82){
+      willGoPage = SettlementPage;
+      params = {pageName:"工程竣工决算款审批"};
+    }
+    else if(page == 83){
+      willGoPage = SettlementPage;
+      params = {pageName:"进度款审批"};
+    }
+    else if(page == 84){
+      willGoPage = SettlementPage;
+      params = {pageName:"一厂/三厂进度款审批"};
+    }
+    else if(page == 85){
+      willGoPage = SettlementPage;
+      params = {pageName:"储气库投资表审批"};
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

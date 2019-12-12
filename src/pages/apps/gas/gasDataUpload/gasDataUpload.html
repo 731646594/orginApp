@@ -12,7 +12,6 @@
           <div *ngIf="zjb.length!=0">
             <div  class="itemContentDiv">分公司：<div class="departNameDiv">{{zjb.fgsmc}}</div></div>
             <div  class="itemContentDiv">油站名称：<div class="departNameDiv">{{zjb.yzmc}}</div></div>
-            <div  class="itemContentDiv">周检日期：{{zjb.zjrq}}</div>
           </div>
         </div>
         <div item-end  *ngIf="zjb.length!=0" (click)="checkedItem(0)">
@@ -29,14 +28,6 @@
             <ion-item class="inputItem">
               <ion-label class="noFlexLabel">油站编码:</ion-label>
               <ion-label class="itemContentLabel">{{item.yzbm}}</ion-label>
-            </ion-item>
-            <ion-item class="inputItem" *ngIf="itemName=='zjb'">
-              <ion-label class="noFlexLabel">周检日期:</ion-label>
-              <ion-label class="itemContentLabel">{{item.zjrq}}</ion-label>
-            </ion-item>
-            <ion-item class="inputItem" *ngIf="itemName=='jjb'">
-              <ion-label class="noFlexLabel">交接班日期:</ion-label>
-              <ion-label class="itemContentLabel">{{item.jjbrq}}</ion-label>
             </ion-item>
             <ion-item class="inputItem" *ngIf="itemName=='zjb'">
               <ion-label class="noFlexLabel">周检人员:</ion-label>
@@ -97,7 +88,6 @@
           <div *ngIf="jjb.length!=0">
             <div  class="itemContentDiv">分公司：<div class="departNameDiv">{{jjb.fgsmc}}</div></div>
             <div  class="itemContentDiv">油站名称：<div class="departNameDiv">{{jjb.yzmc}}</div></div>
-            <div  class="itemContentDiv">交接日期：{{jjb.jjbrq}}</div>
           </div>
         </div>
         <div item-end *ngIf="jjb.length!=0" (click)="checkedItem(1)">
@@ -114,14 +104,6 @@
             <ion-item class="inputItem">
               <ion-label class="noFlexLabel">油站编码:</ion-label>
               <ion-label class="itemContentLabel">{{item.yzbm}}</ion-label>
-            </ion-item>
-            <ion-item class="inputItem" *ngIf="itemName=='zjb'">
-              <ion-label class="noFlexLabel">周检日期:</ion-label>
-              <ion-label class="itemContentLabel">{{item.zjrq}}</ion-label>
-            </ion-item>
-            <ion-item class="inputItem" *ngIf="itemName=='jjb'">
-              <ion-label class="noFlexLabel">交接班日期:</ion-label>
-              <ion-label class="itemContentLabel">{{item.jjbrq}}</ion-label>
             </ion-item>
             <ion-item class="inputItem" *ngIf="itemName=='zjb'">
               <ion-label class="noFlexLabel">周检人员:</ion-label>

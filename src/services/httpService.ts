@@ -3,15 +3,20 @@ import {Http,Headers,RequestOptions} from '@angular/http';
 import "rxjs/add/operator/map";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storageService";
-import {AlertController, App, LoadingController} from "ionic-angular";
+import {AlertController, App, LoadingController, Platform} from "ionic-angular";
+import {HTTP} from "@ionic-native/http";
 
 @Injectable()
 export class HttpService {
 
-  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController){}
+  constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController,private nativeHttp: HTTP,public platform:Platform){}
 
   public getUrl2(){
     let url=this.storageService.read("systemUrl");
+    return url
+  }
+  public getUrl3(){
+    let url=this.storageService.read("systemUrl2");
     return url
   }
   public getUrl(){
@@ -93,60 +98,116 @@ export class HttpService {
     }
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
+    headers.append('type','app');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
-    return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
-      (res)=>{
-        if (isLoading){
-          loading.dismiss();
-        }
-        if(successCallback){
-          if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
-            successCallback(res);
-          }else{
+    if (!this.platform.is("mobileweb")){
+      this.nativeHttp.setDataSerializer('urlencoded');
+      this.nativeHttp.post(url, body, {type:"app"})
+        .then(data => {
+          let res = JSON.parse(data.data);
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        })
+        .catch(error => {
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (error.status) {
+            case 401:
+              errMsg = "";
+              if (this.storageService.read("loginDepartName")){
+                this.postData(this.getUrl()+"appLoginController/login.do",
+                  {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                    this.postData(url,body,successCallback,isLoading,errorCallback)
+                  },true)
+                //PageUtil.pages["mine"].backToLoginPage();
+              }
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
             if (errorCallback){
-              errorCallback(res['msg']);
+              errorCallback(errMsg);
             }
             else {
-              this.errorCallback(res['msg']);
+              this.errorCallback(errMsg);
+            }
+          }
+        })
+    }
+    else {
+      return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
+        (res)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        },(err)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (err.status) {
+            case 401:
+              errMsg = "";
+              if (this.storageService.read("loginDepartName")){
+                this.postData(this.getUrl()+"appLoginController/login.do",
+                  {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                    this.postData(url,body,successCallback,isLoading,errorCallback)
+                  },true)
+                //PageUtil.pages["mine"].backToLoginPage();
+              }
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
             }
           }
         }
-      },(err)=>{
-        if (isLoading){
-          loading.dismiss();
-        }
-        let errMsg = "网络通信异常";
-        switch (err.status) {
-          case 401:
-            errMsg = "";
-            //
-            if (this.storageService.read("loginDepartName")){
-              this.postData(this.getUrl()+"appLoginController/login.do",
-                {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
-                  this.postData(url,body,successCallback,isLoading,errorCallback)
-                },true)
-              //PageUtil.pages["mine"].backToLoginPage();
-              //
-            }
-            break;
-          case 404:
-            errMsg = '抱歉，后台服务找不到对应接口';
-            break;
-          case 0:
-            errMsg = '网络无法连接';
-          default:
-            break;
-        }
-        if (errMsg!=""){
-          if (errorCallback){
-            errorCallback(errMsg);
-          }
-          else {
-            this.errorCallback(errMsg);
-          }
-        }
-      }
-    );
+      );
+    }
   };
   public postData2 (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
@@ -158,64 +219,120 @@ export class HttpService {
     }
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
+    headers.append('type','app');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (this.storageService.read("token"))
       body.token = this.storageService.read("token");
     if (this.storageService.read("loginDepartCode"))
       body.departCode = this.storageService.read("loginDepartCode");
-    return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
-      (res)=>{
-        if (isLoading){
-          loading.dismiss();
-        }
-        if(successCallback){
-          if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
-            successCallback(res);
-          }else{
+    if (!this.platform.is("mobileweb")){
+      this.nativeHttp.setDataSerializer('urlencoded');
+      this.nativeHttp.post(url, body, {type:"app"})
+        .then(data => {
+          let res = JSON.parse(data.data);
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        })
+        .catch(error => {
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (error.status) {
+            case 401:
+              errMsg = "";
+              if (this.storageService.read("loginDepartName")){
+                this.postData(this.getUrl()+"appLoginController/login.do",
+                  {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                    this.postData(url,body,successCallback,isLoading,errorCallback)
+                  },true)
+                //PageUtil.pages["mine"].backToLoginPage();
+              }
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
             if (errorCallback){
-              errorCallback(res['msg']);
+              errorCallback(errMsg);
             }
             else {
-              this.errorCallback(res['msg']);
+              this.errorCallback(errMsg);
+            }
+          }
+        })
+    }
+    else {
+      return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
+        (res)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        },(err)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (err.status) {
+            case 401:
+              errMsg = "";
+              if (this.storageService.read("loginDepartName")){
+                this.postData(this.getUrl()+"appLoginController/login.do",
+                  {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
+                    this.postData(url,body,successCallback,isLoading,errorCallback)
+                  },true)
+                //PageUtil.pages["mine"].backToLoginPage();
+              }
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
             }
           }
         }
-      },(err)=>{
-        if (isLoading){
-          loading.dismiss();
-        }
-        let errMsg = "网络通信异常";
-        switch (err.status) {
-          case 401:
-            errMsg = "";
-            //
-            if (this.storageService.read("loginDepartName")){
-              this.postData(this.getUrl()+"appLoginController/login.do",
-                {usercode:this.storageService.read("loginUserCode"),password:this.storageService.read("loginPassWord")},(data)=>{
-                  this.postData(url,body,successCallback,isLoading,errorCallback)
-                },true)
-              //PageUtil.pages["mine"].backToLoginPage();
-              //
-            }
-            break;
-          case 404:
-            errMsg = '抱歉，后台服务找不到对应接口';
-            break;
-          case 0:
-            errMsg = '网络无法连接';
-          default:
-            break;
-        }
-        if (errMsg!=""){
-          if (errorCallback){
-            errorCallback(errMsg);
-          }
-          else {
-            this.errorCallback(errMsg);
-          }
-        }
-      }
-    );
+      );
+    }
   };
   private transformRequest(obj){
     var str=[];

@@ -21,10 +21,6 @@
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label class="gasSelectLabel">周检日期:</ion-label>
-        <ion-input readonly [(ngModel)]="nowDataTime"></ion-input>
-      </ion-item>
-      <ion-item class="inputItem">
         <ion-label>周检人员:</ion-label>
         <ion-input [(ngModel)]="userName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
@@ -36,11 +32,12 @@
         <div class="fieldItem">{{cols.qyremark}}</div>
         <div class="fieldItem" *ngFor="let field of cols.fields;let i2 = index" >
           <span class="fieldTittle">{{field.columnTitle}}</span><span  class="fieldTittle" *ngIf="field.columnRequire==1" style="color: red">*</span><br>
-          <div>{{field.remark}}</div>
+          <div style="color:gray">{{field.remark}}</div>
           <ion-label class="detailDataLabel" *ngIf="detailData[field.columnName]">{{"未整改内容："+detailData[field.columnName]}}</ion-label>
           <ion-item class="labelItem">
             <ion-select *ngIf="field.columnRequire==1" class="fieldSelect" interface="popover" (ionChange)="selectedChange($event,i,i2)">
               <ion-option *ngIf="!detailData[field.columnName]">合格</ion-option>
+              <ion-option *ngIf="detailData[field.columnName]">暂未整改</ion-option>
               <ion-option>其他情况</ion-option>
             </ion-select>
             <ion-input class="fieldInput" *ngIf="!field.columnRequire" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>

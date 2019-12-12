@@ -18,7 +18,6 @@ export class WeeklyChecklistEntryPage {
   departName;
   gasStationCode;
   gasStationName;
-  nowDataTime;
   detail=[];
   localData;
   departListData = null;
@@ -49,9 +48,6 @@ export class WeeklyChecklistEntryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
-    this.nowDataTime = new Date(new Date().getTime()+8*60*60*1000).toISOString();
-    let i = this.nowDataTime.lastIndexOf("T");
-    this.nowDataTime = this.nowDataTime.substring(0,i);
     this.localData = this.navParams.get("Data");
     this.departListData = this.localData.fgsData;
     this.detailData = this.localData.detailData;
@@ -236,6 +232,9 @@ export class WeeklyChecklistEntryPage {
     }else if(ev == "其他情况"){
       this.temporaryStorageData["col"+(index*20+index2+1)]=ev;
       this.storageData["col"+(index*20+index2+1)]="";
+    }else if(ev == "暂未整改"){
+      this.temporaryStorageData["col"+(index*20+index2+1)]=ev;
+      this.storageData["col"+(index*20+index2+1)]="同上";
     }
   }
   deleteImg(index){
@@ -256,8 +255,6 @@ export class WeeklyChecklistEntryPage {
     })
   }
   saveInfo(){
-    let date = new Date(this.nowDataTime);
-    let storageDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate());
     for(let i = 0;i < this.colsData.length;i++){
       for (let j = 0;j < this.colsData[i].fields.length;j++){
         if(!this.storageData["col"+(i*20+j+1)]&&this.colsData[i].fields[j].columnRequire==1){
@@ -270,7 +267,6 @@ export class WeeklyChecklistEntryPage {
       }
     }
     if(this.departCode&&this.gasStationCode){
-      this.storageData["zjrq"]=storageDate;
       this.storageData["zjry"]=this.userName;
     }else {
       let alertCtrl = this.alertCtrl.create({
@@ -279,8 +275,8 @@ export class WeeklyChecklistEntryPage {
       alertCtrl.present();
       return false;
     }
-    this.storageData["fgsbm"]=this.departCode;
-    this.storageData["fgsmc"]=this.departName;
+    this.storageData["departcode"]=this.departCode;
+    this.storageData["departname"]=this.departName;
     this.storageData["yzbm"]=this.gasStationCode;
     this.storageData["yzmc"]=this.gasStationName;
     this.storageData = JSON.stringify(this.storageData);
