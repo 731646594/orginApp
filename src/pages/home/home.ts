@@ -30,9 +30,9 @@ export class HomePage {
   pageData;
   pageItem;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController) {
+    this.loadData();
   }
   ionViewDidEnter(){
-    this.loadData();
   }
   loadData(){
     that = this;
