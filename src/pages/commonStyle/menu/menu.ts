@@ -37,7 +37,6 @@ export class MenuPage {
   departCode;
   pageName;
   pageData;
-  itemData=[];
   paramsData;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
               public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
@@ -54,16 +53,6 @@ export class MenuPage {
     this.paramsData = this.navParams.data;
     this.pageName = this.paramsData.pageName;
     this.pageData = this.paramsData.pageData;
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("weeklyData",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.itemData.push(JSON.parse(res.rows.item(0).stringData));
-      }
-    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("handoverData",this.userCode),[]).then(res=>{
-      if (res.rows.length>0){
-        this.itemData.push(JSON.parse(res.rows.item(0).stringData));
-      }
-    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
   appChoose(page,params,canIn,funccode){
     if(canIn=="0"){
@@ -187,11 +176,9 @@ export class MenuPage {
     }
     else if(page == 51){
       willGoPage = WeeklyChecklistEntryPage;
-      params = {Data:this.itemData[0]};
     }
     else if(page == 52){
       willGoPage = ChangeShiftsEntryPage;
-      params = {Data:this.itemData[1]};
     }
     else if(page == 53){
       willGoPage = GasDataUploadPage;

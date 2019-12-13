@@ -48,41 +48,45 @@ export class WeeklyChecklistEntryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
-    this.localData = this.navParams.get("Data");
-    this.departListData = this.localData.fgsData;
-    this.detailData = this.localData.detailData;
-    this.departList = this.departListData;
-    let isEqual = true;
-    for (let i in this.departList){
-      if (this.departCode != this.departList[i].departcode){
-        isEqual = false;
-      }else {
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("weeklyData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.localData = JSON.parse(res.rows.item(0).stringData);
+        this.departListData = this.localData.fgsData;
+        this.detailData = this.localData.detailData;
+        this.departList = this.departListData;
+        let isEqual = true;
+        for (let i in this.departList){
+          if (this.departCode != this.departList[i].departcode){
+            isEqual = false;
+          }else {
+            isEqual = true;
+          }
+        }
+        if (!isEqual){
+          this.departCode = this.departList[0].departcode;
+          this.departName = this.departList[0].departname;
+        }
+        this.gasStationData = this.localData.jyzData;
+        this.gasStation = this.gasStationData;
         isEqual = true;
+        for (let i in this.departList){
+          if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
+            isEqual = false;
+          }else {
+            isEqual = true;
+          }
+        }
+        if (!isEqual){
+          this.gasStationCode = this.gasStation[0].departcode;
+          this.gasStationName = this.gasStation[0].departname;
+        }else {
+          this.gasStationCode = this.departCode;
+          this.gasStationName = this.departName;
+        }
+        this.colsData = this.localData.colsData;
+        this.storageData["uploadFile"]=[];
       }
-    }
-    if (!isEqual){
-      this.departCode = this.departList[0].departcode;
-      this.departName = this.departList[0].departname;
-    }
-    this.gasStationData = this.localData.jyzData;
-    this.gasStation = this.gasStationData;
-    isEqual = true;
-    for (let i in this.departList){
-      if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
-        isEqual = false;
-      }else {
-        isEqual = true;
-      }
-    }
-    if (!isEqual){
-      this.gasStationCode = this.gasStation[0].departcode;
-      this.gasStationName = this.gasStation[0].departname;
-    }else {
-      this.gasStationCode = this.departCode;
-      this.gasStationName = this.departName;
-    }
-    this.colsData = this.localData.colsData;
-    this.storageData["uploadFile"]=[];
+    }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
   }
   filterDepartName(ev: any) {
     const val = ev.target.value;
@@ -257,6 +261,9 @@ export class WeeklyChecklistEntryPage {
   saveInfo(){
     for(let i = 0;i < this.colsData.length;i++){
       for (let j = 0;j < this.colsData[i].fields.length;j++){
+        if(this.storageData["col"+(i*20+j+1)]){
+          this.storageData["col"+(i*20+j+1)] = (this.storageData["col"+(i*20+j+1)]+"").trim();
+        }
         if(!this.storageData["col"+(i*20+j+1)]&&this.colsData[i].fields[j].columnRequire==1){
           let alertCtrl = this.alertCtrl.create({
             title:"有必填项未填！"

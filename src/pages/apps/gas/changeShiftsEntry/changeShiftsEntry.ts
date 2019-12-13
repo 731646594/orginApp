@@ -62,41 +62,45 @@ export class ChangeShiftsEntryPage {
     this.departCode = this.storageService.read("loginDepartCode");
     this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.departName = this.storageService.read("loginDepartName");
-    this.localData = this.navParams.get("Data");
-    this.departListData = this.localData.fgsData;
-    this.detailData = this.localData.detailData;
-    this.departList = this.departListData;
-    let isEqual = true;
-    for (let i in this.departList){
-      if (this.departCode != this.departList[i].departcode){
-        isEqual = false;
-      }else {
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("handoverData",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        this.localData = JSON.parse(res.rows.item(0).stringData);
+        this.departListData = this.localData.fgsData;
+        this.detailData = this.localData.detailData;
+        this.departList = this.departListData;
+        let isEqual = true;
+        for (let i in this.departList){
+          if (this.departCode != this.departList[i].departcode){
+            isEqual = false;
+          }else {
+            isEqual = true;
+          }
+        }
+        if (!isEqual){
+          this.departCode = this.departList[0].departcode;
+          this.departName = this.departList[0].departname;
+        }
+        this.gasStationData = this.localData.jyzData;
+        this.gasStation = this.gasStationData;
         isEqual = true;
+        for (let i in this.departList){
+          if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
+            isEqual = false;
+          }else {
+            isEqual = true;
+          }
+        }
+        if (!isEqual){
+          this.gasStationCode = this.gasStation[0].departcode;
+          this.gasStationName = this.gasStation[0].departname;
+        }else {
+          this.gasStationCode = this.departCode;
+          this.gasStationName = this.departName;
+        }
+        this.colsData = this.localData.colsData;
+        this.storageData["uploadFile"]=[];
       }
-    }
-    if (!isEqual){
-      this.departCode = this.departList[0].departcode;
-      this.departName = this.departList[0].departname;
-    }
-    this.gasStationData = this.localData.jyzData;
-    this.gasStation = this.gasStationData;
-    isEqual = true;
-    for (let i in this.departList){
-      if (this.gasStation[i]&&this.departCode != this.gasStation[i].departcode){
-        isEqual = false;
-      }else {
-        isEqual = true;
-      }
-    }
-    if (!isEqual){
-      this.gasStationCode = this.gasStation[0].departcode;
-      this.gasStationName = this.gasStation[0].departname;
-    }else {
-      this.gasStationCode = this.departCode;
-      this.gasStationName = this.departName;
-    }
-    this.colsData = this.localData.colsData;
-    this.storageData["uploadFile"]=[];
+    }).catch(e =>alert("erro2_2:"+JSON.stringify(e)));
   }
   filterDepartName(ev: any) {
     const val = ev.target.value;
@@ -288,6 +292,9 @@ export class ChangeShiftsEntryPage {
   saveInfo(){
     if (this.oldIndex!=null){
       for (let j=0;j<this.colsData[this.oldIndex].fields.length;j++){
+        if(this.storageData["col"+(this.oldIndex*20+j+1)]){
+          this.storageData["col"+(this.oldIndex*20+j+1)] = (this.storageData["col"+(this.oldIndex*20+j+1)]+"").trim();
+        }
         if (!this.storageData["col"+(this.oldIndex*20+j+1)]&&this.colsData[this.oldIndex].fields[j].columnRequire==1){
           let alertCtrl1 = this.alertCtrl.create({
             title:"有必填项未填!"

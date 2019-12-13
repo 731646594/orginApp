@@ -14,14 +14,6 @@
       <ion-label class="itemContentLabel">{{item.yzbm}}</ion-label>
     </ion-item>
     <ion-item class="inputItem" *ngIf="itemName=='zjb'">
-      <ion-label class="noFlexLabel">周检日期:</ion-label>
-      <ion-label class="itemContentLabel">{{item.zjrq}}</ion-label>
-    </ion-item>
-    <ion-item class="inputItem" *ngIf="itemName=='jjb'">
-      <ion-label class="noFlexLabel">交接班日期:</ion-label>
-      <ion-label class="itemContentLabel">{{item.jjbrq}}</ion-label>
-    </ion-item>
-    <ion-item class="inputItem" *ngIf="itemName=='zjb'">
       <ion-label class="noFlexLabel">周检人员:</ion-label>
       <ion-label class="itemContentLabel">{{item.zjry}}</ion-label>
     </ion-item>
@@ -48,9 +40,8 @@
     <ion-item class="inputItem imgItem">
       <ion-label class="noFlexLabel">照片区&emsp;:</ion-label>
     </ion-item>
-    <div class="imgBox" *ngFor="let photo of photoShowArrary">
-      <div class="imgInclusion">
-        <img class="imgShow" (click)="showSign(photo)" src="{{photo}}">
+    <div class="imgBox">
+      <div id="imgBox">
       </div>
     </div>
     <ion-item class="inputItem imgItem" *ngIf="signatureImage1">

@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storageService";
 import {AlertController, App, LoadingController, Platform} from "ionic-angular";
 import {HTTP} from "@ionic-native/http";
+import * as $ from "jquery";
 
 @Injectable()
 export class HttpService {
@@ -102,6 +103,16 @@ export class HttpService {
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (!this.platform.is("mobileweb")){
       this.nativeHttp.setDataSerializer('urlencoded');
+      for(let i in body){
+        if($.isArray(body[i])&&i!="uploadFile"){
+          let str = "";
+          for (let j in body[i]){
+            str += ""+body[i][j]+",";
+          }
+          str = str.substring(0,str.length-1);
+          body[i] = str;
+        }
+      }
       this.nativeHttp.post(url, body, {type:"app"})
         .then(data => {
           let res = JSON.parse(data.data);

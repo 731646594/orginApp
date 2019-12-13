@@ -72,7 +72,7 @@ export class LoginPage {
   }
   entry(){
     this.downloadDictionaries();
-    if (this.storageService.read("serverUrl")=="http://210.12.193.61:9081/plamassets/mobile/"){
+    if (this.httpService.getUrl()=="http://210.12.193.61:9081/plamassets/mobile/"||(this.httpService.getUrl().indexOf("192.168")>-1)){
       this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
         if (data.success=="true"){
           this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));

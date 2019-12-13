@@ -4,6 +4,7 @@ import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 // import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
+import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
 
 @Component({
   selector: 'page-gasDataUpload',
@@ -21,6 +22,12 @@ export class GasDataUploadPage {
   itemName;
   checkedArray=[false,false];
   colsItemName=[];
+  colsItemNameW=[];
+  colsItemNameH=[];
+  colsDataW;
+  colsDataH;
+  detailDataW;
+  detailDataH;
   photoArrary=[];
   photoShowArrary=[];
   signatureImage1;
@@ -45,7 +52,27 @@ export class GasDataUploadPage {
         this.jjb = JSON.parse(res.rows.item(0).stringData);
         this.isHaveData = true;
       }
-    }).catch(e =>alert("erro22:"+JSON.stringify(e))  )
+    }).catch(e =>alert("erro22:"+JSON.stringify(e))  );
+    this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.departCode},data=>{
+      let colsData = data.data.colsData;
+      this.detailDataW = data.data.detailData;
+      this.colsDataW = colsData;
+      for (let i in colsData){
+        for (let j in colsData[i]["fields"]){
+          this.colsItemNameW.push(colsData[i]["fields"][j].columnTitle)
+        }
+      }
+      this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.departCode},data2=>{
+          let colsData = data2.data.colsData;
+          this.detailDataH = data.data.detailData;
+          this.colsDataH = colsData;
+          for (let i in colsData){
+            for (let j in colsData[i]["fields"]){
+              this.colsItemNameH.push(colsData[i]["fields"][j].columnTitle)
+            }
+          }
+      },true);
+    },false);
   }
 
   ionViewDidEnter(){
@@ -61,57 +88,7 @@ export class GasDataUploadPage {
     }
   }
   detailPage(data,name){
-    if(data.length!=0){
-      // this.app.getRootNav().push(GasDataUploadDetailPage,{data:data,name:name})
-      this.colItem = [];
-      this.itemName = null;
-      this.photoArrary = [];
-      this.colsItemName = [];
-      let url;
-      let content;
-      if (name=="zjb"){
-        content = document.getElementsByClassName("disContent")[0];
-        this.itemName = "zjb";
-        url = "devWeeklyCheckController/getCheckListCols.do";
-      }else if (name=="jjb"){
-        content = document.getElementsByClassName("disContent")[1];
-        this.itemName = "jjb";
-        url = "devHandOverController/getCheckListCols.do";
-      }
-      if ((<HTMLElement>content).style.display=="block"){
-        (<HTMLElement>content).style.display="none";
-      }else {
-        (<HTMLElement>content).style.display="block";
-        this.item = data;
-        for(let i in this.item){
-          if (i.indexOf("col")!=-1){
-            this.colItem.push(this.item[i])
-          }
-        }
-        this.photoArrary = this.item["uploadFile"];
-        let photoLen = this.photoArrary.length;
-        if (this.itemName=="jjb") {
-          this.signatureImage1 = this.photoArrary[photoLen - 2];
-          this.signatureImage2 = this.photoArrary[photoLen - 1];
-          photoLen = photoLen-2;
-        }
-        for(let i = 0;i<photoLen;i++){
-          this.photoShowArrary[i] = this.photoArrary[i]
-        }
-        this.httpService.postData(this.httpService.getUrl()+url,{departCode:this.departCode},data=>{
-          if (data.success=="true"){
-            let colsData = data.data.colsData;
-            for (let i in colsData){
-              for (let j in colsData[i]["fields"]){
-                this.colsItemName.push(colsData[i]["fields"][j].columnTitle)
-              }
-            }
-          }else {
-            alert(data.msg);
-          }
-        },true);
-      }
-    }
+    this.app.getRootNav().push(GasDataUploadDetailPage,{name:name,data:data})
   }
   uploadGasInfo(){
     if(!this.isHaveData){
@@ -121,7 +98,7 @@ export class GasDataUploadPage {
       alertCtrl.present();
       return false;
     }
-    if(!this.checkedArray[0]&&!this.checkedArray[0]){
+    if(!this.checkedArray[0]&&!this.checkedArray[1]){
       let alertCtrl = this.alertCtrl.create({
         title:"未选择要上传的数据！"
       });
@@ -138,7 +115,26 @@ export class GasDataUploadPage {
   uploading(url,data,name){
     let json = JSON.parse(JSON.stringify(data));
     delete json.uploadFile;
-    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:json,uploadFile:data["uploadFile"]},data=>{
+    for (let x in json) {
+      if (name=="zjb"){
+        for (let i in this.colsDataW){
+          for (let j in this.colsDataW[i]["fields"]){
+            if(this.colsDataW[i]["fields"][j].columnName==x&&this.detailDataW[this.colsDataW[i]["fields"][j].columnName]){
+              json[x] = this.detailDataW[x]+","+json[x]
+            }
+          }
+        }
+      }else if (name=="jjb"){
+        for (let i in this.colsDataH){
+          for (let j in this.colsDataH[i]["fields"]){
+            if(this.colsDataH[i]["fields"][j].columnName==x&&this.detailDataH[this.colsDataH[i]["fields"][j].columnName]){
+              json[x] = this.detailDataH[x]+","+json[x]
+            }
+          }
+        }
+      }
+    }
+    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:JSON.stringify(json),uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
           this.zjb=[];
