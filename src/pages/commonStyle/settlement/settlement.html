@@ -13,11 +13,8 @@
           <ion-list class="callContent">
             <ion-list class="callList" (click)="showForm(detail)">
               <div *ngFor="let parent of cardData.cardParent">
-                <div *ngIf="parent.itemName != '单据状态'">
+                <div>
                   <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
-                </div>
-                <div *ngIf="parent.itemName == '单据状态'">
-                  <label-normal [itemName]="parent.itemName" [labelValue]="detail['djztName']"></label-normal>
                 </div>
               </div>
               <div class="buttonBox">

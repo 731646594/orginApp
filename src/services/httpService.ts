@@ -17,7 +17,7 @@ export class HttpService {
     return url
   }
   public getUrl3(){
-    let url=this.storageService.read("systemUrl2");
+    let url="http://192.168.0.149:8077/obam/";
     return url
   }
   public getUrl(){
@@ -27,8 +27,8 @@ export class HttpService {
       // this.setUrl("http","192.168.0.212","81","plamassets");
       // return "http://192.168.0.212:81/plamassets/mobile/";
       //98
-      // this.setUrl("http","192.168.0.98","8088","plamassets");
-      // return "http://192.168.0.98:8088/plamassets/mobile/";
+      // this.setUrl("http","192.168.0.98","8086","plamassets");
+      // return "http://192.168.0.98:8086/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
@@ -99,7 +99,7 @@ export class HttpService {
     }
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
-    headers.append('type','app');
+    // headers.append('type','app');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (!this.platform.is("mobileweb")){
       this.nativeHttp.setDataSerializer('urlencoded');
@@ -230,7 +230,7 @@ export class HttpService {
     }
     var headers = new Headers();
     headers.append('Content-Type','application/x-www-form-urlencoded');
-    headers.append('type','app');
+    // headers.append('type','app');
     let options = new RequestOptions({ headers:headers, withCredentials: true});
     if (this.storageService.read("token"))
       body.token = this.storageService.read("token");

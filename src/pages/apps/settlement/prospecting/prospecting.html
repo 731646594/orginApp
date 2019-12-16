@@ -39,22 +39,6 @@
                   <div *ngIf="child.itemType == 'label'">
                     <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
                   </div>
-                  <div *ngIf="child.itemType == 'table'">
-                    <div class="tableBox">
-                      <div class="flexBox">
-                        <div class="flexCon" *ngFor="let tableT of child.tableItem">
-                          <ion-label>{{tableT.colName}}</ion-label>
-                        </div>
-                      </div>
-                      <div *ngFor="let tableC of briefTableData">
-                        <div class="flexBox">
-                          <div class="flexCon" *ngFor="let tableT of child.tableItem">
-                            <ion-label>{{tableC[tableT.colValue]}}</ion-label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </ion-list>
             </ion-content>
@@ -80,22 +64,6 @@
                 <div *ngFor="let child of item.card.cardChild">
                   <div *ngIf="child.itemType == 'label'">
                     <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
-                  </div>
-                  <div *ngIf="child.itemType == 'table'">
-                    <div class="tableBox">
-                      <div class="flexBox">
-                        <div class="flexCon" *ngFor="let tableT of child.tableItem">
-                          <ion-label>{{tableT.colName}}</ion-label>
-                        </div>
-                      </div>
-                      <div *ngFor="let tableC of detailedTableData">
-                        <div class="flexBox">
-                          <div class="flexCon" *ngFor="let tableT of child.tableItem">
-                            <ion-label>{{tableC[tableT.colValue]}}</ion-label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </ion-list>
@@ -135,9 +103,14 @@
     合计<br>
       <div class="callContentMiniBox">
         <ion-list class="callContent" style="width: 100%;max-width: 100%;overflow-x: auto;">
-          <ion-list class="callList" style="display: flex;padding: 0">
+          <ion-list class="callList" style="display: flex;padding: 0" *ngIf="shape=='brief'">
             <div *ngFor="let parent of sumItem">
               <label-normal [itemName]="parent.itemName" [labelValue]="sumData[parent.itemValue]"></label-normal>
+            </div>
+          </ion-list>
+          <ion-list class="callList" style="display: flex;padding: 0" *ngIf="shape=='detailed'">
+            <div *ngFor="let parent of sumItem2">
+              <label-normal [itemName]="parent.itemName" [labelValue]="sumData2[parent.itemValue]"></label-normal>
             </div>
           </ion-list>
         </ion-list>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
+import {ConfigProvider} from "../../../../services/config";
 
 @Component({
   selector: 'page-prospecting',
@@ -12,87 +13,78 @@ export class ProspectingPage {
   shape = "brief";
   pageData;
   displayIndex;
-  briefData = [{},{},{},{},{},{}];
-  detailedData = [{}];
-  moreData = [{}];
-  briefTableData = [{}];
-  detailedTableData = [{}];
+  briefData = [];
+  detailedData = [];
+  moreData = [];
   sumItem = [];
+  sumItem2 = [];
   sumData = {};
+  sumData2 = {};
+  invoice;
+  detailUrl;
+  enclosureUrl;
+  historyUrl;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams) {
     this.pageName = this.navParams.get("pageName").replace("审批","详情");
     this.pageData = {
-      segmentName:["单据明细", "附件明细", "审批历史记录"],
-      pageItem:[
+      segmentName: ["单据明细", "附件明细", "审批历史记录"],
+      pageItem: [
         [
-          {itemType:"card",
-            card:{
-              cardParent:[
-                {itemName:"设备编码", itemType:"label",itemValue:"sbbm"},
-                {itemName:"设备名称", itemType:"label",itemValue:"sbmc"},
+          {
+            itemType: "card",
+            card: {
+              cardParent: [
+                {itemName: "工程合同名称", itemType: "label", itemValue: "contractName"},
+                {itemName: "合同编号", itemType: "label", itemValue: "contractCode"},
               ],
-              cardChild:[
-                {itemName:"是否外包", itemType:"label",itemValue:"zfyl10"},
-                {itemName:"所属单位", itemType:"label",itemValue:"ssdwmc"},
-                {itemName:"资产类型", itemType:"label",itemValue:"sblxmc"},
-                {itemName:"资产类别", itemType:"label",itemValue:"zclbmc"},
-                {itemName:"特种设备", itemType:"label",itemValue:"tssb"},
-                {itemName:"规格型号", itemType:"label",itemValue:"ggxhmc"},
-                {itemName:"历史维修信息",itemType:"label", itemValue:"makeFactory"},
-                {itemName:"\u00A0\u00A0\u00A0\u00A0设备总维修次数",itemType:"label", itemValue:"wxCount"},
-                {itemName:"\u00A0\u00A0\u00A0\u00A0总维修金额",itemType:"label", itemValue:"sumMoney"},
-                {itemName:"历史维修信息明细",itemType:"label", itemValue:"makeFactory"},
-                {itemType:"table",tableItem:[
-                    {colName:"维修日期",colValue:"wxrq"},
-                    {colName:"维修金额",colValue:"zfyl1"},
-                    {colName:"故障描述",colValue:"zfyl2"},
-                  ]
-                }
+              cardChild: [
+                {itemName: "工作量", itemType: "label", itemValue: "totalWorks"},
+                {itemName: "审定金额（不含税）", itemType: "label", itemValue: "authorizeAmount"},
+                {itemName: "已付金额", itemType: "label", itemValue: "makeFactory"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostSettled"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxSettled"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostSettled"},
+                {itemName: "增（减）金额", itemType: "label", itemValue: "increaseDecreaseAmount"},
+                {itemName: "本次付款金额", itemType: "label", itemValue: "makeFactory"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
+                {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
               ]
             }
           }
         ],
         [
-          {itemType:"card",
-            card:{
-              cardParent:[
-                {itemName:"设备编码", itemType:"label",itemValue:"sbbm"},
-                {itemName:"设备名称", itemType:"label",itemValue:"sbmc"},
+          {
+            itemType: "card",
+            card: {
+              cardParent: [
+                {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+                {itemName: "施工内容", itemType: "label", itemValue: "buildContent"},
               ],
-              cardChild:[
-                {itemName:"是否外包", itemType:"label",itemValue:"zfyl10"},
-                {itemName:"所属单位", itemType:"label",itemValue:"ssdwmc"},
-                {itemName:"资产类型", itemType:"label",itemValue:"sblxmc"},
-                {itemName:"资产类别", itemType:"label",itemValue:"zclbmc"},
-                {itemName:"特种设备", itemType:"label",itemValue:"tssb"},
-                {itemName:"规格型号", itemType:"label",itemValue:"ggxhmc"},
-                {itemName:"历史维修信息",itemType:"label", itemValue:"makeFactory"},
-                {itemName:"\u00A0\u00A0\u00A0\u00A0设备总维修次数",itemType:"label", itemValue:"wxCount"},
-                {itemName:"\u00A0\u00A0\u00A0\u00A0总维修金额",itemType:"label", itemValue:"sumMoney"},
-                {itemName:"历史维修信息明细",itemType:"label", itemValue:"makeFactory"},
-                {itemType:"table",tableItem:[
-                    {colName:"维修日期",colValue:"wxrq"},
-                    {colName:"维修金额",colValue:"zfyl1"},
-                    {colName:"故障描述",colValue:"zfyl2"},
-                  ]
-                }
+              cardChild: [
+                {itemName: "施工日期", itemType: "label", itemValue: "buildDate"},
+                {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
+                {itemName: "备注", itemType: "label", itemValue: "remark"},
               ]
             }
           }
         ],
         [
-          {itemType:"card",
-            card:{
-              cardParent:[
-                {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
-                {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
+          {
+            itemType: "card",
+            card: {
+              cardParent: [
+                {itemName: "审批序号", itemType: "label", itemValue: "billNumber"},
+                {itemName: "岗位名称", itemType: "label", itemValue: "dutyName"},
               ],
-              cardChild:[
-                {itemName:"厂商地址", itemType:"label",itemValue:"csdz"},
-                {itemName:"联系电话", itemType:"label",itemValue:"lxdh"},
-                {itemName:"手机", itemType:"label",itemValue:"phone"},
-                {itemName:"厂商类型", itemType:"label",itemValue:"cslx"},
+              cardChild: [
+                {itemName: "岗位编号", itemType: "label", itemValue: "dutyId"},
+                {itemName: "审批人员", itemType: "label", itemValue: "userId"},
+                {itemName: "人员姓名", itemType: "label", itemValue: "userName"},
+                {itemName: "审批日期", itemType: "label", itemValue: "reviewDate"},
+                {itemName: "审批结果", itemType: "label", itemValue: "reviewResultName"},
+                {itemName: "审批意见", itemType: "label", itemValue: "reviewOpition"},
               ]
             }
           }
@@ -100,15 +92,34 @@ export class ProspectingPage {
       ],
     }
     this.sumItem = [
-      {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
-      {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
-      {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
-      {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
+      {itemName: "已付金额工程价款", itemType: "label", itemValue: "projectCostSettled"},
+      {itemName: "已付金额增值税款", itemType: "label", itemValue: "addTaxSettled"},
+      {itemName: "已付金额价税合计", itemType: "label", itemValue: "sumCostSettled"},
+      {itemName: "本次付款金额工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
+      {itemName: "本次付款金额增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
+      {itemName: "本次付款金额价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
     ]
-    this.sumData = {
-      csxh:11111111111111111,
-      csdwmc:48465.494
-    }
+    this.sumItem2 = [
+      {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
+    ]
+    this.invoice = this.navParams.get("data");
+    this.detailUrl = this.navParams.get("detailUrl");
+    this.enclosureUrl = this.navParams.get("enclosureUrl");
+    this.historyUrl = this.navParams.get("historyUrl");
+    this.httpService.postData2(this.httpService.getUrl3() + this.detailUrl, {invoiceId:this.invoice.invoiceNo}, (data)=> {
+      this.briefData = data.obj.rows;
+      this.sumData = data.obj.footer[0];
+      this.httpService.postData2(this.httpService.getUrl3() + this.enclosureUrl, {invoiceId:this.invoice.invoiceNo}, (data2)=> {
+        this.detailedData = data2.obj.rows;
+        this.sumData2 = data2.obj.footer[0];
+        this.httpService.postData2(this.httpService.getUrl3() + this.historyUrl+"&billNumber="+this.invoice.invoiceNo+"&reviewType="+this.invoice.invoiceTypeName+"审批", {}, (data3)=> {
+          this.moreData = data3.obj.rows;
+          for (let i in this.moreData){
+            this.moreData[i]["reviewResultName"] = ConfigProvider.resultName(this.moreData[i]["reviewResult"])
+          }
+        },false)
+      },false)
+    },true)
   }
   displayContent(index){
     let content = document.getElementsByClassName("disContent");

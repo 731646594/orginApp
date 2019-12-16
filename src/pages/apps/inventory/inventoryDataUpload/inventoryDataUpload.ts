@@ -98,7 +98,7 @@ export class InventoryDataUploadPage {
     let data = Object.assign({},this.planDetailList[this.planIndex]);
     delete data.uploadFile;
     let dataString = JSON.stringify(data)
-    this.httpService.post(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString}).subscribe(data=>{
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString},(data)=>{
       if (data.success=="true"){
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
         if(l>-1){
@@ -128,7 +128,7 @@ export class InventoryDataUploadPage {
       }else {
         this.uploadSinglePlan(loading)
       }
-    },(err)=>{
+    },true,(err)=>{
       loading.dismiss();
       let alertCtrl = this.alertCtrl.create({
         title:err

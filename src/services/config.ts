@@ -17,6 +17,18 @@ export class ConfigProvider {
     {name:"未派单",value:9},
     {name:"已派单",value:10},
   ];
+  static status = [
+    {name:"待送审",value:"01"},
+    {name:"待审批",value:"02"},
+    {name:"审批中",value:"03"},
+    {name:"驳回",value:"04"},
+    {name:"审核通过",value:"05"},
+  ];
+  static result = [
+    {name: "未审", value: "0"},
+    {name: "通过", value: "1"},
+    {name: "驳回", value: "2"}
+  ]
   static djzt2 = [
     {name:"未派单",value:"0"},
     {name:"已派单",value:"1"},
@@ -70,6 +82,22 @@ export class ConfigProvider {
     for (let i in this.djzt){
       if (this.djzt[i].value==value){
         return this.djzt[i].name
+      }
+    }
+    return false;
+  }
+  static statusName(value): any {
+    for (let i in this.status){
+      if (this.status[i].value==value){
+        return this.status[i].name
+      }
+    }
+    return false;
+  }
+  static resultName(value): any {
+    for (let i in this.result){
+      if (this.result[i].value==value){
+        return this.result[i].name
       }
     }
     return false;

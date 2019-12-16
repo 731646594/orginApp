@@ -38,9 +38,14 @@ export class MenuPage {
   pageName;
   pageData;
   paramsData;
+  isDownPlan = false;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
               public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
-
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=> {
+      if (res.rows.length > 0) {
+        this.isDownPlan = true;
+      }
+    })
   }
   ionViewDidEnter(){
     this.loadData();
@@ -80,6 +85,7 @@ export class MenuPage {
         return false;
       }
     }
+
     //11:快速扫码
     //12:盘点查询
     //13:数据下载
@@ -138,6 +144,13 @@ export class MenuPage {
       willGoPage = InventoryEntryPage;
     }
     else if(page == 17){
+      if (!this.isDownPlan){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请下载盘点计划！"
+        });
+        alertCtrl.present();
+        return false;
+      }
       willGoPage = RFIDScanPage;
     }
     else if(page == 21){

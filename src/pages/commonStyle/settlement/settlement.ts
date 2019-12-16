@@ -21,6 +21,9 @@ export class SettlementPage {
   listUrl = "";
   submitUrl = "";
   deleteUrl = "";
+  detailUrl = "";
+  enclosureUrl = "";
+  historyUrl = "";
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService,public modalCtrl?:ModalController, public toastCtrl?:ToastController) {
@@ -30,9 +33,12 @@ export class SettlementPage {
       this.submitUrl = "";
       this.deleteUrl = "";
     }else if (this.pageName == "工程竣工决算款审批"){
-      this.listUrl = "lhd/app/devRepairController.do?datagridbl";
-      this.submitUrl = "";
-      this.deleteUrl = "";
+      this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
+      this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
+      this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
+      this.detailUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryDetail";
+      this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail";
+      this.historyUrl = "lhd/app/reviewProcessApp.do?datagrid";
     }else if (this.pageName == "进度款审批"){
       this.listUrl = "lhd/app/devRepairController.do?datagridsp";
       this.submitUrl = "";
@@ -59,31 +65,47 @@ export class SettlementPage {
     }
     if (this.pageName == "工程竣工决算款审批") {
       this.cardData.cardParent = [
-        {itemName:"维修编号", itemType:"label",itemValue:"WXDH"},
-        {itemName:"派单状态", itemType:"label",itemValue:"djztName"},
-        {itemName:"单位名称", itemType:"label",itemValue:"SQDWMC"},
-        {itemName:"设备名称", itemType:"label",itemValue:"SBMC"},
-        {itemName:"维修人", itemType:"label",itemValue:"SQRMC"},
+        {itemName:"单据编号", itemType:"label",itemValue:"invoiceNo"},
+        {itemName:"状态", itemType:"label",itemValue:"statusName"},
+        {itemName:"单据名称", itemType:"label",itemValue:"invoiceName"},
+        {itemName:"附件类型", itemType:"label",itemValue:"attachTypeName"},
+        {itemName:"附件明细表头", itemType:"label",itemValue:"attachDetailTitle"},
+        {itemName:"附件建设单位", itemType:"label",itemValue:"attachCsoeName"},
+        {itemName:"明细数量", itemType:"label",itemValue:"numTotal"},
+        // {itemName:"单据类型", itemType:"label",itemValue:"invoiceTypeName"},
+        // {itemName:"制单单位", itemType:"label",itemValue:"departName"},
+        // {itemName:"制单时间", itemType:"label",itemValue:"createDate"},
+        // {itemName:"制单人", itemType:"label",itemValue:"operator"},
+        // {itemName:"备注", itemType:"label",itemValue:"remark"},
       ]
     }
   }
   ionViewDidLoad(){
-    this.itemData = [{}]
-    // this.page = 1;
-    // this.isNewSearch = true;
-    // this.httpService.postData2(this.httpService.getUrl3()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode},data=>{
-    //   this.itemData = data.obj.rows;
-    //   for (let i in this.itemData){
-    //     this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["djzt"])
-    //   }
-    //   console.log(this.itemData)
-    // },true);
+    this.itemData = [];
+    this.page = 1;
+    this.isNewSearch = true;
+    this.httpService.postData2(this.httpService.getUrl3()+this.listUrl,{page:this.page,rows:this.pageSize},data=>{
+      this.itemData = data.obj.rows;
+      for (let i in this.itemData){
+        this.itemData[i]["statusName"] = ConfigProvider.statusName(this.itemData[i]["status"])
+      }
+      console.log(this.itemData)
+    },true);
   }
   showForm(Data){
+    if(Data.attachTypeCode=='04'){
+      this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail"
+    }else if(Data.attachTypeCode=='02'){
+      this.enclosureUrl = "lhd/app/oldWellWorkDetailAppController.do?queryDetail"
+    }else if(Data.attachTypeCode=='03'){
+      this.enclosureUrl = "lhd/app/oldWellFractureDetailAppController.do?queryDetail"
+    }else if(Data.attachTypeCode=='05'){
+      this.enclosureUrl = "lhd/app/examineDetailAppController.do?queryDetail"
+    }
     if (this.pageName == "勘探部项目款审批"){
       this.app.getRootNav().push(ProspectingPage,{pageName:this.pageName,data:Data})
     }else if (this.pageName == "工程竣工决算款审批"){
-      this.app.getRootNav().push(ProspectingPage,{pageName:this.pageName,data:Data})
+      this.app.getRootNav().push(ProspectingPage,{pageName:this.pageName,data:Data,detailUrl:this.detailUrl,enclosureUrl:this.enclosureUrl,historyUrl:this.historyUrl})
     }else if (this.pageName == "进度款审批"){
       this.app.getRootNav().push(ProspectingPage,{pageName:this.pageName,data:Data})
     }else if (this.pageName == "一厂/三厂进度款审批"){
@@ -116,11 +138,7 @@ export class SettlementPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData2(this.httpService.getUrl3() + this.submitUrl, {
-                dataobj: JSON.stringify([detail]),
-                yj: e.reason
-                ,flag:3
-              }, data => {
+              this.httpService.postData2(this.httpService.getUrl3() + this.submitUrl, {invoiceNumbers:detail.invoiceNo,reviewOpinion:e.reason}, data => {
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title: "通过成功！"
@@ -159,7 +177,7 @@ export class SettlementPage {
               alertCtrl1.present();
               return false;
             }else {
-              this.httpService.postData2(this.httpService.getUrl3()+this.deleteUrl,{dataobj:JSON.stringify([detail]),yj:e.reason,flag:3},data=>{
+              this.httpService.postData2(this.httpService.getUrl3()+this.deleteUrl,{invoiceNumbers:detail.invoiceNo,reviewOpinion:e.reason},data=>{
                 console.log(data)
                 let alertCtrl = this.alertCtrl.create({
                   title:"驳回成功！"
@@ -182,7 +200,7 @@ export class SettlementPage {
     this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
       console.log(data)
       for (let i in data.obj.rows){
-        data.obj.rows[i]["djztName"] = ConfigProvider.djztName(data.obj.rows[i]["djzt"])
+        this.itemData[i]["statusName"] = ConfigProvider.statusName(this.itemData[i]["status"])
         this.itemData.push(data.obj.rows[i])
       }
       if (!data.obj.rows[0]){

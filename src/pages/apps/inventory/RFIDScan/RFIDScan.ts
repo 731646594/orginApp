@@ -7,7 +7,7 @@ import {RFIDScanListPage} from "../RFIDScanList/RFIDScanList";
 import * as  echarts from 'echarts';
 import { ConfigProvider } from '../../../../services/config';
 let that;
-
+declare let cordova: any;
 @Component({
   selector: 'page-RFIDScan',
   templateUrl: 'RFIDScan.html'
@@ -35,12 +35,24 @@ export class RFIDScanPage{
   newPlan=[];
   newMap={};
   scanPlan=[];
-  isScaning = false;
+  barCode;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
     that = this;
     PageUtil.pages["RFIDScan"]=this;
+    /**接收消息触发 */
+    document.addEventListener('rfid.receiveMessage', (event: any) => {
+      // this.logger.log(event,'Receive notification');
+      if (event.data.length==16){
+        let str = event.data.split("AA")[0];
+        this.getScanValue(str);
+      }
+    }, false);
+    this.init();
+  }
+  ionViewWillUnload(){
+    this.dispose()
   }
   ionViewDidEnter(){
     this.userCode = this.storageService.read("loginUserCode");
@@ -179,12 +191,11 @@ export class RFIDScanPage{
     this.app.getRootNav().push(RFIDScanListPage,{type:value});
   }
   beginScan(){
-    this.isScaning = true;
-    this.getScan();
+    this.startScan();
     this.drawChart();
   }
   stopScan(){
-    this.isScaning = false;
+    this.endScan();
   }
   cal(){
     let haveNew = false;
@@ -218,9 +229,9 @@ export class RFIDScanPage{
           if (this.willMap[barCode]){
             this.scanPlan.push(this.willMap[barCode])
           }else if (this.newMap[barCode]){
-              
+
           }else if (this.existMap[barCode]){
-            
+
           }else {
             this.scanPlan.push({barCode:barCode,checkResult:"3"})
           }
@@ -231,19 +242,35 @@ export class RFIDScanPage{
       if (this.willMap[barCode]){
         this.scanPlan.push(this.willMap[barCode])
       }else if (this.newMap[barCode]){
-          
+
       }else if (this.existMap[barCode]){
-        
+
       }else {
         this.scanPlan.push({barCode:barCode,checkResult:"3"})
       }
       this.numList["scan"]++;
     }
   }
-  getScan(){
-    if (this.isScaning){
-      let barCode = "1"
-      this.getScanValue(barCode)
-    }
+  init(){
+    cordova.plugins.RfidScanPlugin.initEngine("CX900", result => {
+      cordova.plugins.RfidScanPlugin.init("", result =>  {}, error => alert(error));
+
+    }, error => alert(error));
+  }
+  startScan(){
+    cordova.plugins.RfidScanPlugin.startScan("", result =>  {}, error => alert(error));
+  }
+  endScan(){
+    cordova.plugins.RfidScanPlugin.stopScan("", result =>  {}, error => alert(error));
+  }
+
+  getScanStatus(){
+    cordova.plugins.RfidScanPlugin.getScanStatus("", result =>{
+      let scanStatus = JSON.stringify(result)
+    }, error => alert(error));
+  }
+
+  dispose(){
+    cordova.plugins.RfidScanPlugin.dispose("", result => {}, error => alert(error));
   }
 }
