@@ -40,27 +40,7 @@ page-RFIDScan{
     display: grid;
     color:white;
   }
-  .labelInlineBox:nth-child(1) {
-    width: 100%;
-    .centerText{
-      width: 35%;
-      background: #E57D60;
-    }
-  }
-  .labelInlineBox:nth-child(2) .centerText{
-    background: #4389e8;
-    margin-right: 10px;
-  }
-  .labelInlineBox:nth-child(3) .centerText{
-    background: #D72A26;
-    margin-left: 10px;
-  }
-  .labelInlineBox:nth-child(4) .centerText{
-    background: #2C4755;
-    margin-right: 10px;
-  }
-  .labelInlineBox:nth-child(5) .centerText{
-    background: #44A1A9;
-    margin-left: 10px;
+  .inlineBox{
+    display: flex;
   }
 }
