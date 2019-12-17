@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      设备类型
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div style="margin-bottom: 60px">
+    <ion-item no-lines >
+      <ion-label>请选择设备类型</ion-label>
+    </ion-item>
+    <div style="width: 100%;padding: 0 5%">
+      <div class="radioBox" radio-group [(ngModel)]="selectedType">
+        <ion-item class="radioItem" *ngFor="let data of typeData">
+          <ion-label>{{data.itemName}}</ion-label>
+          <ion-radio [value]="data.itemValue"></ion-radio>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding>
+  <button class="formFooterButton" (click)="saveType()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+</footer>

@@ -169,6 +169,7 @@ export class InventoryDataUploadPage {
           handler:()=>{
             let l = this.planDetailList[index].realIndex-this.newPlanDetail.length;
             if(l>-1){
+              this.existPlanDetail[l]["checkResult"]='';
               this.willPlanDetail.push(this.existPlanDetail[l]);
               this.existPlanDetail.splice(l,1);
               this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));

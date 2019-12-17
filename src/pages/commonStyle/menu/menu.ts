@@ -38,7 +38,6 @@ export class MenuPage {
   pageName;
   pageData;
   paramsData;
-  isDownPlan = false;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
               public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
 
@@ -54,11 +53,6 @@ export class MenuPage {
     this.paramsData = this.navParams.data;
     this.pageName = this.paramsData.pageName;
     this.pageData = this.paramsData.pageData;
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=> {
-      if (res.rows.length > 0) {
-        this.isDownPlan = true;
-      }
-    })
   }
   appChoose(page,params,canIn,funccode){
     if(canIn=="0"){
@@ -145,14 +139,17 @@ export class MenuPage {
       willGoPage = InventoryEntryPage;
     }
     else if(page == 17){
-      if (!this.isDownPlan){
-        let alertCtrl = this.alertCtrl.create({
-          title:"请下载盘点计划！"
-        });
-        alertCtrl.present();
-        return false;
-      }
-      willGoPage = RFIDScanPage;
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=> {
+        if (res.rows.length > 0) {
+          this.app.getRootNav().push(RFIDScanPage,params)
+        }else {
+          let alertCtrl = this.alertCtrl.create({
+            title:"请下载盘点计划！"
+          });
+          alertCtrl.present();
+          return false;
+        }
+      })
     }
     else if(page == 21){
       willGoPage = ScrapApplicationPage;

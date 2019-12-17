@@ -34,9 +34,9 @@ export class RFIDScanPage{
   existMap={};
   newPlan=[];
   newMap={};
-  scanPlan=[];
   barCode;
   isScanning = false;
+  scanList = {};
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
@@ -47,7 +47,22 @@ export class RFIDScanPage{
       // this.logger.log(event,'Receive notification');
       if (event.data.length==16){
         let str = event.data.split("AA")[0];
-        this.getScanValue(str);
+        this.scanList[str] = {barCode:str,checkResult:"3"};
+        let len = 0;
+        for (let i in this.scanList){
+          if (this.willMap[i]){
+            this.scanList[i] = this.willMap[i]
+          }
+          if (this.newMap[i]){
+            delete this.scanList[i]
+          }else if (this.existMap[i]){
+            delete this.scanList[i]
+          }
+          len++
+        }
+        this.numList["scan"] = len;
+        PageUtil.pages["RFIDScanList"].data = this.scanList;
+        PageUtil.pages["RFIDScanList"].getData();
       }
     }, false);
     this.init();
@@ -56,13 +71,18 @@ export class RFIDScanPage{
     this.dispose()
   }
   ionViewDidEnter(){
+    let len = 0;
+    for (let i in this.scanList){
+      len++
+    }
+    this.numList["scan"] = len;
     this.userCode = this.storageService.read("loginUserCode");
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.willPlan = JSON.parse(res.rows.item(0).stringData);
         this.numList["will"] = this.willPlan.length;
         for (let i in this.willPlan){
-          this.willMap[this.willPlan['barCode']] = this.willPlan[i]
+          this.willMap[this.willPlan[i]['barCode']] = this.willPlan[i]
         }
       }
       this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
@@ -70,15 +90,16 @@ export class RFIDScanPage{
           this.existPlan = JSON.parse(res.rows.item(0).stringData);
           this.numList["exist"] = this.existPlan.length;
           for (let i in this.existPlan){
-            this.existMap[this.existPlan['barCode']] = this.existPlan[i]
+            this.existMap[this.existPlan[i]['barCode']] = this.existPlan[i]
           }
+          alert(JSON.stringify(this.existMap))
         }
         this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
           if (res.rows.length>0){
             this.newPlan = JSON.parse(res.rows.item(0).stringData);
             this.numList["new"] = this.newPlan.length;
             for (let i in this.newPlan){
-              this.newMap[this.newPlan['barCode']] = this.newPlan[i]
+              this.newMap[this.newPlan[i]['barCode']] = this.newPlan[i]
             }
           }
           this.allPlan = [];
@@ -189,7 +210,7 @@ export class RFIDScanPage{
     chart1.setOption(option1);
   }
   nextPage(value){
-    this.app.getRootNav().push(RFIDScanListPage,{type:value});
+    this.app.getRootNav().push(RFIDScanListPage,{type:value,data:this.scanList});
   }
   beginScan(){
     this.startScan();
@@ -200,17 +221,16 @@ export class RFIDScanPage{
   }
   cal(){
     let haveNew = false;
-    for(let i in this.scanPlan){
-      if(this.scanPlan[i].checkResult==''){
-        this.scanPlan[i].checkResult = "1";
+    for(let i in this.scanList){
+      if(!this.scanList[i].checkResult||this.scanList[i].checkResult==''){
+        this.scanList[i].checkResult = "1";
         for(let j = 0; j<this.willPlan.length;j++){
-          if(this.willPlan[j].barCode == this.scanPlan[i].barCode){
+          if(this.willPlan[j].barCode == i){
             this.willPlan.splice(j,1);
           }
         }
-        this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(this.willPlan));
-        this.existPlan.push(this.scanPlan[i]);
-        this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(this.existPlan));
+        this.existPlan.push(this.scanList[i]);
+        delete this.scanList[i];
       }else{
         haveNew = true;
       }
@@ -221,39 +241,14 @@ export class RFIDScanPage{
       });
       alertCtrl.present();
     }
-    this.drawChart();
-  }
-  getScanValue(barCode){
-    if(this.scanPlan.length>0){
-      for (let i in this.scanPlan){
-        if (barCode != this.scanPlan[i].barCode){
-          if (this.willMap[barCode]){
-            this.scanPlan.push(this.willMap[barCode])
-          }else if (this.newMap[barCode]){
-
-          }else if (this.existMap[barCode]){
-
-          }else {
-            this.scanPlan.push({barCode:barCode,checkResult:"3"})
-          }
-          this.numList["scan"]++;
-        }
-      }
-    }else{
-      if (this.willMap[barCode]){
-        this.scanPlan.push(this.willMap[barCode])
-      }else if (this.newMap[barCode]){
-
-      }else if (this.existMap[barCode]){
-
-      }else {
-        this.scanPlan.push({barCode:barCode,checkResult:"3"})
-      }
-      this.numList["scan"]++;
-    }
+    this.storageService.sqliteInsert2("willPlanDetail",this.userCode,JSON.stringify(this.willPlan),(e)=>{
+      this.storageService.sqliteInsert2("existPlanDetail",this.userCode,JSON.stringify(this.existPlan),(e)=>{
+        this.ionViewDidEnter();
+      });
+    });
   }
   init(){
-    cordova.plugins.RfidScanPlugin.initEngine("CX900", result => {
+    cordova.plugins.RfidScanPlugin.initEngine(this.storageService.read("deviceType"), result => {
       cordova.plugins.RfidScanPlugin.init("", result =>  {}, error => alert(error));
 
     }, error => alert(error));

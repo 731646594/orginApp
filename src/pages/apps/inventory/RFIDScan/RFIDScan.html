@@ -20,15 +20,15 @@
           <ion-label class="noFlexLabel centerText" style="background: #4389e8;margin-right: 10px;" (click)="nextPage(pageItem[0].itemValue)">{{pageItem[0].itemName+":"+numList[pageItem[0].itemValue]}}</ion-label>
         </div>
         <div class="labelInlineBox">
-          <ion-label class="noFlexLabel centerText" style="background: #D72A26;margin-left: 10px;" (click)="nextPage(pageItem[1].itemValue)">{{pageItem[1].itemName+":"+numList[pageItem[0].itemValue]}}</ion-label>
+          <ion-label class="noFlexLabel centerText" style="background: #D72A26;margin-left: 10px;" (click)="nextPage(pageItem[1].itemValue)">{{pageItem[1].itemName+":"+numList[pageItem[1].itemValue]}}</ion-label>
         </div>
       </div>
       <div class="inlineBox">
         <div class="labelInlineBox">
-          <ion-label class="noFlexLabel centerText" style="background: #2C4755;margin-right: 10px;" (click)="nextPage(pageItem[2].itemValue)">{{pageItem[2].itemName+":"+numList[pageItem[0].itemValue]}}</ion-label>
+          <ion-label class="noFlexLabel centerText" style="background: #2C4755;margin-right: 10px;" (click)="nextPage(pageItem[2].itemValue)">{{pageItem[2].itemName+":"+numList[pageItem[2].itemValue]}}</ion-label>
         </div>
         <div class="labelInlineBox">
-          <ion-label class="noFlexLabel centerText" style="background: #44A1A9;margin-left: 10px;" (click)="nextPage(pageItem[3].itemValue)">{{pageItem[3].itemName+":"+numList[pageItem[0].itemValue]}}</ion-label>
+          <ion-label class="noFlexLabel centerText" style="background: #44A1A9;margin-left: 10px;" (click)="nextPage(pageItem[3].itemValue)">{{pageItem[3].itemName+":"+numList[pageItem[3].itemValue]}}</ion-label>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
   <button class="formFooterButton" *ngIf="isScanning" (click)="stopScan()">
     <ion-icon class="formFooterIcon" name="stopwatch"></ion-icon><br>停止
   </button>
-  <button class="formFooterButton" (click)="cal()">
+  <button class="formFooterButton" *ngIf="!isScanning" (click)="cal()">
     <ion-icon class="formFooterIcon" name="calculator"></ion-icon><br>计算
   </button>
 </footer>

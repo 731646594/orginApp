@@ -151,7 +151,7 @@ export class InventoryPage {
     let saveToPhotoAlbum;
     if (type){
       sourceType = this.camera.PictureSourceType.CAMERA;
-      saveToPhotoAlbum = true;
+      saveToPhotoAlbum = false;
     }
     else {
       sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;

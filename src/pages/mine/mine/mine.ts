@@ -5,6 +5,7 @@ import {ServerSettingPage} from "../serverSetting/serverSetting";
 import {ModifyPasswordPage} from "../modifyPassword/modifyPassword";
 import {LoginPage} from "../login/login";
 import {HttpService} from "../../../services/httpService";
+import {DeviceTypePage} from "../deviceType/deviceType";
 
 @Component({
   selector: 'page-mine',
@@ -100,6 +101,9 @@ export class MinePage {
     }
     else if(page == 7){
       this.downloadDictionaries();
+    }
+    else if(page == 8){
+      willGoPage = DeviceTypePage;
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

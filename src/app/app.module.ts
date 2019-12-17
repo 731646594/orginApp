@@ -86,6 +86,7 @@ import {FileOpener} from "@ionic-native/file-opener";
 import {ProspectingPage} from "../pages/apps/settlement/prospecting/prospecting";
 import {SettlementPage} from "../pages/commonStyle/settlement/settlement";
 import {HTTP} from "@ionic-native/http";
+import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import {HTTP} from "@ionic-native/http";
     MaintenancePage,
     MaintenanceAlertPage,
     SettlementPage,
-    ProspectingPage
+    ProspectingPage,
+    DeviceTypePage
   ],
   imports: [
     BrowserModule,
@@ -240,6 +242,7 @@ import {HTTP} from "@ionic-native/http";
     MaintenanceAlertPage,
     SettlementPage,
     ProspectingPage,
+    DeviceTypePage
   ],
   providers: [
     StatusBar,

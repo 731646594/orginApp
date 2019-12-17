@@ -1,0 +1,21 @@
+page-deviceType {
+  .radioBox{
+    border: 1px solid #c8c7cc;
+    display: block;
+  }
+  .radioItem{
+    border-bottom: 0.55px solid #c8c7cc;
+    .item-inner{
+      border-bottom: none !important;
+    }
+  }
+  .radioItem:last-child{
+    border-bottom: none;
+  }
+
+  .item-ios .item-button {
+    padding: 0 0.5em;
+    height: 34px;
+    font-size: 1.3rem;
+  }
+}

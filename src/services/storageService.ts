@@ -63,6 +63,28 @@ export class StorageService {
       }
     }).catch(e =>alert("erro7:"+JSON.stringify(e)));
   }
+  sqliteInsert2(tableName,userCode,stringData,callBack){
+    this.createUserTable(tableName);
+    this.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
+      if (res.rows.length>0){
+        this.updateUserTable2(tableName,userCode,stringData,callBack);
+      }else {
+        this.insertIntoUserTable2(tableName,userCode,stringData,callBack);
+      }
+    }).catch(e =>alert("erro7:"+JSON.stringify(e)));
+  }
+  updateUserTable2(tableName,userCode,stringData,callBack){
+    this.AssetInventoryDatabase.executeSql('UPDATE '+tableName+' SET stringData=? WHERE userCode=?;', [stringData, userCode]).then(res=>{
+      callBack(res)
+    }).catch(e => alert("erro4:"+JSON.stringify(e)));
+
+  }
+  insertIntoUserTable2(tableName,userCode,stringData,callBack){
+    this.AssetInventoryDatabase.executeSql('INSERT INTO '+tableName+' VALUES (?, ?);', [userCode, stringData]).then(res=>{
+      callBack(res)
+    }).catch(e => alert("erro3:"+JSON.stringify(e)));
+
+  }
   sqliteDrop(tableName,userCode){
     this.createUserTable(tableName);
     this.getUserTable().executeSql('SELECT * FROM '+tableName+' WHERE userCode=\''+userCode+'\';',[]).then(res =>{
