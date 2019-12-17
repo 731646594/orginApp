@@ -5,8 +5,8 @@ import {BarcodeScanner,} from "@ionic-native/barcode-scanner";
 import {File} from "@ionic-native/file";
 import {RFIDScanListPage} from "../RFIDScanList/RFIDScanList";
 import * as  echarts from 'echarts';
-import { ConfigProvider } from '../../../../services/config';
 let that;
+import * as $ from "jquery";
 declare let cordova: any;
 @Component({
   selector: 'page-RFIDScan',
@@ -36,6 +36,7 @@ export class RFIDScanPage{
   newMap={};
   scanPlan=[];
   barCode;
+  isScanning = false;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
@@ -258,9 +259,11 @@ export class RFIDScanPage{
     }, error => alert(error));
   }
   startScan(){
+    this.isScanning = true;
     cordova.plugins.RfidScanPlugin.startScan("", result =>  {}, error => alert(error));
   }
   endScan(){
+    this.isScanning = false;
     cordova.plugins.RfidScanPlugin.stopScan("", result =>  {}, error => alert(error));
   }
 

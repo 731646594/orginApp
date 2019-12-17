@@ -169,12 +169,12 @@ export class TabsPage {
         [1,this.shebeibaoyang,"","设备保养管理"],[1,this.danjujiesuanguanli,"","结算单据管理"]
       ]
     };
-    if(this.storageService.read("applyPageData")){
-      this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
-      if (this.pageData1.pageData.length==2){
-        this.isShowHome = false
-      }
-    }
+    // if(this.storageService.read("applyPageData")){
+    //   this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
+    //   if (this.pageData1.pageData.length==2){
+    //     this.isShowHome = false
+    //   }
+    // }
     this.pageData2 = {
       pageName:"我的",
       pageData:[

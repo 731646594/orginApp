@@ -21,10 +21,10 @@
 </ion-content>
 
 <footer class="formFooter" padding>
-  <button class="formFooterButton" (click)="beginScan()">
+  <button class="formFooterButton" *ngIf="!isScanning" (click)="beginScan()">
     <ion-icon class="formFooterIcon" name="qr-scanner"></ion-icon><br>开始
   </button>
-  <button class="formFooterButton" (click)="stopScan()">
+  <button class="formFooterButton" *ngIf="isScanning" (click)="stopScan()">
     <ion-icon class="formFooterIcon" name="stopwatch"></ion-icon><br>停止
   </button>
   <button class="formFooterButton" (click)="cal()">

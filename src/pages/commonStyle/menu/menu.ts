@@ -41,11 +41,7 @@ export class MenuPage {
   isDownPlan = false;
   constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
               public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
-    this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=> {
-      if (res.rows.length > 0) {
-        this.isDownPlan = true;
-      }
-    })
+
   }
   ionViewDidEnter(){
     this.loadData();
@@ -58,6 +54,11 @@ export class MenuPage {
     this.paramsData = this.navParams.data;
     this.pageName = this.paramsData.pageName;
     this.pageData = this.paramsData.pageData;
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=> {
+      if (res.rows.length > 0) {
+        this.isDownPlan = true;
+      }
+    })
   }
   appChoose(page,params,canIn,funccode){
     if(canIn=="0"){
