@@ -103,6 +103,8 @@ export class ProspectingPage {
       {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
     ]
     this.invoice = this.navParams.get("data");
+    this.pageData.pageItem[0][0].card = this.navParams.get("detailItem");
+    this.sumItem = this.navParams.get("detailSumItem");
     if (this.invoice.attachTypeName=="无附件明细"){
       this.pageData.segmentName = ["单据明细","", "审批历史记录"];
     }else if(this.invoice.attachTypeName=="老井作业结算明细表"){

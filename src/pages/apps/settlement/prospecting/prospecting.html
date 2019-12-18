@@ -99,7 +99,7 @@
   </div>
 </ion-content>
 <footer class="formFooter" padding>
-  <button class="formFooterButton" *ngIf="shape=='brief'||(shape=='detailed'&&sumItem2.length!=0)">
+  <button class="formFooterButton" *ngIf="(shape=='brief'&&sumItem.length!=0)||(shape=='detailed'&&sumItem2.length!=0)">
     合计<br>
       <div class="callContentMiniBox">
         <ion-list class="callContent" style="width: 100%;max-width: 100%;overflow-x: auto;">
