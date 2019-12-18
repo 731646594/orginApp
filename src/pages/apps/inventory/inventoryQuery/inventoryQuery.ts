@@ -131,10 +131,10 @@ export class InventoryQueryPage {
               };
               reader.readAsDataURL(file);
             }, err => {
-              alert(err)
+              alert("1："+JSON.stringify(err))
             });
           }, err => {
-            alert(err)
+
           })
         }
         this.planDetailList.push(item[i]);
@@ -175,10 +175,10 @@ export class InventoryQueryPage {
                 };
                 reader.readAsDataURL(file);
               }, err => {
-                alert(err)
+                alert("3："+JSON.stringify(err))
               });
             }, err => {
-              alert(err)
+              alert("4："+JSON.stringify(err))
             })
           }
           this.planDetailList.push(item[i]);

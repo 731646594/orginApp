@@ -86,9 +86,6 @@ export class TabsPage {
         [
           [14,"","chaxun.png","本地下载查询","1"],[15,"","shangchuan.png","数据上传","1"],[16,"","luruzhong.png","盘盈录入","1"]
         ],
-        [
-          [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
-        ]
       ]
     };
     this.baofei = {
@@ -169,12 +166,19 @@ export class TabsPage {
         [1,this.shebeibaoyang,"","设备保养管理"],[1,this.danjujiesuanguanli,"","结算单据管理"]
       ]
     };
-    // if(this.storageService.read("applyPageData")){
-    //   this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
-    //   if (this.pageData1.pageData.length==2){
-    //     this.isShowHome = false
-    //   }
-    // }
+    if(this.storageService.read("applyPageData")){
+      this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
+      if (this.pageData1.pageData.length==2){
+        this.isShowHome = false
+      }
+    }
+    if (this.storageService.read("deviceType")&&this.storageService.read("deviceType")!="phone"){
+      this.pageData1.pageData[0][1].pageData.push(
+        [
+          [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+        ]
+      )
+    }
     this.pageData2 = {
       pageName:"我的",
       pageData:[
@@ -182,7 +186,10 @@ export class TabsPage {
           [2,"","shezhi.png","服务器设置"],[3,"","xiugai.png","修改密码"],[4,"","qiehuan.png","切换单位"]
         ],
         [
-          [6,"","qingchu.png","清除数据"],[7,"","gengxin.png","更新字典"],[5,"","tuichu.png","退出登陆"]
+          [6,"","qingchu.png","清除数据"],[7,"","gengxin.png","更新字典"],[8,"","shezhi.png","设备类型"],
+        ],
+        [
+          [5,"","tuichu.png","退出登陆"],
         ]
       ]
     }

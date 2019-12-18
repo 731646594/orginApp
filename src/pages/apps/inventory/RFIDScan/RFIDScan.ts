@@ -71,11 +71,6 @@ export class RFIDScanPage{
     this.dispose()
   }
   ionViewDidEnter(){
-    let len = 0;
-    for (let i in this.scanList){
-      len++
-    }
-    this.numList["scan"] = len;
     this.userCode = this.storageService.read("loginUserCode");
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
@@ -92,7 +87,6 @@ export class RFIDScanPage{
           for (let i in this.existPlan){
             this.existMap[this.existPlan[i]['barCode']] = this.existPlan[i]
           }
-          alert(JSON.stringify(this.existMap))
         }
         this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
           if (res.rows.length>0){
@@ -105,14 +99,11 @@ export class RFIDScanPage{
           this.allPlan = [];
           this.allPlan = this.allPlan.concat(this.willPlan).concat(this.existPlan).concat(this.newPlan);
           this.numList["all"] = this.numList["will"]+this.numList["exist"]+this.numList["new"];
-          if (this.numList["all"]==0){
-            let alertCtrl = this.alertCtrl.create({
-              title:"请先下载盘点计划！"
-            });
-            alertCtrl.present();
-            this.app.getRootNav().pop();
-            return false;
+          let len = 0;
+          for (let i in this.scanList){
+            len++
           }
+          this.numList["scan"] = len;
           this.drawChart();
         });
       });
