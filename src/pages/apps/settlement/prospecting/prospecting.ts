@@ -103,6 +103,114 @@ export class ProspectingPage {
       {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
     ]
     this.invoice = this.navParams.get("data");
+    if (this.invoice.attachTypeName=="无附件明细"){
+      this.pageData.segmentName = ["单据明细","", "审批历史记录"];
+    }else if(this.invoice.attachTypeName=="老井作业结算明细表"){
+      this.pageData.pageItem[1][0].card = {
+        cardParent: [
+          {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+          {itemName: "施工内容", itemType: "label", itemValue: "buildContent"},
+        ],
+        cardChild: [
+          {itemName: "施工日期", itemType: "label", itemValue: "buildDate"},
+          {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
+          {itemName: "备注", itemType: "label", itemValue: "remark"},
+        ]
+      };
+      this.sumItem2 = [
+        {itemName: "结算价格（元）", itemType: "label", itemValue: "settleMoney"},
+      ]
+    }else if(this.invoice.attachTypeName=="老井压裂结算明细表"){
+      this.pageData.pageItem[1][0].card = {
+        cardParent: [
+          {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+          {itemName: "项目", itemType: "label", itemValue: "projectName"},
+        ],
+        cardChild: [
+          {itemName: "施工日期", itemType: "label", itemValue: "buildDate"},
+          {itemName: "液量m3", itemType: "label", itemValue: "fluidMeasure"},
+          {itemName: "压裂井深（米）", itemType: "label", itemValue: "wellDeep"},
+          {itemName: "施工费（元）", itemType: "label", itemValue: "buildMoney"},
+          {itemName: "备注", itemType: "label", itemValue: "remark"},
+        ]
+      };
+      this.sumItem2 = [
+        {itemName: "施工费（元）", itemType: "label", itemValue: "buildMoney"},
+      ]
+    }else if(this.invoice.attachTypeName=="新井进度款结算明细表"){
+      this.pageData.pageItem[1][0].card = {
+        cardParent: [
+          {itemName: "建设单位", itemType: "label", itemValue: "buildDepart"},
+          {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+        ],
+        cardChild: [
+          {itemName: "层数", itemType: "label", itemValue: "floors"},
+          {itemName: "试油工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0施工费", itemType: "label", itemValue: "buildCostOil"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0材料费", itemType: "label", itemValue: "materialCostOil"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0小计", itemType: "label", itemValue: "sumOil"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0附加费用", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0气举费", itemType: "label", itemValue: "gasCost"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0其他费用", itemType: "label", itemValue: "otherCost"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0试油费用", itemType: "label", itemValue: "testCost"},
+          {itemName: "压裂工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0施工费", itemType: "label", itemValue: "buildCostFracture"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0材料费", itemType: "label", itemValue: "materialCostFracture"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0压裂费用", itemType: "label", itemValue: "fractureCost"},
+          {itemName: "射孔工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0射孔费用", itemType: "label", itemValue: "perforationCost"},
+          {itemName: "总费用", itemType: "label", itemValue: "totalCost"},
+          {itemName: "进度款比例", itemType: "label", itemValue: "progressScale"},
+          {itemName: "进度款", itemType: "label", itemValue: "progressMoney"},
+          {itemName: "已付进度款", itemType: "label", itemValue: "payMoney"},
+          {itemName: "本次进度款", itemType: "label", itemValue: "currMoney"},
+          {itemName: "备注", itemType: "label", itemValue: "remark"},
+        ]
+      };
+      this.sumItem2 = [
+        {itemName: "试油工程施工费", itemType: "label", itemValue: "buildCostOil"},
+        {itemName: "试油工程材料费", itemType: "label", itemValue: "materialCostOil"},
+        {itemName: "试油工程小计", itemType: "label", itemValue: "sumOil"},
+        {itemName: "试油工程附加费用", itemType: "label", itemValue: "makeFactory"},
+        {itemName: "试油工程附加费用气举费", itemType: "label", itemValue: "gasCost"},
+        {itemName: "试油工程附加费用其他费用", itemType: "label", itemValue: "otherCost"},
+        {itemName: "试油工程试油费用", itemType: "label", itemValue: "testCost"},
+        {itemName: "压裂工程施工费", itemType: "label", itemValue: "buildCostFracture"},
+        {itemName: "压裂工程材料费", itemType: "label", itemValue: "materialCostFracture"},
+        {itemName: "压裂工程压裂费用", itemType: "label", itemValue: "fractureCost"},
+        {itemName: "射孔工程射孔费用", itemType: "label", itemValue: "perforationCost"},
+        {itemName: "总费用", itemType: "label", itemValue: "totalCost"},
+        {itemName: "进度款", itemType: "label", itemValue: "progressMoney"},
+        {itemName: "已付进度款", itemType: "label", itemValue: "payMoney"},
+        {itemName: "本次进度款", itemType: "label", itemValue: "currMoney"},
+      ]
+    }else if(this.invoice.attachTypeName==" 审查明细表"){
+      this.pageData.pageItem[1][0].card = {
+        cardParent: [
+          {itemName: "建设单位", itemType: "label", itemValue: "buildDepart"},
+          {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+        ],
+        cardChild: [
+          {itemName: "层数", itemType: "label", itemValue: "floors"},
+          {itemName: "下浮后结算金额（元）", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0试油工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0施工费", itemType: "label", itemValue: "buildCostOil"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0材料费", itemType: "label", itemValue: "materialCostOil"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0试油费用", itemType: "label", itemValue: "testCost"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0压裂工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0施工费", itemType: "label", itemValue: "buildCostFracture"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0材料费", itemType: "label", itemValue: "materialCostFracture"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0压裂费用", itemType: "label", itemValue: "fractureCost"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0射孔工程", itemType: "label", itemValue: "makeFactory"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0射孔费用", itemType: "label", itemValue: "perforationCost"},
+          {itemName: "审定金额合计", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "已付进度款合计", itemType: "label", itemValue: "payMoney"},
+          {itemName: "应付金额合计", itemType: "label", itemValue: "payableMoney"},
+          {itemName: "备注", itemType: "label", itemValue: "remark"},
+        ]
+      };
+      this.sumItem2 = []
+    }
     this.detailUrl = this.navParams.get("detailUrl");
     this.enclosureUrl = this.navParams.get("enclosureUrl");
     this.historyUrl = this.navParams.get("historyUrl");
@@ -111,6 +219,7 @@ export class ProspectingPage {
       this.sumData = data.obj.footer[0];
       this.httpService.postData2(this.httpService.getUrl3() + this.enclosureUrl, {invoiceId:this.invoice.invoiceNo}, (data2)=> {
         this.detailedData = data2.obj.rows;
+        if (data2.obj.footer)
         this.sumData2 = data2.obj.footer[0];
         this.httpService.postData2(this.httpService.getUrl3() + this.historyUrl+"&billNumber="+this.invoice.invoiceNo+"&reviewType="+this.invoice.invoiceTypeName+"审批", {}, (data3)=> {
           this.moreData = data3.obj.rows;

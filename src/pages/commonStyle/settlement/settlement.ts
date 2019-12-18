@@ -197,7 +197,7 @@ export class SettlementPage {
     let url,body;
     url = this.listUrl;
     body = {page:this.page,rows:this.pageSize};
-    this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
+    this.httpService.postData2(this.httpService.getUrl3()+url,body,data=>{
       console.log(data)
       for (let i in data.obj.rows){
         this.itemData[i]["statusName"] = ConfigProvider.statusName(this.itemData[i]["status"])

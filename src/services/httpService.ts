@@ -17,7 +17,7 @@ export class HttpService {
     return url
   }
   public getUrl3(){
-    let url="http://192.168.0.149:8077/obam/";
+    let url="http://192.168.0.166:8077/obam/";
     return url
   }
   public getUrl(){
