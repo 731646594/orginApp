@@ -166,12 +166,11 @@ export class ChangeShiftsEntryPage {
         this.beforeShow()
       })
       .catch((err) => {
-        // const alert = this.alertCtrl.create({
-        //   title: 'Attention!',
-        //   subTitle: err,
-        //   buttons: ['Close']
-        // });
-        // alert.present();
+        let alert = this.alertCtrl.create({
+          title:"请扫描二维码！"
+        });
+        alert.present();
+        return false;
       });
   }
   pickPhoto(){
