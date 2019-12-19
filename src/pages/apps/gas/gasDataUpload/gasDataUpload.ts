@@ -79,11 +79,19 @@ export class GasDataUploadPage {
 
   }
   checkedItem(index){
-    if (this.checkedArray[index]==false){
-      document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #4389e8;");
+    if (!this.checkedArray[index]){
+      if(this.zjb.length == 0){
+        document.getElementsByClassName("uploadIcon")[0].setAttribute("style","color: #4389e8;");
+      }else {
+        document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #4389e8;");
+      }
       this.checkedArray[index]=true;
     }else {
-      document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #dedede;");
+      if(this.zjb.length == 0){
+        document.getElementsByClassName("uploadIcon")[0].setAttribute("style","color: #dedede;");
+      }else {
+        document.getElementsByClassName("uploadIcon")[index].setAttribute("style","color: #dedede;");
+      }
       this.checkedArray[index]=false;
     }
   }

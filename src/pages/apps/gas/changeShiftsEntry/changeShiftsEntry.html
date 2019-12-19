@@ -63,7 +63,7 @@
       </div>
       <div>
         <ion-item class="inputItem imgItem">
-          <ion-label>交班人员签字:</ion-label>
+          <ion-label>交班人员签字<span class="fieldTittle" style="color: red">*</span></ion-label>
         </ion-item>
         <div id="handoverSign" class="addIcon" *ngIf="signatureImage1 == ''">
           <ion-icon name="add" (click)="signature(1)"></ion-icon>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <ion-item class="inputItem imgItem">
-          <ion-label>接班人员签字:</ion-label>
+          <ion-label>接班人员签字<span class="fieldTittle" style="color: red">*</span></ion-label>
         </ion-item>
         <div id="successorSign" class="addIcon" *ngIf="signatureImage2 == ''">
           <ion-icon name="add" (click)="signature(2)"></ion-icon>
