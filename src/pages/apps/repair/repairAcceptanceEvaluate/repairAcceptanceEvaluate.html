@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      供应商评价
+      厂商
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -26,16 +26,10 @@
           </ion-item>
         </div>
       </div>
-      <div class="cardButton" item-end  (click)="deleteForm(i)">
-        <button ion-button small color="danger">删除</button>
-      </div>
     </div>
   </div>
 </ion-content>
 <footer class="formFooter" padding *ngIf="!isFocus&&insertCspjModal">
-  <button class="formFooterButton" (click)="addForm()">
-    <ion-icon class="formFooterIcon" name="add-circle"></ion-icon><br>新增
-  </button>
   <button class="formFooterButton" (click)="saveForm()">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
   </button>

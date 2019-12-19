@@ -290,6 +290,13 @@ export class ChangeShiftsEntryPage {
     })
   }
   saveInfo(){
+    if(!this.userName2||this.userName2.trim()==""){
+      let alertCtrl = this.alertCtrl.create({
+        title:"接班人员未填！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     if (this.oldIndex!=null){
       for (let j=0;j<this.colsData[this.oldIndex].fields.length;j++){
         if(this.storageData["col"+(this.oldIndex*20+j+1)]){

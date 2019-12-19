@@ -43,6 +43,9 @@ export class RepairAcceptanceEvaluatePage {
         this.lightStar[i] = ["star","star","star","star","star"];
       }
     }
+    if (this.insertCspjData.length == 0){
+      this.addForm();
+    }
     this.pageData = {
       pageItem:[
         [
@@ -113,7 +116,7 @@ export class RepairAcceptanceEvaluatePage {
       });
       if (j.length>0){
         let alertCtrl = this.alertCtrl.create({
-          title:"请填写第"+(i+1)+"个评价的"+j[0].itemName
+          title:"请填写"+j[0].itemName
         });
         alertCtrl.present();
         return false;
