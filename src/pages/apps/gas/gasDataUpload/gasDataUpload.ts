@@ -142,7 +142,7 @@ export class GasDataUploadPage {
         }
       }
     }
-    this.httpService.postData(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:JSON.stringify(json),uploadFile:data["uploadFile"]},data=>{
+    this.httpService.postJson(this.httpService.getUrl()+url,{userCode:this.userCode,userName:this.userName,userDepart:this.departCode,userDepartName:this.departName,data:JSON.stringify(json),uploadFile:data["uploadFile"]},data=>{
       if (data.success=="true"){
         if(name=="zjb"){
           this.zjb=[];

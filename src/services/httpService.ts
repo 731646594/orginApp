@@ -223,6 +223,123 @@ export class HttpService {
       );
     }
   };
+  public postJson (url:string,Json:any,successCallback,isLoading?:any,errorCallback?:any){
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      // duration:5000
+    });
+    if (isLoading){
+      loading.present();
+    }
+    var headers = new Headers();
+    headers.append('Content-Type','application/json');
+    // headers.append('type','app');
+    let options = new RequestOptions({ headers:headers, withCredentials: true});
+    if (!this.platform.is("mobileweb")){
+      this.nativeHttp.setDataSerializer('json');
+      for(let i in Json){
+        if($.isArray(Json[i])&&i!="uploadFile"){
+          let str = "";
+          for (let j in Json[i]){
+            str += ""+Json[i][j]+",";
+          }
+          str = str.substring(0,str.length-1);
+          Json[i] = str;
+        }
+      }
+      this.nativeHttp.post(url, Json, {type:"app"})
+        .then(data => {
+          let res = JSON.parse(data.data);
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        })
+        .catch(error => {
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (error.status) {
+            case 401:
+              errMsg = "请重新登录";
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
+            }
+          }
+        })
+    }
+    else {
+      return this.http.post(url,Json,options).map(res=>res.json()).subscribe(
+        (res)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          if(successCallback){
+            if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+              successCallback(res);
+            }else{
+              if (errorCallback){
+                errorCallback(res['msg']);
+              }
+              else {
+                this.errorCallback(res['msg']);
+              }
+            }
+          }
+        },(err)=>{
+          if (isLoading){
+            loading.dismiss();
+          }
+          let errMsg = "网络通信异常";
+          switch (err.status) {
+            case 401:
+              errMsg = "请重新登录";
+              break;
+            case 404:
+              errMsg = '抱歉，后台服务找不到对应接口';
+              break;
+            case 0:
+              errMsg = '网络无法连接';
+            default:
+              break;
+          }
+          if (errMsg!=""){
+            if (errorCallback){
+              errorCallback(errMsg);
+            }
+            else {
+              this.errorCallback(errMsg);
+            }
+          }
+        }
+      );
+    }
+  };
   public postData2 (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
