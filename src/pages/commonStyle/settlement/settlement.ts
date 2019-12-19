@@ -31,10 +31,10 @@ export class SettlementPage {
               public httpService?: HttpService,public modalCtrl?:ModalController, public toastCtrl?:ToastController) {
     this.pageName = this.navParams.get("pageName");
     if (this.pageName == "勘探部项目款审批"){
-      this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
-      this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
-      this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
-      this.detailUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryDetail";
+      this.listUrl = "lhd/app/exploreProjectStatementAuditAppController.do?queryInvoice";
+      this.submitUrl = "lhd/app/exploreProjectStatementAuditAppController.do?reviewPass";
+      this.deleteUrl = "lhd/app/exploreProjectStatementAuditAppController.do?reviewVeto";
+      this.detailUrl = "lhd/app/exploreProjectStatementAuditAppController.do?queryDetail";
       this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail";
       this.historyUrl = "lhd/app/reviewProcessApp.do?datagrid";
       this.detailItem = {
@@ -43,36 +43,37 @@ export class SettlementPage {
           {itemName: "合同编号", itemType: "label", itemValue: "contractCode"},
         ],
         cardChild: [
-          {itemName: "合同金额", itemType: "label", itemValue: "totalWorks"},
-          {itemName: "单项工程名称", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "计量单位", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "累计工作量", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "工程形象进度比例", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "合同金额", itemType: "label", itemValue: "contractAmount"},
+          {itemName: "单项工程名称", itemType: "label", itemValue: "projectName"},
+          {itemName: "计量单位", itemType: "label", itemValue: "unitName"},
+          {itemName: "累计工作量", itemType: "label", itemValue: "totalWorks"},
+          {itemName: "工程形象进度比例", itemType: "label", itemValue: "projectScale"},
           {itemName: "已结算金额", itemType: "label", itemValue: "makeFactory"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostSettled"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxScaleSettled"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxSettled"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostSettled"},
           {itemName: "本次结算金额", itemType: "label", itemValue: "makeFactory"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxCurrSettle"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxScaleCurrSettle"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
-          {itemName: "其中质量保证金", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "付款总比例", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "其中质量保证金", itemType: "label", itemValue: "retentionMoney"},
+          {itemName: "付款总比例", itemType: "label", itemValue: "payScale"},
         ]
       };
       this.detailSumItem = [
-        {itemName: "合同金额", itemType: "label", itemValue: "totalWorks"},
+        {itemName: "合同金额", itemType: "label", itemValue: "contractAmount"},
         {itemName: "已结算金额工程价款", itemType: "label", itemValue: "projectCostSettled"},
         {itemName: "已结算金额增值税款", itemType: "label", itemValue: "addTaxSettled"},
         {itemName: "已结算金额价税合计", itemType: "label", itemValue: "sumCostSettled"},
         {itemName: "本次结算金额工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
         {itemName: "本次结算金额增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
         {itemName: "本次结算金额价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
-        {itemName: "其中质量保证金", itemType: "label", itemValue: "authorizeAmount"},
+        {itemName: "其中质量保证金", itemType: "label", itemValue: "retentionMoney"},
       ]
-    }else if (this.pageName == "工程竣工决算款审批"){
+    }
+    else if (this.pageName == "工程竣工决算款审批"){
       this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
       this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
       this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
@@ -106,11 +107,12 @@ export class SettlementPage {
         {itemName: "本次付款金额增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
         {itemName: "本次付款金额价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
       ]
-    }else if (this.pageName == "进度款审批"){
-      this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
-      this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
-      this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
-      this.detailUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryDetail";
+    }
+    else if (this.pageName == "进度款审批"){
+      this.listUrl = "lhd/app/projectProgressStatementAuditApp.do?queryInvoice";
+      this.submitUrl = "lhd/app/projectProgressStatementAuditApp.do?reviewPass";
+      this.deleteUrl = "lhd/app/projectProgressStatementAuditApp.do?reviewVeto";
+      this.detailUrl = "lhd/app/projectProgressStatementAuditApp.do?queryDetail";
       this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail";
       this.historyUrl = "lhd/app/reviewProcessApp.do?datagrid";
       this.detailItem = {
@@ -119,24 +121,24 @@ export class SettlementPage {
           {itemName: "合同编号", itemType: "label", itemValue: "contractCode"},
         ],
         cardChild: [
-          {itemName: "合同金额", itemType: "label", itemValue: "totalWorks"},
-          {itemName: "工程项目名称", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "计量单位", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "合同金额", itemType: "label", itemValue: "contractAmount"},
+          {itemName: "工程项目名称", itemType: "label", itemValue: "projectName"},
+          {itemName: "计量单位", itemType: "label", itemValue: "unitName"},
           {itemName: "工作量", itemType: "label", itemValue: "makeFactory"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0本月工作量", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0累计工作量", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "工程形象进度比例", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0本月工作量", itemType: "label", itemValue: "currMonthWorks"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0累计工作量", itemType: "label", itemValue: "totalWorks"},
+          {itemName: "工程形象进度比例", itemType: "label", itemValue: "projectScale"},
           {itemName: "已付金额", itemType: "label", itemValue: "makeFactory"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostSettled"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxScaleSettled"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxSettled"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostSettled"},
           {itemName: "本次付款金额", itemType: "label", itemValue: "makeFactory"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxScaleCurrSettle"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
-          {itemName: "付款总比例", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "付款总比例", itemType: "label", itemValue: "payScale"},
         ]
       };
       this.detailSumItem = [
@@ -147,11 +149,12 @@ export class SettlementPage {
         {itemName: "本次付款金额增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
         {itemName: "本次付款金额价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
       ]
-    }else if (this.pageName == "一厂/三厂进度款审批"){
-      this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
-      this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
-      this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
-      this.detailUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryDetail";
+    }
+    else if (this.pageName == "一厂/三厂进度款审批"){
+      this.listUrl = "lhd/app/depProjectProcessStatementAuditAppController.do?queryInvoice";
+      this.submitUrl = "lhd/app/depProjectProcessStatementAuditAppController.do?reviewPass";
+      this.deleteUrl = "lhd/app/depProjectProcessStatementAuditAppController.do?reviewVeto";
+      this.detailUrl = "lhd/app/depProjectProcessStatementAuditAppController.do?queryDetail";
       this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail";
       this.historyUrl = "lhd/app/reviewProcessApp.do?datagrid";
       this.detailItem = {
@@ -160,12 +163,12 @@ export class SettlementPage {
           {itemName: "合同编号", itemType: "label", itemValue: "contractCode"},
         ],
         cardChild: [
-          {itemName: "井号", itemType: "label", itemValue: "totalWorks"},
-          {itemName: "合同金额（不含税）", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "预付比例", itemType: "label", itemValue: "totalWorks"},
+          {itemName: "井号", itemType: "label", itemValue: "wellNo"},
+          {itemName: "合同金额（不含税）", itemType: "label", itemValue: "contractAmount"},
+          {itemName: "预付比例", itemType: "label", itemValue: "advancePayScale"},
           {itemName: "本次付款金额", itemType: "label", itemValue: "makeFactory"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0工程价款", itemType: "label", itemValue: "projectCostCurrSettle"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxSettled"},
+            {itemName: "\u00A0\u00A0\u00A0\u00A0增值税率", itemType: "label", itemValue: "addTaxScaleCurrSettle"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
           {itemName: "\u00A0\u00A0\u00A0\u00A0价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
         ]
@@ -175,30 +178,30 @@ export class SettlementPage {
         {itemName: "本次付款金额增值税款", itemType: "label", itemValue: "addTaxCurrSettle"},
         {itemName: "本次付款金额价税合计", itemType: "label", itemValue: "sumCostCurrSettle"},
       ]
-    }else if (this.pageName == "储气库投资表审批"){
-      this.listUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryInvoice";
-      this.submitUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewPass";
-      this.deleteUrl = "lhd/app/projectCompletionStatementAuditApp.do?reviewVeto";
-      this.detailUrl = "lhd/app/projectCompletionStatementAuditApp.do?queryDetail";
+    }
+    else if (this.pageName == "储气库投资表审批"){
+      this.listUrl = "lhd/app/gasStorageStatementAuditAppController.do?queryInvoice";
+      this.submitUrl = "lhd/app/gasStorageStatementAuditAppController.do?reviewPass";
+      this.deleteUrl = "lhd/app/gasStorageStatementAuditAppController.do?reviewVeto";
+      this.detailUrl = "lhd/app/gasStorageStatementAuditAppController.do?queryDetail";
       this.enclosureUrl = "lhd/app/newWellProgressDetailAppController.do?queryDetail";
       this.historyUrl = "lhd/app/reviewProcessApp.do?datagrid";
       this.detailItem = {
         cardParent: [
-          {itemName: "工程合同名称", itemType: "label", itemValue: "contractName"},
-          {itemName: "合同编号", itemType: "label", itemValue: "contractCode"},
+          {itemName: "工程名称", itemType: "label", itemValue: "projectName"},
+          {itemName: "合同价款", itemType: "label", itemValue: "contractAmount"},
         ],
         cardChild: [
-          {itemName: "合同价款", itemType: "label", itemValue: "totalWorks"},
-          {itemName: "形象进度", itemType: "label", itemValue: "authorizeAmount"},
-          {itemName: "本次应结算工程款", itemType: "label", itemValue: "authorizeAmount"},
+          {itemName: "形象进度", itemType: "label", itemValue: "projectScale"},
+          {itemName: "本次应结算工程款", itemType: "label", itemValue: "currSettleAmount"},
           {itemName: "已结算工程款", itemType: "label", itemValue: "makeFactory"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0合计", itemType: "label", itemValue: "projectCostSettled"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0工程款", itemType: "label", itemValue: "addTaxSettled"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0备料款", itemType: "label", itemValue: "sumCostSettled"},
-          {itemName: "\u00A0\u00A0\u00A0\u00A0其他", itemType: "label", itemValue: "sumCostSettled"},
-          {itemName: "累计结算工程款", itemType: "label", itemValue: "increaseDecreaseAmount"},
-          {itemName: "其中：质量保证金", itemType: "label", itemValue: "makeFactory"},
-          {itemName: "备注", itemType: "label", itemValue: "increaseDecreaseAmount"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0合计", itemType: "label", itemValue: "sumCostSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0工程款", itemType: "label", itemValue: "projectCostSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0备料款", itemType: "label", itemValue: "otherCostSettled"},
+          {itemName: "\u00A0\u00A0\u00A0\u00A0其他", itemType: "label", itemValue: "prepareCostSettled"},
+          {itemName: "累计结算工程款", itemType: "label", itemValue: "addSettleAmount"},
+          {itemName: "其中：质量保证金", itemType: "label", itemValue: "retentionMoney"},
+          {itemName: "备注", itemType: "label", itemValue: "remark"},
         ]
       };
       this.detailSumItem = []

@@ -218,6 +218,14 @@ export class ProspectingPage {
     this.historyUrl = this.navParams.get("historyUrl");
     this.httpService.postData2(this.httpService.getUrl3() + this.detailUrl, {invoiceId:this.invoice.invoiceNo}, (data)=> {
       this.briefData = data.obj.rows;
+      for (let i in this.briefData){
+        for (let j in this.briefData[i]){
+          if (j == "addTaxScaleSettled"||j == "addTaxScaleCurrSettle"){
+            this.briefData[i][j] = this.briefData[i][j]*100 + "%"
+          }
+        }
+      }
+      if (data.obj.footer)
       this.sumData = data.obj.footer[0];
       this.httpService.postData2(this.httpService.getUrl3() + this.enclosureUrl, {invoiceId:this.invoice.invoiceNo}, (data2)=> {
         this.detailedData = data2.obj.rows;
