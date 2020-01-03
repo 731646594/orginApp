@@ -1,0 +1,58 @@
+page-maintenanceAcceptance{
+  .scroll-content {
+    background-color: rgb(246, 246, 246) !important;
+    .scroll-content{
+      background-color: transparent !important;
+    }
+  }
+  .headToolbar{
+    .toolbar-background{
+      background: white !important;
+      border-bottom: 0 !important;
+    }
+  }
+  .contentBox{
+    margin-bottom: 60px;
+  }
+  .callContent{
+    width: 80%;
+  }
+  .disContent{
+    min-height: 200px;
+  }
+  .imgBox{
+    background: white;
+  }
+  .formTextarea{
+    width: calc(100% - 64px);
+    height: 100px;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 0 32px;
+  }
+  .whiteBackground{
+    background: white;
+  }
+  .text-input{
+    margin-left: 0 !important;
+  }
+  .flexBox{
+    display: -webkit-box;
+  }
+  .flexCon{
+    width: 30%;
+    ion-label{
+      white-space: normal;
+    }
+  }
+  .flexCon:nth-child(3){
+    width: 40%;
+  }
+  .tableBox{
+    overflow-x: auto;
+    margin-left: 16px;
+  }
+  .supplierContent{
+    min-height: 120px;
+  }
+}

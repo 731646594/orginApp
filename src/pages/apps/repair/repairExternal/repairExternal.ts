@@ -10,7 +10,7 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 import {File} from "@ionic-native/file";
 import {RepairAlertPage} from "../repairAlert/repairAlert";
-import {RepairExternalSignaturePage} from "../repairExternalSignature/repairExternalSignature";
+// import {RepairExternalSignaturePage} from "../repairExternalSignature/repairExternalSignature";
 import {ConfigProvider} from "../../../../services/config";
 import {RepairBjAlertPage} from "../repairBjAlert/repairBjAlert";
 let that;
@@ -29,7 +29,7 @@ export class RepairExternalPage {
   displayIndex;
   tableData=[];
   pageName;
-  signatureImage = "";
+  // signatureImage = "";
   listBase64 = [];
   isShowFooter = true;
   shape = "brief";
@@ -291,28 +291,28 @@ export class RepairExternalPage {
       },100)
     }
   }
-  signature(){
-    this.app.getRootNav().push(RepairExternalSignaturePage,{callback:this.myCallbackFunction})
-  }
-  myCallbackFunction  =(params) => {
-    return new Promise((resolve, reject) => {
-
-      if(typeof(params)!='undefined'){
-        resolve('ok');
-        this.signatureImage = params;
-      }else{
-
-        reject(Error('error'))
-      }
-
-    });
-  };
-  showSign(){
-    this.app.getRootNav().push(ShowPicturePage,{picture:this.signatureImage});
-  }
-  deleteImg(){
-    this.signatureImage = "";
-  }
+  // signature(){
+  //   this.app.getRootNav().push(RepairExternalSignaturePage,{callback:this.myCallbackFunction})
+  // }
+  // myCallbackFunction  =(params) => {
+  //   return new Promise((resolve, reject) => {
+  //
+  //     if(typeof(params)!='undefined'){
+  //       resolve('ok');
+  //       this.signatureImage = params;
+  //     }else{
+  //
+  //       reject(Error('error'))
+  //     }
+  //
+  //   });
+  // };
+  // showSign(){
+  //   this.app.getRootNav().push(ShowPicturePage,{picture:this.signatureImage});
+  // }
+  // deleteImg(){
+  //   this.signatureImage = "";
+  // }
   dispatchForm(){
     if (!this.invoice["ACCOUNT"]){
       let alertCtrl = this.alertCtrl.create({
@@ -366,19 +366,19 @@ export class RepairExternalPage {
       alertCtrl.present();
       return false;
     }
-    if (!this.signatureImage){
-      let alertCtrl = this.alertCtrl.create({
-        title:"请油站经理签字！"
-      });
-      alertCtrl.present();
-      return false;
-    }
+    // if (!this.signatureImage){
+    //   let alertCtrl = this.alertCtrl.create({
+    //     title:"请油站经理签字！"
+    //   });
+    //   alertCtrl.present();
+    //   return false;
+    // }
     this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?savePeripheryRepairFinish",{
       wxdh:this.invoice["wxdh"],
       id:this.invoice["id"],
       bjmc:this.invoice["bjmc"],
       bjbm:this.invoice["bjbm"],
-      signImage:this.signatureImage
+      // signImage:this.signatureImage
     },(data)=>{
       console.log(data);
       let alertCtrl = this.alertCtrl.create({

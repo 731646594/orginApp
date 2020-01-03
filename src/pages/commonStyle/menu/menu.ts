@@ -114,6 +114,7 @@ export class MenuPage {
     //71:外委派单
     //72:开始保养
     //73:保养办结
+    //74:保养验收
     //81:勘探部项目款审批
     //82:工程竣工决算款审批
     //83:进度款审批
@@ -241,6 +242,10 @@ export class MenuPage {
     else if(page == 73){
       willGoPage = RepairApplyPage;
       params = {pageName:"保养办结",funccode:funccode};
+    }
+    else if(page == 74){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"保养验收",funccode:funccode};
     }
     else if(page == 81){
       willGoPage = SettlementPage;

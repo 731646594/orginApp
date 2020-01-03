@@ -72,6 +72,7 @@ export class TabsPage {
     //71:外委派单
     //72:开始保养
     //73:保养办结
+    //74:保养验收
     //81:勘探部项目款审批
     //82:工程竣工决算款审批
     //83:进度款审批
@@ -144,6 +145,9 @@ export class TabsPage {
       pageData:[
         [
           [71,"","diaochu.png","保养外委派单","1"],[72,"","taizhangchaxun.png","开始保养","1"],[73,"","chaxun.png","保养办结","1"]
+        ],
+        [
+          [74,"","zichanchaxun.png","保养验收","1"],[],[]
         ]
       ]
     };

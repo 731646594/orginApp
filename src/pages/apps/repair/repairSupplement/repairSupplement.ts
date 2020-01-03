@@ -206,7 +206,7 @@ export class RepairSupplementPage {
       ],
     }
     if (this.invoice["wxfs"]=="供应商维修"){
-      this.pageData.segmentName =["单据信息", "主设备","供应商"]
+      this.pageData.segmentName =["单据信息", "主设备","厂商评价"]
     }
     this.events.subscribe("showFooter", (res) => {
       this.showFooter()

@@ -103,7 +103,7 @@ export class MaintenancePage {
           {optionName:"故障",optionValue:"0002"},
         ],};
       this.pageData.pageItem[0][16] = {itemName:"保养记录", itemType:"textarea",itemValue:"maintenanceRemark",nec:1};
-      this.pageData.pageItem[0][17] = {itemName:"备件", itemType:"filter",itemValue:"bjmc",nec:0};
+      this.pageData.pageItem[0][17] = {itemName:"备件", itemType:"filter",itemValue:"bjmc",nec:1};
       this.pageData.pageItem[0][18] = {itemName:"图片", itemType:"photo",itemValue:"createUserName4",nec:0};
     }
   }

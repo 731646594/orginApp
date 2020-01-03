@@ -87,6 +87,7 @@ import {ProspectingPage} from "../pages/apps/settlement/prospecting/prospecting"
 import {SettlementPage} from "../pages/commonStyle/settlement/settlement";
 import {HTTP} from "@ionic-native/http";
 import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
+import {MaintenanceAcceptancePage} from "../pages/apps/maintenance/maintenanceAcceptance/maintenanceAcceptance";
 
 @NgModule({
   declarations: [
@@ -155,7 +156,8 @@ import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
     MaintenanceAlertPage,
     SettlementPage,
     ProspectingPage,
-    DeviceTypePage
+    DeviceTypePage,
+    MaintenanceAcceptancePage,
   ],
   imports: [
     BrowserModule,
@@ -242,7 +244,8 @@ import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
     MaintenanceAlertPage,
     SettlementPage,
     ProspectingPage,
-    DeviceTypePage
+    DeviceTypePage,
+    MaintenanceAcceptancePage,
   ],
   providers: [
     StatusBar,

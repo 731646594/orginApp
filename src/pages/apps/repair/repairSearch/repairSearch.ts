@@ -163,7 +163,7 @@ export class RepairSearchPage {
       ],
     }
     if (this.invoice["zfyl1"] == "03"||this.invoice["zfyl1"] == "05"){
-      this.pageData.segmentName =["单据信息", "主设备","供应商"];
+      this.pageData.segmentName =["单据信息", "主设备","厂商评价"];
     }
   }
   ionViewDidLoad() {

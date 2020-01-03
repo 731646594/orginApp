@@ -42,21 +42,21 @@
           <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
           <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
         </div>
-        <div *ngIf="item.itemType=='sign'">
-          <ion-item class="inputItem imgItem">
-            <ion-label><span class="star requireLabel">*</span>油站经理签字:</ion-label>
-          </ion-item>
-          <div id="handoverSign" class="addIcon" *ngIf="signatureImage == ''">
-            <ion-icon name="add" (click)="signature()"></ion-icon>
-          </div>
-          <div class="imgBox" *ngIf="signatureImage != ''">
-            <span class="star">*</span>
-            <div class="imgInclusion">
-              <img class="imgShow" (click)="showSign()" src="{{signatureImage}}">
-              <img id="signDelete1" class="imgDeleteButton" (click)="deleteImg()" src='assets/imgs/delete.png'>
-            </div>
-          </div>
-        </div>
+        <!--<div *ngIf="item.itemType=='sign'">-->
+          <!--<ion-item class="inputItem imgItem">-->
+            <!--<ion-label><span class="star requireLabel">*</span>油站经理签字:</ion-label>-->
+          <!--</ion-item>-->
+          <!--<div id="handoverSign" class="addIcon" *ngIf="signatureImage == ''">-->
+            <!--<ion-icon name="add" (click)="signature()"></ion-icon>-->
+          <!--</div>-->
+          <!--<div class="imgBox" *ngIf="signatureImage != ''">-->
+            <!--<span class="star">*</span>-->
+            <!--<div class="imgInclusion">-->
+              <!--<img class="imgShow" (click)="showSign()" src="{{signatureImage}}">-->
+              <!--<img id="signDelete1" class="imgDeleteButton" (click)="deleteImg()" src='assets/imgs/delete.png'>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <ion-item class="inputItem imgItem" *ngIf="this.invoice.sfscfj == 1">
         <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>

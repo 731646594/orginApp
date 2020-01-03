@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      单据验收
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar class="headToolbar" *ngIf="pageData.segmentName[1]">
+    <ion-segment [(ngModel)]="shape">
+      <ion-segment-button value="brief" >
+        {{pageData.segmentName[0]}}
+      </ion-segment-button>
+      <ion-segment-button value="supplier" >
+        {{pageData.segmentName[1]}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox" [ngSwitch]="shape">
+    <div *ngSwitchCase="'brief'">
+      <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='input'">
+          <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [nec]="item.nec" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
+        </div>
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='select'">
+          <select-normal [itemName]="item.itemName" [selectData]="item.option" [nec]="item.nec" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue)"></select-normal>
+        </div>
+        <div *ngIf="item.itemType=='textarea-readonly'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
+        </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea class="formTextarea" [(ngModel)]="invoice[item.itemValue]" (focus)="hideFooter()" (blur)="showFooter()"></textarea>
+        </div>
+        <div *ngIf="item.itemType == 'date'">
+          <ion-item class="inputItem" >
+            <ion-label class="noFlexLabel"><span class="star requireLabel">*</span>{{item.itemName}}</ion-label>
+            <ion-datetime  displayFormat="YYYY-MM-DD" cancelText="取消" doneText="确认" [(ngModel)]="invoice[item.itemValue]"></ion-datetime>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'supplier'">
+      <div *ngFor="let item of pageData.pageItem[1];">
+        <div *ngFor="let parent of item.card.cardParent">
+          <div *ngIf="parent.itemType=='label'">
+            <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]" [nec]="parent.nec"></label-normal>
+          </div>
+          <div *ngIf="parent.itemType=='input'">
+            <input-normal [itemName]="parent.itemName" [inputType]="parent.inputType" [nec]="parent.nec" [inputValue]="detail[parent.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,parent.itemValue)"></input-normal>
+          </div>
+          <div *ngIf="parent.itemType=='select'">
+            <select-normal [itemName]="parent.itemName" [selectData]="parent.option" [nec]="parent.nec" [selectValue]="detail[parent.itemValue]" [optionValue]="parent.optionValueString" [optionName]="parent.optionNameString" (backValue)="getSelectValue($event,parent.itemValue)"></select-normal>
+          </div>
+          <div *ngIf="parent.itemType=='textarea'" class="whiteBackground">
+            <label-normal [itemName]="parent.itemName" [nec]="parent.nec"></label-normal>
+            <textarea class="formTextarea" [(ngModel)]="detail[parent.itemValue]" (focus)="hideFooter()" (blur)="showFooter()"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="passForm()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>通过
+  </button>
+  <button class="formFooterButton" (click)="rejectForm()">
+    <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>驳回
+  </button>
+</footer>

@@ -175,11 +175,11 @@ export class RepairAcceptanceApprovalPage {
       ],
     }
     if (this.invoice["zfyl1"] == "03"){
-      this.pageData.segmentName =["单据信息", "主设备","供应商"];
+      this.pageData.segmentName =["单据信息", "主设备","厂商评价"];
     }
     if (this.invoice["zfyl1"] == "05"){
       // this.invoice["yssj"] = "";
-      this.pageData.segmentName =["单据信息", "主设备","供应商"];
+      this.pageData.segmentName =["单据信息", "主设备","厂商评价"];
       this.invoice["fplx"] = 1;
       this.pageData.pageItem[0][29].itemType = "label";
       this.invoice["sjwxzz"] = 0;

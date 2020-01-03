@@ -53,6 +53,13 @@
         <div id="imgBox">
         </div>
       </div>
+      <ion-item class="inputItem imgItem" *ngIf="invoice.sfscfj == 1">
+        <ion-label><span class="star">*</span>验收照片区&emsp;:</ion-label>
+      </ion-item>
+      <div class="imgBox" *ngIf="invoice.sfscfj == 1">
+        <div id="imgBox2">
+        </div>
+      </div>
     </div>
     <div class="detailTab" *ngSwitchCase="'detailed'">
       <div *ngFor="let item of pageData.pageItem[1];">
@@ -126,6 +133,9 @@
   </div>
 </ion-content>
 <footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="pickPhoto()" *ngIf="shape=='brief'&&invoice.sfscfj == 1">
+    <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
+  </button>
   <button class="formFooterButton" (click)="saveForm()">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
   </button>
