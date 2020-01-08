@@ -10,12 +10,14 @@
   <div class="menuBox" *ngFor="let Data of pageData;let i = index">
     <div class="menuName">{{Data[3]}}</div>
     <div class="appsButtonBox" *ngFor="let datas of Data[1].pageData">
-      <button *ngFor="let data of datas" class="appsButton" (click)="appChoose(data[0],data[1],data[4],data[5])">
+      <div *ngFor="let data of datas" class="appsButton" (click)="appChoose(data[0],data[1],data[4],data[5])">
         <div class="appsButtonIconBox2" *ngIf="data[2]">
           <img [src]="'assets/menuPageImgs/'+data[2]">
         </div>
-        <br>{{data[3]}}
-      </button>
+        <div style="margin-top:8%">
+          {{data[3]}}
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>
