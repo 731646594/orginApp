@@ -6,7 +6,7 @@ import {
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
 import {DatePipe} from "@angular/common";
-import {Camera, CameraOptions} from "@ionic-native/camera";
+import {Camera} from "@ionic-native/camera";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 import {File} from "@ionic-native/file";
 import {ConfigProvider} from "../../../../services/config";
@@ -25,11 +25,9 @@ export class RepairAcceptancePage {
   data=[];
   detailData=[];
   i = 0;
-  j = 0;
   displayIndex;
   tableData=[];
   listBase64=[];
-  checkListBase64=[];
   insertCspj = [];
   insertCspjIndex= "";
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
@@ -84,40 +82,6 @@ export class RepairAcceptancePage {
           }
         };
         this.i++;
-      }
-      node = document.getElementById("imgBox2");
-      for (let j in this.checkListBase64){
-        let base64Image = this.checkListBase64[j].imgUrl;
-        let div = document.createElement("div");
-        div.className = "imgInclusion";
-        div.innerHTML +=
-          "<img id=\"2i" + this.j + "\" name=\"2i" + this.j + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
-          "<img id=\"2b" + this.j + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
-        node.appendChild(div);
-        document.getElementById("2i" + this.j).onclick = function () {
-          try {
-            that.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
-          } catch (e) {
-            alert(e)
-          }
-        };
-        document.getElementById("2b" + this.j).onclick = function () {
-          try {
-            let id = this.id;
-            if (that.invoice["sfscfj"] == 1&&that.checkListBase64.length==1){
-              let alertCtrl = that.alertCtrl.create({
-                title:"不能删除最后一张图片"
-              });
-              alertCtrl.present();
-              return false;
-            }
-            node.removeChild(div);
-            that.checkListBase64.splice(parseInt(id.slice(2)), 1);
-          } catch (e) {
-            alert(e)
-          }
-        };
-        this.j++;
       }
 
     },true)
@@ -294,46 +258,6 @@ export class RepairAcceptancePage {
             }
           };
         }
-        node = document.getElementById("imgBox2");
-        for (let j in this.checkListBase64) {
-          let base64Image = "";
-          let isUrl = true;
-          if (this.checkListBase64[j].imgUrl) {
-            base64Image = this.checkListBase64[j].imgUrl;
-          } else {
-            base64Image = this.checkListBase64[j];
-            isUrl = false;
-          }
-          let div = document.createElement("div");
-          div.className = "imgInclusion";
-          div.innerHTML +=
-            "<img id=\"2i" + j + "\" name=\"2i" + j + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
-            "<img id=\"2b" + j + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
-          node.appendChild(div);
-          document.getElementById("2i" + j).onclick = function () {
-            try {
-              that.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
-            } catch (e) {
-              alert(e)
-            }
-          };
-          document.getElementById("2b" + j).onclick = function () {
-            try {
-              let id = this.id;
-              if (that.invoice["sfscfj"] == 1 && that.checkListBase64.length == 1) {
-                let alertCtrl = that.alertCtrl.create({
-                  title: "不能删除最后一张图片"
-                });
-                alertCtrl.present();
-                return false;
-              }
-              node.removeChild(div);
-              that.checkListBase64.splice(parseInt(this.id.slice(2)), 1);
-            } catch (e) {
-              alert(e)
-            }
-          };
-        }
       },100)
     }
   }
@@ -352,116 +276,6 @@ export class RepairAcceptancePage {
         lrrq:dateString,
       }})
     this.insertCspjIndex = this.data[index].csxh;
-  }
-  pickPhoto(){
-    let actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: '拍摄照片',
-          icon: 'camera',
-          handler: () => {
-            this.openCamera(true);
-          }
-        },
-        {
-          text: '从相册中选择照片',
-          icon: 'images',
-          handler: () => {
-            this.openCamera(false);
-          }
-        },
-      ]
-    });
-    actionSheet.present();
-  }
-  openCamera(type) {
-    let sourceType;
-    let saveToPhotoAlbum;
-    if (type) {
-      sourceType = this.camera.PictureSourceType.CAMERA;
-      saveToPhotoAlbum = true;
-    }
-    else {
-      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-      saveToPhotoAlbum = false;
-    }
-    const options: CameraOptions = {
-      quality: 50,                                                   //相片质量 0 -100
-      destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: saveToPhotoAlbum,                                       //是否保存到相册
-      sourceType: sourceType,         //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
-      correctOrientation: true
-    };
-
-    this.camera.getPicture(options).then((imageData) => {
-      this.resolveUri(imageData).then(url => {
-        url.file((file) => {
-          let reader = new FileReader();
-          reader.onloadend = (e) => {
-            let node = document.getElementById("imgBox2");
-            let base64Image = e.target['result'];
-            let div = document.createElement("div");
-            div.className = "imgInclusion";
-            div.innerHTML +=
-              "<img id=\"2i" + this.j + "\" name=\"2i" + this.j + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
-              "<img id=\"2b" + this.j + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
-            if (this.checkListBase64.length==3){
-              let alertCtrl = this.alertCtrl.create({
-                title:"照片数量不能大于3张"
-              });
-              alertCtrl.present();
-              return false;
-            }
-            node.appendChild(div);
-            this.checkListBase64.push(base64Image);
-            document.getElementById("2i" + this.j).onclick = function () {
-              try {
-                that.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
-              } catch (e) {
-                alert(e)
-              }
-            };
-            document.getElementById("2b" + this.j).onclick = function () {
-              try {
-                let id = this.id;
-                if (that.invoice["sfscfj"] == 1 && that.checkListBase64.length == 1) {
-                  let alertCtrl = that.alertCtrl.create({
-                    title: "不能删除最后一张图片"
-                  });
-                  alertCtrl.present();
-                  return false;
-                }
-                node.removeChild(div);
-                that.checkListBase64.splice(parseInt(id.slice(2)), 1);
-              } catch (e) {
-                alert(e)
-              }
-            };
-            this.j++;
-          };
-          reader.readAsDataURL(file);
-        }, err => {
-          alert(JSON.stringify(err))
-        });
-      }, err => {
-        alert(JSON.stringify(err))
-      })
-    }, (err) => {
-      // Handle error
-      // alert(JSON.stringify(err))
-    });
-  }
-  //转换url
-  resolveUri(uri:string):Promise<any>{
-    return new Promise((resolve, reject) => {
-      this.file.resolveLocalFilesystemUrl(uri).then(filePath =>{
-        resolve(filePath);
-      }).catch(err =>{
-        reject(err);
-      });
-    })
   }
   saveForm(){
     let j = this.pageData.pageItem[0].filter((item) => {
@@ -483,7 +297,7 @@ export class RepairAcceptancePage {
         return false;
       }
     }
-    let body = {djFormData:JSON.stringify(this.invoice),mainEquipData:JSON.stringify(this.detailData),images:this.checkListBase64};
+    let body = {djFormData:JSON.stringify(this.invoice),mainEquipData:JSON.stringify(this.detailData)};
     if (this.invoice["zfyl1"] == "03"||this.invoice["zfyl1"] == "05"){
       body["csxxData"]=JSON.stringify(this.data);
       let temp = [];
