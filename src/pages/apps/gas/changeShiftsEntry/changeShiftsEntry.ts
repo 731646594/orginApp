@@ -387,6 +387,29 @@ export class ChangeShiftsEntryPage {
   beforeShow(){
     if (this.oldIndex!=null){
       for (let j=0;j<this.colsData[this.oldIndex].fields.length;j++){
+        if(this.storageData["col"+(this.oldIndex*20+j+1)]){
+          this.storageData["col"+(this.oldIndex*20+j+1)] = (this.storageData["col"+(this.oldIndex*20+j+1)]+"").trim();
+        }
+        for (let x in this.storageData){
+          if(this.colsData[this.oldIndex]["fields"][j].columnName==x&&!this.detailData[this.colsData[this.oldIndex]["fields"][j].columnName]){
+            if(this.storageData["col"+(this.oldIndex*20+j+1)]=="同上"){
+              let alertCtrl1 = this.alertCtrl.create({
+                title:"请勿在无未整改内容的项目里填写同上！"
+              });
+              alertCtrl1.present();
+              this.storageData["col"+(this.oldIndex*20+j+1)]="";
+              return false;
+            }
+          }
+        }
+        if(this.storageData["col"+(this.oldIndex*20+j+1)]==";"){
+          let alertCtrl1 = this.alertCtrl.create({
+            title:"填写有误！"
+          });
+          alertCtrl1.present();
+          this.storageData["col"+(this.oldIndex*20+j+1)]="";
+          return false;
+        }
         if (!this.storageData["col"+(this.oldIndex*20+j+1)]&&this.colsData[this.oldIndex].fields[j].columnRequire==1){
           let alertCtrl1 = this.alertCtrl.create({
             title:"有必填项未填!"

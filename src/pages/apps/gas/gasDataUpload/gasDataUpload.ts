@@ -128,7 +128,7 @@ export class GasDataUploadPage {
         for (let i in this.colsDataW){
           for (let j in this.colsDataW[i]["fields"]){
             if(this.colsDataW[i]["fields"][j].columnName==x&&this.detailDataW[this.colsDataW[i]["fields"][j].columnName]){
-              json[x] = this.detailDataW[x]+","+json[x]
+              json[x] = this.detailDataW[x]+";"+json[x]
             }
           }
         }
@@ -136,7 +136,7 @@ export class GasDataUploadPage {
         for (let i in this.colsDataH){
           for (let j in this.colsDataH[i]["fields"]){
             if(this.colsDataH[i]["fields"][j].columnName==x&&this.detailDataH[this.colsDataH[i]["fields"][j].columnName]){
-              json[x] = this.detailDataH[x]+","+json[x]
+              json[x] = this.detailDataH[x]+";"+json[x]
             }
           }
         }
