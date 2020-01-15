@@ -153,10 +153,18 @@ export class InventoryDataUploadPage {
           };
           reader.readAsDataURL(file);
         }, err => {
-          alert(err)
+          alert(JSON.stringify(err));
+          loading.dismiss();
         });
       },err=>{
-        alert(err)
+        if (err.message=="NOT_FOUND_ERR"){
+          let alertCtrl = this.alertCtrl.create({
+            title:"第一条数据的图片已被删除，请重新录入"
+          });
+          alertCtrl.present();
+          loading.dismiss();
+          return false;
+        }
       })
 
   }
