@@ -128,7 +128,7 @@ export class InventoryDataUploadPage {
       }else {
         this.uploadSinglePlan(loading)
       }
-    },true,(err)=>{
+    },false,(err)=>{
       loading.dismiss();
       let alertCtrl = this.alertCtrl.create({
         title:err

@@ -24,9 +24,21 @@ export class ProspectingPage {
   detailUrl;
   enclosureUrl;
   historyUrl;
+  reviewType;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams) {
     this.pageName = this.navParams.get("pageName").replace("审批","详情");
+    if (this.pageName == "勘探部项目款详情"){
+      this.reviewType = "勘探部项目款结算签认单据审批"
+    }else if (this.pageName == "工程竣工决算款详情"){
+      this.reviewType = "工程竣工决算款结算签认单据审批"
+    }else if (this.pageName == "进度款详情"){
+      this.reviewType = "工程进度款结算签认单据审批"
+    }else if (this.pageName == "一厂/三厂进度款详情"){
+      this.reviewType = "一厂/三厂进度款结算签认单审批"
+    }else if (this.pageName == "储气库投资表详情"){
+      this.reviewType = "储气库签认单投资单据审批"
+    }
     this.pageData = {
       segmentName: ["单据明细", "附件明细", "审批历史记录"],
       pageItem: [
@@ -231,7 +243,7 @@ export class ProspectingPage {
         this.detailedData = data2.obj.rows;
         if (data2.obj.footer)
         this.sumData2 = data2.obj.footer[0];
-        this.httpService.postData2(this.httpService.getUrl3() + this.historyUrl+"&billNumber="+this.invoice.invoiceNo+"&reviewType="+this.invoice.invoiceTypeName+"审批", {}, (data3)=> {
+        this.httpService.postData2(this.httpService.getUrl3() + this.historyUrl+"&billNumber="+this.invoice.invoiceNo+"&reviewType="+this.reviewType, {}, (data3)=> {
           this.moreData = data3.obj.rows;
           for (let i in this.moreData){
             this.moreData[i]["reviewResultName"] = ConfigProvider.resultName(this.moreData[i]["reviewResult"])
