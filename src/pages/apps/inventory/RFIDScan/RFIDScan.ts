@@ -215,6 +215,23 @@ export class RFIDScanPage{
     for(let i in this.scanList){
       if(!this.scanList[i].checkResult||this.scanList[i].checkResult==''){
         this.scanList[i].checkResult = "1";
+        this.scanList[i]["uploadFile"] = [];
+        if(!this.scanList[i]["realcodeStatus"]){
+          this.scanList[i]["realcodeStatus"] = "0";
+        }if(!this.scanList[i]["usedState"]){
+          this.scanList[i]["usedState"] = "010101";
+        }if(!this.scanList[i]["usedStateName"]){
+          this.scanList[i]["usedStateName"] = "生产经营用-科研";
+        }if(!this.scanList[i]["technicalCondition"]){
+          this.scanList[i]["technicalCondition"] = "01";
+        }if(!this.scanList[i]["technicalConditionName"]){
+          this.scanList[i]["technicalConditionName"] = "完好";
+        }if(!this.scanList[i]["storePlace"]){
+          this.scanList[i]["storePlace"] = "";
+          this.scanList[i]["storePlaceName"] = "";
+        }else {
+          this.scanList[i]["storePlaceName"] = this.scanList[i]["storePlace"];
+        }
         for(let j = 0; j<this.willPlan.length;j++){
           if(this.willPlan[j].barCode == i){
             this.willPlan.splice(j,1);
