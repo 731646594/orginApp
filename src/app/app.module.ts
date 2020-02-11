@@ -88,6 +88,7 @@ import {SettlementPage} from "../pages/commonStyle/settlement/settlement";
 import {HTTP} from "@ionic-native/http";
 import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
 import {MaintenanceAcceptancePage} from "../pages/apps/maintenance/maintenanceAcceptance/maintenanceAcceptance";
+import {AppVersion} from "@ionic-native/app-version";
 
 @NgModule({
   declarations: [
@@ -264,6 +265,7 @@ import {MaintenanceAcceptancePage} from "../pages/apps/maintenance/maintenanceAc
     DatePipe,
     Network,
     HTTP,
+    AppVersion,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
