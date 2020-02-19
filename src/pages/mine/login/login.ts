@@ -53,9 +53,19 @@ export class LoginPage {
         alert.present();
         return;
       }else {
-        this.isLogin=true;
         let loginInfo = {};
         loginInfo = data.data;
+        let item = loginInfo[2].func.replace(/'/g, '"');
+        try {
+          let i = JSON.parse(item)
+        }catch {
+          let alert=this.alertCtrl.create({
+            title:"该用户配置不正确，请联系管理员！"
+          });
+          alert.present();
+          return;
+        }
+        this.isLogin=true;
         this.departList = loginInfo[1].depart;
         this.storageService.write("loginUserName",loginInfo[0].user.username);
         this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
