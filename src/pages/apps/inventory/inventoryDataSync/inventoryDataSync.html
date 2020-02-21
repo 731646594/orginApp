@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>数据同步</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="planListBox">
+    <ion-list class="planList">
+      <ion-item class="inputItem" *ngFor="let plan of planList;let i = index" (click)="detailPage(i)">
+        <div>
+          盘点计划编码：<span class="readonlyInput labelNormal" >{{plan.planNumber}}</span>
+        </div>
+        <div>
+          盘点计划名称：<span class="readonlyInput labelNormal" >{{plan.planName}}</span>
+        </div>
+        <div style="overflow: auto;" *ngIf="plan.status!=1">
+          已完成：<span class=" labelNormal iconText" >{{plan.completeCount}}</span>
+          未完成：<span class=" labelNormal iconText" >{{plan.incompleteCount}}</span>
+          未同步：<span class=" labelNormal iconText" >{{plan.notSyncCount}}</span>
+          失败：<span class=" labelNormal iconText" >{{plan.partialFailuresCount}}</span>
+        </div>
+        <div class="planButton" *ngIf="plan.status==1" item-end>
+          <div class="planStatus clickIcon">{{plan.statusName}}</div>
+        </div>
+        <div class="planButton" *ngIf="plan.status==2" item-end >
+          <div class="planStatus ingIcon">{{plan.statusName}}</div>
+        </div>
+        <div class="planButton" *ngIf="plan.status==3" item-end >
+          <div class="planStatus download">{{plan.statusName}}</div>
+        </div>
+        <div class="planButton" *ngIf="plan.status==4" item-end >
+          <div class="planStatus failIcon">{{plan.statusName}}</div>
+        </div>
+        <div class="planButton" *ngIf="plan.status==5" item-end >
+          <div class="planStatus partIcon">{{plan.statusName}}</div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+<footer class="formFooter" padding>
+  <button class="formFooterButton" (click)="loadData()">
+    <ion-icon class="formFooterIcon" name="refresh-outline"></ion-icon><br>刷新
+  </button>
+</footer>

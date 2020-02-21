@@ -25,6 +25,7 @@ import {Network} from "@ionic-native/network";
 import {RepairApplyPage} from "../../apps/repair/repairApply/repairApply";
 import {RFIDScanPage} from "../../apps/inventory/RFIDScan/RFIDScan";
 import {SettlementPage} from "../settlement/settlement";
+import {InventoryDataSyncPage} from "../../apps/inventory/inventoryDataSync/inventoryDataSync";
 
 @Component({
   selector: 'page-menu',
@@ -88,6 +89,7 @@ export class MenuPage {
     //15:数据上传
     //16:盘盈录入
     //17:RFID
+    //18:数据同步
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -151,6 +153,9 @@ export class MenuPage {
           return false;
         }
       })
+    }
+    else if(page == 18){
+      willGoPage = InventoryDataSyncPage;
     }
     else if(page == 21){
       willGoPage = ScrapApplicationPage;

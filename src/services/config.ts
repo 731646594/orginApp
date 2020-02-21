@@ -6,6 +6,13 @@ export class ConfigProvider {
   constructor() {
 
   }
+  static syncStatus = [
+    {name:"未同步",value:1},
+    {name:"正在同步",value:2},
+    {name:"已完成",value:3},
+    {name:"部分失败",value:4},
+    {name:"部分同步",value:5},
+  ];
   static djzt = [
     {name:"新增",value:1},
     {name:"驳回",value:2},
@@ -78,6 +85,14 @@ export class ConfigProvider {
     {name:"清扫",value:"01"},
     {name:"更换零件",value:"02"},
   ];
+  static syncStatusName(value): any {
+    for (let i in this.syncStatus){
+      if (this.syncStatus[i].value==value){
+        return this.syncStatus[i].name
+      }
+    }
+    return false;
+  }
   static djztName(value): any {
     for (let i in this.djzt){
       if (this.djzt[i].value==value){

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>失败数据详情</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="planListBox">
+    <ion-item class="inputItem">
+      <div>
+        盘点计划编码：<span class="readonlyInput labelNormal" >{{plan.planNumber}}</span>
+      </div>
+      <div>
+        盘点计划名称：<span class="readonlyInput labelNormal" >{{plan.planName}}</span>
+      </div>
+    </ion-item>
+    <ion-list class="planList">
+      <ion-item class="inputItem">
+        <ion-label class="noFlexLabel">单位名称:</ion-label>
+        <ion-input [(ngModel)]="searchValue" placeholder="请输入要筛选的字符" (ionChange)="searchDepart()" (focus)="inputOnfocus()" (blur)="inputOnblur()"></ion-input>
+      </ion-item>
+      <div *ngFor="let department of departments;let i = index">
+        <ion-item class="inputItem" *ngIf="!displayArray[i]">
+          <ion-checkbox [checked]="department.checked" (click)="checkedOne(i)"></ion-checkbox>
+          <ion-label>{{department.departName}}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>
+<footer class="formFooter" padding  *ngIf="!isOnfocus">
+  <button class="formFooterButton" (click)="checkAll()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>全选
+  </button>
+  <button class="formFooterButton" (click)="checkInverse()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle-outline"></ion-icon><br>反选
+  </button>
+  <button class="formFooterButton" (click)="syncData()">
+    <ion-icon class="formFooterIcon" name="sync-outline"></ion-icon><br>同步
+  </button>
+</footer>

@@ -1,0 +1,50 @@
+page-inventoryDataSync{
+  .list-ios .item-block .item-inner{
+    border-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .item-ios{
+    border-bottom: none !important;
+    padding-right: 8px;
+  }
+  .label-ios{
+    margin-right: 0 !important;;
+  }
+  .planButton{
+    text-align: center;
+    margin: 0 !important;
+  }
+  .planIcon{
+    color: #4389e8;
+    font-size: 1.6em;
+  }
+  .planStatus{
+    font-size: 0.8em;
+    color:white ;
+    padding: 3px;
+    border-radius: 5px;
+  }
+  .download{
+    background: rgba(0,0,0,0.3);
+  }
+  .clickIcon{
+    background: #4389e8;
+  }
+  .failIcon{
+    background: red;
+  }
+  .ingIcon{
+    background: #32db64;
+  }
+  .partIcon{
+    background: linear-gradient(to right,rgb(79,166,243),rgb(42,80,213));
+  }
+  .iconText{
+    margin-right: 5px;
+  }
+  .readonlyInput{
+    width: 60%;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+}

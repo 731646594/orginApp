@@ -89,6 +89,8 @@ import {HTTP} from "@ionic-native/http";
 import {DeviceTypePage} from "../pages/mine/deviceType/deviceType";
 import {MaintenanceAcceptancePage} from "../pages/apps/maintenance/maintenanceAcceptance/maintenanceAcceptance";
 import {AppVersion} from "@ionic-native/app-version";
+import {InventoryDataSyncPage} from "../pages/apps/inventory/inventoryDataSync/inventoryDataSync";
+import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryDataSyncDetail/inventoryDataSyncDetail";
 
 @NgModule({
   declarations: [
@@ -159,6 +161,8 @@ import {AppVersion} from "@ionic-native/app-version";
     ProspectingPage,
     DeviceTypePage,
     MaintenanceAcceptancePage,
+    InventoryDataSyncPage,
+    InventoryDataSyncDetailPage
   ],
   imports: [
     BrowserModule,
@@ -247,6 +251,8 @@ import {AppVersion} from "@ionic-native/app-version";
     ProspectingPage,
     DeviceTypePage,
     MaintenanceAcceptancePage,
+    InventoryDataSyncPage,
+    InventoryDataSyncDetailPage
   ],
   providers: [
     StatusBar,

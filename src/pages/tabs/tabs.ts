@@ -46,6 +46,7 @@ export class TabsPage {
     //15:数据上传
     //16:盘盈录入
     //17:RFID
+    //18:数据同步
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -87,6 +88,9 @@ export class TabsPage {
         [
           [14,"","chaxun.png","本地下载查询","1"],[15,"","shangchuan.png","数据上传","1"],[16,"","luruzhong.png","盘盈录入","1"]
         ],
+        [
+          [18,"","xiazai.png","数据同步","1"],[],[]
+        ]
       ]
     };
     this.baofei = {
@@ -177,11 +181,18 @@ export class TabsPage {
       }
     }
     if (this.storageService.read("deviceType")&&this.storageService.read("deviceType")!="phone"){
-      this.pageData1.pageData[0][1].pageData.push(
-        [
-          [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
-        ]
-      )
+      let lastIndex = this.pageData1.pageData[0][1].pageData.length-1;
+      if(this.pageData1.pageData[0][1].pageData[lastIndex][2].length>0){
+        this.pageData1.pageData[0][1].pageData.push(
+          [
+            [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+          ]
+        )
+      }else if (this.pageData1.pageData[0][1].pageData[lastIndex][1].length == 0){
+        this.pageData1.pageData[0][1].pageData[lastIndex][1] = [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+      }else if (this.pageData1.pageData[0][1].pageData[lastIndex][2].length == 0){
+        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+      }
     }
     this.pageData2 = {
       pageName:"我的",

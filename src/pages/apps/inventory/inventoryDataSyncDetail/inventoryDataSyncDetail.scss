@@ -1,0 +1,72 @@
+page-inventoryDataSyncDetail{
+  ion-label{
+    white-space: normal;
+  }
+  .list-ios .item-block .item-inner{
+    border-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .list-md .item-block .item-inner{
+    border-bottom: 0 !important;
+    padding-right: 0 !important;
+  }
+  .item-ios{
+    border-bottom: 0 !important;
+    margin-left: 16px;
+    padding-left: 0;
+    width: calc(95% - 16px) !important;
+  }
+  .label-ios{
+    margin-right: 0 !important;;
+  }
+  .label-md{
+    margin-right: 0 !important;;
+  }
+  .planButton{
+    text-align: center;
+    margin: 0 !important;
+  }
+  .planIcon{
+    color: #4389e8;
+    font-size: 1.6em;
+  }
+  .planStatus{
+    font-size: 0.8em;
+    color:white ;
+    padding: 3px;
+    border-radius: 5px;
+  }
+  .download{
+    background: rgba(0,0,0,0.3);
+  }
+  .readonlyInput{
+    width: 56%;
+  }
+  .planListBox{
+    margin-bottom: 60px;
+  }
+  .formFooter{
+    width: 100%;
+    display: flex;
+    padding: 5px !important;
+    border-top: 1px solid #d9d9d9;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
+    background: white;
+  }
+  .formFooterButton {
+    background: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    color: #4389e8;
+    font-size: 1em;
+  }
+  .formFooterIcon{
+    font-size: 2em;
+    color: #4389e8;
+    margin-bottom: 2px;
+  }
+}
