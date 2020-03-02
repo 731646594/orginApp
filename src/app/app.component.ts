@@ -28,30 +28,6 @@ export class MyApp {
       let url = storageService.read("serverUrl");
       // wkWebView.injectCookie(url["agreement"]+"://"+url["address"]+"/");
     });
-    // let alertControl = alertCtrl;
-    // appVersion.getVersionNumber().then((value:any)=>{
-    //   httpService.postData(httpService.getUrl()+"appVersionController/getVersionUrl.do",{currentVersion:"v"+value},data=>{
-    //     let alertCtrl = alertControl.create({
-    //       title:"请更新最新版本的APP",
-    //       subTitle:data.data.APP_PACKAGE_VERSION,
-    //       message:data.data.APP_PACKAGE_MSG,
-    //       buttons:[
-    //         {
-    //           text:"更新",
-    //           handler:()=>{
-    //             window.open(data.data.APP_PACKAGE_URL)
-    //           }
-    //         },
-    //       ]
-    //     });
-    //     alertCtrl.present();
-    //   },false,(err)=>{});
-    // }).catch(err=>{
-    //   let alertCtrl = alertControl.create({
-    //     title:"error:"+err,
-    //   });
-    //   alertCtrl.present();
-    // });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -59,6 +35,30 @@ export class MyApp {
       splashScreen.hide();
       // platform.registerBackButtonAction(() => {
       //   return;
+      // });
+      // let alertControl = alertCtrl;
+      // appVersion.getVersionNumber().then((value:any)=>{
+      //   httpService.postData(httpService.getUrl()+"appVersionController/getVersionUrl.do",{currentVersion:"v"+value},data=>{
+      //     let alertCtrl = alertControl.create({
+      //       title:"请更新最新版本的APP",
+      //       subTitle:data.data.APP_PACKAGE_VERSION,
+      //       message:data.data.APP_PACKAGE_MSG,
+      //       buttons:[
+      //         {
+      //           text:"更新",
+      //           handler:()=>{
+      //             window.location.href = data.data.APP_PACKAGE_URL
+      //           }
+      //         },
+      //       ]
+      //     });
+      //     alertCtrl.present();
+      //   },false,(err)=>{});
+      // }).catch(err=>{
+      //   let alertCtrl = alertControl.create({
+      //     title:"error:"+err,
+      //   });
+      //   alertCtrl.present();
       // });
       platform.registerBackButtonAction(() => {
         if (!this.nav.canGoBack()){
