@@ -80,7 +80,7 @@
                           <ion-label>{{tableT.colName}}</ion-label>
                         </div>
                       </div>
-                      <div *ngFor="let tableC of tableData">
+                      <div *ngFor="let tableC of tableData[i]">
                         <div class="flexBox">
                           <div class="flexCon" *ngFor="let tableT of child.tableItem">
                             <ion-label>{{tableC[tableT.colValue]}}</ion-label>

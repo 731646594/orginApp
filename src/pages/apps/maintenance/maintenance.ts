@@ -201,7 +201,7 @@ export class MaintenancePage {
       saveToPhotoAlbum = false;
     }
     const options: CameraOptions = {
-      quality: 50,                                                   //相片质量 0 -100
+      quality: 30,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -388,7 +388,7 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",{
+    let body = {
       id:this.invoice["id"],
       maintenanceAmount:this.invoice["maintenanceAmount"],
       maintenancePosition:this.invoice["maintenancePosition"],
@@ -396,10 +396,11 @@ export class MaintenancePage {
       deviceTechStatus:this.invoice["deviceTechStatusName"],
       maintenanceRemark:this.invoice["maintenanceRemark"],
       maintenanceFactory:this.storageService.read("loginDepartName"),
-      attachmentList:this.base64List,
       bjmc:this.invoice["bjmc"],
-      bjbm:this.invoice["bjbm"]
-    },(data)=>{
+      bjbm:this.invoice["bjbm"],
+      attachmentList:this.base64List
+    };
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",body,(data)=>{
       console.log(data);
       let alertCtrl = this.alertCtrl.create({
         title:"办结成功！"

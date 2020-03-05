@@ -81,10 +81,14 @@ export class RepairExternalPage {
       selectData = temp.operatorList;
       this.pageData.pageItem[0][10].option = temp.operatorList;
       if (this.invoice["sfscfj"] == 1){
+        let url = storageService.read("systemUrl")+"";
+        let urlHead = url.split(":")[0]+"://"+url.split("/")[2];
         if (temp.imgUrlList.indexOf(",")>-1){
           for (let i in temp.imgUrlList.split(",")){
-            this.listBase64.push(temp.imgUrlList.split(",")[i]);
+            this.listBase64.push(urlHead + temp.imgUrlList.split(",")[i]);
           }
+        }else {
+          this.listBase64.push(urlHead + temp.imgUrlList);
         }
         let node = document.getElementById("imgBox");
         for (let j in this.listBase64){

@@ -61,7 +61,7 @@
       <ion-item class="inputItem imgItem" *ngIf="this.invoice.sfscfj == 1">
         <ion-label><span class="star">*</span>照片区&emsp;:</ion-label>
       </ion-item>
-      <div class="imgBox" *ngIf="this.invoice.sfscfj == 1">
+      <div class="imgBox">
         <div id="imgBox">
         </div>
       </div>
@@ -92,7 +92,7 @@
                           <ion-label>{{tableT.colName}}</ion-label>
                         </div>
                       </div>
-                      <div *ngFor="let tableC of tableData">
+                      <div *ngFor="let tableC of tableData[i]">
                         <div class="flexBox">
                           <div class="flexCon" *ngFor="let tableT of child.tableItem">
                             <ion-label>{{tableC[tableT.colValue]}}</ion-label>

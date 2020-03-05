@@ -97,6 +97,7 @@ export class RepairSearchPage {
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
           {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
           {itemName:"故障描述", itemType:"label",itemValue:"wxms",nec:0},
+          {itemName:"备注", itemType:"label",itemValue:"bzxx",nec:0},
           {itemName:"单据来源", itemType:"label", itemValue:"djlyName",nec:0},
           {itemName:"维修预算", itemType:"label", itemValue:"ysze",nec:0,},
           {itemName:"已占用预算", itemType:"label",itemValue:"yzyysze",nec:0},
