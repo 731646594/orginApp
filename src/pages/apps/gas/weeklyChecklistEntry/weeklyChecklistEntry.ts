@@ -102,6 +102,9 @@ export class WeeklyChecklistEntryPage {
       item = this.departListData;
     }
     this.departList = item;
+    if (this.departCode!="-1"){
+      this.departCode = "-1";
+    }
   }
   selectDepart(departName){
     this.departName = departName;
@@ -120,6 +123,9 @@ export class WeeklyChecklistEntryPage {
       item = this.gasStationData;
     }
     this.gasStation = item;
+    if (this.gasStationCode!="-1"){
+      this.gasStationCode = "-1";
+    }
   }
   selectStation(departName){
     this.gasStationName = departName;
@@ -259,6 +265,20 @@ export class WeeklyChecklistEntryPage {
     })
   }
   saveInfo(){
+    if(this.departCode=="-1"){
+      let alertCtrl = this.alertCtrl.create({
+        title:"分公司输入有误，请检查输入的字符，并重新选择下拉选项"
+      });
+      alertCtrl.present();
+      return false;
+    }
+    if(this.gasStationCode=="-1"){
+      let alertCtrl = this.alertCtrl.create({
+        title:"加油站输入有误，请检查输入的字符，并重新选择下拉选项"
+      });
+      alertCtrl.present();
+      return false;
+    }
     for(let i = 0;i < this.colsData.length;i++){
       for (let j = 0;j < this.colsData[i].fields.length;j++){
         if(this.storageData["col"+(i*20+j+1)]){
