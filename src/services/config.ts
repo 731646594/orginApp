@@ -6,6 +6,11 @@ export class ConfigProvider {
   constructor() {
 
   }
+  static checkStatus = [
+    {name: "未验收", value: "0"},
+    {name: "验收通过", value: "1"},
+    {name: "验收驳回", value: "2"}
+  ];
   static syncStatus = [
     {name:"未同步",value:1},
     {name:"正在同步",value:2},
@@ -85,6 +90,14 @@ export class ConfigProvider {
     {name:"清扫",value:"01"},
     {name:"更换零件",value:"02"},
   ];
+  static checkStatusName(value): any{
+    for (let i in this.checkStatus){
+      if (this.checkStatus[i].value==value){
+        return this.checkStatus[i].name
+      }
+    }
+    return false;
+  }
   static syncStatusName(value): any {
     for (let i in this.syncStatus){
       if (this.syncStatus[i].value==value){

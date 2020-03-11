@@ -152,7 +152,17 @@ export class RepairApplyPage {
         {itemName:"保养人", itemType:"label",itemValue:"lrrmc"},
       ]
     }
-    if (this.pageName == "开始保养"||this.pageName == "保养办结") {
+    if (this.pageName == "开始保养") {
+      this.cardData.cardParent = [
+        {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
+        {itemName:"保养进度", itemType:"label",itemValue:"byjdName"},
+        {itemName:"验收状态", itemType:"label",itemValue:"checkStatusName"},
+        {itemName:"单位名称", itemType:"label",itemValue:"departName"},
+        {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
+        {itemName:"保养人", itemType:"label",itemValue:"lrrmc"},
+      ]
+    }
+    if (this.pageName == "保养办结") {
       this.cardData.cardParent = [
         {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
         {itemName:"保养进度", itemType:"label",itemValue:"byjdName"},
@@ -164,7 +174,7 @@ export class RepairApplyPage {
     if(this.pageName == "保养验收"){
       this.cardData.cardParent = [
         {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
-        {itemName:"单据状态", itemType:"label",itemValue:"djztName"},
+        {itemName:"保养状态", itemType:"label",itemValue:"checkDateName"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
       ]
@@ -199,12 +209,18 @@ export class RepairApplyPage {
             if (this.pageName == "保养外委派单"){
               this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
             }
-            if(this.pageName == "开始保养"||this.pageName == "保养办结"){
+            if(this.pageName == "开始保养"){
+              this.itemData[i]["byjdName"] = ConfigProvider.byjdName(this.itemData[i]["byjd"]);
+              this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
+              this.itemData[i]["checkStatusName"] = ConfigProvider.checkStatusName(this.itemData[i]["checkStatus"])
+            }
+            if (this.pageName == "保养办结"){
               this.itemData[i]["byjdName"] = ConfigProvider.byjdName(this.itemData[i]["byjd"]);
               this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
             }
             if (this.pageName == "保养验收"){
               this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
+              this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
             }
           }
           console.log(this.itemData)

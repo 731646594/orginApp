@@ -120,6 +120,7 @@ export class MaintenanceAcceptancePage {
         }
       }
       body["dataobj"]=JSON.stringify(this.detail);
+      body["zrdwType"] = this.invoice["zrdwType"]
     }
     this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?acceptanceYes",body,(data)=>{
       let alertCtrl = this.alertCtrl.create({
