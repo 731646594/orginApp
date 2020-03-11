@@ -201,7 +201,7 @@ export class MaintenancePage {
       saveToPhotoAlbum = false;
     }
     const options: CameraOptions = {
-      quality: 30,                                                   //相片质量 0 -100
+      quality: 20,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
