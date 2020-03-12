@@ -8,6 +8,7 @@ import {HttpService} from "../../../../services/httpService";
 import {DatePipe} from "@angular/common";
 import {File} from "@ionic-native/file";
 import {ConfigProvider} from "../../../../services/config";
+import {MaintenanceAlertPage} from "../maintenanceAlert/maintenanceAlert";
 let that;
 @Component({
   selector: 'page-maintenanceAcceptance',
@@ -25,12 +26,10 @@ export class MaintenanceAcceptancePage {
               public file?: File, public modalCtrl?: ModalController) {
     that = this;
     this.invoice = this.navParams.get("data");
-    let checkDateName = ConfigProvider.checkDateName(this.invoice["checkDate"]);
     this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devMaintenanceController.do?getByMaintenanceNumberDetail", {maintenanceNumberDetail:this.invoice["maintenanceNumberDetail"]}, (data)=>{
       let temp = data.obj;
       this.detail["maintenanceFactory"] = temp.maintenanceFactory;
-      this.invoice = temp;
-      this.invoice["checkDateName"] = checkDateName;
+      this.invoice = Object.assign(this.invoice,temp);
     },true)
 
     this.pageData = {
@@ -82,6 +81,24 @@ export class MaintenanceAcceptancePage {
     }
     if (this.invoice["zrdwType"] == "01"){
       this.pageData.segmentName =["单据信息","厂商评价"];
+      this.pageData.pageItem[0] = [
+        {itemName:"保养单号", itemType:"label",itemValue:"maintenanceNumberDetail",nec:0},
+        {itemName:"保养状态", itemType:"label",itemValue:"checkDateName",nec:0},
+        {itemName:"申请单位", itemType:"label",itemValue:"lrrdwmc",nec:0},
+        {itemName:"设备名称", itemType:"label",itemValue:"assetsName",nec:0},
+        {itemName:"保养金额", itemType:"label",itemValue:"maintenanceAmount",nec:0},
+        {itemName:"保养位置", itemType:"label",itemValue:"maintenancePosition",nec:0},
+        {itemName:"设备使用状态", itemType:"label",itemValue:"deviceUseStatus",nec:0},
+        {itemName:"设备技术状态", itemType:"label",itemValue:"deviceTechStatus",nec:0},
+        {itemName:"责任单位", itemType:"label",itemValue:"zrdwTypeName",nec:0},
+        {itemName:"设备名称", itemType:"label",itemValue:"assetsName",nec:0},
+        {itemName:"所属单位", itemType:"label",itemValue:"departName",nec:0},
+        {itemName:"派单时间", itemType:"label",itemValue:"sendTime",nec:0},
+        {itemName:"开始时间", itemType:"label",itemValue:"beginTime",nec:0},
+        {itemName:"结束时间", itemType:"label",itemValue:"finishTime",nec:0},
+        {itemName:"提交时间", itemType:"label",itemValue:"remindDate",nec:0},
+        {itemName:"保养记录", itemType:"textarea-readonly",itemValue:"maintenanceRemark",nec:0},
+      ]
     }
   }
   ionViewDidLoad() {
@@ -169,5 +186,18 @@ export class MaintenanceAcceptancePage {
       ]
     })
     alertCtrl.present();
+  }
+  showMaintenanceStandard(){
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?getMaintenanceStandard",{checkCode:this.invoice["checkCode"]},(data)=>{
+      let maintenanceStandardData = data.obj;
+      let modal = this.modalCtrl.create(MaintenanceAlertPage,{data:maintenanceStandardData},{
+      });
+      modal.present();
+      modal.onDidDismiss(data=>{
+        if(data&&data.selectedData){
+          console.log(data.selectedData)
+        }
+      })
+    },true)
   }
 }

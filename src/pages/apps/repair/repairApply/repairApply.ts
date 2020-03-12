@@ -149,7 +149,7 @@ export class RepairApplyPage {
         {itemName:"派单状态", itemType:"label",itemValue:"djztName"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
-        {itemName:"保养人", itemType:"label",itemValue:"lrrmc"},
+        {itemName:"保养人", itemType:"label",itemValue:"bpdr"},
       ]
     }
     if (this.pageName == "开始保养") {
@@ -159,7 +159,7 @@ export class RepairApplyPage {
         {itemName:"验收状态", itemType:"label",itemValue:"checkStatusName"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
-        {itemName:"保养人", itemType:"label",itemValue:"lrrmc"},
+        {itemName:"保养人", itemType:"label",itemValue:"bpdr"},
       ]
     }
     if (this.pageName == "保养办结") {
@@ -168,7 +168,7 @@ export class RepairApplyPage {
         {itemName:"保养进度", itemType:"label",itemValue:"byjdName"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
-        {itemName:"保养人", itemType:"label",itemValue:"lrrmc"},
+        {itemName:"保养人", itemType:"label",itemValue:"bpdr"},
       ]
     }
     if(this.pageName == "保养验收"){
@@ -177,6 +177,7 @@ export class RepairApplyPage {
         {itemName:"保养状态", itemType:"label",itemValue:"checkDateName"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
+        {itemName:"责任单位", itemType:"label",itemValue:"zrdwTypeName"}
       ]
     }
   }
@@ -221,6 +222,7 @@ export class RepairApplyPage {
             if (this.pageName == "保养验收"){
               this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
               this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
+              this.itemData[i]["zrdwTypeName"] = ConfigProvider.zrdwTypeName(this.itemData[i]["zrdwType"]);
             }
           }
           console.log(this.itemData)

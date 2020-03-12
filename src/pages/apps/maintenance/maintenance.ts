@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  ActionSheetController, AlertController, App, Events, ModalController, NavController,
+  ActionSheetController, AlertController, App, Events, LoadingController, ModalController, NavController,
   NavParams
 } from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
@@ -12,6 +12,7 @@ import {File} from "@ionic-native/file";
 import {RepairAlertPage} from "../repair/repairAlert/repairAlert";
 import {MaintenanceAlertPage} from "./maintenanceAlert/maintenanceAlert";
 import {RepairBjAlertPage} from "../repair/repairBjAlert/repairBjAlert";
+import {Http} from "@angular/http";
 let that
 @Component({
   selector: 'page-maintenance',
@@ -34,7 +35,8 @@ export class MaintenancePage {
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService, public datePipe?: DatePipe, public actionSheetCtrl?: ActionSheetController,
-              public camera?: Camera, public file?: File, public modalCtrl?: ModalController) {
+              public camera?: Camera, public file?: File, public modalCtrl?: ModalController,public http?:Http,
+              public loadingCtrl?:LoadingController) {
     that = this;
     this.pageName = this.navParams.get("pageName");
     this.invoice = this.navParams.get("data");
@@ -201,7 +203,7 @@ export class MaintenancePage {
       saveToPhotoAlbum = false;
     }
     const options: CameraOptions = {
-      quality: 20,                                                   //相片质量 0 -100
+      quality: 50,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -388,25 +390,85 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    let body = {
-      id:this.invoice["id"],
-      maintenanceAmount:this.invoice["maintenanceAmount"],
-      maintenancePosition:this.invoice["maintenancePosition"],
-      deviceUseStatus:this.invoice["deviceUseStatusName"],
-      deviceTechStatus:this.invoice["deviceTechStatusName"],
-      maintenanceRemark:this.invoice["maintenanceRemark"],
-      maintenanceFactory:this.storageService.read("loginDepartName"),
-      bjmc:this.invoice["bjmc"],
-      bjbm:this.invoice["bjbm"],
-      attachmentList:this.base64List
-    };
-    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",body,(data)=>{
-      console.log(data);
-      let alertCtrl = this.alertCtrl.create({
-        title:"办结成功！"
-      });
-      alertCtrl.present();
-      this.app.getRootNav().pop()
-    },true)
+    // let body = {
+    //   id:this.invoice["id"],
+    //   maintenanceAmount:this.invoice["maintenanceAmount"],
+    //   maintenancePosition:this.invoice["maintenancePosition"],
+    //   deviceUseStatus:this.invoice["deviceUseStatusName"],
+    //   deviceTechStatus:this.invoice["deviceTechStatusName"],
+    //   maintenanceRemark:this.invoice["maintenanceRemark"],
+    //   maintenanceFactory:this.storageService.read("loginDepartName"),
+    //   bjmc:this.invoice["bjmc"],
+    //   bjbm:this.invoice["bjbm"],
+    //   attachmentList:this.base64List
+    // };
+    let bodyForm = new FormData();
+    bodyForm.append("token",this.storageService.read("token"));
+    bodyForm.append("departCode",this.storageService.read("loginDepartCode"))
+    bodyForm.append("id",this.invoice["id"]);
+    bodyForm.append("maintenanceAmount",this.invoice["maintenanceAmount"]);
+    bodyForm.append("maintenancePosition",this.invoice["maintenancePosition"]);
+    bodyForm.append("deviceUseStatus",this.invoice["deviceUseStatusName"]);
+    bodyForm.append("deviceTechStatus",this.invoice["deviceTechStatusName"]);
+    bodyForm.append("maintenanceRemark",this.invoice["maintenanceRemark"]);
+    bodyForm.append("maintenanceFactory",this.storageService.read("loginDepartName"));
+    bodyForm.append("bjmc",this.invoice["bjmc"]);
+    bodyForm.append("bjbm",this.invoice["bjbm"]);
+    let stringBase64 = "";
+    for (let i=0;i<this.base64List.length;i++){
+      stringBase64 += this.base64List[i];
+      if (i != this.base64List.length-1){
+        stringBase64  += "||&&||&&||";
+      }
+    }
+    bodyForm.append("attachmentList",stringBase64);
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      // duration:5000
+    });
+    loading.present();
+    this.http.post(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",bodyForm)
+      .subscribe((data:any)=>{
+        loading.dismiss();
+        let res = JSON.parse(data._body);
+        if (res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+          let alertCtrl = this.alertCtrl.create({
+            title:"办结成功！"
+          });
+          alertCtrl.present();
+          this.app.getRootNav().pop()
+        }else {
+          let alertCtrl = this.alertCtrl.create({
+            title:res.msg
+          });
+          alertCtrl.present();
+        }
+      },err => {
+        let errMsg = "网络通信异常";
+        switch (err.status) {
+          case 401:
+            errMsg = "请重新登录";
+            break;
+          case 404:
+            errMsg = '抱歉，后台服务找不到对应接口';
+            break;
+          case 0:
+            errMsg = '网络无法连接';
+          default:
+            break;
+        }
+        let alertCtrl = this.alertCtrl.create({
+          title:errMsg
+        });
+        alertCtrl.present();
+      })
+    // this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",body,(data)=>{
+    //   console.log(data);
+    //   let alertCtrl = this.alertCtrl.create({
+    //     title:"办结成功！"
+    //   });
+    //   alertCtrl.present();
+    //   this.app.getRootNav().pop()
+    // },true)
   }
 }

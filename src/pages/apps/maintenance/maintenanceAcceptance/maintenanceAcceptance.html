@@ -66,6 +66,9 @@
   </div>
 </ion-content>
 <footer class="formFooter" padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="showMaintenanceStandard()">
+    <ion-icon class="formFooterIcon" name="document"></ion-icon><br>查看保养标准
+  </button>
   <button class="formFooterButton" (click)="passForm()">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>通过
   </button>

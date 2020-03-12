@@ -6,6 +6,10 @@ export class ConfigProvider {
   constructor() {
 
   }
+  static zrdwType = [
+    {name: "外包保养", value: "01"},
+    {name: "公司保养", value: "02"},
+  ];
   static checkStatus = [
     {name: "未验收", value: "0"},
     {name: "验收通过", value: "1"},
@@ -90,6 +94,14 @@ export class ConfigProvider {
     {name:"清扫",value:"01"},
     {name:"更换零件",value:"02"},
   ];
+  static zrdwTypeName(value): any{
+    for (let i in this.zrdwType){
+      if (this.zrdwType[i].value==value){
+        return this.zrdwType[i].name
+      }
+    }
+    return false;
+  }
   static checkStatusName(value): any{
     for (let i in this.checkStatus){
       if (this.checkStatus[i].value==value){
