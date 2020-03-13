@@ -76,9 +76,15 @@ export class MaintenancePage {
       this.pageData.pageItem[0][8] = {itemName:"联系电话", itemType:"input",inputType:"number", itemValue:"bpdrdh",nec:1};
       this.pageData.pageItem[0][9] = {itemName:"进场信息", itemType:"textarea",itemValue:"jcxx",nec:1};
       this.pageData.pageItem[0][10] = {itemName:"开始时间", itemType:"label",itemValue:"beginTime",nec:0};
-      if(this.invoice["jcxx"]){
+      if(this.invoice["jcxx"]&&this.invoice["checkStatus"]!="2"){
         this.pageData.pageItem[0][8] = {itemName:"联系电话", itemType:"label",itemValue:"bpdrdh",nec:0};
         this.pageData.pageItem[0][9] = {itemName:"进场信息", itemType:"textarea-readonly",itemValue:"jcxx",nec:0};
+      }
+      if (this.invoice["jcxx"]&&this.invoice["checkStatus"]=="2"){
+        this.pageData.pageItem[0][8] = {itemName:"驳回原因", itemType:"label",itemValue:"checkRemark",nec:0};
+        this.pageData.pageItem[0][9] = {itemName:"联系电话", itemType:"input",inputType:"number", itemValue:"bpdrdh",nec:1};
+        this.pageData.pageItem[0][10] = {itemName:"进场信息", itemType:"textarea",itemValue:"jcxx",nec:1};
+        this.pageData.pageItem[0][11] = {itemName:"开始时间", itemType:"label",itemValue:"beginTime",nec:0};
       }
     }else if (this.pageName == "保养办结"){
       this.invoice["finishTime"] = "点击“办结”后自动生成";
