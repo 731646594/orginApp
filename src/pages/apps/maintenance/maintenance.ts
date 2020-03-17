@@ -332,6 +332,13 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
+    if(!(/^1[3456789]\d{9}$/.test(this.invoice["bpdrdh"]))){
+      let alertCtrl = this.alertCtrl.create({
+        title:"进场人员电话填写有误！"
+      });
+      alertCtrl.present();
+      return false;
+    }
     if (!this.invoice["jcxx"]){
       let alertCtrl = this.alertCtrl.create({
         title:"请填写进场信息！"
