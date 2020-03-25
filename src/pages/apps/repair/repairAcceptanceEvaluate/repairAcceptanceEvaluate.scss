@@ -5,4 +5,14 @@ page-repairAcceptanceEvaluate{
   .scroll-content {
     background-color: rgb(246, 246, 246) !important;
   }
+  .formTextarea{
+    width: calc(100% - 64px);
+    height: 100px;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 0 32px;
+  }
+  .whiteBackground{
+    background: white;
+  }
 }

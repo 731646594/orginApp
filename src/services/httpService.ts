@@ -95,6 +95,7 @@ export class HttpService {
   public postData (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
+      dismissOnPageChange:true
       // duration:5000
     });
     if (isLoading){
@@ -225,6 +226,7 @@ export class HttpService {
   public postJson (url:string,Json:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
+      dismissOnPageChange:true
       // duration:5000
     });
     if (isLoading){
@@ -341,6 +343,7 @@ export class HttpService {
   public postData2 (url:string,body:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
+      dismissOnPageChange:true
       // duration:5000
     });
     if (isLoading){
@@ -465,6 +468,7 @@ export class HttpService {
   public postJson2 (url:string,Json:any,successCallback,isLoading?:any,errorCallback?:any){
     let loading = this.loadingCtrl.create({
       content:"请等待...",
+      dismissOnPageChange:true
       // duration:5000
     });
     if (isLoading){

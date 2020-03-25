@@ -7,6 +7,10 @@
 </ion-header>
 <ion-content>
   <div class="contentBox">
+    <ion-item  *ngIf="pageName == '维修申请'" class="inputItem" style="position: sticky;top: 0;z-index: 10;">
+      <ion-label class="noFlexLabel">单据编号:</ion-label>
+      <ion-input [(ngModel)]="searchValue" placeholder="请输入要筛选的字符" (ionChange)="searchDepart()" (focus)="hideFooter()" (blur)="showFooter()"></ion-input>
+    </ion-item>
     <div *ngFor="let detail of itemData;let i = index">
       <div class="callContentBox">
         <div class="callContentMiniBox">

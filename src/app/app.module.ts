@@ -91,6 +91,7 @@ import {MaintenanceAcceptancePage} from "../pages/apps/maintenance/maintenanceAc
 import {AppVersion} from "@ionic-native/app-version";
 import {InventoryDataSyncPage} from "../pages/apps/inventory/inventoryDataSync/inventoryDataSync";
 import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryDataSyncDetail/inventoryDataSyncDetail";
+import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryData
     DeviceTypePage,
     MaintenanceAcceptancePage,
     InventoryDataSyncPage,
-    InventoryDataSyncDetailPage
+    InventoryDataSyncDetailPage,
+    MenuHelpPage
   ],
   imports: [
     BrowserModule,
@@ -252,7 +254,8 @@ import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryData
     DeviceTypePage,
     MaintenanceAcceptancePage,
     InventoryDataSyncPage,
-    InventoryDataSyncDetailPage
+    InventoryDataSyncDetailPage,
+    MenuHelpPage
   ],
   providers: [
     StatusBar,

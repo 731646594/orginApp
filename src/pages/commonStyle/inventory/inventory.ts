@@ -158,7 +158,7 @@ export class InventoryPage {
       saveToPhotoAlbum = false;
     }
     const options: CameraOptions = {
-      quality: 20,                                                   //相片质量 0 -100
+      quality: 50,                                                   //相片质量 0 -100
       destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -214,10 +214,23 @@ export class InventoryPage {
       })
     }, (err) => {
       // Handle error
-      let alertCtrl = this.alertCtrl.create({
-        title:err
-      });
-      alertCtrl.present()
+      if (err=="No Image Selected"){
+        let alertCtrl = this.alertCtrl.create({
+          title:"请选择图片"
+        });
+        alertCtrl.present()
+      }else if(err=="Unable to retrieve path to picture!"){
+        let alertCtrl = this.alertCtrl.create({
+          title:"无法获取该路径的图片，如想使用请将它复制到系统的相册里"
+        });
+        alertCtrl.present()
+      }else {
+        let alertCtrl = this.alertCtrl.create({
+          title:err
+        });
+        alertCtrl.present()
+      }
+
     });
   }
   //转换url
@@ -432,8 +445,15 @@ export class InventoryPage {
               };
               document.getElementById("b" + this.i + this.imgBox).onclick = (e) => {
                 try {
+                  let j;
+                  for(let i in node.childNodes){
+                    if(node.childNodes[i] == div){
+                      j = i;
+                    }
+                  }
+                  j --;
+                  this.uploadFile.splice(j, 1);
                   node.removeChild(div);
-                  this.uploadFile.splice(parseInt((<HTMLElement>div.firstChild).id.slice(1)), 1);
                 } catch (e) {
                   alert(e)
                 }

@@ -437,6 +437,7 @@ export class MaintenancePage {
     bodyForm.append("attachmentList",stringBase64);
     let loading = this.loadingCtrl.create({
       content:"请等待...",
+      dismissOnPageChange:true,
       // duration:5000
     });
     loading.present();

@@ -3,7 +3,7 @@ import {AlertController, App, LoadingController, NavController, NavParams} from 
 import {HttpService} from "../../../../services/httpService";
 import { StorageService} from "../../../../services/storageService";
 import {File} from "@ionic-native/file";
-
+let that;
 @Component({
   selector: 'page-inventoryDataUpload',
   templateUrl: 'inventoryDataUpload.html'
@@ -26,6 +26,7 @@ export class InventoryDataUploadPage {
     this.loadData();
   }
   ionViewDidEnter(){
+    that = this;
     // this.loadData();
   }
   loadData(){
@@ -76,7 +77,7 @@ export class InventoryDataUploadPage {
     }
     let loading = this.loadingCtrl.create({
       content:"上传进度：0%",
-      dismissOnPageChange:false,
+      dismissOnPageChange:true,
     });
     loading.present();
     this.uploadSinglePlan(loading);
@@ -96,8 +97,14 @@ export class InventoryDataUploadPage {
   }
   postPlan(now,loading,uploadType){
     let data = Object.assign({},this.planDetailList[this.planIndex]);
-    delete data.uploadFile;
-    let dataString = JSON.stringify(data)
+    // delete data.uploadFile;
+    let data2 = {};
+    for(let i in data){
+      if (i != "uploadFile"){
+        data2[i] = data[i]
+      }
+    }
+    let dataString = JSON.stringify(data2);
     this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString},(data)=>{
       if (data.success=="true"){
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
@@ -142,13 +149,42 @@ export class InventoryDataUploadPage {
         url.file((file)=> {
           let reader = new FileReader();
           reader.onloadend=(e)=>{
-            let base64Image = e.target['result'];
-            this.uploadFile.push(base64Image);
-            this.imgIndex++;
-            if (base64Images.length==this.uploadFile.length){
-              this.postPlan(now,loading,uploadType)
-            }else {
-              this.getBase64Pics(base64Images,now,loading,uploadType)
+            let base64 = e.target['result'];
+            var newImage = new Image();
+            var quality = 1;    //压缩系数0-1之间
+            newImage.src = base64;
+            newImage.setAttribute("crossOrigin", 'Anonymous');  //url为外域时需要
+            var imgWidth, imgHeight;
+            newImage.onload =  (ev:any)=> {
+              let img = ev.path[0];
+              imgWidth = img.width;
+              imgHeight = img.height;
+              var canvas = document.createElement("canvas");
+              var ctx = canvas.getContext("2d");
+              let w = 500;
+              if (Math.max(imgWidth, imgHeight) > w) {
+                if (imgWidth > imgHeight) {
+                  canvas.width = w;
+                  canvas.height = w * imgHeight / imgWidth;
+                } else {
+                  canvas.height = w;
+                  canvas.width = w * imgWidth / imgHeight;
+                }
+              } else {
+                canvas.width = imgWidth;
+                canvas.height = imgHeight;
+                quality = 1;
+              }
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              var base64Image = canvas.toDataURL("image/jpeg", quality); //压缩语句
+              that.uploadFile.push(base64Image);
+              that.imgIndex++;
+              if (base64Images.length==that.uploadFile.length){
+                that.postPlan(now,loading,uploadType)
+              }else {
+                that.getBase64Pics(base64Images,now,loading,uploadType)
+              }
             }
           };
           reader.readAsDataURL(file);

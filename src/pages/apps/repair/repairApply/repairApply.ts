@@ -31,6 +31,7 @@ export class RepairApplyPage {
   funccode="";
   operatorList = [];
   refreshData = true;
+  searchValue = "";
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService,public modalCtrl?:ModalController, public toastCtrl?:ToastController) {
@@ -302,14 +303,29 @@ export class RepairApplyPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
-      console.log(data)
-      let alertCtrl = this.alertCtrl.create({
-        title:"作废成功！"
-      });
-      alertCtrl.present();
-      this.ionViewDidEnter()
-    },true)
+    let alertCtrl = this.alertCtrl.create({
+      title:"确定作废单据？",
+      cssClass:"alertMiddle",
+      buttons:[
+        {
+          text:"取消",
+        },
+        {
+          text:"确定",
+          handler:(e)=>{
+            this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
+              console.log(data)
+              let alertCtrl = this.alertCtrl.create({
+                title:"作废成功！"
+              });
+              alertCtrl.present();
+              this.ionViewDidEnter()
+            },true)
+          }
+        }
+      ]
+    });
+    alertCtrl.present();
   }
   finishForm(detail){
     if (detail.djzt != 2){
@@ -385,7 +401,7 @@ export class RepairApplyPage {
             }
           }
         ]
-      })
+      });
       alertCtrl.present();
     }
 
@@ -398,14 +414,29 @@ export class RepairApplyPage {
       alertCtrl.present();
       return false;
     }
-    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
-      console.log(data)
-      let alertCtrl = this.alertCtrl.create({
-        title:"作废成功！"
-      });
-      alertCtrl.present();
-      this.ionViewDidEnter()
-    },true)
+    let alertCtrl = this.alertCtrl.create({
+      title:"确定作废单据？",
+      cssClass:"alertMiddle",
+      buttons:[
+        {
+          text:"取消",
+        },
+        {
+          text:"确定",
+          handler:(e)=>{
+            this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
+              console.log(data)
+              let alertCtrl = this.alertCtrl.create({
+                title:"作废成功！"
+              });
+              alertCtrl.present();
+              this.ionViewDidEnter()
+            },true);
+          }
+        }
+      ]
+    });
+    alertCtrl.present();
   }
   finishForm2(detail){
     let alertCtrl = this.alertCtrl.create({
@@ -671,6 +702,9 @@ export class RepairApplyPage {
     let url,body;
     url = this.listUrl;
     body = {page:this.page,rows:this.pageSize,funccode:this.funccode};
+    if (this.searchValue){
+      body["wxdh"] = this.searchValue;
+    }
     this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
       console.log(data)
       for (let i in data.obj.rows){
@@ -688,5 +722,26 @@ export class RepairApplyPage {
       infiniteScroll.complete();
     })
   }
-
+  searchDepart(){
+    $(".scroll-content")[2].scrollTop = 0;
+    this.page = 1;
+    this.isNewSearch = true;
+    let body = {page:this.page,rows:this.pageSize,funccode:this.funccode,searchValue:this.searchValue};
+    if (this.searchValue){
+      body["wxdh"] = this.searchValue;
+    }
+    this.httpService.postData2(this.httpService.getUrl2()+this.listUrl,body,data=>{
+      this.itemData = data.obj.rows;
+      for (let i in this.itemData){
+        this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["djzt"])
+      }
+      console.log(this.itemData)
+    },false,(err)=>{
+      this.itemData = [];
+      let alertCtrl = this.alertCtrl.create({
+        title:err
+      });
+      alertCtrl.present();
+    });
+  }
 }

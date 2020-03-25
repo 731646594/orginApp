@@ -25,6 +25,9 @@
         <div *ngIf="item.itemType=='label'">
           <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
         </div>
+        <div *ngIf="item.itemType=='labelRightShow'" style="padding-left: 16px;background: white">
+          <label-right-show [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]"></label-right-show>
+        </div>
         <div *ngIf="item.itemType=='select'">
           <select-normal [itemName]="item.itemName" [selectData]="item.option" [nec]="item.nec" [selectValue]="invoice[item.itemValue]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue($event,item.itemValue,item.itemValueName)"></select-normal>
         </div>

@@ -25,6 +25,10 @@
             </ion-label>
           </ion-item>
         </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea class="formTextarea" [placeholder]="'请输入'+item.itemName" [(ngModel)]="data[item.itemValue]" (focus)="hideFooter()" (blur)="showFooter()"></textarea>
+        </div>
       </div>
     </div>
   </div>

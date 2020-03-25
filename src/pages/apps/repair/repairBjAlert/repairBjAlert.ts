@@ -21,7 +21,7 @@ export class RepairBjAlertPage{
   displayIndex;
   isNewSearch = true;
   upperButton = false;
-  lowerButton = true;
+  lowerButton = false;
   constructor(
     public storageService?: StorageService,
     public events?: Events,
@@ -98,6 +98,8 @@ export class RepairBjAlertPage{
     this.httpService.postData2(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", body, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
+      this.upperButton = false;
+      this.lowerButton = false;
     },true);
   }
   changeSearchSelect(value){
@@ -119,6 +121,8 @@ export class RepairBjAlertPage{
     this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
+      this.upperButton = false;
+      this.lowerButton = false;
     },true);
   }
   goToxj(){
@@ -128,6 +132,8 @@ export class RepairBjAlertPage{
     this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
       this.data = data.obj;
       this.filterData = JSON.parse(JSON.stringify(this.data));
+      this.upperButton = false;
+      this.lowerButton = false;
     },true);
   }
   returnSelect(){

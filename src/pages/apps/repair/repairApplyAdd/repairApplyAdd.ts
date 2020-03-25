@@ -108,7 +108,7 @@ export class RepairApplyAddPage {
           {itemName:"维修单号", itemType:"label",itemValue:"wxdh",nec:0},
           {itemName:"单据状态", itemType:"label",itemValue:"djztName",nec:0},
           {itemName:"申请时间", itemType:"label",itemValue:"sqsj",nec:0},
-          {itemName:"申请单位", itemType:"label",itemValue:"sqdwmc",nec:0},
+          {itemName:"申请单位", itemType:"labelRightShow",itemValue:"sqdwmc",nec:0},
           {itemName:"所属城市", itemType:"label",itemValue:"sscs",nec:0},
           {itemName:"申请人", itemType:"label",itemValue:"sqrmc",nec:0},
           {itemName:"联系电话", itemType:"input",itemValue:"zfyl8",nec:1},

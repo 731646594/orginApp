@@ -42,6 +42,9 @@ export class RepairAcceptanceEvaluatePage {
       if (this.insertCspjData[i]["zfyl8"]==5){
         this.lightStar[i] = ["star","star","star","star","star"];
       }
+      if(!this.insertCspjData[i]["bz"]){
+        this.insertCspjData[i]["bz"] = "";
+      }
     }
     if (this.insertCspjData.length == 0){
       this.addForm();
@@ -63,6 +66,7 @@ export class RepairAcceptanceEvaluatePage {
             ],
           },
           {itemName:"整体服务", itemType:"star",itemValue:"zfyl8",nec:1},
+          {itemName:"备注", itemType:"textarea",itemValue:"bz",nec:0},
         ],
       ],
     }
