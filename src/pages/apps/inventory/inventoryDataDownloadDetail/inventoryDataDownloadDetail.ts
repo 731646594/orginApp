@@ -102,6 +102,9 @@ export class InventoryDataDownloadDetailPage {
                 }
               }
               this.departments = JSON.parse(JSON.stringify(departments));
+              for(let i in data){
+                data[i]["checkResult"] = "";
+              }
               this.storageService.sqliteInsert("localPlan",this.userCode,JSON.stringify(this.planDate));
               this.storageService.sqliteInsert("localPlanDetail",this.userCode,JSON.stringify(data));
               this.storageService.sqliteInsert("willPlanDetail",this.userCode,JSON.stringify(data));

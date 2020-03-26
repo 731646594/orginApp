@@ -36,30 +36,30 @@ export class MyApp {
       // platform.registerBackButtonAction(() => {
       //   return;
       // });
-      // let alertControl = alertCtrl;
-      // appVersion.getVersionNumber().then((value:any)=>{
-      //   httpService.postData(httpService.getUrl()+"appVersionController/getVersionUrl.do",{currentVersion:"v"+value},data=>{
-      //     let alertCtrl = alertControl.create({
-      //       title:"请更新最新版本的APP",
-      //       subTitle:data.data.APP_PACKAGE_VERSION,
-      //       message:data.data.APP_PACKAGE_MSG,
-      //       buttons:[
-      //         {
-      //           text:"更新",
-      //           handler:()=>{
-      //             window.location.href = data.data.APP_PACKAGE_URL
-      //           }
-      //         },
-      //       ]
-      //     });
-      //     alertCtrl.present();
-      //   },false,(err)=>{});
-      // }).catch(err=>{
-      //   let alertCtrl = alertControl.create({
-      //     title:"error:"+err,
-      //   });
-      //   alertCtrl.present();
-      // });
+      let alertControl = alertCtrl;
+      appVersion.getVersionNumber().then((value:any)=>{
+        httpService.postData(httpService.getUrl()+"appVersionController/getVersionUrl.do",{currentVersion:"v"+value},data=>{
+          let alertCtrl = alertControl.create({
+            title:"请更新最新版本的APP",
+            subTitle:data.data.APP_PACKAGE_VERSION,
+            message:data.data.APP_PACKAGE_MSG,
+            buttons:[
+              {
+                text:"更新",
+                handler:()=>{
+                  window.location.href = data.data.APP_PACKAGE_URL
+                }
+              },
+            ]
+          });
+          alertCtrl.present();
+        },false,(err)=>{});
+      }).catch(err=>{
+        let alertCtrl = alertControl.create({
+          title:"error:"+err,
+        });
+        alertCtrl.present();
+      });
       platform.registerBackButtonAction(() => {
         if (!this.nav.canGoBack()){
           if (this.backButtonPressed){
