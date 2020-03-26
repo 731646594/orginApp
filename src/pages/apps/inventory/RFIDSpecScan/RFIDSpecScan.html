@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>RFID标签特殊盘点</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="formInfoBox">
+    <div class="chartBox">
+      <div id="chart1" class="chart"></div>
+    </div>
+    <div class="formInfoInput">
+      <div class="inlineBox">
+        <div class="labelInlineBox" style=" width: 100%">
+          <ion-label class="noFlexLabel centerText" style="background: #E57D60;width: 35%;" (click)="nextPage('scan')">{{"已扫描:"+numList['scan']}}</ion-label>
+        </div>
+      </div>
+      <div class="inlineBox">
+        <div class="labelInlineBox">
+          <ion-label class="noFlexLabel centerText" style="background: #4389e8;margin-right: 10px;" (click)="nextPage(pageItem[0].itemValue)">{{pageItem[0].itemName+":"+numList[pageItem[0].itemValue]}}</ion-label>
+        </div>
+        <div class="labelInlineBox">
+          <ion-label class="noFlexLabel centerText" style="background: #D72A26;margin-left: 10px;" (click)="nextPage(pageItem[1].itemValue)">{{pageItem[1].itemName+":"+numList[pageItem[1].itemValue]}}</ion-label>
+        </div>
+      </div>
+      <div class="inlineBox">
+        <div class="labelInlineBox">
+          <ion-label class="noFlexLabel centerText" style="background: #2C4755;margin-right: 10px;" (click)="nextPage(pageItem[2].itemValue)">{{pageItem[2].itemName+":"+numList[pageItem[2].itemValue]}}</ion-label>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<footer class="formFooter" padding>
+  <button class="formFooterButton" *ngIf="!isScanning" (click)="beginScan()">
+    <ion-icon class="formFooterIcon" name="qr-scanner"></ion-icon><br>开始
+  </button>
+  <button class="formFooterButton" *ngIf="isScanning" (click)="stopScan()">
+    <ion-icon class="formFooterIcon" name="stopwatch"></ion-icon><br>停止
+  </button>
+  <button class="formFooterButton" *ngIf="!isScanning" (click)="cal()">
+    <ion-icon class="formFooterIcon" name="calculator"></ion-icon><br>计算
+  </button>
+</footer>

@@ -26,6 +26,7 @@ import {RepairApplyPage} from "../../apps/repair/repairApply/repairApply";
 import {RFIDScanPage} from "../../apps/inventory/RFIDScan/RFIDScan";
 import {SettlementPage} from "../settlement/settlement";
 import {InventoryDataSyncPage} from "../../apps/inventory/inventoryDataSync/inventoryDataSync";
+import {RFIDSpecScanPage} from "../../apps/inventory/RFIDSpecScan/RFIDSpecScan";
 
 @Component({
   selector: 'page-menu',
@@ -63,7 +64,7 @@ export class MenuPage {
       alertCtrl.present();
       return false;
     }
-    if(this.storageService.getDevice()!=2&&(page == 11||page == 16||page == 17||page == 51||page == 52)){
+    if(this.storageService.getDevice()!=2&&(page == 11||page == 16||page == 17||page == 19||page == 51||page == 52)){
       if(this.network.type != 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请切换到飞行模式！"
@@ -90,6 +91,7 @@ export class MenuPage {
     //16:盘盈录入
     //17:RFID
     //18:数据同步
+    //19:RFID特殊
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -156,6 +158,19 @@ export class MenuPage {
     }
     else if(page == 18){
       willGoPage = InventoryDataSyncPage;
+    }
+    else if(page == 19){
+      this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=> {
+        if (res.rows.length > 0) {
+          this.app.getRootNav().push(RFIDSpecScanPage,params)
+        }else {
+          let alertCtrl = this.alertCtrl.create({
+            title:"请下载盘点计划！"
+          });
+          alertCtrl.present();
+          return false;
+        }
+      })
     }
     else if(page == 21){
       willGoPage = ScrapApplicationPage;

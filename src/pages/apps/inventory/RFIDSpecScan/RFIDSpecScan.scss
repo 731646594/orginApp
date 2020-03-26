@@ -1,0 +1,46 @@
+page-RFIDSpecScan{
+  .label-ios{
+    margin-right: 0;
+  }
+  .formInfoBox{
+    margin-bottom: 60px;
+  }
+  .formInfoInput{
+    margin-top: 320px;
+  }
+  .imgItem{
+    .item-inner{
+      border-bottom: none !important;
+    }
+  }
+  .chartBox{
+    width: 100%;
+    margin: 0 auto;
+  }
+  .chart {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    background: white;
+    top: 16px;
+  }
+  .labelInlineBox{
+    display: inline-grid;
+    width: 50%;
+  }
+  .centerText{
+    text-align: center;
+    font-size: 17px;
+    font-weight: bolder;
+    width: 67%;
+    height: 90%;
+    margin: 11px auto;
+    border-radius: 5px;
+    align-items: center;
+    display: grid;
+    color:white;
+  }
+  .inlineBox{
+    display: flex;
+  }
+}

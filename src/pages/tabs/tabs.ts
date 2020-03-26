@@ -47,6 +47,7 @@ export class TabsPage {
     //16:盘盈录入
     //17:RFID
     //18:数据同步
+    //19:RFID特殊
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -185,13 +186,19 @@ export class TabsPage {
       if(this.pageData1.pageData[0][1].pageData[lastIndex][2].length>0){
         this.pageData1.pageData[0][1].pageData.push(
           [
-            [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+            [17,"","saoyisao.png","RFID标签盘点","1"],[19,"","luruzhong.png","RFID标签盘点","1"],[]
           ]
         )
       }else if (this.pageData1.pageData[0][1].pageData[lastIndex][1].length == 0){
-        this.pageData1.pageData[0][1].pageData[lastIndex][1] = [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+        this.pageData1.pageData[0][1].pageData[lastIndex][1] = [17,"","saoyisao.png","RFID标签盘点","1"];
+        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [19,"","luruzhong.png","RFID标签盘点","1"];
       }else if (this.pageData1.pageData[0][1].pageData[lastIndex][2].length == 0){
-        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [17,"","saoyisao.png","RFID标签盘点","1"],[],[]
+        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [17,"","saoyisao.png","RFID标签盘点","1"];
+        this.pageData1.pageData[0][1].pageData.push(
+          [
+            [19,"","luruzhong.png","RFID标签盘点","1"],[],[]
+          ]
+        )
       }
     }
     this.pageData2 = {

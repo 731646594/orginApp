@@ -92,6 +92,8 @@ import {AppVersion} from "@ionic-native/app-version";
 import {InventoryDataSyncPage} from "../pages/apps/inventory/inventoryDataSync/inventoryDataSync";
 import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryDataSyncDetail/inventoryDataSyncDetail";
 import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
+import {RFIDSpecScanPage} from "../pages/apps/inventory/RFIDSpecScan/RFIDSpecScan";
+import {RFIDSpecScanListPage} from "../pages/apps/inventory/RFIDSpecScanList/RFIDSpecScanList";
 
 @NgModule({
   declarations: [
@@ -164,7 +166,9 @@ import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
     MaintenanceAcceptancePage,
     InventoryDataSyncPage,
     InventoryDataSyncDetailPage,
-    MenuHelpPage
+    MenuHelpPage,
+    RFIDSpecScanPage,
+    RFIDSpecScanListPage
   ],
   imports: [
     BrowserModule,
@@ -255,7 +259,9 @@ import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
     MaintenanceAcceptancePage,
     InventoryDataSyncPage,
     InventoryDataSyncDetailPage,
-    MenuHelpPage
+    MenuHelpPage,
+    RFIDSpecScanPage,
+    RFIDSpecScanListPage
   ],
   providers: [
     StatusBar,
