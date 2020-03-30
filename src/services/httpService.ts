@@ -57,11 +57,11 @@ export class HttpService {
       // this.setUrl("http","127.0.0.1","10610","plamassets");
       // return "http://127.0.0.1:10610/plamassets/mobile/"
       //黑龙江销售
-      // this.setUrl("http","210.12.194.210","9080","plamassets");
-      // return "http://210.12.194.210:9080/plamassets/mobile/"
+      this.setUrl("http","210.12.194.210","9080","plamassets");
+      return "http://210.12.194.210:9080/plamassets/mobile/"
       //油网
-      this.setUrl("http","10.215.9.57","8081","plamassets");
-      return "http://10.215.9.57:8081/plamassets/mobile/"
+      // this.setUrl("http","10.215.9.57","8081","plamassets");
+      // return "http://10.215.9.57:8081/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");

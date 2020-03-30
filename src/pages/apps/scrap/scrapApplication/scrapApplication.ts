@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {
+  AlertController, App, Events, LoadingController, ModalController, NavController,
+  NavParams
+} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {ApplicationPage} from "../../../commonStyle/application/application";
 import {DatePipe} from "@angular/common";
+import {MenuHelpPage} from "../../../commonStyle/menuHelp/menuHelp";
 
 @Component({
   selector: 'page-application',
@@ -12,7 +16,7 @@ import {DatePipe} from "@angular/common";
 export class ScrapApplicationPage extends ApplicationPage{
   constructor(public navCtrl?: NavController,public navParams?:NavParams,public alertCtrl?:AlertController,
               public storageService?:StorageService,public events?:Events,public app?:App,public loadingCtrl?:LoadingController,
-              public httpService?:HttpService,public datePipe?:DatePipe) {
+              public httpService?:HttpService,public datePipe?:DatePipe,public modalCtrl?:ModalController) {
     super(navCtrl,navParams,alertCtrl,storageService,events);
     let date = new Date();
     this.invoice["invoiceType"]="020201";
@@ -231,5 +235,9 @@ export class ScrapApplicationPage extends ApplicationPage{
     if(!isExist){
         return  true
     }
+  }
+  helpPage(){
+    let contactModal = this.modalCtrl.create(MenuHelpPage,{url:"http://192.168.0.98:8088/plamassets/helpDoc/help.html"},{});
+    contactModal.present();
   }
 }

@@ -11,6 +11,8 @@ import {AllocateApplicationPage} from "../apps/allocate/allocateApplication/allo
 import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateApproval";
 import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
+import {NativeService} from "../../services/NativeService";
+import {JpushUtils} from "../../services/JpushUtils";
 let that;
 @Component({
   selector: 'page-home',
@@ -29,8 +31,12 @@ export class HomePage {
   num5;
   pageData;
   pageItem;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController) {
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController,public jpushUtil:JpushUtils,public nativeService:NativeService) {
     this.loadData();
+    // if(this.nativeService.isMobile()){
+    //   this.jpushUtil.setTags(["123Flynn"])
+    // }
+    // this.jpushUtil.addListenter();
   }
   ionViewDidEnter(){
   }

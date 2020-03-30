@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from "../pages/mine/login/login";
 import {HttpService} from "../services/httpService";
 import {AppVersion} from "@ionic-native/app-version";
+import {JpushUtils} from "../services/JpushUtils";
 declare var wkWebView: any;
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,9 @@ export class MyApp {
   rootPage:any = LoginPage;
   backButtonPressed: boolean = false;  //用于判断返回键是否触发
   @ViewChild('myNav') nav: Nav;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,alertCtrl:AlertController,app:App,appVersion:AppVersion) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
+              storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,
+              alertCtrl:AlertController,app:App,appVersion:AppVersion,jpushUtils:JpushUtils) {
     // let olog = console.error;
     // console.error = function() {
     //   alert([].join.call(arguments, ''))
@@ -33,6 +36,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleBlackTranslucent();
       splashScreen.hide();
+      jpushUtils.initPush();
       // platform.registerBackButtonAction(() => {
       //   return;
       // });
