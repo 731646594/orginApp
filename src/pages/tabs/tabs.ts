@@ -186,17 +186,17 @@ export class TabsPage {
       if(this.pageData1.pageData[0][1].pageData[lastIndex][2].length>0){
         this.pageData1.pageData[0][1].pageData.push(
           [
-            [17,"","saoyisao.png","RFID标签盘点","1"],[19,"","luruzhong.png","RFID标签特殊盘点","1"],[]
+            [17,"","saoyisao.png","RFID标签盘点","1"],[19,"","luruzhong.png","RFID特殊盘点","1"],[]
           ]
         )
       }else if (this.pageData1.pageData[0][1].pageData[lastIndex][1].length == 0){
         this.pageData1.pageData[0][1].pageData[lastIndex][1] = [17,"","saoyisao.png","RFID标签盘点","1"];
-        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [19,"","luruzhong.png","RFID标签特殊盘点","1"];
+        this.pageData1.pageData[0][1].pageData[lastIndex][2] = [19,"","luruzhong.png","RFID特殊盘点","1"];
       }else if (this.pageData1.pageData[0][1].pageData[lastIndex][2].length == 0){
         this.pageData1.pageData[0][1].pageData[lastIndex][2] = [17,"","saoyisao.png","RFID标签盘点","1"];
         this.pageData1.pageData[0][1].pageData.push(
           [
-            [19,"","luruzhong.png","RFID特殊标签盘点","1"],[],[]
+            [19,"","luruzhong.png","RFID特殊盘点","1"],[],[]
           ]
         )
       }
