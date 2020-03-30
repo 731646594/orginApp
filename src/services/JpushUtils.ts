@@ -6,6 +6,7 @@
 import { Injectable } from '@angular/core';
 import { JPush } from '@jiguang-ionic/jpush';
 import {NativeService} from "./NativeService";
+import {Events} from "ionic-angular";
 /**
  * Helper类存放和业务有关的公共方法
  * @description
@@ -14,7 +15,7 @@ import {NativeService} from "./NativeService";
 export class JpushUtils {
   private registrationId: string;
   sequence: number = 0;
-  constructor(private jpush: JPush, private nativeService:NativeService) {
+  constructor(private jpush: JPush, private nativeService:NativeService,public events:Events) {
 
   }
 
@@ -24,30 +25,30 @@ export class JpushUtils {
     this.jpush.setBadge(0);
     this.jpush.resetBadge();
     // window['plugins'].jPushPlugin.receiveMessageInAndroidCallback = function (data) {
-    //   console.log('Receive notification: ' + JSON.stringify(event['message']));
+    //   alert('Receive notification: ' + JSON.stringify(event['message']));
     //   //expresstion
     // };
 
     //   /**接收消息触发 */
     //   document.addEventListener('jpush.receiveMessage', (event: any) => {
     //     // this.logger.log(event,'Receive notification');
-    //          console.log('Receive receiveMessage: ' + JSON.stringify(event.message));
+    //          alert('Receive receiveMessage: ' + JSON.stringify(event.message));
     //       }, false);
     //
     // /**接收消息触发 */
     //   document.addEventListener('jpush.receiveNotification', (event: any) => {
     // // this.logger.log(event,'Receive notification');
-    //      console.log('Receive notification: ' + JSON.stringify(event.message));
+    //      alert('Receive notification: ' + JSON.stringify(event.message));
     //   }, false);
     // /**打开消息触发 */
     // document.addEventListener('jpush.openNotification', (event: any) => {
     //   // this.logger.log(event,'open notification');
-    //   console.log('Receive notification: ' + JSON.stringify(event));
+    //   alert('Receive notification: ' + JSON.stringify(event));
     // }, false);
     // /**接收本地消息 */
     //   document.addEventListener('jpush.receiveLocalNotification', (event: any) => {
     // // this.logger.log(event,'receive local notification');
-    // console.log('Receive notification: ' + JSON.stringify(event));
+    // alert('Receive notification: ' + JSON.stringify(event));
     //   }, false);
   }
 
@@ -55,19 +56,20 @@ export class JpushUtils {
 
     // 打开
     document.addEventListener('jpush.openNotification', (event?: any)=>{
-      console.log('---------------jpush openNotification main----------------')
-      console.log(JSON.stringify(event))
-      console.log(JSON.stringify(event.extras["cn.jpush.android.EXTRA"]))
+      // alert('---------------jpush openNotification main----------------')
+      // alert(JSON.stringify(event))
+      let item = event.extras["cn.jpush.android.EXTRA"];
+      this.events.publish("homeGoPage",item["page"])
       this.jpush.setBadge(0);
       this.jpush.setApplicationIconBadgeNumber(0);
       this.jpush.resetBadge();
-      // console.log(JSON.stringify(event))
+      // alert(JSON.stringify(event))
     }, false);
 
     // /**接收通知消息触发 */
       document.addEventListener('jpush.receiveNotification', (event: any) => {
     // this.logger.log(event,'Receive notification');
-    //      console.log('Receive notification: ' + JSON.stringify(event.message));
+    //      alert('Receive notification: ' + JSON.stringify(event.message));
         this.jpush.setBadge(0);
         this.jpush.setApplicationIconBadgeNumber(0);
         this.jpush.resetBadge();
@@ -75,18 +77,18 @@ export class JpushUtils {
 
 // 获取自定义信息内容
     document.addEventListener('jpush.receiveMessage', (event?: any)=>{
-      console.log('---------------jpush receiveMessage main----------------')
-      console.log(JSON.stringify(event))
-      // console.log(JSON.stringify(event))
+      alert('---------------jpush receiveMessage main----------------')
+      alert(JSON.stringify(event))
+      // alert(JSON.stringify(event))
     }, false);
 // 后台接受通知
     document.addEventListener('jpush.receiveLocalNotification', (event?: any)=>{
-      console.log('---------------jpush receiveLocalNotification mainmain----------------')
-      console.log(JSON.stringify(event))
+      alert('---------------jpush receiveLocalNotification mainmain----------------')
+      alert(JSON.stringify(event))
       this.jpush.setBadge(0);
       this.jpush.setApplicationIconBadgeNumber(0);
       this.jpush.resetBadge();
-      // console.log(JSON.stringify(event))
+      // alert(JSON.stringify(event))
     }, false);
   }
 
@@ -99,7 +101,7 @@ export class JpushUtils {
   aliasResultHandler = function(result) {
     var sequence: number = result.sequence;
     var alias: string = result.alias;
-    // console.log('Success!' + '\nSequence: ' + sequence + '\nAlias: ' + alias+'别名设置回调');
+    // alert('Success!' + '\nSequence: ' + sequence + '\nAlias: ' + alias+'别名设置回调');
   };
 
   errorHandler = function(err) {
