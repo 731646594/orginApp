@@ -94,8 +94,8 @@ import {InventoryDataSyncDetailPage} from "../pages/apps/inventory/inventoryData
 import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
 import {RFIDSpecScanPage} from "../pages/apps/inventory/RFIDSpecScan/RFIDSpecScan";
 import {RFIDSpecScanListPage} from "../pages/apps/inventory/RFIDSpecScanList/RFIDSpecScanList";
-import {JPush} from "@jiguang-ionic/jpush";
-import {JpushUtils} from "../services/JpushUtils";
+// import {JPush} from "@jiguang-ionic/jpush";
+// import {JpushUtils} from "../services/JpushUtils";
 import {NativeService} from "../services/NativeService";
 
 @NgModule({
@@ -284,8 +284,8 @@ import {NativeService} from "../services/NativeService";
     Network,
     HTTP,
     AppVersion,
-    JPush,
-    JpushUtils,
+    // JPush,
+    // JpushUtils,
     NativeService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

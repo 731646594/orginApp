@@ -12,7 +12,7 @@ import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateAp
 import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
 import {NativeService} from "../../services/NativeService";
-import {JpushUtils} from "../../services/JpushUtils";
+// import {JpushUtils} from "../../services/JpushUtils";
 let that;
 @Component({
   selector: 'page-home',
@@ -31,15 +31,15 @@ export class HomePage {
   num5;
   pageData;
   pageItem;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController,public jpushUtil:JpushUtils,public nativeService:NativeService,public events:Events) {
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController,public nativeService:NativeService,public events:Events) {
     this.loadData();
     this.events.subscribe("homeGoPage", (res) => {
       this.willGoPage(res,"1")
     });
-    if(this.nativeService.isMobile()){
-      this.jpushUtil.setTags(["123Flynn"])
-    }
-    this.jpushUtil.addListenter();
+    // if(this.nativeService.isMobile()){
+    //   this.jpushUtil.setTags(["123Flynn"])
+    // }
+    // this.jpushUtil.addListenter();
   }
   ionViewDidEnter(){
   }
