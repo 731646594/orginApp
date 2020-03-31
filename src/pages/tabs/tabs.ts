@@ -5,6 +5,7 @@ import { HomePage } from '../home/home';
 // import {PageUtil} from "../../services/storageService";
 import {MinePage} from "../mine/mine/mine";
 import {StorageService} from "../../services/storageService";
+import {NativeService} from "../../services/NativeService";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -28,7 +29,7 @@ export class TabsPage {
   danjujiesuanguanli;
   isShowHome = true;
   isShowOther = true;
-  constructor(public storageService:StorageService) {
+  constructor(public storageService:StorageService,public nativeService:NativeService) {
 
     // PageUtil.pages["tabs"]=this;
 
@@ -214,7 +215,19 @@ export class TabsPage {
           [5,"","tuichu.png","退出登陆"],
         ]
       ]
+    };
+    if (!this.nativeService.isAndroid()){
+      this.pageData2 = {
+        pageName:"我的",
+        pageData:[
+          [
+            [2,"","shezhi.png","服务器设置"],[3,"","xiugai.png","修改密码"],[4,"","qiehuan.png","切换单位"]
+          ],
+          [
+            [6,"","qingchu.png","清除数据"],[7,"","gengxin.png","更新字典"],[5,"","tuichu.png","退出登陆"],
+          ]
+        ]
+      }
     }
-
   }
 }
