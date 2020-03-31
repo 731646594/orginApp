@@ -8,7 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from "../pages/mine/login/login";
 import {HttpService} from "../services/httpService";
 import {AppVersion} from "@ionic-native/app-version";
-import {JpushUtils} from "../services/JpushUtils";
+// import {JpushUtils} from "../services/JpushUtils";
 declare var wkWebView: any;
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +19,7 @@ export class MyApp {
   @ViewChild('myNav') nav: Nav;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
               storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,
-              alertCtrl:AlertController,app:App,appVersion:AppVersion,jpushUtils:JpushUtils) {
+              alertCtrl:AlertController,app:App,appVersion:AppVersion) {
     // let olog = console.error;
     // console.error = function() {
     //   alert([].join.call(arguments, ''))
@@ -36,7 +36,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleBlackTranslucent();
       splashScreen.hide();
-      jpushUtils.initPush();
+      // jpushUtils.initPush();
       // platform.registerBackButtonAction(() => {
       //   return;
       // });
