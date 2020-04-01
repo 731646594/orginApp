@@ -21,7 +21,7 @@ export class InventoryEntryPage  extends InventoryPage{
       pageName:"盘盈录入",
       pageData:{
         pageItem:[
-          {itemName:"盘点单位", itemType:"select",nec:0, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.departments,},
+          {itemName:"盘点单位", itemType:"select",nec:1, itemValue:"managerDepart",optionValueString:"departCode",optionNameString:"departName", option:this.departments,},
           {itemName:"资产条码", itemType:"input",inputType:"text",nec:0,itemValue:"barCode"},
           {itemName:"资产名称", itemType:"input",inputType:"text",nec:1,itemValue:"assetsName"},
           {itemName:"规格型号", itemType:"input",inputType:"text",nec:0,itemValue:"assetsStandard"},
