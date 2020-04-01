@@ -29,6 +29,7 @@ export class InventoryQueryPage {
   displayIndex;
   page=1;
   pageData={};
+  loginDepartCode;
   constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController,public file:File) {
     this.loadData();
   }
@@ -37,6 +38,7 @@ export class InventoryQueryPage {
   loadData(){
     this.pageData["pageItem"]=[];
     this.userCode = this.storageService.read("loginUserCode");
+    this.loginDepartCode = this.storageService.read("loginDepartCode");
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.existPlan = JSON.parse(res.rows.item(0).stringData);
@@ -56,11 +58,21 @@ export class InventoryQueryPage {
       if (res.rows.length>0){
         this.plan = JSON.parse(res.rows.item(0).stringData);
         this.departments = this.plan["departments"];
-        if (this.departments.length>0){
-          this.departCode = this.departments[0]["departCode"];
+        let isInclude = true;
+        for (let i in this.loginDepartCode){
+          if (this.loginDepartCode[i] != this.departments[0]["departCode"][i]){
+            isInclude = false;
+          }
         }
-        this.planStatus = "will";
-        this.selectDepart(this.departCode);
+        if (isInclude){
+          if (this.departments.length>0){
+            this.departCode = this.departments[0]["departCode"];
+          }
+          this.planStatus = "will";
+          this.selectDepart(this.departCode);
+        }else {
+          this.departments = [];
+        }
       }
       this.plan["username"]=this.storageService.read("loginUserName");
       this.pageData={
@@ -213,17 +225,17 @@ export class InventoryQueryPage {
     this.willPlanDetail=[];
     this.newPlanDetail=[];
     for (let x in this.existPlan){
-      if (this.departCode == this.existPlan[x]["managerDepart"]){
+      if (this.departCode == this.existPlan[x]["departCode"]){
         this.existPlanDetail.push(this.existPlan[x])
       }
     }
     for (let i in this.willPlan){
-      if (this.departCode == this.willPlan[i]["managerDepart"]){
+      if (this.departCode == this.willPlan[i]["departCode"]){
         this.willPlanDetail.push(this.willPlan[i])
       }
     }
     for (let j in this.newPlan){
-      if (this.departCode == this.newPlan[j]["managerDepart"]){
+      if (this.departCode == this.newPlan[j]["departCode"]){
         this.newPlanDetail.push(this.newPlan[j])
       }
     }
