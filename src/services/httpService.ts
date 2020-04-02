@@ -30,8 +30,8 @@ export class HttpService {
       // this.setUrl("http","192.168.0.98","8088","plamassets");
       // return "http://192.168.0.98:8088/plamassets/mobile/";
       //外网98渤钻井下
-      this.setUrl("http","lhsm.vip","8086","plamassets");
-      return "http://lhsm.vip:8086/plamassets/mobile/";
+      // this.setUrl("http","lhsm.vip","8086","plamassets");
+      // return "http://lhsm.vip:8086/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
@@ -63,8 +63,8 @@ export class HttpService {
       // this.setUrl("http","210.12.194.210","9080","plamassets");
       // return "http://210.12.194.210:9080/plamassets/mobile/"
       //油网
-      // this.setUrl("http","10.215.9.57","8081","plamassets");
-      // return "http://10.215.9.57:8081/plamassets/mobile/"
+      this.setUrl("http","10.215.9.57","8081","plamassets");
+      return "http://10.215.9.57:8081/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");
