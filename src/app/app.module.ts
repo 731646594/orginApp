@@ -95,7 +95,7 @@ import {MenuHelpPage} from "../pages/commonStyle/menuHelp/menuHelp";
 import {RFIDSpecScanPage} from "../pages/apps/inventory/RFIDSpecScan/RFIDSpecScan";
 import {RFIDSpecScanListPage} from "../pages/apps/inventory/RFIDSpecScanList/RFIDSpecScanList";
 // import {JPush} from "@jiguang-ionic/jpush";
-// import {JpushUtils} from "../services/JpushUtils";
+// import {JpushUtils} from "../services/JpushUtils";//jpush 1.0.2
 import {NativeService} from "../services/NativeService";
 
 @NgModule({
