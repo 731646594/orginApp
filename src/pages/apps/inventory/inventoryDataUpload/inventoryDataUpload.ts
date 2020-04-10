@@ -156,7 +156,7 @@ export class InventoryDataUploadPage {
             newImage.setAttribute("crossOrigin", 'Anonymous');  //url为外域时需要
             var imgWidth, imgHeight;
             newImage.onload =  (ev:any)=> {
-              let img = ev.path[0];
+              let img = ev.target;
               imgWidth = img.width;
               imgHeight = img.height;
               var canvas = document.createElement("canvas");

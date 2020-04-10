@@ -159,7 +159,7 @@ export class InventoryPage {
     }
     const options: CameraOptions = {
       quality: 50,                                                   //相片质量 0 -100
-      destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
+      destinationType: this.camera.DestinationType.NATIVE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       saveToPhotoAlbum: saveToPhotoAlbum,                                       //是否保存到相册
@@ -465,7 +465,7 @@ export class InventoryPage {
             alert(err)
           });
         },err=>{
-          alert(err)
+          alert(JSON.stringify(err))
         })
       }
     }
