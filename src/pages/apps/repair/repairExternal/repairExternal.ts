@@ -83,12 +83,14 @@ export class RepairExternalPage {
       if (this.invoice["sfscfj"] == 1){
         let url = storageService.read("systemUrl")+"";
         let urlHead = url.split(":")[0]+"://"+url.split("/")[2];
-        if (temp.imgUrlList.indexOf(",")>-1){
-          for (let i in temp.imgUrlList.split(",")){
-            this.listBase64.push(urlHead + temp.imgUrlList.split(",")[i]);
+        if (temp.imgUrlList){
+          if (temp.imgUrlList.indexOf(",")>-1){
+            for (let i in temp.imgUrlList.split(",")){
+              this.listBase64.push(urlHead + temp.imgUrlList.split(",")[i]);
+            }
+          }else {
+            this.listBase64.push(urlHead + temp.imgUrlList);
           }
-        }else {
-          this.listBase64.push(urlHead + temp.imgUrlList);
         }
         let node = document.getElementById("imgBox");
         for (let j in this.listBase64){
