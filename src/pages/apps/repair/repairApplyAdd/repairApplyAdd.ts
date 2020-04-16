@@ -525,15 +525,15 @@ export class RepairApplyAddPage {
         this.invoice["wxfs"] = listWxfs[i].complexname;
       }
     }
-    for (let i in this.data){
-      if (this.invoice["zfyl1"] == "05"&&this.data[i]["zfyl10"]!="是"){
-        let alertCtrl = this.alertCtrl.create({
-          title:"外包维修不能包含非外包设备！"
-        });
-        alertCtrl.present();
-        return false;
-      }
-    }
+    // for (let i in this.data){
+    //   if (this.invoice["zfyl1"] == "05"&&this.data[i]["zfyl10"]!="是"){
+    //     let alertCtrl = this.alertCtrl.create({
+    //       title:"外包维修不能包含非外包设备！"
+    //     });
+    //     alertCtrl.present();
+    //     return false;
+    //   }
+    // }
     let j = this.pageData.pageItem[0].filter((item) => {
       return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
     });
