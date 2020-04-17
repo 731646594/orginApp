@@ -182,7 +182,6 @@ export class RepairApplyPage {
   }
   ionViewDidEnter(){
     if (this.refreshData){
-      $(".scroll-content")[2].scrollTop = 0;
       if (this.pageName == "维修外委派单"||this.pageName == "开始维修"||this.pageName == "维修办结"||this.pageName == "保养外委派单"||this.pageName == "开始保养"||this.pageName == "保养办结"||this.pageName == "保养验收") {
         this.isNewSearch = true;
         let body = {departCode:this.storageService.read("loginDepartCode"),userCode:this.storageService.read("loginUserCode"),wxType:1,funccode:this.funccode};
@@ -235,7 +234,8 @@ export class RepairApplyPage {
               this.itemData[i]["zrdwTypeName"] = ConfigProvider.zrdwTypeName(this.itemData[i]["zrdwType"]);
             }
           }
-          console.log(this.itemData)
+          console.log(this.itemData);
+          (<HTMLElement>document.getElementsByClassName("contentBox")[0].parentNode).scrollTop = 0;
         },true,(err)=>{
           this.itemDataOrgin = [];
           this.itemData = [];
@@ -253,7 +253,8 @@ export class RepairApplyPage {
           for (let i in this.itemData){
             this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["djzt"])
           }
-          console.log(this.itemData)
+          console.log(this.itemData);
+          (<HTMLElement>document.getElementsByClassName("contentBox")[0].parentNode).scrollTop = 0;
         },true,(err)=>{
           this.itemData = [];
           let alertCtrl = this.alertCtrl.create({
