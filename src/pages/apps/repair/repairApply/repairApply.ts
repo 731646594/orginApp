@@ -22,6 +22,7 @@ import {MaintenanceAcceptancePage} from "../../maintenance/maintenanceAcceptance
 export class RepairApplyPage {
   cardData;
   itemData=[];
+  itemDataOrgin = [];
   pageName;
   isFocus = false;
   isNewSearch = true;
@@ -91,13 +92,10 @@ export class RepairApplyPage {
         console.log(this.itemData)
       },true);
     }else if (this.pageName == "维修外委派单"){
-      this.isNewSearch = false;
       this.listUrl = "lhd/app/devPeripheryRepairController.do?getPeripheryPlan"
     }else if (this.pageName == "开始维修"){
-      this.isNewSearch = false;
       this.listUrl = "lhd/app/devPeripheryRepairController.do?getPeripheryRepairInfo"
     }else if (this.pageName == "维修办结"){
-      this.isNewSearch = false;
       this.listUrl = "lhd/app/devPeripheryRepairController.do?getPeripheryRepairInfo"
     }else if (this.pageName == "保养外委派单"){
       this.listUrl = "lhd/app/devMaintenanceController.do?getMaintenancePlan"
@@ -184,8 +182,9 @@ export class RepairApplyPage {
   }
   ionViewDidEnter(){
     if (this.refreshData){
+      $(".scroll-content")[2].scrollTop = 0;
       if (this.pageName == "维修外委派单"||this.pageName == "开始维修"||this.pageName == "维修办结"||this.pageName == "保养外委派单"||this.pageName == "开始保养"||this.pageName == "保养办结"||this.pageName == "保养验收") {
-        this.isNewSearch = false;
+        this.isNewSearch = true;
         let body = {departCode:this.storageService.read("loginDepartCode"),userCode:this.storageService.read("loginUserCode"),wxType:1,funccode:this.funccode};
         if (this.pageName == "维修办结"){
           body.wxType = 2
@@ -197,10 +196,20 @@ export class RepairApplyPage {
           body["byType"] = 2
         }
         this.httpService.postData2(this.httpService.getUrl2()+this.listUrl,body,data=>{
-          this.itemData = data.obj;
+          this.itemDataOrgin = data.obj;
           if (this.pageName == "保养外委派单"){
-            this.itemData = data.obj.planList;
+            this.itemDataOrgin = data.obj.planList;
             this.operatorList = data.obj.operatorList;
+          }
+          this.itemData = [];
+          if (this.itemDataOrgin.length>10){
+            this.page = 1;
+            for (let i=0; i<10;i++){
+              this.itemData.push(this.itemDataOrgin[i]);
+            }
+          }else {
+            this.itemData = this.itemDataOrgin;
+            this.isNewSearch = false;
           }
           for (let i in this.itemData){
             this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["DJZT"]);
@@ -228,6 +237,7 @@ export class RepairApplyPage {
           }
           console.log(this.itemData)
         },true,(err)=>{
+          this.itemDataOrgin = [];
           this.itemData = [];
           let alertCtrl = this.alertCtrl.create({
             title:err
@@ -705,22 +715,64 @@ export class RepairApplyPage {
     if (this.searchValue){
       body["wxdh"] = this.searchValue;
     }
-    this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
-      console.log(data)
-      for (let i in data.obj.rows){
-        data.obj.rows[i]["djztName"] = ConfigProvider.djztName(data.obj.rows[i]["djzt"])
-        this.itemData.push(data.obj.rows[i])
+    if (this.pageName == "维修外委派单"||this.pageName == "开始维修"||this.pageName == "维修办结"||this.pageName == "保养外委派单"||this.pageName == "开始保养"||this.pageName == "保养办结"||this.pageName == "保养验收") {
+      for (let i = (this.page-1)*10;i < this.page*10;i++){
+        if (!this.itemDataOrgin[i]){
+          if (this.isNewSearch){
+            this.isNewSearch = false;
+            let toast = this.toastCtrl.create({
+              message: "这已经是最后一页了",
+              duration: 2000,
+            });
+            toast.present();
+          }
+        }else {
+          this.itemData.push(this.itemDataOrgin[i]);
+        }
       }
-      if (!data.obj.rows[0]){
-        this.isNewSearch = false;
-        let toast = this.toastCtrl.create({
-          message: "这已经是最后一页了",
-          duration: 2000,
-        });
-        toast.present();
+      for (let i = (this.page-1)*10;i < this.itemData.length;i++){
+        this.itemData[i]["djztName"] = ConfigProvider.djztName(this.itemData[i]["DJZT"]);
+        this.itemData[i]["wxztName"] = ConfigProvider.wxztName(this.itemData[i]["WXZT"]);
+        if (this.pageName == "维修办结"){
+          this.itemData[i]["bjztName"] = "未办结"
+        }
+        if (this.pageName == "保养外委派单"){
+          this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
+        }
+        if(this.pageName == "开始保养"){
+          this.itemData[i]["byjdName"] = ConfigProvider.byjdName(this.itemData[i]["byjd"]);
+          this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
+          this.itemData[i]["checkStatusName"] = ConfigProvider.checkStatusName(this.itemData[i]["checkStatus"])
+        }
+        if (this.pageName == "保养办结"){
+          this.itemData[i]["byjdName"] = ConfigProvider.byjdName(this.itemData[i]["byjd"]);
+          this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
+        }
+        if (this.pageName == "保养验收"){
+          this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
+          this.itemData[i]["checkDateName"] = ConfigProvider.checkDateName(this.itemData[i]["checkDate"]);
+          this.itemData[i]["zrdwTypeName"] = ConfigProvider.zrdwTypeName(this.itemData[i]["zrdwType"]);
+        }
       }
       infiniteScroll.complete();
-    })
+    }else {
+      this.httpService.postData2(this.httpService.getUrl2()+url,body,data=>{
+        console.log(data)
+        for (let i in data.obj.rows){
+          data.obj.rows[i]["djztName"] = ConfigProvider.djztName(data.obj.rows[i]["djzt"])
+          this.itemData.push(data.obj.rows[i])
+        }
+        if (!data.obj.rows[0]){
+          this.isNewSearch = false;
+          let toast = this.toastCtrl.create({
+            message: "这已经是最后一页了",
+            duration: 2000,
+          });
+          toast.present();
+        }
+        infiniteScroll.complete();
+      })
+    }
   }
   searchDepart(){
     $(".scroll-content")[2].scrollTop = 0;
