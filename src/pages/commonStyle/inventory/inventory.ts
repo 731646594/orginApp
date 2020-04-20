@@ -210,7 +210,10 @@ export class InventoryPage {
           alert(err)
         });
       },err=>{
-        alert(err)
+        let alertCtrl = this.alertCtrl.create({
+          title:"无法获取该路径的图片，如想使用请将它复制到系统的相册里"
+        });
+        alertCtrl.present()
       })
     }, (err) => {
       // Handle error
