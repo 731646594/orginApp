@@ -97,6 +97,7 @@ import {RFIDSpecScanListPage} from "../pages/apps/inventory/RFIDSpecScanList/RFI
 // import {JPush} from "@jiguang-ionic/jpush";
 // import {JpushUtils} from "../services/JpushUtils";//jpush 1.0.2
 import {NativeService} from "../services/NativeService";
+import {NativeAudio} from "@ionic-native/native-audio";
 
 @NgModule({
   declarations: [
@@ -287,6 +288,7 @@ import {NativeService} from "../services/NativeService";
     // JPush,
     // JpushUtils,
     NativeService,
+    NativeAudio,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

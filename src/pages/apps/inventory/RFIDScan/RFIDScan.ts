@@ -7,6 +7,7 @@ import {RFIDScanListPage} from "../RFIDScanList/RFIDScanList";
 import * as  echarts from 'echarts';
 let that;
 import * as $ from "jquery";
+import {NativeAudio} from "@ionic-native/native-audio";
 declare let cordova: any;
 @Component({
   selector: 'page-RFIDScan',
@@ -39,9 +40,11 @@ export class RFIDScanPage{
   scanList = {};
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
-              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,
+              private nativeAudio?: NativeAudio) {
     that = this;
     PageUtil.pages["RFIDScan"]=this;
+    this.nativeAudio.preloadSimple('uniqueId1', 'assets/beep.ogg');
     /**接收消息触发 */
     document.addEventListener('rfid.receiveMessage', (event: any) => {
       // this.logger.log(event,'Receive notification');
@@ -51,7 +54,7 @@ export class RFIDScanPage{
         let len = 0;
         for (let i in this.scanList){
           if (this.willMap[i]){
-            this.scanList[i] = this.willMap[i]
+            this.scanList[i] = this.willMap[i];
           }
           if (this.newMap[i]){
             delete this.scanList[i]
@@ -59,6 +62,9 @@ export class RFIDScanPage{
             delete this.scanList[i]
           }
           len++
+        }
+        if(len>this.numList["scan"]){
+          this.nativeAudio.play('uniqueId1');
         }
         this.numList["scan"] = len;
         PageUtil.pages["RFIDScanList"].data = this.scanList;
