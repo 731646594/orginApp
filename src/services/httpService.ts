@@ -36,8 +36,8 @@ export class HttpService {
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
-      // this.setUrl("http","210.12.193.92","9080","plamassets");
-      // return "http://210.12.193.92:9080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.92","9080","plamassets");
+      return "http://210.12.193.92:9080/plamassets/mobile/";
       //辽宁
       // this.setUrl("http","210.12.193.94","9081","plamassets");
       // return "http://210.12.193.94:9081/plamassets/mobile/";
@@ -54,8 +54,8 @@ export class HttpService {
       // this.setUrl("http","127.0.0.1","10401","plamassets");
       // return "http://127.0.0.1:10401/plamassets/mobile/";
       //天津
-      this.setUrl("http","210.12.194.121","9080","plamassets");
-      return "http://210.12.194.121:9080/plamassets/mobile/"
+      // this.setUrl("http","210.12.194.121","9080","plamassets");
+      // return "http://210.12.194.121:9080/plamassets/mobile/"
       //浙江油田petrochina.zjytcwc.jxkh
       // this.setUrl("http","127.0.0.1","10610","plamassets");
       // return "http://127.0.0.1:10610/plamassets/mobile/"
@@ -367,6 +367,7 @@ export class HttpService {
       body.departCode = this.storageService.read("loginDepartCode");
     if (!this.platform.is("mobileweb")){
       this.nativeHttp.setDataSerializer('urlencoded');
+      this.nativeHttp.setRequestTimeout(120);
       this.nativeHttp.post(url, body, {type:"app"})
         .then(data => {
           let res = JSON.parse(data.data);
