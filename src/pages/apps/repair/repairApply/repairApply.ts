@@ -78,7 +78,8 @@ export class RepairApplyPage {
       this.listUrl = "lhd/app/devRepairController.do?datagridys";
       this.funccode = "4000001006"
     }else if (this.pageName == "维修验收审批"){
-      this.listUrl = "lhd/app/devRepairController.do?datagridyssp"
+      this.listUrl = "lhd/app/devRepairController.do?datagridyssp";
+      this.funccode = "4000001007"
     }else if (this.pageName == "维修单据查询"){
       this.refreshData = false;
       this.listUrl = "lhd/app/devRepairQueryAppContoller.do?prepairOrderDetail"
