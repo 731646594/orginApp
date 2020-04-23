@@ -48,30 +48,29 @@ export class RFIDScanPage{
     /**接收消息触发 */
     document.addEventListener('rfid.receiveMessage', (event: any) => {
       // this.logger.log(event,'Receive notification');
-      if (event.data.length==16){
-        let str = event.data.split("AA")[0];
-        this.scanList[str] = {barCode:str,checkResult:"3"};
-        let len = 0;
-        for (let i in this.scanList){
-          if (this.willMap[i]){
-            this.scanList[i] = this.willMap[i];
-          }
-          if (this.newMap[i]){
-            delete this.scanList[i]
-          }else if (this.existMap[i]){
-            delete this.scanList[i]
-          }
-          len++
-        }
-        if(len>this.numList["scan"]){
-          this.nativeAudio.play('uniqueId1');
-        }
-        this.numList["scan"] = len;
-        PageUtil.pages["RFIDScanList"].data = this.scanList;
-        PageUtil.pages["RFIDScanList"].getData();
-      }
+      this.RFIDScan(event);
     }, false);
     this.init();
+  }
+  RFIDScan(event){
+    if (event.data.length==16){
+      let str = event.data.split("AA")[0];
+      if (this.willMap[str]){
+        this.scanList[str] = this.willMap[str];
+      }else if (!this.newMap[str]&&!this.existMap[str]){
+        this.scanList[str] = {barCode:str,checkResult:"3"};
+      }
+      let len = 0;
+      for (let i in this.scanList){
+        len++
+      }
+      if(len>this.numList["scan"]){
+        this.nativeAudio.play('uniqueId1');
+      }
+      this.numList["scan"] = len;
+      PageUtil.pages["RFIDScanList"].data = this.scanList;
+      PageUtil.pages["RFIDScanList"].getData();
+    }
   }
   ionViewWillUnload(){
     this.dispose()
