@@ -58,7 +58,7 @@ export class RFIDSpecScanPage{
       for (let i in this.scanList){
         len++
       }
-      if(len>this.numList["scan"]){
+      if(len-this.numList["scan"]>=1){
         this.nativeAudio.play('uniqueId1');
       }
       this.numList["scan"] = len;
