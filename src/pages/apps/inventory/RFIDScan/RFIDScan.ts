@@ -55,9 +55,9 @@ export class RFIDScanPage{
   RFIDScan(event){
     if (event.data.length==16){
       let str = event.data.split("AA")[0];
-      if (this.willMap[str]){
+      if (this.willMap[str]&&this.willMap[str].checkResult!="1"){
         this.scanList[str] = this.willMap[str];
-      }else if (!this.newMap[str]&&!this.existMap[str]){
+      }else if ((!this.newMap[str])&&(!this.existMap[str])){
         this.scanList[str] = {barCode:str,checkResult:"3"};
       }
       let len = 0;

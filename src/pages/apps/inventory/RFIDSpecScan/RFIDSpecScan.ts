@@ -52,7 +52,7 @@ export class RFIDSpecScanPage{
     if (event.data.length==16){
       let str = event.data.split("AA")[0];
       let len = 0;
-      if (this.willMap[str]) {
+      if (this.willMap[str]&&this.willMap[str].checkResult!="1") {
         this.scanList[str] = this.willMap[str];
       }
       for (let i in this.scanList){
