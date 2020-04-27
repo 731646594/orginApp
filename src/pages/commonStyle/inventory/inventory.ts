@@ -468,7 +468,17 @@ export class InventoryPage {
             alert(err)
           });
         },err=>{
-          alert(JSON.stringify(err))
+          if (err.message == "NOT_FOUND_ERR"){
+            let alertCtrl = this.alertCtrl.create({
+              title:"该资产的图片已丢失！"
+            });
+            alertCtrl.present();
+          }else {
+            let alertCtrl = this.alertCtrl.create({
+              title:err.message
+            });
+            alertCtrl.present();
+          }
         })
       }
     }

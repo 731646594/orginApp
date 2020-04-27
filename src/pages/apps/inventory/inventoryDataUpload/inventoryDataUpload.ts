@@ -20,7 +20,8 @@ export class InventoryDataUploadPage {
   planIndex = 0;
   failLen = 0;
   imgIndex = 0;
-  uploadFile = []
+  uploadFile = [];
+  failPhotoLength = 0;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public file:File,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
@@ -39,6 +40,7 @@ export class InventoryDataUploadPage {
     this.planDetailList = [];
     this.planIndex = 0;
     this.failLen = 0;
+    this.failPhotoLength = 0;
     let planDetailList = [];
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
@@ -91,11 +93,11 @@ export class InventoryDataUploadPage {
       uploadType = 2;
       this.getBase64Pics(this.planDetailList[this.planIndex].uploadFile,now,loading,uploadType);
     }else {
-      this.postPlan(now,loading,uploadType)
+      this.postPlan(now,loading,uploadType,false)
     }
 
   }
-  postPlan(now,loading,uploadType){
+  postPlan(now,loading,uploadType,isFailPhoto){
     let data = Object.assign({},this.planDetailList[this.planIndex]);
     // delete data.uploadFile;
     let data2 = {};
@@ -105,7 +107,7 @@ export class InventoryDataUploadPage {
       }
     }
     let dataString = JSON.stringify(data2);
-    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString},(data)=>{
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString,isFailPhoto:isFailPhoto},(data)=>{
       if (data.success=="true"){
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
         if(l>-1){
@@ -115,6 +117,9 @@ export class InventoryDataUploadPage {
         else {
           this.newPlanDetail[this.planDetailList[this.planIndex].realIndex]["Uploaded"]=true;
           this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
+        }
+        if (isFailPhoto){
+          this.failPhotoLength++;
         }
       }else {
         this.failLen++;
@@ -128,7 +133,11 @@ export class InventoryDataUploadPage {
           title: "上传完成，失败" + this.failLen + "条！"
         });
         if(this.failLen == 0){
-          alertCtrl.setTitle("上传成功！");
+          if (this.failPhotoLength>0){
+            alertCtrl.setTitle("上传成功，有" + this.failPhotoLength + "条资产的图片上传失败！");
+          }else {
+            alertCtrl.setTitle("上传成功！");
+          }
         }
         alertCtrl.present();
         this.loadData();
@@ -181,7 +190,7 @@ export class InventoryDataUploadPage {
               that.uploadFile.push(base64Image);
               that.imgIndex++;
               if (base64Images.length==that.uploadFile.length){
-                that.postPlan(now,loading,uploadType)
+                that.postPlan(now,loading,uploadType,false)
               }else {
                 that.getBase64Pics(base64Images,now,loading,uploadType)
               }
@@ -194,12 +203,14 @@ export class InventoryDataUploadPage {
         });
       },err=>{
         if (err.message=="NOT_FOUND_ERR"){
-          let alertCtrl = this.alertCtrl.create({
-            title:"第一条数据的图片已被删除，请重新录入"
-          });
-          alertCtrl.present();
-          loading.dismiss();
-          return false;
+          // let alertCtrl = this.alertCtrl.create({
+          //   title:"第一条数据的图片已被删除，请重新录入"
+          // });
+          // alertCtrl.present();
+          // loading.dismiss();
+          // return false;
+          that.uploadFile = [];
+          that.postPlan(now,loading,0,true);
         }
       })
 
