@@ -38,6 +38,8 @@ export class RFIDScanPage{
   barCode;
   isScanning = false;
   scanList = {};
+  newManagerDepart;
+  newManagerDepartName;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,
@@ -77,6 +79,15 @@ export class RFIDScanPage{
   }
   ionViewDidEnter(){
     this.userCode = this.storageService.read("loginUserCode");
+    this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+      if (res.rows.length>0){
+        let departments = JSON.parse(res.rows.item(0).stringData)["departments"];
+        if (departments){
+          this.newManagerDepart=departments[0].departCode;
+          this.newManagerDepartName=departments[0].departName;
+        }
+      }
+    });
     this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
       if (res.rows.length>0){
         this.willPlan = JSON.parse(res.rows.item(0).stringData);
@@ -216,7 +227,6 @@ export class RFIDScanPage{
     this.endScan();
   }
   cal(){
-    let haveNew = false;
     for(let i in this.scanList){
       if(!this.scanList[i].checkResult||this.scanList[i].checkResult==''){
         this.scanList[i].checkResult = "1";
@@ -245,18 +255,19 @@ export class RFIDScanPage{
         this.existPlan.push(this.scanList[i]);
         delete this.scanList[i];
       }else{
-        haveNew = true;
+        this.scanList[i]["necNotFinish"] = true;
+        this.scanList[i]["managerDepart"]=this.newManagerDepart;
+        this.scanList[i]["managerDepartName"]=this.newManagerDepartName;
+        this.scanList[i]["departCode"] = this.scanList[i]["managerDepart"];
+        this.newPlan.push(this.scanList[i]);
+        delete this.scanList[i];
       }
-    }
-    if(haveNew){
-      let alertCtrl = this.alertCtrl.create({
-        title:"请填写已扫描中剩余的盘盈数据！"
-      });
-      alertCtrl.present();
     }
     this.storageService.sqliteInsert2("willPlanDetail",this.userCode,JSON.stringify(this.willPlan),(e)=>{
       this.storageService.sqliteInsert2("existPlanDetail",this.userCode,JSON.stringify(this.existPlan),(e)=>{
-        this.ionViewDidEnter();
+        this.storageService.sqliteInsert2("newPlanDetail",this.userCode,JSON.stringify(this.newPlan),(e)=>{
+          this.ionViewDidEnter();
+        });
       });
     });
   }

@@ -37,7 +37,7 @@
     </div>
   </div>
 </ion-content>
-<footer class="listFooter" padding >
+<footer class="listFooter" padding *ngIf="!necNotFinish">
   <button class="listFooterButton" (click)="uploadList()">
     <ion-icon class="listFooterIcon" name="checkmark-circle"></ion-icon><br>上传
   </button>

@@ -143,11 +143,18 @@ export class RFIDScanListPage{
     for(let i=0;i<this.filterData.length;i++){
       if(this.filterData[i].checkedIcon){
         let key = this.filterData[i].barCode;
-        delete PageUtil.pages["RFIDScan"].scanList[key];
+        if (this.type=="scan"){
+          delete PageUtil.pages["RFIDScan"].scanList[key];
+        }else if(this.type=="new"){
+          delete PageUtil.pages["RFIDScan"].willMap[key];
+        }
       }else {
         filterData.push(this.filterData[i])
       }
     }
     this.filterData = filterData;
+    if(this.type=="new"){
+      this.storageService.sqliteInsert("newPlanDetail",this.userCode,JSON.stringify(this.filterData));
+    }
   }
 }

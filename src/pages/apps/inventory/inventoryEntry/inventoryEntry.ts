@@ -150,6 +150,7 @@ export class InventoryEntryPage  extends InventoryPage{
     this.invoice["uploadFile"] = this.invoice["uploadFile"].concat(this.uploadFile);
     this.invoice["checkResult"] = "3";
     this.invoice["departCode"] = this.invoice["managerDepart"];
+    this.invoice["necNotFinish"] = false;
     let invoiceList = [];
     let isReplace = false;
     isReplace = false;

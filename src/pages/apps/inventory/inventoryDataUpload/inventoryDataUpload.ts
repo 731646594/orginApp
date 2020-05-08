@@ -22,6 +22,7 @@ export class InventoryDataUploadPage {
   imgIndex = 0;
   uploadFile = [];
   failPhotoLength = 0;
+  necNotFinish = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public file:File,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
     this.loadData();
@@ -46,6 +47,17 @@ export class InventoryDataUploadPage {
       if (res.rows.length>0){
         this.newPlanDetail = JSON.parse(res.rows.item(0).stringData);
         planDetailList = planDetailList.concat(this.newPlanDetail);
+        for(let i in this.newPlanDetail){
+          if(this.newPlanDetail[i]["necNotFinish"]){
+            this.necNotFinish = true;
+          }
+        }
+        if (this.necNotFinish){
+          let alertCtrl = this.alertCtrl.create({
+            title:"检测到有未完成的盘盈数据，请先到RFID盘点功能里完成盘盈数据填写，才能进行上传！"
+          });
+          alertCtrl.present();
+        }
       }
       this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
         if (res.rows.length>0){
