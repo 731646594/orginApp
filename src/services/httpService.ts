@@ -32,6 +32,9 @@ export class HttpService {
       //外网98渤钻井下
       // this.setUrl("http","lhsm.vip","8086","plamassets");
       // return "http://lhsm.vip:8086/plamassets/mobile/";
+      //井下
+      this.setUrl("http","210.12.194.18","9080","plamassets");
+      return "http://210.12.194.18:9080/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
@@ -39,8 +42,8 @@ export class HttpService {
       // this.setUrl("http","210.12.193.92","9080","plamassets");
       // return "http://210.12.193.92:9080/plamassets/mobile/";
       //辽宁
-      this.setUrl("http","210.12.193.94","9081","plamassets");
-      return "http://210.12.193.94:9081/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.94","9081","plamassets");
+      // return "http://210.12.193.94:9081/plamassets/mobile/";
       //西藏
       // this.setUrl("http","210.12.193.171","9080","plamassets");
       // return "http://210.12.193.171:9080/plamassets/mobile/";
