@@ -119,7 +119,8 @@ export class InventoryDataUploadPage {
       }
     }
     let dataString = JSON.stringify(data2);
-    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: this.uploadFile,data:dataString,isFailPhoto:isFailPhoto},(data)=>{
+    let strUploadFile = JSON.stringify(this.uploadFile);
+    this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/uploadcheckplan.do",{userCode:this.userCode,departCode:this.departCode,uploadType:uploadType,uploadFile: strUploadFile,data:dataString,isFailPhoto:isFailPhoto},(data)=>{
       if (data.success=="true"){
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
         if(l>-1){
