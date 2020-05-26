@@ -104,6 +104,7 @@ import {DayReportEntryAlertPage} from "../pages/apps/report/dayReportEntryAlert/
 import {DayReportSupplementPage} from "../pages/apps/report/dayReportSupplement/dayReportSupplement";
 import {DayReportSupplementDetailPage} from "../pages/apps/report/dayReportSupplementDetail/dayReportSupplementDetail";
 import {DayReportSupplementAlertPage} from "../pages/apps/report/dayReportSupplementAlert/dayReportSupplementAlert";
+import {DayReportEntryDetailAlertPage} from "../pages/apps/report/dayReportEntryDetailAlert/dayReportEntryDetailAlert";
 
 @NgModule({
   declarations: [
@@ -182,6 +183,7 @@ import {DayReportSupplementAlertPage} from "../pages/apps/report/dayReportSupple
     DayReportEntryPage,
     DayReportEntryDetailPage,
     DayReportEntryAlertPage,
+    DayReportEntryDetailAlertPage,
     DayReportSupplementPage,
     DayReportSupplementDetailPage,
     DayReportSupplementAlertPage,
@@ -281,6 +283,7 @@ import {DayReportSupplementAlertPage} from "../pages/apps/report/dayReportSupple
     DayReportEntryPage,
     DayReportEntryDetailPage,
     DayReportEntryAlertPage,
+    DayReportEntryDetailAlertPage,
     DayReportSupplementPage,
     DayReportSupplementDetailPage,
     DayReportSupplementAlertPage

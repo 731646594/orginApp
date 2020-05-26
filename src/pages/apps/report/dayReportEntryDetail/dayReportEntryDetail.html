@@ -7,9 +7,9 @@
 </ion-header>
 <ion-content id="reportForm">
   <div class="formHeader">
-    <ion-item class="inputItem headerBox">
-      <ion-label class="noFlexLabel">{{itemName+":"}}</ion-label>
-      <ion-datetime class="dataNormal" [placeholder]="'请选择'+itemName" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [max]="maxDate" [(ngModel)]="dateValue" (ionChange)="returnDate()"></ion-datetime>
+    <ion-item class="inputItem personBox">
+      <ion-label class="noFlexLabel">{{itemName+"："}}</ion-label>
+      <ion-label class="departNameDiv flex1" (click)="showPerson()">{{personText}}</ion-label>
     </ion-item>
   </div>
   <div style="margin-bottom: 60px;margin-top: 20px;width: 100%;padding: 0 5%">

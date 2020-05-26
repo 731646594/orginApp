@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController} from 'ionic-angular';
+import {AlertController, App, ModalController, NavController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
 import {DatePipe} from "@angular/common";
+import {DayReportEntryDetailAlertPage} from "../dayReportEntryDetailAlert/dayReportEntryDetailAlert";
 
 @Component({
   selector: 'page-dayReportEntryDetail',
@@ -10,9 +11,17 @@ import {DatePipe} from "@angular/common";
 })
 export class DayReportEntryDetailPage {
   maxDate;
-  itemName = '日报日期';
+  itemName = '在班人员';
   isFocus = false;
-  dateValue;
+  personText = '请选择';
+  personData;
+  personList = [
+    {text:"甲"},
+    {text:"乙"},
+    {text:"丙"},
+    {text:"丁"},
+    {text:"戊"},
+  ];
   dataesList=
     [
       {projectsName:"内部收入",projectsCode:"100",data:[]},
@@ -2308,10 +2317,7 @@ export class DayReportEntryDetailPage {
     {itemName:"改进措施",itemValue:"measures"},
   ];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public app:App,public datePipe:DatePipe) {
-    let date = new Date();
-    this.maxDate = this.datePipe.transform(date,"yyyy-MM-dd");
-    this.dateValue = this.maxDate;
+              public alertCtrl:AlertController,public app:App,public datePipe:DatePipe,public modalCtrl:ModalController) {
     for(let i in this.data){
       if (this.data[i].targetValue==null){
         this.data[i].targetValue = 0;
@@ -2345,6 +2351,29 @@ export class DayReportEntryDetailPage {
   }
   ionViewDidEnter(){
 
+  }
+  showPerson(){
+    let data1 = this.personList;
+    let content = {
+      item:{
+        parent:[
+          {itemValue:"text"},
+        ],
+      }
+    }
+    let body = {data:data1,content:content}
+    let modal = this.modalCtrl.create(DayReportEntryDetailAlertPage,body);
+    modal.present();
+    modal.onDidDismiss(data=>{
+      if(data&&data.selectedData){
+        this.personText = "";
+        this.personData = data.selectedData;
+        for(let i in this.personData){
+          this.personText += this.personData[i].text + ","
+        }
+        this.personText = this.personText.substring(0,this.personText.length-1);
+      }
+    })
   }
   hideFooter() {
     this.isFocus = true;

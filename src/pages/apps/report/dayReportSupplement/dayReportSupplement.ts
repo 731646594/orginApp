@@ -9510,9 +9510,11 @@ export class DayReportSupplementPage {
   }
   ionViewDidEnter(){
     for (let i in this.dataList){
-      if (this.dataList[i].type == "2"){
+      if (this.dataList[i].type == "1"){
+        this.dataList[i]["typeName"] = "新建"
+      }else if (this.dataList[i].type == "2"){
         this.dataList[i]["typeName"] = "未补录"
-      }else {
+      }else if (this.dataList[i].type == "3"){
         this.dataList[i]["typeName"] = "补录完成"
       }
     }

@@ -13,7 +13,7 @@
               </ion-item>
             </ion-list>
           </ion-list>
-          <div class="cardButton" item-end *ngIf="detail.children.length==0">
+          <div class="cardButton" item-end>
             <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="cardCheckedIcon"></ion-icon>
             <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
           </div>
@@ -23,10 +23,6 @@
   </div>
 </ion-content>
 <footer class="formFooter" *ngIf="!isOnfocus">
-  <button class="formFooterButton" *ngIf="upperButton == true" (click)="goTosj()">
-    <ion-icon class="formFooterIcon" name="arrow-dropup-circle"></ion-icon>
-    <ion-label class="formFooterText">返回</ion-label>
-  </button>
   <button class="formFooterButton" (click)="returnSelect()">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon>
     <ion-label class="formFooterText">确定</ion-label>
