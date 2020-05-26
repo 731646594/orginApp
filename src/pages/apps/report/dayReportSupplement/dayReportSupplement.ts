@@ -25,7 +25,7 @@ export class DayReportSupplementPage {
       "departCode": "13710",
       "departName": "中国石油天然气股份有限公司福建销售分公司",
       "statisticsTime": "2020-05-20",
-      "type": "2",
+      "type": "1",
       "createUser": "系统管理员",
       "updateTime": null,
       "updateUser": null
@@ -49,7 +49,7 @@ export class DayReportSupplementPage {
       "departCode": "13710",
       "departName": "中国石油天然气股份有限公司福建销售分公司",
       "statisticsTime": "2020-05-21",
-      "type": "2",
+      "type": "3",
       "createUser": "系统管理员",
       "updateTime": null,
       "updateUser": null

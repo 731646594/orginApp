@@ -15,11 +15,11 @@
   <div style="margin-bottom: 70px;margin-top: 20px;width: 100%;padding: 0 5%">
     <ion-list class="planList" *ngFor="let data of dataList;let i = index">
       <div class="inputItem" *ngFor="let item of itemList" (click)="goToDetail(i)">
-        <ion-item *ngIf="data.type!=3">
+        <ion-item *ngIf="data.type==3">
           <ion-label class="noFlexLabel">{{item.itemName+"："}}</ion-label>
           <ion-label class="departNameDiv">{{data[item.itemValue]}}</ion-label>
         </ion-item>
-        <ion-item *ngIf="data.type==3&&(item.itemName!='补录时间'&&item.itemName!='补录人')">
+        <ion-item *ngIf="data.type!=3&&(item.itemName!='补录时间'&&item.itemName!='补录人')">
           <ion-label class="noFlexLabel">{{item.itemName+"："}}</ion-label>
           <ion-label class="departNameDiv">{{data[item.itemValue]}}</ion-label>
         </ion-item>
