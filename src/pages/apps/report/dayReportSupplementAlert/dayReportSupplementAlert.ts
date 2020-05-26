@@ -15,7 +15,6 @@ export class DayReportSupplementAlertPage{
   item;
   checkedData = null;
   upperButton = false;
-  lowerButton = false;
   nowIndex = -1;
   parentIndex = -1;
   constructor(
@@ -48,6 +47,20 @@ export class DayReportSupplementAlertPage{
   hideFooter(){
     this.events.publish("hideFooter")
   }
+  showChildren(i){
+    if (this.filterData[i].children.length>0){
+      this.parentIndex++;
+      if (this.filterData[this.nowIndex]&&this.filterData[this.nowIndex].checkedIcon){
+        this.filterData[this.nowIndex].checkedIcon = false;
+      }
+      this["parentData"+this.parentIndex] = this.filterData;
+      this.filterData = JSON.parse(JSON.stringify(this.filterData[i].children));
+      this.upperButton = true;
+      this.checkedData = null;
+    }else {
+      this.checkedItemRadio(i)
+    }
+  }
   checkedItemRadio(index){
     for (let i in this.filterData){
       this.filterData[i]["checkedIcon"] = false;
@@ -56,28 +69,17 @@ export class DayReportSupplementAlertPage{
     this.checkedData = this.filterData[index];
     this.nowIndex = index;
     this.upperButton = true;
-    this.lowerButton = true;
     if (this.parentIndex==-1){
       this.upperButton = false;
-    }
-    if (this.checkedData.children.length==0){
-      this.lowerButton = false;
     }
   }
   goTosj(){
     this.filterData = this["parentData"+this.parentIndex];
-    this.upperButton = false;
-    this.lowerButton = false;
+    this.upperButton = true;
     this.parentIndex--;
-    this.checkedData = null;
-  }
-  goToxj(){
-    this.parentIndex++;
-    this.filterData[this.nowIndex].checkedIcon = false;
-    this["parentData"+this.parentIndex] = this.filterData;
-    this.filterData = JSON.parse(JSON.stringify(this.checkedData.children));
-    this.upperButton = false;
-    this.lowerButton = false;
+    if (this.parentIndex==-1){
+      this.upperButton = false;
+    }
     this.checkedData = null;
   }
   returnSelect(){

@@ -5,7 +5,7 @@
   <div class="backgroundBox" (click)="back()">
     <div class="contentBox" (click)="$event.cancelBubble=true;">
       <div  *ngFor="let detail of filterData;let i = index">
-        <div class="flexBox">
+        <div class="flexBox" (click)="showChildren(i)">
           <ion-list class="callContent">
             <ion-list class="callList">
               <ion-item class="inputItem" *ngFor="let pItem of item.parent">
@@ -13,7 +13,7 @@
               </ion-item>
             </ion-list>
           </ion-list>
-          <div class="cardButton" item-end (click)="checkedItemRadio(i)">
+          <div class="cardButton" item-end *ngIf="detail.children.length==0" (click)="checkedItemRadio(i)">
             <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="cardCheckedIcon"></ion-icon>
             <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
           </div>
@@ -25,14 +25,10 @@
 <footer class="formFooter" *ngIf="!isOnfocus">
   <button class="formFooterButton" *ngIf="upperButton == true" (click)="goTosj()">
     <ion-icon class="formFooterIcon" name="arrow-dropup-circle"></ion-icon>
-    <br>上级
-  </button>
-  <button class="formFooterButton" *ngIf="lowerButton == true" (click)="goToxj()">
-    <ion-icon class="formFooterIcon" name="arrow-dropdown-circle"></ion-icon>
-    <br>下级
+    <ion-label class="formFooterText">返回</ion-label>
   </button>
   <button class="formFooterButton" (click)="returnSelect()">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon>
-    <br>确定
+    <ion-label class="formFooterText">确定</ion-label>
   </button>
 </footer>

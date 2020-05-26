@@ -52,7 +52,6 @@ page-dayReportSupplementAlert{
   .formFooterIcon{
     font-size: 2em;
     color: #4389e8;
-    margin-bottom: 2px;
   }
   .noFlexLabel{
     flex: none;
@@ -139,5 +138,9 @@ page-dayReportSupplementAlert{
   }
   .iconItem .input-wrapper{
     display: none;
+  }
+  .formFooterText{
+    margin: 0 !important;
+    padding-top: 2px;
   }
 }
