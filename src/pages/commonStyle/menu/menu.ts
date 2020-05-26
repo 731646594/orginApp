@@ -27,6 +27,7 @@ import {RFIDScanPage} from "../../apps/inventory/RFIDScan/RFIDScan";
 import {SettlementPage} from "../settlement/settlement";
 import {InventoryDataSyncPage} from "../../apps/inventory/inventoryDataSync/inventoryDataSync";
 import {RFIDSpecScanPage} from "../../apps/inventory/RFIDSpecScan/RFIDSpecScan";
+import {DayReportEntryPage} from "../../apps/report/dayReportEntry/dayReportEntry";
 
 @Component({
   selector: 'page-menu',
@@ -124,6 +125,7 @@ export class MenuPage {
     //83:进度款审批
     //84:一厂/三厂进度款审批
     //85:储气库投资表审批
+    //91:加油站日报录入
     let willGoPage = null;
     if(page == 11){
       willGoPage = ScanCodePage;
@@ -286,6 +288,10 @@ export class MenuPage {
     else if(page == 85){
       willGoPage = SettlementPage;
       params = {pageName:"储气库投资表审批"};
+    }
+    else if(page == 91){
+      willGoPage = DayReportEntryPage;
+      params = {pageName:"加油站日报录入"};
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)

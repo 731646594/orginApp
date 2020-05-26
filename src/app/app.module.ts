@@ -98,6 +98,9 @@ import {RFIDSpecScanListPage} from "../pages/apps/inventory/RFIDSpecScanList/RFI
 // import {JpushUtils} from "../services/JpushUtils";//jpush 1.0.2
 import {NativeService} from "../services/NativeService";
 import {NativeAudio} from "@ionic-native/native-audio";
+import {DayReportEntryPage} from "../pages/apps/report/dayReportEntry/dayReportEntry";
+import {DayReportEntryDetailPage} from '../pages/apps/report/dayReportEntryDetail/dayReportEntryDetail';
+import {DayReportEntryAlertPage} from "../pages/apps/report/dayReportEntryAlert/dayReportEntryAlert";
 
 @NgModule({
   declarations: [
@@ -172,7 +175,10 @@ import {NativeAudio} from "@ionic-native/native-audio";
     InventoryDataSyncDetailPage,
     MenuHelpPage,
     RFIDSpecScanPage,
-    RFIDSpecScanListPage
+    RFIDSpecScanListPage,
+    DayReportEntryPage,
+    DayReportEntryDetailPage,
+    DayReportEntryAlertPage
   ],
   imports: [
     BrowserModule,
@@ -265,7 +271,10 @@ import {NativeAudio} from "@ionic-native/native-audio";
     InventoryDataSyncDetailPage,
     MenuHelpPage,
     RFIDSpecScanPage,
-    RFIDSpecScanListPage
+    RFIDSpecScanListPage,
+    DayReportEntryPage,
+    DayReportEntryDetailPage,
+    DayReportEntryAlertPage
   ],
   providers: [
     StatusBar,
