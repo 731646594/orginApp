@@ -82,9 +82,7 @@ export class DayReportEntryPage {
     this.app.getRootNav().push(DayReportEntryDetailPage,{data:this.dataList[i]})
   }
   addForm(){
-    let date = new Date();
-    let modal = this.modalCtrl.create(DayReportEntryAlertPage,{
-    });
+    let modal = this.modalCtrl.create(DayReportEntryAlertPage,{});
     modal.present();
     modal.onDidDismiss(data=>{
       if(data){

@@ -101,6 +101,9 @@ import {NativeAudio} from "@ionic-native/native-audio";
 import {DayReportEntryPage} from "../pages/apps/report/dayReportEntry/dayReportEntry";
 import {DayReportEntryDetailPage} from '../pages/apps/report/dayReportEntryDetail/dayReportEntryDetail';
 import {DayReportEntryAlertPage} from "../pages/apps/report/dayReportEntryAlert/dayReportEntryAlert";
+import {DayReportSupplementPage} from "../pages/apps/report/dayReportSupplement/dayReportSupplement";
+import {DayReportSupplementDetailPage} from "../pages/apps/report/dayReportSupplementDetail/dayReportSupplementDetail";
+import {DayReportSupplementAlertPage} from "../pages/apps/report/dayReportSupplementAlert/dayReportSupplementAlert";
 
 @NgModule({
   declarations: [
@@ -178,7 +181,10 @@ import {DayReportEntryAlertPage} from "../pages/apps/report/dayReportEntryAlert/
     RFIDSpecScanListPage,
     DayReportEntryPage,
     DayReportEntryDetailPage,
-    DayReportEntryAlertPage
+    DayReportEntryAlertPage,
+    DayReportSupplementPage,
+    DayReportSupplementDetailPage,
+    DayReportSupplementAlertPage,
   ],
   imports: [
     BrowserModule,
@@ -274,7 +280,10 @@ import {DayReportEntryAlertPage} from "../pages/apps/report/dayReportEntryAlert/
     RFIDSpecScanListPage,
     DayReportEntryPage,
     DayReportEntryDetailPage,
-    DayReportEntryAlertPage
+    DayReportEntryAlertPage,
+    DayReportSupplementPage,
+    DayReportSupplementDetailPage,
+    DayReportSupplementAlertPage
   ],
   providers: [
     StatusBar,
