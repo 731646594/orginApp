@@ -1,0 +1,52 @@
+page-dayReportSupplementDetail {
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .list{
+    margin: 0;
+  }
+  .inputItem{
+    border-bottom: none !important;
+    border-top:none !important;
+    background: transparent !important;
+  }
+  .item-ios{
+    background: transparent !important;
+  }
+  .headerBox{
+    background: white !important;
+  }
+  .personBox{
+    background: white !important;
+  }
+  .planList{
+    border-radius: 5px;
+    background: white;
+  }
+  ion-label{
+    flex: none !important;
+    margin-right: 0 !important;
+  }
+  .text-input{
+    margin-left: 0 !important;
+  }
+  .dataesContent{
+    display: none;
+  }
+  .dataContent{
+    display: none;
+  }
+  .dtContent{
+    display: none;
+  }
+  .formHeader{
+    width: 100%;
+    //border-bottom: 1px solid #d9d9d9;
+    display: flex;
+    left: 0;
+    top: 0;
+    position: sticky;
+    z-index: 10;
+    background: #d9d9d9;
+  }
+}

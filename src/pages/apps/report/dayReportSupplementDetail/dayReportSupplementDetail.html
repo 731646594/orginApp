@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      加油站日报补录详情
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content id="reportForm">
+  <div class="formHeader">
+    <ion-item class="inputItem personBox">
+      <ion-label class="noFlexLabel">{{itemName+"："}}</ion-label>
+      <ion-label class="departNameDiv flex1" (click)="showPerson()">{{personText}}</ion-label>
+    </ion-item>
+  </div>
+  <div style="margin-bottom: 60px;margin-top: 20px;width: 100%;padding: 0 5%">
+    <ion-list class="planList">
+      <div *ngFor="let dataes of dataesList;let i = index">
+        <ion-item class="inputItem" *ngIf="dataes.data.length>0" (click)="showDataes(i)">
+          <ion-label>
+            {{dataes.projectsName}}
+          </ion-label>
+        </ion-item>
+        <ion-item class="inputItem" *ngIf="dataes.data.length==0" (click)="showDt(i,0,0)">
+          <ion-label>
+            {{dataes.projectsName}}
+          </ion-label>
+        </ion-item>
+        <ion-list class="dtContent" *ngIf="dataes.data.length==0">
+          <div *ngFor="let item of cellItem">
+            <ion-item class="inputItem" *ngIf="item.itemValue!='count'&&item.itemValue!='price'&&item.itemValue!='amount'">
+              <ion-label>
+                {{"&emsp;"+item.itemName+"："}}
+              </ion-label>
+              <ion-label *ngIf="item.itemName!='发生数'">
+                {{dataes[item.itemValue]}}
+              </ion-label>
+            </ion-item>
+            <ion-item class="inputItem" *ngIf="dataes['price']&&(item.itemValue=='count'||item.itemValue=='price'||item.itemValue=='amount')">
+              <ion-label>
+                {{"&emsp;"+"&emsp;"+item.itemName+"："+dataes[item.itemValue]}}
+              </ion-label>
+            </ion-item>
+            <ion-item class="inputItem" *ngIf="!dataes['price']&&item.itemValue=='amount'">
+              <ion-label>
+                {{"&emsp;"+"&emsp;"+item.itemName+"："+dataes[item.itemValue]}}
+              </ion-label>
+            </ion-item>
+          </div>
+        </ion-list>
+        <ion-list class="dataesContent">
+          <div *ngFor="let data of dataes.data;let i2 = index">
+            <ion-item class="inputItem" *ngIf="data['itemsList'].length>0" (click)="showData(i,i2)">
+              <ion-label>
+                {{data.projectsName}}
+              </ion-label>
+            </ion-item>
+            <ion-item class="inputItem" *ngIf="data['itemsList'].length==0" (click)="showDt(i,i2,0)">
+              <ion-label>
+                {{data.projectsName}}
+              </ion-label>
+            </ion-item>
+            <ion-list class="dataContent" *ngIf="data['itemsList'].length>0">
+              <div *ngFor="let dt of data['itemsList'];let i3 = index">
+                <ion-item class="inputItem" (click)="showDt(i,i2,i3)">
+                  <ion-label>
+                    {{dt.projectsName}}
+                  </ion-label>
+                </ion-item>
+                <ion-list class="dtContent">
+                  <div *ngFor="let item of cellItem">
+                    <ion-item class="inputItem" *ngIf="item.itemValue!='count'&&item.itemValue!='price'&&item.itemValue!='amount'">
+                      <ion-label>
+                        {{"&emsp;"+item.itemName+"："}}
+                      </ion-label>
+                      <ion-label *ngIf="item.itemName!='发生数'">
+                        {{dt[item.itemValue]}}
+                      </ion-label>
+                    </ion-item>
+                    <ion-item class="inputItem" *ngIf="dt['price']&&(item.itemValue=='count'||item.itemValue=='price'||item.itemValue=='amount')">
+                      <ion-label>
+                        {{"&emsp;"+"&emsp;"+item.itemName+"："+dt[item.itemValue]}}
+                      </ion-label>
+                    </ion-item>
+                    <ion-item class="inputItem" *ngIf="(dt['unit']=='升')&&!dt['price']&&item.itemValue=='count'">
+                      <ion-label>
+                        {{"&emsp;"+"&emsp;"+item.itemName+"："+dt[item.itemValue]}}
+                      </ion-label>
+                    </ion-item>
+                    <ion-item class="inputItem" *ngIf="(dt['unit']!='升')&&!dt['price']&&item.itemValue=='amount'">
+                      <ion-label>
+                        {{"&emsp;"+"&emsp;"+item.itemName+"："}}
+                      </ion-label>
+                      <ion-label>
+                        {{dt[item.itemValue]}}
+                      </ion-label>
+                    </ion-item>
+                  </div>
+                </ion-list>
+              </div>
+              <ion-item class="inputItem" (click)="showDt(i,i2,-1)">
+                <ion-label>
+                  {{data.projectsName.substring(data.projectsName.indexOf('、')+1,data.projectsName.length) + "合计"}}
+                </ion-label>
+              </ion-item>
+              <ion-list class="dtContent">
+                <div *ngFor="let item of cellItem">
+                  <ion-item class="inputItem" *ngIf="item.itemValue!='count'&&item.itemValue!='price'&&item.itemValue!='amount'">
+                    <ion-label>
+                      {{"&emsp;"+item.itemName+"："}}
+                    </ion-label>
+                    <ion-label *ngIf="item.itemName!='发生数'">
+                      {{data[item.itemValue]}}
+                    </ion-label>
+                  </ion-item>
+                  <ion-item class="inputItem" *ngIf="data['price']&&(item.itemValue=='count'||item.itemValue=='price'||item.itemValue=='amount')">
+                    <ion-label>
+                      {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                    </ion-label>
+                  </ion-item>
+                  <ion-item class="inputItem" *ngIf="(data['unit']=='吨')&&!data['price']&&item.itemValue=='count'">
+                    <ion-label>
+                      {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                    </ion-label>
+                  </ion-item>
+                  <ion-item class="inputItem" *ngIf="(data['unit']!='吨')&&!data['price']&&item.itemValue=='amount'">
+                    <ion-label>
+                      {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                    </ion-label>
+                  </ion-item>
+                </div>
+              </ion-list>
+            </ion-list>
+            <ion-list class="dtContent" *ngIf="data['itemsList'].length==0">
+              <div *ngFor="let item of cellItem">
+                <ion-item class="inputItem" *ngIf="item.itemValue!='count'&&item.itemValue!='price'&&item.itemValue!='amount'">
+                  <ion-label>
+                    {{"&emsp;"+item.itemName+"："}}
+                  </ion-label>
+                  <ion-label *ngIf="item.itemName!='发生数'&&item.itemName!='改进措施'&&item.itemName!='目标值'">
+                    {{data[item.itemValue]}}
+                  </ion-label>
+                  <ion-label *ngIf="item.itemName=='目标值'&&(data.sort!=16&&data.sort!=20&&data.sort!=70)">
+                    {{data[item.itemValue]}}
+                  </ion-label>
+                  <ion-input *ngIf="item.itemName=='目标值'&&(data.sort==16||data.sort==20||data.sort==70)" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
+                  <ion-input *ngIf="item.itemName=='改进措施'" [(ngModel)]="data[item.itemValue]"></ion-input>
+                </ion-item>
+                <ion-item class="inputItem" *ngIf="data['price']&&(item.itemValue=='count'||item.itemValue=='price'||item.itemValue=='amount')">
+                  <ion-label *ngIf="(data.sort!=70)||item.itemName!='数量'">
+                    {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                  </ion-label>
+                  <ion-label *ngIf="(data.sort==70)&&item.itemName=='数量'">
+                    {{"&emsp;"+"&emsp;"+item.itemName+"："}}
+                  </ion-label>
+                  <ion-input *ngIf="(data.sort==70)&&item.itemName=='数量'" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
+                </ion-item>
+                <ion-item class="inputItem" *ngIf="(data['unit']=='张')&&!data['price']&&item.itemValue=='count'">
+                  <ion-label>
+                    {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                  </ion-label>
+                </ion-item>
+                <ion-item class="inputItem" *ngIf="(data['unit']!='张')&&!data['price']&&item.itemValue=='amount'">
+                  <ion-label *ngIf="data.sort!=16&&data.sort!=20&&data.sort!=70">
+                    {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
+                  </ion-label>
+                  <ion-label *ngIf="(data.sort==16||data.sort==20||data.sort==70)&&item.itemName=='金额'">
+                    {{"&emsp;"+"&emsp;"+item.itemName+"："}}
+                  </ion-label>
+                  <ion-input *ngIf="(data.sort==16||data.sort==20||data.sort==70)&&item.itemName=='金额'" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
+                </ion-item>
+              </div>
+            </ion-list>
+          </div>
+        </ion-list>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>
+<footer class="formFooter"  padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="submitForm()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+</footer>
