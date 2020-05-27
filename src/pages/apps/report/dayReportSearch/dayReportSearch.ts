@@ -9511,7 +9511,7 @@ export class DayReportSearchPage {
       ],
       "marktail": 0
     }
-  ]
+  ];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public app:App,public datePipe:DatePipe,public modalCtrl:ModalController) {
     let date = new Date();
