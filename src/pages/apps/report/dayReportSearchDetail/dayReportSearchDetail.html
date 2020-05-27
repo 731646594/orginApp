@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      加油站日报补录详情
+      加油站日报查询详情
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -136,23 +136,14 @@
                   <ion-label>
                     {{"&emsp;"+item.itemName+"："}}
                   </ion-label>
-                  <ion-label *ngIf="item.itemName!='发生数'&&item.itemName!='改进措施'&&item.itemName!='目标值'">
+                  <ion-label>
                     {{data[item.itemValue]}}
                   </ion-label>
-                  <ion-label *ngIf="item.itemName=='目标值'&&(data.sort!=16&&data.sort!=20&&data.sort!=70)">
-                    {{data[item.itemValue]}}
-                  </ion-label>
-                  <ion-input *ngIf="item.itemName=='目标值'&&(data.sort==16||data.sort==20||data.sort==70)" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
-                  <ion-input *ngIf="item.itemName=='改进措施'" [(ngModel)]="data[item.itemValue]"></ion-input>
                 </ion-item>
                 <ion-item class="inputItem" *ngIf="data['price']&&(item.itemValue=='count'||item.itemValue=='price'||item.itemValue=='amount')">
-                  <ion-label *ngIf="(data.sort!=70)||item.itemName!='数量'">
+                  <ion-label>
                     {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
                   </ion-label>
-                  <ion-label *ngIf="(data.sort==70)&&item.itemName=='数量'">
-                    {{"&emsp;"+"&emsp;"+item.itemName+"："}}
-                  </ion-label>
-                  <ion-input *ngIf="(data.sort==70)&&item.itemName=='数量'" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
                 </ion-item>
                 <ion-item class="inputItem" *ngIf="(data['unit']=='张')&&!data['price']&&item.itemValue=='count'">
                   <ion-label>
@@ -160,13 +151,9 @@
                   </ion-label>
                 </ion-item>
                 <ion-item class="inputItem" *ngIf="(data['unit']!='张')&&!data['price']&&item.itemValue=='amount'">
-                  <ion-label *ngIf="data.sort!=16&&data.sort!=20&&data.sort!=70">
+                  <ion-label>
                     {{"&emsp;"+"&emsp;"+item.itemName+"："+data[item.itemValue]}}
                   </ion-label>
-                  <ion-label *ngIf="(data.sort==16||data.sort==20||data.sort==70)&&item.itemName=='金额'">
-                    {{"&emsp;"+"&emsp;"+item.itemName+"："}}
-                  </ion-label>
-                  <ion-input *ngIf="(data.sort==16||data.sort==20||data.sort==70)&&item.itemName=='金额'" type="number" (ionFocus)="hideFooter()" (ionBlur)="setNumForm(i,i2,-1,item.itemValue,data.sort)" [(ngModel)]="data[item.itemValue]"></ion-input>
                 </ion-item>
               </div>
             </ion-list>
@@ -176,8 +163,3 @@
     </ion-list>
   </div>
 </ion-content>
-<footer class="formFooter"  padding *ngIf="!isFocus">
-  <button class="formFooterButton" (click)="submitForm()">
-    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
-  </button>
-</footer>

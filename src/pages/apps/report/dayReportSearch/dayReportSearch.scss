@@ -1,0 +1,36 @@
+page-dayReportSearch {
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .list{
+    margin: 0;
+  }
+  .inputItem{
+    border-bottom: none !important;
+    border-top:none !important;
+    background: transparent !important;
+  }
+  .item-ios{
+    background: transparent !important;
+  }
+  .text-input{
+    margin-left: 0 !important;
+  }
+  .dateBox{
+    background: white !important;
+  }
+  .planList{
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background: white;
+  }
+  .formHeader{
+    width: 100%;
+    //border-bottom: 1px solid #d9d9d9;
+    left: 0;
+    top: 0;
+    position: sticky;
+    z-index: 10;
+    background: #d9d9d9;
+  }
+}
