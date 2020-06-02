@@ -1,0 +1,33 @@
+tab-tree {
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .list{
+    margin: 0;
+  }
+  .inputItem{
+    border-bottom: none !important;
+    border-top:none !important;
+    background: transparent !important;
+  }
+  .item-ios{
+    background: transparent !important;
+  }
+  .planList{
+    border-radius: 5px;
+    background: white;
+  }
+  ion-label{
+    flex: none !important;
+    margin-right: 0 !important;
+  }
+  .text-input{
+    margin-left: 0 !important;
+  }
+  .dataContent{
+    display: none;
+  }
+  .dtContent{
+    display: none;
+  }
+}

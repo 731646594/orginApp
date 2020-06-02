@@ -107,6 +107,7 @@ import {DayReportSupplementAlertPage} from "../pages/apps/report/dayReportSupple
 import {DayReportEntryDetailAlertPage} from "../pages/apps/report/dayReportEntryDetailAlert/dayReportEntryDetailAlert";
 import {DayReportSearchPage} from "../pages/apps/report/dayReportSearch/dayReportSearch";
 import {DayReportSearchDetailPage} from "../pages/apps/report/dayReportSearchDetail/dayReportSearchDetail";
+import {DayReportSimplePage} from "../pages/apps/report/dayReportSimple/dayReportSimple";
 
 @NgModule({
   declarations: [
@@ -190,7 +191,8 @@ import {DayReportSearchDetailPage} from "../pages/apps/report/dayReportSearchDet
     DayReportSupplementDetailPage,
     DayReportSupplementAlertPage,
     DayReportSearchPage,
-    DayReportSearchDetailPage
+    DayReportSearchDetailPage,
+    DayReportSimplePage
   ],
   imports: [
     BrowserModule,
@@ -292,7 +294,8 @@ import {DayReportSearchDetailPage} from "../pages/apps/report/dayReportSearchDet
     DayReportSupplementDetailPage,
     DayReportSupplementAlertPage,
     DayReportSearchPage,
-    DayReportSearchDetailPage
+    DayReportSearchDetailPage,
+    DayReportSimplePage
   ],
   providers: [
     StatusBar,

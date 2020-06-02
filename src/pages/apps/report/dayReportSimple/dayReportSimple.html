@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{pageName}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content id="reportForm">
+  <div class="formHeader">
+    <ion-item class="inputItem dateBox">
+      <ion-label class="noFlexLabel">{{itemName+"："}}</ion-label>
+      <ion-datetime class="dataNormal" [placeholder]="'请选择'+itemName" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [(ngModel)]="dateValue" (ionChange)="returnDate()"></ion-datetime>
+    </ion-item>
+    <ion-item class="inputItem dateBox">
+      <ion-label class="noFlexLabel">{{itemName2+"："}}</ion-label>
+      <ion-label class="departNameDiv flex1" (click)="showDepart()">{{departText}}</ion-label>
+    </ion-item>
+  </div>
+  <div style="margin-bottom: 60px;margin-top: 20px;width: 100%;padding: 0 5%">
+    <tab-tree [dataesList]="dataesList" [cellItem]="cellItem" [dataesSum]="" [notSum]="true"></tab-tree>
+  </div>
+</ion-content>
+<footer class="formFooter"  padding *ngIf="!isFocus">
+  <button class="formFooterButton" (click)="submitForm()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>保存
+  </button>
+</footer>

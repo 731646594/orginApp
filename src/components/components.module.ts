@@ -14,6 +14,7 @@ import { CardSelectInputComponent } from './card-select-input/card-select-input'
 import { LabelRightShowComponent } from './label-right-show/label-right-show';
 import { SelectFilterNecComponent } from './select-filter-nec/select-filter-nec';
 import {UpRefreshRowsComponent} from "./up-refresh-rows/up-refresh-rows";
+import {TabTreeComponent} from "./tab-tree/tab-tree";
 @NgModule({
 	declarations: [SelectFilterComponent,
     InputNormalComponent,
@@ -29,6 +30,7 @@ import {UpRefreshRowsComponent} from "./up-refresh-rows/up-refresh-rows";
     LabelRightShowComponent,
     SelectFilterNecComponent,
     UpRefreshRowsComponent,
+    TabTreeComponent
   ],
 	imports: [IonicModule],
 	exports: [SelectFilterComponent,
@@ -45,6 +47,7 @@ import {UpRefreshRowsComponent} from "./up-refresh-rows/up-refresh-rows";
     LabelRightShowComponent,
     SelectFilterNecComponent,
     UpRefreshRowsComponent,
+    TabTreeComponent
   ]
 })
 export class ComponentsModule {}
