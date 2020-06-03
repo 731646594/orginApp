@@ -15,6 +15,7 @@ import { LabelRightShowComponent } from './label-right-show/label-right-show';
 import { SelectFilterNecComponent } from './select-filter-nec/select-filter-nec';
 import {UpRefreshRowsComponent} from "./up-refresh-rows/up-refresh-rows";
 import {TabTreeComponent} from "./tab-tree/tab-tree";
+import {TabTreeMergeCellComponent} from "./tab-tree-merge-cell/tab-tree-merge-cell";
 @NgModule({
 	declarations: [SelectFilterComponent,
     InputNormalComponent,
@@ -30,7 +31,8 @@ import {TabTreeComponent} from "./tab-tree/tab-tree";
     LabelRightShowComponent,
     SelectFilterNecComponent,
     UpRefreshRowsComponent,
-    TabTreeComponent
+    TabTreeComponent,
+    TabTreeMergeCellComponent
   ],
 	imports: [IonicModule],
 	exports: [SelectFilterComponent,
@@ -47,7 +49,8 @@ import {TabTreeComponent} from "./tab-tree/tab-tree";
     LabelRightShowComponent,
     SelectFilterNecComponent,
     UpRefreshRowsComponent,
-    TabTreeComponent
+    TabTreeComponent,
+    TabTreeMergeCellComponent
   ]
 })
 export class ComponentsModule {}

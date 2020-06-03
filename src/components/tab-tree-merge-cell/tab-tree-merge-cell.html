@@ -1,0 +1,46 @@
+<ion-list class="planList">
+  <div *ngFor="let dataes of dataesList;let i = index">
+    <ion-item class="inputItem" *ngIf="dataes.data&&dataes.data.length>0" (click)="showData(dataes.sort)">
+      <ion-label>
+        {{dataes.projectsName}}
+      </ion-label>
+    </ion-item>
+    <ion-list [class]="'dataContent sort'+dataes.sort" *ngIf="dataes.data&&dataes.data.length>0">
+      <tab-tree [cellItem]="cellItem" [dataesList]="dataes.data" [dataesSum]="dataes" [notSum]="dataes.notSum"></tab-tree>
+    </ion-list>
+    <ion-item class="inputItem" *ngIf="!dataes.data||dataes.data.length==0" (click)="showDt(dataes.sort)">
+      <ion-label>
+        {{dataes.projectsName}}
+      </ion-label>
+    </ion-item>
+    <ion-list [class]="'dtContent sort'+dataes.sort" *ngIf="!dataes.data||dataes.data.length==0">
+      <div *ngFor="let item of cellItem">
+        <ion-item class="inputItem">
+          <ion-label>
+            {{"&emsp;"+item.itemName+"："}}
+          </ion-label>
+          <ion-label *ngIf="dataes[item.itemValue+'ShowType']=='label'">{{dataes[item.itemValue]}}</ion-label>
+          <ion-input *ngIf="dataes[item.itemValue+'ShowType']=='input'" [(ngModel)]="dataes[item.itemValue]"></ion-input>
+          <ion-input *ngIf="dataes[item.itemValue+'ShowType']=='input-number'||!dataes[item.itemValue+'ShowType']" type="number" (ionFocus)="subSum(dataes.rankIndex,item.itemValue,'dataes')" (ionBlur)="addSum(dataes.rankIndex,item.itemValue,'dataes')" [(ngModel)]="dataes[item.itemValue]"></ion-input>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+  <ion-item class="inputItem" *ngIf="!notSum" (click)="showDt(dataesSum.sort)">
+    <ion-label>
+      {{dataesSum.projectsName.substring(dataesSum.projectsName.indexOf('、')+1,dataesSum.projectsName.length) + "合计"}}
+    </ion-label>
+  </ion-item>
+  <ion-list [class]="'dtContent sort'+dataesSum.sort" *ngIf="!notSum">
+    <div *ngFor="let item of cellItem">
+      <ion-item class="inputItem">
+        <ion-label>
+          {{"&emsp;"+item.itemName+"："}}
+        </ion-label>
+        <ion-label *ngIf="dataesSum[item.itemValue+'ShowType']=='label'||!dataesSum[item.itemValue+'ShowType']">{{dataesSum[item.itemValue]}}</ion-label>
+        <ion-input *ngIf="dataesSum[item.itemValue+'ShowType']=='input'" [(ngModel)]="dataesSum[item.itemValue]"></ion-input>
+        <ion-input *ngIf="dataesSum[item.itemValue+'ShowType']=='input-number'" type="number"  (ionFocus)="subSum(dataesSum.rankIndex,item.itemValue,'dataesSum')" (ionBlur)="addSum(dataesSum.rankIndex,item.itemValue,'dataesSum')" [(ngModel)]="dataesSum[item.itemValue]"></ion-input>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-list>

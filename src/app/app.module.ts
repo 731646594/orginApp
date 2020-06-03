@@ -108,6 +108,7 @@ import {DayReportEntryDetailAlertPage} from "../pages/apps/report/dayReportEntry
 import {DayReportSearchPage} from "../pages/apps/report/dayReportSearch/dayReportSearch";
 import {DayReportSearchDetailPage} from "../pages/apps/report/dayReportSearchDetail/dayReportSearchDetail";
 import {DayReportSimplePage} from "../pages/apps/report/dayReportSimple/dayReportSimple";
+import {DayReportMergeCellPage} from "../pages/apps/report/dayReportMergeCell/dayReportMergeCell";
 
 @NgModule({
   declarations: [
@@ -192,7 +193,8 @@ import {DayReportSimplePage} from "../pages/apps/report/dayReportSimple/dayRepor
     DayReportSupplementAlertPage,
     DayReportSearchPage,
     DayReportSearchDetailPage,
-    DayReportSimplePage
+    DayReportSimplePage,
+    DayReportMergeCellPage
   ],
   imports: [
     BrowserModule,
@@ -295,7 +297,8 @@ import {DayReportSimplePage} from "../pages/apps/report/dayReportSimple/dayRepor
     DayReportSupplementAlertPage,
     DayReportSearchPage,
     DayReportSearchDetailPage,
-    DayReportSimplePage
+    DayReportSimplePage,
+    DayReportMergeCellPage
   ],
   providers: [
     StatusBar,
