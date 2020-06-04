@@ -16,6 +16,7 @@ export class TabTreeMergeCellComponent {
   @Input() dataesSum=null;
   @Input() notSum;
   @Input() cellItem=[];
+  @Input() cellItem2=[];
   @Output() backValue = new EventEmitter();
   displayDataSort = -1;
   displayDtSort = -1;
@@ -29,6 +30,9 @@ export class TabTreeMergeCellComponent {
   }
   showDt(sort){
     this.showContent(".dtContent.sort",sort,"displayDtSort");
+  }
+  typeIsArray(value){
+    return Array.isArray(value)
   }
   showContent(contentName,sort,displaySort){
     let content = $(contentName+sort)[0];
@@ -54,6 +58,10 @@ export class TabTreeMergeCellComponent {
       this.dataesList[rankIndex[rankIndex.length-1]][itemValue] = parseFloat(this.dataesList[rankIndex[rankIndex.length-1]][itemValue])
     }else if(dataName=='dataesSum'){
       this.dataesSum[itemValue] = parseFloat(this.dataesSum[itemValue])
+    }else if(dataName.itemValue){
+      this.dataesList[rankIndex[rankIndex.length-1]][itemValue][dataName.index][dataName.itemValue] = parseFloat(this.dataesList[rankIndex[rankIndex.length-1]][itemValue][dataName.index][dataName.itemValue])
+      this.events.publish("focusInput",{rankIndex:rankIndex,itemValue:itemValue,dataName:dataName})
+      return;
     }
     this.events.publish("focusInput",{rankIndex:rankIndex,itemValue:itemValue})
   }
@@ -62,6 +70,10 @@ export class TabTreeMergeCellComponent {
       this.dataesList[rankIndex[rankIndex.length-1]][itemValue] = parseFloat(this.dataesList[rankIndex[rankIndex.length-1]][itemValue])
     }else if(dataName=='dataesSum'){
       this.dataesSum[itemValue] = parseFloat(this.dataesSum[itemValue])
+    }else if(dataName.itemValue){
+      this.dataesList[rankIndex[rankIndex.length-1]][itemValue][dataName.index][dataName.itemValue] = parseFloat(this.dataesList[rankIndex[rankIndex.length-1]][itemValue][dataName.index][dataName.itemValue])
+      this.events.publish("blurInput",{rankIndex:rankIndex,itemValue:itemValue,dataName:dataName})
+      return;
     }
     this.events.publish("blurInput",{rankIndex:rankIndex,itemValue:itemValue})
   }

@@ -10503,12 +10503,12 @@ export class DayReportSimplePage {
   forReturnData(dataesList){
     for(let i in dataesList){
       if (dataesList[i].parentGroupCode===null){
-        this.returnData.push(dataesList[i]);
+        this.returnData[dataesList[i].sort-1]=dataesList[i];
       }
-      if(dataesList[i].data&&dataesList[i].data.length>0){
+      if(dataesList[i].data.length>0){
         for(let j in dataesList[i].data){
-          this.returnData.push(dataesList[i].data[j])
-          if(dataesList[i].data[j].data&&dataesList[i].data[j].data.length>0){
+          this.returnData[dataesList[i].data[j].sort-1]=dataesList[i].data[j];
+          if(dataesList[i].data[j].data.length>0){
             this.forReturnData(dataesList[i].data)
           }
         }
