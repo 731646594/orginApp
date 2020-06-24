@@ -38,7 +38,7 @@ export class RepairBjAlertPage{
       this.filterData = JSON.parse(JSON.stringify(this.data));
     }else {
       this.httpService.postData2(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", {bjcj:1}, (data)=> {
-        this.data = data.obj;
+        this.data = data.obj.rows;
         this.filterData = JSON.parse(JSON.stringify(this.data));
       },true);
     }
@@ -65,13 +65,15 @@ export class RepairBjAlertPage{
     }
     this.filterData[index]["checkedIcon"] = true;
     this.checkedData = this.filterData[index];
-    this.upperButton = true;
-    this.lowerButton = true;
-    if (this.checkedData.bjcj==1){
-      this.upperButton = false;
-    }
-    if (this.checkedData.sfmx==1){
-      this.lowerButton = false;
+    if (this.navParams.get("data").length>0) {
+      this.upperButton = true;
+      this.lowerButton = true;
+      if (this.checkedData.bjcj == 1) {
+        this.upperButton = false;
+      }
+      if (this.checkedData.sfmx == 1) {
+        this.lowerButton = false;
+      }
     }
   }
   displayContent(index){
@@ -96,7 +98,7 @@ export class RepairBjAlertPage{
       body={bjbm:"%"+this.searchValue+"%"}
     }
     this.httpService.postData2(this.httpService.getUrl2() + "lhd/common/sparepartCatalogController.do?datagrid", body, (data)=> {
-      this.data = data.obj;
+      this.data = data.obj.rows;
       this.filterData = JSON.parse(JSON.stringify(this.data));
       this.upperButton = false;
       this.lowerButton = false;
@@ -119,7 +121,7 @@ export class RepairBjAlertPage{
     let url = "lhd/common/sparepartCatalogController.do?findCodeUp";
     let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
     this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
-      this.data = data.obj;
+      this.data = data.obj.rows;
       this.filterData = JSON.parse(JSON.stringify(this.data));
       this.upperButton = false;
       this.lowerButton = false;
@@ -130,7 +132,7 @@ export class RepairBjAlertPage{
     let url = "lhd/common/sparepartCatalogController.do?findCodeDown";
     let bodyJson = {dataobj:JSON.stringify(this.checkedData)};
     this.httpService.postData2(this.httpService.getUrl2() + url, bodyJson, (data)=> {
-      this.data = data.obj;
+      this.data = data.obj.rows;
       this.filterData = JSON.parse(JSON.stringify(this.data));
       this.upperButton = false;
       this.lowerButton = false;

@@ -360,7 +360,52 @@ export class MaintenancePage {
       this.app.getRootNav().pop()
     },true)
   }
+  compressBase64Pics(base64Images){
+    for (let i in base64Images){
+      let base64 = base64Images[i];
+      let newImage = new Image();
+      let quality = 1;    //压缩系数0-1之间
+      newImage.src = base64;
+      newImage.setAttribute("crossOrigin", 'Anonymous');  //url为外域时需要
+      let imgWidth, imgHeight;
+      newImage.onload =  (ev:any)=> {
+        let img = ev.target;
+        imgWidth = img.width;
+        imgHeight = img.height;
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d");
+        let w = 500;
+        if (Math.max(imgWidth, imgHeight) > w) {
+          if (imgWidth > imgHeight) {
+            canvas.width = w;
+            canvas.height = w * imgHeight / imgWidth;
+          } else {
+            canvas.height = w;
+            canvas.width = w * imgWidth / imgHeight;
+          }
+        } else {
+          canvas.width = imgWidth;
+          canvas.height = imgHeight;
+          quality = 1;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        let base64Image = canvas.toDataURL("image/jpeg", quality); //压缩语句
+        this.base64List[i] = base64Image;
+        if (parseInt(i) == base64Images.length - 1){
+          this.finishForm2()
+        }
+      }
+    }
+  }
   finishForm(){
+    if (this.base64List.length>0){
+      this.compressBase64Pics(this.base64List);
+    }else {
+      this.finishForm2()
+    }
+  }
+  finishForm2(){
     if (!this.invoice["maintenanceAmount"]){
       let alertCtrl = this.alertCtrl.create({
         title:"请填写保养金额！"
@@ -403,86 +448,86 @@ export class MaintenancePage {
       alertCtrl.present();
       return false;
     }
-    // let body = {
-    //   id:this.invoice["id"],
-    //   maintenanceAmount:this.invoice["maintenanceAmount"],
-    //   maintenancePosition:this.invoice["maintenancePosition"],
-    //   deviceUseStatus:this.invoice["deviceUseStatusName"],
-    //   deviceTechStatus:this.invoice["deviceTechStatusName"],
-    //   maintenanceRemark:this.invoice["maintenanceRemark"],
-    //   maintenanceFactory:this.storageService.read("loginDepartName"),
-    //   bjmc:this.invoice["bjmc"],
-    //   bjbm:this.invoice["bjbm"],
-    //   attachmentList:this.base64List
-    // };
-    let bodyForm = new FormData();
-    bodyForm.append("token",this.storageService.read("token"));
-    bodyForm.append("departCode",this.storageService.read("loginDepartCode"))
-    bodyForm.append("id",this.invoice["id"]);
-    bodyForm.append("maintenanceAmount",this.invoice["maintenanceAmount"]);
-    bodyForm.append("maintenancePosition",this.invoice["maintenancePosition"]);
-    bodyForm.append("deviceUseStatus",this.invoice["deviceUseStatusName"]);
-    bodyForm.append("deviceTechStatus",this.invoice["deviceTechStatusName"]);
-    bodyForm.append("maintenanceRemark",this.invoice["maintenanceRemark"]);
-    bodyForm.append("maintenanceFactory",this.storageService.read("loginDepartName"));
-    bodyForm.append("bjmc",this.invoice["bjmc"]);
-    bodyForm.append("bjbm",this.invoice["bjbm"]);
-    let stringBase64 = "";
-    for (let i=0;i<this.base64List.length;i++){
-      stringBase64 += this.base64List[i];
-      if (i != this.base64List.length-1){
-        stringBase64  += "||&&||&&||";
-      }
-    }
-    bodyForm.append("attachmentList",stringBase64);
-    let loading = this.loadingCtrl.create({
-      content:"请等待...",
-      dismissOnPageChange:true,
-      // duration:5000
-    });
-    loading.present();
-    this.http.post(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",bodyForm)
-      .subscribe((data:any)=>{
-        loading.dismiss();
-        let res = JSON.parse(data._body);
-        if (res["success"]=="true"||res["success"]=="success"||res["success"]==true){
-          let alertCtrl = this.alertCtrl.create({
-            title:"办结成功！"
-          });
-          alertCtrl.present();
-          this.app.getRootNav().pop()
-        }else {
-          let alertCtrl = this.alertCtrl.create({
-            title:res.msg
-          });
-          alertCtrl.present();
-        }
-      },err => {
-        let errMsg = "网络通信异常";
-        switch (err.status) {
-          case 401:
-            errMsg = "请重新登录";
-            break;
-          case 404:
-            errMsg = '抱歉，后台服务找不到对应接口';
-            break;
-          case 0:
-            errMsg = '网络无法连接';
-          default:
-            break;
-        }
-        let alertCtrl = this.alertCtrl.create({
-          title:errMsg
-        });
-        alertCtrl.present();
-      })
-    // this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",body,(data)=>{
-    //   console.log(data);
-    //   let alertCtrl = this.alertCtrl.create({
-    //     title:"办结成功！"
-    //   });
-    //   alertCtrl.present();
-    //   this.app.getRootNav().pop()
-    // },true)
+    let body = {
+      id:this.invoice["id"],
+      maintenanceAmount:this.invoice["maintenanceAmount"],
+      maintenancePosition:this.invoice["maintenancePosition"],
+      deviceUseStatus:this.invoice["deviceUseStatusName"],
+      deviceTechStatus:this.invoice["deviceTechStatusName"],
+      maintenanceRemark:this.invoice["maintenanceRemark"],
+      maintenanceFactory:this.storageService.read("loginDepartName"),
+      bjmc:this.invoice["bjmc"],
+      bjbm:this.invoice["bjbm"],
+      listBase64:JSON.stringify(this.base64List)
+    };
+    // let bodyForm = new FormData();
+    // bodyForm.append("token",this.storageService.read("token"));
+    // bodyForm.append("departCode",this.storageService.read("loginDepartCode"))
+    // bodyForm.append("id",this.invoice["id"]);
+    // bodyForm.append("maintenanceAmount",this.invoice["maintenanceAmount"]);
+    // bodyForm.append("maintenancePosition",this.invoice["maintenancePosition"]);
+    // bodyForm.append("deviceUseStatus",this.invoice["deviceUseStatusName"]);
+    // bodyForm.append("deviceTechStatus",this.invoice["deviceTechStatusName"]);
+    // bodyForm.append("maintenanceRemark",this.invoice["maintenanceRemark"]);
+    // bodyForm.append("maintenanceFactory",this.storageService.read("loginDepartName"));
+    // bodyForm.append("bjmc",this.invoice["bjmc"]);
+    // bodyForm.append("bjbm",this.invoice["bjbm"]);
+    // let stringBase64 = "";
+    // for (let i=0;i<this.base64List.length;i++){
+    //   stringBase64 += this.base64List[i];
+    //   if (i != this.base64List.length-1){
+    //     stringBase64  += "||&&||&&||";
+    //   }
+    // }
+    // bodyForm.append("attachmentList",stringBase64);
+    // let loading = this.loadingCtrl.create({
+    //   content:"请等待...",
+    //   dismissOnPageChange:true,
+    //   // duration:5000
+    // });
+    // loading.present();
+    // this.http.post(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",bodyForm)
+    //   .subscribe((data:any)=>{
+    //       loading.dismiss();
+    //       let res = JSON.parse(data._body);
+    //       if (res["success"]=="true"||res["success"]=="success"||res["success"]==true){
+    //         let alertCtrl = this.alertCtrl.create({
+    //           title:"办结成功！"
+    //         });
+    //         alertCtrl.present();
+    //         this.app.getRootNav().pop()
+    //       }else {
+    //         let alertCtrl = this.alertCtrl.create({
+    //           title:res.msg
+    //         });
+    //         alertCtrl.present();
+    //       }
+    //     },err => {
+    //     let errMsg = "网络通信异常";
+    //     switch (err.status) {
+    //       case 401:
+    //         errMsg = "请重新登录";
+    //         break;
+    //       case 404:
+    //         errMsg = '抱歉，后台服务找不到对应接口';
+    //         break;
+    //       case 0:
+    //         errMsg = '网络无法连接';
+    //       default:
+    //         break;
+    //     }
+    //     let alertCtrl = this.alertCtrl.create({
+    //       title:errMsg
+    //     });
+    //     alertCtrl.present();
+    //     })
+    this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devMaintenanceController.do?savePeripheryMaintenancerFinish",body,(data)=>{
+      console.log(data);
+      let alertCtrl = this.alertCtrl.create({
+        title:"办结成功！"
+      });
+      alertCtrl.present();
+      this.app.getRootNav().pop()
+    },true)
   }
 }

@@ -39,14 +39,14 @@ export class HttpService {
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
-      // this.setUrl("http","210.12.193.92","9080","plamassets");
-      // return "http://210.12.193.92:9080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.92","9080","plamassets");
+      return "http://210.12.193.92:9080/plamassets/mobile/";
       //辽宁
       // this.setUrl("http","210.12.193.94","9081","plamassets");
       // return "http://210.12.193.94:9081/plamassets/mobile/";
       //西藏
-      this.setUrl("http","210.12.193.171","9080","plamassets");
-      return "http://210.12.193.171:9080/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.171","9080","plamassets");
+      // return "http://210.12.193.171:9080/plamassets/mobile/";
       //广西
       // this.setUrl("http","210.12.193.61","9081","plamassets");
       // return "http://210.12.193.61:9081/plamassets/mobile/";

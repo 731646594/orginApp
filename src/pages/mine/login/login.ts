@@ -74,7 +74,7 @@ export class LoginPage {
         this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
         if (loginInfo[4]){
           this.storageService.write("token",loginInfo[4].token);
-          this.storageService.write("systemUrl",loginInfo[5].systemUrl);
+          this.storageService.write("systemUrl",loginInfo[5].systemUrlJump);
         }
         this.depart = this.departList[0];
       }
