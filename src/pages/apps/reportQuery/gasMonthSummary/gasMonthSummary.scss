@@ -1,0 +1,97 @@
+page-gasMonthSummary {
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+    overflow: hidden;
+  }
+  .contentBox {
+    text-align: center;
+    height: calc(100% - 70px);
+    padding: 5%;
+  }
+  //table > thead > tr > th,
+  table > tbody > tr > td {
+    //width: 3%!important;
+    padding: 0 2px;
+  }
+  #tbodyDiv0 table > tbody > tr > td:first-child {
+    text-align: left !important;
+    padding-left: 10px;
+  }
+  th {
+    color: white;
+  }
+  td,
+  th {
+    height: 35px;
+    text-align: center;
+  }
+  #contenter {
+    position: relative;
+    //width: 800px;
+    height: 100%;
+    margin: auto;
+    background-color: white;
+    border: 1px solid black;
+    overflow: auto;
+  }
+
+
+  #grid1,
+  #grid2 {
+    width: 1600px;
+    border: 1px solid gray;
+  }
+  #grid10,
+  #grid20 {
+    width: 1600px;
+    border: 1px solid gray;
+  }
+  #theadDiv {
+    position: absolute;
+    left: 150px;
+    right: 0;
+    height: auto;
+    overflow: hidden; //这里hidden是用于隐藏滚动条
+    z-index: 100;
+  }
+  #theadDiv0 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: auto;
+    overflow: hidden; //这里hidden是用于隐藏滚动条
+    z-index: 100;
+  }
+  #tbodyDiv {
+    position: absolute;
+    top: 0;
+    left: 150px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+  }
+  #tbodyDiv0 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+  }
+  #theadT{
+    background: #4389e8;
+  }
+  #theadT0{
+    background: #4389e8;
+  }
+  .formHeader{
+    width: 100%;
+    //border-bottom: 1px solid #d9d9d9;
+    display: flex;
+    left: 0;
+    top: 0;
+    position: sticky;
+    z-index: 10;
+    background: #d9d9d9;
+  }
+}

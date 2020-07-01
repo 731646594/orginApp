@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      油站月汇总
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox">
+    <div class="formHeader">
+      <ion-item class="inputItem dateBox">
+        <ion-label class="noFlexLabel">目标日期</ion-label>
+        <ion-datetime class="dataNormal" placeholder="请选择日期" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [(ngModel)]="dateValue" (ionChange)="returnDate()"></ion-datetime>
+      </ion-item>
+      <ion-item class="inputItem dateBox">
+        <ion-label class="noFlexLabel">选择部门</ion-label>
+        <!--<ion-select class="formSelect" interface="popover"  [(ngModel)]="stateValue">-->
+          <!--<ion-option *ngFor="let state of stateData" [value]="state.stateCode" (ionSelect)="selectState(state.stateName)">{{state.stateName}}</ion-option>-->
+        <!--</ion-select>-->
+      </ion-item>
+    </div>
+    <div id="contenter" *ngIf="bodyData.length>0">
+      <div id="theadDiv">
+        <table id="grid1" border="1" cellpadding="0" cellspacing="0">
+          <thead id="theadT">
+          <tr style="text-align: center;">
+            <th *ngFor="let item of titleData">{{item.itemName}}</th>
+          </tr>
+          </thead>
+          <tbody style="visibility: hidden">
+          <tr *ngFor="let item of bodyData">
+            <td style="text-align:center;" *ngFor="let item2 of titleData">{{item[item2.itemValue]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="tbodyDiv">
+        <table id="grid2"  border="1" cellpadding="0" cellspacing="0">
+          <thead id="theadB" style="visibility: hidden">
+          <tr style="text-align: center;">
+            <th *ngFor="let item of titleData">{{item.itemName}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of bodyData">
+            <td style="text-align:center;" *ngFor="let item2 of titleData">{{item[item2.itemValue]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>
