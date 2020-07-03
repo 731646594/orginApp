@@ -7,18 +7,18 @@ import {DatePipe} from "@angular/common";
 import {SimpleSummaryAlertPage} from "../simpleSummaryAlert/simpleSummaryAlert";
 
 @Component({
-  selector: 'page-simpleSummary',
-  templateUrl: 'simpleSummary.html'
+  selector: 'page-gasInputStatusQuery',
+  templateUrl: 'gasInputStatusQuery.html'
 })
-export class SimpleSummaryPage {
+export class GasInputStatusQueryPage {
   dateValue;
   maxDate;
   titleData = [
-    {itemName:'项目名称',itemValue:'projectsName'},
-    {itemName:'计量单位',itemValue:'unit'},
-    {itemName:'目标值',itemValue:'targetValue'},
-    {itemName:'差异',itemValue:'difference'},
-    {itemName:'发生数',itemValue:'amount'}
+    {itemName:'所属分公司',itemValue:'parentName'},
+    {itemName:'统计状态',itemValue:'typeName'},
+    {itemName:'所属部门名称',itemValue:'departName'},
+    {itemName:'所属部门编码',itemValue:'departCode'},
+    {itemName:'录入时间',itemValue:'statisticsTime'}
   ];
   bodyData = [];
   pageName = '';
@@ -26,18 +26,19 @@ export class SimpleSummaryPage {
   body;
   departText = '请选择部门';
   departData;
+  orderType = '0';
+  stateData = [
+    {stateName: '全部',stateCode:'0'},
+    {stateName: '已完成',stateCode:'5'},
+    {stateName: '未完成',stateCode:'-5'}
+  ];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public app:App,public datePipe:DatePipe,public navParams:NavParams,
               public modalCtrl:ModalController,public loadingCtrl:LoadingController) {
     this.pageName = this.navParams.data.pageName;
     let date = new Date();
-    if (this.pageName == '月简表'){
-      this.dateValue = this.datePipe.transform(date,"yyyy-MM");
-      this.maxDate = this.datePipe.transform(date,"yyyy-MM");
-    }else if (this.pageName == '日简表'){
-      this.dateValue = this.datePipe.transform(date,"yyyy-MM-dd");
-      this.maxDate = this.datePipe.transform(date,"yyyy-MM-dd");
-    }
+    this.dateValue = this.datePipe.transform(date,"yyyy-MM-dd");
+    this.maxDate = this.datePipe.transform(date,"yyyy-MM-dd");
     this.departData = {text:this.storageService.read('loginDepartName'),id:this.storageService.read('loginDepartCode')}
     this.departText = this.departData.text;
     this.getData();
@@ -51,13 +52,8 @@ export class SimpleSummaryPage {
     $('.contentBox').height(Math.floor(conH));
   }
   getData(){
-    if (this.pageName == '月简表'){
-      this.url = 'lhd/xzgasstationapp/xzGasStationPlateEasyAppController.do?dayEasyStationManagementMonth';
-      this.body = {month:this.dateValue,selectDepartCode:this.departData.id};
-    }else if (this.pageName == '日简表'){
-      this.url = 'lhd/xzgasstationapp/xzGasStationPlateEasyAppController.do?dayEasyStationManagementDay';
-      this.body = {targetDate:this.dateValue,selectDepartCode:this.departData.id};
-    }
+    this.url = 'lhd/xzgasstationapp/xzGasStationPlateEasyAppController.do?datagridStationInfo';
+    this.body = {time:this.dateValue,selectDepartCode:this.departData.id,orderType:this.orderType};
     let loadingCtrl = this.loadingCtrl.create({
       content:"请等待...",
       dismissOnPageChange:true
@@ -66,6 +62,13 @@ export class SimpleSummaryPage {
     this.httpService.postData2(this.httpService.getUrl4() + this.url, this.body, (data)=> {
       this.bodyData = [];
       this.bodyData = data.obj.rows;
+      for (let item of this.bodyData){
+        if (item.type == 5){
+          item['typeName'] = '已完成'
+        }else {
+          item['typeName'] = '未完成'
+        }
+      }
       $('#contenter').css('visibility','hidden');
       if (this.bodyData.length > 0){
         setTimeout(()=>{

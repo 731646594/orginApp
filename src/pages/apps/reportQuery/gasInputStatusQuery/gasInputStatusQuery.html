@@ -1,24 +1,26 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{pageName}}
+      油站录入情况查询
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <div class="contentBox">
     <div class="formHeader">
-      <ion-item class="inputItem dateBox" *ngIf="pageName == '月简表'">
-        <ion-label class="noFlexLabel">目标月份</ion-label>
-        <ion-datetime class="dataNormal" placeholder="请选择月份" displayFormat="YYYY-MM" cancelText="关闭" doneText="确定" [max]="maxDate" [(ngModel)]="dateValue"></ion-datetime>
-      </ion-item>
-      <ion-item class="inputItem dateBox" *ngIf="pageName == '日简表'">
+      <ion-item class="inputItem dateBox">
         <ion-label class="noFlexLabel">目标日期</ion-label>
         <ion-datetime class="dataNormal" placeholder="请选择日期" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [max]="maxDate" [(ngModel)]="dateValue"></ion-datetime>
       </ion-item>
       <ion-item class="inputItem">
         <ion-label class="noFlexLabel">目标部门</ion-label>
         <ion-label class="departNameDiv" (click)="showDepart()">{{departText}}</ion-label>
+      </ion-item>
+      <ion-item class="inputItem dateBox">
+        <ion-label class="noFlexLabel">统计状态</ion-label>
+        <ion-select class="formSelect" interface="popover"  [(ngModel)]="orderType">
+          <ion-option *ngFor="let state of stateData" [value]="state.stateCode">{{state.stateName}}</ion-option>
+        </ion-select>
       </ion-item>
     </div>
     <div id="contenter" style="visibility: hidden">

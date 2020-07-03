@@ -112,6 +112,7 @@ import {DayReportMergeCellPage} from "../pages/apps/report/dayReportMergeCell/da
 import {GasMonthSummaryPage} from "../pages/apps/reportQuery/gasMonthSummary/gasMonthSummary";
 import {SimpleSummaryPage} from "../pages/apps/reportQuery/simpleSummary/simpleSummary";
 import {SimpleSummaryAlertPage} from "../pages/apps/reportQuery/simpleSummaryAlert/simpleSummaryAlert";
+import {GasInputStatusQueryPage} from "../pages/apps/reportQuery/gasInputStatusQuery/gasInputStatusQuery";
 
 @NgModule({
   declarations: [
@@ -200,7 +201,8 @@ import {SimpleSummaryAlertPage} from "../pages/apps/reportQuery/simpleSummaryAle
     DayReportMergeCellPage,
     GasMonthSummaryPage,
     SimpleSummaryPage,
-    SimpleSummaryAlertPage
+    SimpleSummaryAlertPage,
+    GasInputStatusQueryPage
   ],
   imports: [
     BrowserModule,
@@ -307,7 +309,8 @@ import {SimpleSummaryAlertPage} from "../pages/apps/reportQuery/simpleSummaryAle
     DayReportMergeCellPage,
     GasMonthSummaryPage,
     SimpleSummaryPage,
-    SimpleSummaryAlertPage
+    SimpleSummaryAlertPage,
+    GasInputStatusQueryPage
   ],
   providers: [
     StatusBar,

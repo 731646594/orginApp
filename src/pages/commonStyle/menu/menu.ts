@@ -30,6 +30,8 @@ import {RFIDSpecScanPage} from "../../apps/inventory/RFIDSpecScan/RFIDSpecScan";
 import {DayReportEntryPage} from "../../apps/report/dayReportEntry/dayReportEntry";
 import {DayReportSupplementPage} from "../../apps/report/dayReportSupplement/dayReportSupplement";
 import {DayReportSearchPage} from "../../apps/report/dayReportSearch/dayReportSearch";
+import {SimpleSummaryPage} from "../../apps/reportQuery/simpleSummary/simpleSummary";
+import {GasInputStatusQueryPage} from "../../apps/reportQuery/gasInputStatusQuery/gasInputStatusQuery";
 
 @Component({
   selector: 'page-menu',
@@ -130,6 +132,9 @@ export class MenuPage {
     //91:加油站日报录入
     //92:加油站日报补录
     //93:加油站日报查询
+    //101:日简表
+    //102:月简表
+    //103:油站录入情况查询
     let willGoPage = null;
     if(page == 11){
       willGoPage = ScanCodePage;
@@ -304,6 +309,18 @@ export class MenuPage {
     else if(page == 93){
       willGoPage = DayReportSearchPage;
       params = {pageName:"加油站日报查询"};
+    }
+    else if(page == 101){
+      willGoPage = SimpleSummaryPage;
+      params = {pageName:"日简表"};
+    }
+    else if(page == 102){
+      willGoPage = SimpleSummaryPage;
+      params = {pageName:"月简表"};
+    }
+    else if(page == 103){
+      willGoPage = GasInputStatusQueryPage;
+      params = {pageName:"油站录入情况查询"};
     }
     if (willGoPage!=null){
       this.app.getRootNav().push(willGoPage,params)
