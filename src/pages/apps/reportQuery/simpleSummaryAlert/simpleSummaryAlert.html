@@ -1,0 +1,34 @@
+<ion-header>
+
+</ion-header>
+<ion-content style="background: rgba(0,0,0,0.25);">
+  <div class="backgroundBox" (click)="back()">
+    <div class="contentBox" (click)="$event.cancelBubble=true;">
+      <div  *ngFor="let detail of filterData;let i = index">
+        <div class="flexBox">
+          <ion-list class="callContent" (click)="showChildren(i)">
+            <ion-list class="callList">
+              <ion-item class="inputItem" *ngFor="let pItem of item.parent">
+                <ion-label class="scrollLabel">{{detail[pItem.itemValue]}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-list>
+          <div class="cardButton" item-end (click)="checkedItemRadio(i)">
+            <ion-icon name="checkmark-circle" *ngIf="detail.checkedIcon" class="cardCheckedIcon"></ion-icon>
+            <ion-icon name="checkmark-circle" *ngIf="!detail.checkedIcon" class="cardDisCheckedIcon"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<footer class="formFooter" *ngIf="!isOnfocus">
+  <button class="formFooterButton" *ngIf="upperButton == true" (click)="goTosj()">
+    <ion-icon class="formFooterIcon" name="arrow-dropup-circle"></ion-icon>
+    <ion-label class="formFooterText">返回</ion-label>
+  </button>
+  <button class="formFooterButton" (click)="returnSelect()">
+    <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon>
+    <ion-label class="formFooterText">确定</ion-label>
+  </button>
+</footer>

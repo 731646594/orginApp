@@ -111,6 +111,7 @@ import {DayReportSimplePage} from "../pages/apps/report/dayReportSimple/dayRepor
 import {DayReportMergeCellPage} from "../pages/apps/report/dayReportMergeCell/dayReportMergeCell";
 import {GasMonthSummaryPage} from "../pages/apps/reportQuery/gasMonthSummary/gasMonthSummary";
 import {SimpleSummaryPage} from "../pages/apps/reportQuery/simpleSummary/simpleSummary";
+import {SimpleSummaryAlertPage} from "../pages/apps/reportQuery/simpleSummaryAlert/simpleSummaryAlert";
 
 @NgModule({
   declarations: [
@@ -198,7 +199,8 @@ import {SimpleSummaryPage} from "../pages/apps/reportQuery/simpleSummary/simpleS
     DayReportSimplePage,
     DayReportMergeCellPage,
     GasMonthSummaryPage,
-    SimpleSummaryPage
+    SimpleSummaryPage,
+    SimpleSummaryAlertPage
   ],
   imports: [
     BrowserModule,
@@ -304,7 +306,8 @@ import {SimpleSummaryPage} from "../pages/apps/reportQuery/simpleSummary/simpleS
     DayReportSimplePage,
     DayReportMergeCellPage,
     GasMonthSummaryPage,
-    SimpleSummaryPage
+    SimpleSummaryPage,
+    SimpleSummaryAlertPage
   ],
   providers: [
     StatusBar,
