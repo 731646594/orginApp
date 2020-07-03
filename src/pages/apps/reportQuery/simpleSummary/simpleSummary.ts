@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, ModalController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {HttpService} from "../../../../services/httpService";
 import * as $ from "jquery";
@@ -28,7 +28,7 @@ export class SimpleSummaryPage {
   departData;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public app:App,public datePipe:DatePipe,public navParams:NavParams,
-              public modalCtrl:ModalController) {
+              public modalCtrl:ModalController,public loadingCtrl:LoadingController) {
     this.pageName = this.navParams.data.pageName;
     let date = new Date();
     if (this.pageName == '月简表'){
@@ -58,15 +58,31 @@ export class SimpleSummaryPage {
       this.url = 'lhd/xzgasstationapp/xzGasStationPlateEasyAppController.do?dayEasyStationManagementDay';
       this.body = {targetDate:this.dateValue,selectDepartCode:this.departData.departCode};
     }
+    let loadingCtrl = this.loadingCtrl.create({
+      content:"请等待...",
+      dismissOnPageChange:true
+    });
+    loadingCtrl.present();
     this.httpService.postData2(this.httpService.getUrl4() + this.url, this.body, (data)=> {
+      this.bodyData = [];
       this.bodyData = data.obj.rows;
+      $('#contenter').css('visibility','hidden');
       if (this.bodyData.length > 0){
-        $('#contenter').css('visibility','visible')
-        setTimeout(()=>{$('#theadDiv').height($('#theadT').height())},100);
+        setTimeout(()=>{
+          $('#theadDiv').height($('#theadT').height());
+          $('#contenter').css('visibility','visible');
+          loadingCtrl.dismiss();
+        },100);
       }else {
-        $('#contenter').css('visibility','hidden')
+        loadingCtrl.dismiss();
       }
-    },true)
+    },false,(err)=>{
+      loadingCtrl.dismiss();
+      let alertCtrl = this.alertCtrl.create({
+        title: err
+      });
+      alertCtrl.present();
+    })
   }
   showDepart(){
     let data;
