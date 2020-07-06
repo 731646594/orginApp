@@ -13,8 +13,9 @@ export class HttpService {
   constructor(public http: Http,public httpClient:HttpClient,public storageService:StorageService,public alertCtrl:AlertController,public app:App,public loadingCtrl:LoadingController,private nativeHttp: HTTP,public platform:Platform){}
 
   public getUrl2(){
-    let url=this.storageService.read("systemUrl");
-    return url
+    let url=this.getUrl();
+    let urlHead = url.split(":")[0]+"://"+url.split("/")[2]+'/'+url.split("/")[3]+'/';
+    return urlHead
   }
   public getUrl3(){
     let url=this.storageService.read("systemUrl");
@@ -28,8 +29,8 @@ export class HttpService {
     let url=this.storageService.read("serverUrl");
     if (!url){
       //98
-      // this.setUrl("http","192.168.0.98","8088","plamassets");
-      // return "http://192.168.0.98:8088/plamassets/mobile/";
+      // this.setUrl("http","lhsm.vip","8088","plamassets");
+      // return "http://lhsm.vip:8088/plamassets/mobile/";
       //外网98渤钻井下
       // this.setUrl("http","lhsm.vip","8086","plamassets");
       // return "http://lhsm.vip:8086/plamassets/mobile/";
@@ -40,14 +41,14 @@ export class HttpService {
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
-      // this.setUrl("http","210.12.193.92","9080","plamassets");
-      // return "http://210.12.193.92:9080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.92","9080","plamassets");
+      return "http://210.12.193.92:9080/plamassets/mobile/";
       //辽宁
       // this.setUrl("http","210.12.193.94","9081","plamassets");
       // return "http://210.12.193.94:9081/plamassets/mobile/";
       //西藏
-      this.setUrl("http","210.12.193.171","9080","plamassets");
-      return "http://210.12.193.171:9080/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.171","9080","plamassets");
+      // return "http://210.12.193.171:9080/plamassets/mobile/";
       //广西
       // this.setUrl("http","210.12.193.61","9081","plamassets");
       // return "http://210.12.193.61:9081/plamassets/mobile/";
@@ -377,6 +378,7 @@ export class HttpService {
       this.nativeHttp.setRequestTimeout(120);
       this.nativeHttp.post(url, body, {type:"app"})
         .then(data => {
+          // alert(JSON.stringify(data))
           let res = JSON.parse(data.data);
           if (isLoading){
             loading.dismiss();
