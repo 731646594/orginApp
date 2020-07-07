@@ -17,8 +17,8 @@ export class SimpleSummaryPage {
     {itemName:'项目名称',itemValue:'projectsName'},
     {itemName:'计量单位',itemValue:'unit'},
     {itemName:'目标值',itemValue:'targetValue'},
-    {itemName:'差异',itemValue:'difference'},
-    {itemName:'发生数',itemValue:'amount'}
+    {itemName:'发生数',itemValue:'amount'},
+    {itemName:'差异',itemValue:'difference'}
   ];
   bodyData = [];
   pageName = '';

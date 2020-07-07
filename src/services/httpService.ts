@@ -22,8 +22,9 @@ export class HttpService {
     return url
   }
   public getUrl4(){
-    let url=this.storageService.read("systemUrl");
-    return url
+    let url=this.getUrl();
+    let urlHead = url.split(":")[0]+"://"+url.split("/")[2]+'/'+url.split("/")[3]+'/';
+    return urlHead
   }
   public getUrl(){
     let url=this.storageService.read("serverUrl");
@@ -41,14 +42,14 @@ export class HttpService {
       // this.setUrl("http","210.12.193.123","9081","plamassets");
       // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
-      this.setUrl("http","210.12.193.92","9080","plamassets");
-      return "http://210.12.193.92:9080/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.92","9080","plamassets");
+      // return "http://210.12.193.92:9080/plamassets/mobile/";
       //辽宁
       // this.setUrl("http","210.12.193.94","9081","plamassets");
       // return "http://210.12.193.94:9081/plamassets/mobile/";
       //西藏
-      // this.setUrl("http","210.12.193.171","9080","plamassets");
-      // return "http://210.12.193.171:9080/plamassets/mobile/";
+      this.setUrl("http","210.12.193.171","9080","plamassets");
+      return "http://210.12.193.171:9080/plamassets/mobile/";
       //广西
       // this.setUrl("http","210.12.193.61","9081","plamassets");
       // return "http://210.12.193.61:9081/plamassets/mobile/";
@@ -378,7 +379,6 @@ export class HttpService {
       this.nativeHttp.setRequestTimeout(120);
       this.nativeHttp.post(url, body, {type:"app"})
         .then(data => {
-          // alert(JSON.stringify(data))
           let res = JSON.parse(data.data);
           if (isLoading){
             loading.dismiss();

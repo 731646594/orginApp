@@ -21,7 +21,7 @@ export class LoginPage {
     this.loadData();
   }
   loadData(){
-    if (this.storageService.read("loginUserName")){
+    if (this.storageService.read("loginUserName")&&this.storageService.read("loginDepartName")){
       this.isLogin=true;
     }
     if (this.storageService.read("loginDepartList")) {
@@ -57,7 +57,19 @@ export class LoginPage {
         loginInfo = data.data;
         let item = loginInfo[2].func.replace(/'/g, '"');
         try {
-          let i = JSON.parse(item)
+          let i = JSON.parse(item);
+          this.isLogin=true;
+          this.departList = loginInfo[1].depart;
+          this.storageService.write("loginUserName",loginInfo[0].user.username);
+          this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
+          this.storageService.write("loginPassWord",this.password);
+          this.storageService.write("loginDepartList",this.departList);
+          this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
+          if (loginInfo[4]){
+            this.storageService.write("token",loginInfo[4].token);
+            this.storageService.write("systemUrl",loginInfo[5].systemUrlJump);
+          }
+          this.depart = this.departList[0];
         }catch {
           let alert=this.alertCtrl.create({
             title:"该用户配置不正确，请联系管理员！"
@@ -65,18 +77,6 @@ export class LoginPage {
           alert.present();
           return;
         }
-        this.isLogin=true;
-        this.departList = loginInfo[1].depart;
-        this.storageService.write("loginUserName",loginInfo[0].user.username);
-        this.storageService.write("loginUserCode",loginInfo[0].user.usercode);
-        this.storageService.write("loginPassWord",this.password);
-        this.storageService.write("loginDepartList",this.departList);
-        this.storageService.write("applyPageData",loginInfo[2].func.replace(/'/g, '"'));
-        if (loginInfo[4]){
-          this.storageService.write("token",loginInfo[4].token);
-          this.storageService.write("systemUrl",loginInfo[5].systemUrlJump);
-        }
-        this.depart = this.departList[0];
       }
     },true)
   }
