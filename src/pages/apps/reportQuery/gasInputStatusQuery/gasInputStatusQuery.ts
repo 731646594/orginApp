@@ -17,7 +17,7 @@ export class GasInputStatusQueryPage {
     {itemName:'所属分公司',itemValue:'parentName'},
     {itemName:'统计状态',itemValue:'typeName'},
     {itemName:'所属部门名称',itemValue:'departName'},
-    {itemName:'所属部门编码',itemValue:'departCode'},
+    // {itemName:'所属部门编码',itemValue:'departCode'},
     {itemName:'录入时间',itemValue:'statisticsTime'}
   ];
   bodyData = [];

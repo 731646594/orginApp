@@ -22,17 +22,23 @@
           <ion-option *ngFor="let state of stateData" [value]="state.stateCode">{{state.stateName}}</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item class="inputItem">
+        <ion-label class="noFlexLabel">总数</ion-label>
+        <ion-label class="departNameDiv">{{bodyData.length}}</ion-label>
+      </ion-item>
     </div>
     <div id="contenter" style="visibility: hidden">
       <div id="theadDiv">
         <table id="grid1" border="1" cellpadding="0" cellspacing="0">
           <thead id="theadT">
           <tr style="text-align: center;">
+            <th>序号</th>
             <th *ngFor="let item of titleData">{{item.itemName}}</th>
           </tr>
           </thead>
           <tbody style="visibility: hidden;">
-          <tr *ngFor="let item of bodyData">
+          <tr *ngFor="let item of bodyData;let i = index">
+            <td style="text-align:center;">{{i+1}}</td>
             <td style="text-align:center;" *ngFor="let item2 of titleData">{{item[item2.itemValue]}}</td>
           </tr>
           </tbody>
@@ -42,11 +48,13 @@
         <table id="grid2"  border="1" cellpadding="0" cellspacing="0">
           <thead id="theadB" style="visibility: hidden">
           <tr style="text-align: center;">
+            <th>序号</th>
             <th *ngFor="let item of titleData">{{item.itemName}}</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of bodyData">
+          <tr *ngFor="let item of bodyData;let i = index">
+            <td style="text-align:center;">{{i+1}}</td>
             <td style="text-align:center;" *ngFor="let item2 of titleData">{{item[item2.itemValue]}}</td>
           </tr>
           </tbody>
