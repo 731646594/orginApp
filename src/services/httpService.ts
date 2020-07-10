@@ -77,6 +77,9 @@ export class HttpService {
       //青海油田
       // this.setUrl("http","218.205.135.168","7000","plamassets");
       // return "http://218.205.135.168:7000/plamassets/mobile/"
+      //华北油田
+      // this.setUrl("http","210.12.194.113","7000","plamassets");
+      // return "http://210.12.194.113:7000/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");

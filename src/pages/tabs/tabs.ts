@@ -203,7 +203,7 @@ export class TabsPage {
     };
     if(this.storageService.read("applyPageData")){
       this.pageData1 = JSON.parse(this.storageService.read("applyPageData"));
-      if (this.pageData1.pageData.length==2){
+      if (this.pageData1.pageData.length<=2){
         this.isShowHome = false
       }
     }
