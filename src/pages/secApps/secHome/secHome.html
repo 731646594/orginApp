@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      首页
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="pageCon">
+    <div class="splitBar">
+      <div class="splitLine"></div>
+      <div class="splitLeftText">我的工作台</div>
+      <div class="splitRightText" (click)="goToCus()">定制</div>
+    </div>
+    <div class="appsButtonBigBox">
+      <div class="appsButtonBox" *ngFor="let item of disAppData;">
+        <button class="appsButton" *ngFor="let item2 of item;">
+          <div *ngIf="item2.src" class="appsButtonIconBox2" >
+            <img [src]="item2.src">
+          </div>
+          <br>{{item2.text}}
+        </button>
+      </div>
+    </div>
+    <ion-toolbar class="applicationToolbar">
+      <ion-segment [(ngModel)]="showTitle">
+        <ion-segment-button value="affair" >
+          待办事项
+        </ion-segment-button>
+        <ion-segment-button value="notice" >
+          通知公告
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+    <div class="applicationContentBox">
+      <div [ngClass]="showTitle == 'affair' ? 'showDiv' : 'hideDiv'">
+        <ion-scroll class="switchScroll" scrollY="true">
+          <div *ngFor="let item of affairData;">
+            <ion-item>
+              <ion-checkbox></ion-checkbox>
+              <ion-label>{{item.text}}</ion-label>
+            </ion-item>
+          </div>
+        </ion-scroll>
+      </div>
+      <div  [ngClass]="showTitle == 'notice' ? 'showDiv' : 'hideDiv'">
+        <ion-scroll class="switchScroll" scrollY="true">
+          <div *ngFor="let item of noticeData;">
+            <ion-item>
+              <ion-label>{{item.text}}</ion-label>
+            </ion-item>
+          </div>
+        </ion-scroll>
+      </div>
+    </div>
+  </div>
+</ion-content>
