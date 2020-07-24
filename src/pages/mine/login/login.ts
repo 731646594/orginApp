@@ -21,7 +21,7 @@ export class LoginPage {
     this.loadData();
   }
   loadData(){
-    if (this.storageService.read("loginUserName")&&this.storageService.read("loginDepartName")){
+    if (this.storageService.read("loginUserName")){
       this.isLogin=true;
     }
     if (this.storageService.read("loginDepartList")) {
