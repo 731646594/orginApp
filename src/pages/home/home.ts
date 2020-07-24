@@ -93,7 +93,7 @@ export class HomePage {
       alertCtrl.present();
       return false;
     }
-    if(this.storageService.getDevice()!=2&&pageIndex == 1){
+    if(this.storageService.getDevice()!=2&&pageIndex == 1&&!this.storageService.read('noFlightMode')){
       if(this.network.type != 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请切换到飞行模式！"
