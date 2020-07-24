@@ -64,7 +64,8 @@ export class MinePage {
     else if(page == 4){
       this.storageService.remove("loginDepartName");
       this.storageService.remove("loginDepartCode");
-      willGoPage = LoginPage;
+      willGoPage = null;
+      this.app.getRootNav().setRoot(LoginPage);
     }
     else if(page == 5){
       let alertCtrl = this.alertCtrl.create({
