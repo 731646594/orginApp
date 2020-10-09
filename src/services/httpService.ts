@@ -39,8 +39,8 @@ export class HttpService {
       // this.setUrl("http","210.12.194.18","9080","plamassets");
       // return "http://210.12.194.18:9080/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
-      // this.setUrl("http","210.12.193.123","9081","plamassets");
-      // return "http://210.12.193.123:9081/plamassets/mobile/";
+      this.setUrl("http","210.12.193.123","9081","plamassets");
+      return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
       // this.setUrl("http","210.12.193.92","9080","plamassets");
       // return "http://210.12.193.92:9080/plamassets/mobile/";
@@ -68,7 +68,7 @@ export class HttpService {
       //黑龙江销售
       // this.setUrl("http","210.12.194.210","9080","plamassets");
       // return "http://210.12.194.210:9080/plamassets/mobile/"
-      //油网
+      //润滑油
       // this.setUrl("http","10.215.9.57","8081","plamassets");
       // return "http://10.215.9.57:8081/plamassets/mobile/"
       //浙江
@@ -81,8 +81,8 @@ export class HttpService {
       // this.setUrl("http","210.12.194.113","7000","plamassets");
       // return "http://210.12.194.113:7000/plamassets/mobile/"
       //云南
-      this.setUrl("http","210.12.193.144","9204","plamassets");
-      return "http://210.12.193.144:9204/plamassets/mobile/"
+      // this.setUrl("http","210.12.193.144","9204","plamassets");
+      // return "http://210.12.193.144:9204/plamassets/mobile/"
     }
     if (this.storageService.getDevice()==2){
       this.setUrl("http","114.116.135.83","8080","plamassets");
