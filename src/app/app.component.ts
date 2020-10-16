@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, App, Nav, Platform, ToastController} from 'ionic-angular';
+import {AlertController, App, Keyboard, Nav, Platform, ToastController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageService } from "../services/storageService";
@@ -19,7 +19,7 @@ export class MyApp {
   @ViewChild('myNav') nav: Nav;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
               storageService:StorageService,httpService:HttpService, toastCtrl: ToastController,
-              alertCtrl:AlertController,app:App,appVersion:AppVersion) {
+              alertCtrl:AlertController,app:App,appVersion:AppVersion,keyboard:Keyboard) {
     // let olog = console.error;
     // console.error = function() {
     //   alert([].join.call(arguments, ''))
@@ -65,6 +65,11 @@ export class MyApp {
         alertCtrl.present();
       });
       platform.registerBackButtonAction(() => {
+        if (keyboard.isOpen()) {
+          //按下返回键时，先关闭键盘
+          keyboard.close();
+          return;
+        };
         if (!this.nav.canGoBack()){
           if (this.backButtonPressed){
             platform.exitApp();
