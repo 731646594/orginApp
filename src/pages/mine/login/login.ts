@@ -105,7 +105,8 @@ export class LoginPage {
             this.storageService.write("systemUrl",loginInfo[5].systemUrlJump);
           }
           this.depart = this.departList[0];
-          if (this.httpService.getUrl() == 'http://210.12.194.113:7000/plamassets/mobile/'){
+          if (this.httpService.getUrl() == 'http://210.12.194.113:7000/plamassets/mobile/'||
+            this.httpService.getUrl() == 'http://218.205.135.168:7000/plamassets/mobile/'){
             this.storageService.write('noFlightMode',true)
           }else {
             this.storageService.write('noFlightMode',false)
