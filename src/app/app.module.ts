@@ -113,6 +113,8 @@ import {GasMonthSummaryPage} from "../pages/apps/reportQuery/gasMonthSummary/gas
 import {SimpleSummaryPage} from "../pages/apps/reportQuery/simpleSummary/simpleSummary";
 import {SimpleSummaryAlertPage} from "../pages/apps/reportQuery/simpleSummaryAlert/simpleSummaryAlert";
 import {GasInputStatusQueryPage} from "../pages/apps/reportQuery/gasInputStatusQuery/gasInputStatusQuery";
+import {MaintenanceRemindPage} from "../pages/apps/maintenance/maintenanceRemind/maintenanceRemind";
+import {MaintenanceSearchPage} from "../pages/apps/maintenance/maintenanceSearch/maintenanceSearch";
 
 @NgModule({
   declarations: [
@@ -203,6 +205,8 @@ import {GasInputStatusQueryPage} from "../pages/apps/reportQuery/gasInputStatusQ
     SimpleSummaryPage,
     SimpleSummaryAlertPage,
     GasInputStatusQueryPage,
+    MaintenanceRemindPage,
+    MaintenanceSearchPage
   ],
   imports: [
     BrowserModule,
@@ -311,6 +315,8 @@ import {GasInputStatusQueryPage} from "../pages/apps/reportQuery/gasInputStatusQ
     SimpleSummaryPage,
     SimpleSummaryAlertPage,
     GasInputStatusQueryPage,
+    MaintenanceRemindPage,
+    MaintenanceSearchPage
   ],
   providers: [
     StatusBar,
