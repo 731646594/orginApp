@@ -123,7 +123,7 @@ export class LoginPage {
   }
   entry(){
     this.downloadDictionaries();
-    if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"||(this.httpService.getUrl().indexOf("192.168")>-1)){
+    if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"||this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"||(this.httpService.getUrl().indexOf("192.168")>-1)){
       this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
         if (data.success=="true"){
           this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
@@ -142,6 +142,7 @@ export class LoginPage {
     this.storageService.write("loginDepartName",this.depart.shortname);
     this.storageService.write("loginDepartLongName",this.depart.departname);
     this.storageService.write("loginDepartCode",this.depart.departcode);
+    this.storageService.write("fromtype",this.depart.fromtype);
     this.app.getRootNav().push(TabsPage);
   }
   serviceSetting(){
