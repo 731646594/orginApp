@@ -1,0 +1,156 @@
+page-maintenanceRemind{
+  .scroll-content {
+    background-color: rgb(246, 246, 246) !important;
+    .scroll-content{
+      background-color: transparent !important;
+    }
+  }
+  .headToolbar{
+    .toolbar-background{
+      background: white !important;
+      border-bottom: 0 !important;
+    }
+  }
+  .contentBox{
+    margin-bottom: 60px;
+  }
+  .callContent{
+    width: 80%;
+  }
+  .disContent{
+    min-height: 200px;
+  }
+  .imgBox{
+    background: white;
+  }
+  .formTextarea{
+    width: calc(100% - 64px);
+    height: 100px;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 0 32px;
+  }
+  .whiteBackground{
+    background: white;
+  }
+  .text-input{
+    margin-left: 0 !important;
+  }
+  .flexBox{
+    display: -webkit-box;
+  }
+  .flexCon{
+    width: 30%;
+    ion-label{
+      white-space: normal;
+    }
+  }
+  .flexCon:nth-child(3){
+    width: 40%;
+  }
+  .tableBox{
+    overflow-x: auto;
+    margin-left: 16px;
+  }
+  .supplierContent{
+    min-height: 120px;
+  }
+  .formFooter{
+    width: 100%;
+    display: flex;
+    padding: 5px !important;
+    border-top: 1px solid #d9d9d9;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
+    background: white;
+  }
+  .formFooterButton{
+    background: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    font-size: 1em;
+  }
+  .formFooterIcon{
+    font-size: 2em;
+    color: #0091d2;
+    margin-bottom: 2px;
+  }
+  .noFlexLabel{
+    flex: none;
+  }
+  .cardButton{
+    text-align: center;
+    margin:auto;
+  }
+  .cardDisCheckedIcon{
+    color: #dedede;
+    font-size: 30px;
+  }
+  .cardCheckedIcon{
+    color: #4389e8;
+    font-size: 30px;
+  }
+  .flexBox{
+    display: flex;
+  }
+  .callContent {
+    margin: 0;
+    width: 80%;
+    border: none;
+    .callList {
+      margin: 0;
+    }
+  }
+  .disContentAlertPage{
+    display: none;
+    height: 280px;
+  }
+  .scrollLabel{
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+    text-overflow: clip;
+  }
+  .scrollLabel::-webkit-scrollbar {
+    display: none;    /* 隐藏滚动条 */
+  }
+  .inputItem{
+    width: 100%;
+    border: 0 !important;
+  }
+  .item-ios.item-block .item-inner{
+    border: none;
+  }
+  .list-ios > .item-block:first-child{
+    border: none;
+  }
+  //.ion-infinite-scroll-content{
+  //  min-height: 0;
+  //}
+  .searchButton{
+    .text-input{
+      margin-left: 0;
+      width: 100%;
+    }
+    ion-icon{
+      font-size: 20px;
+      line-height: 33px;
+      margin-left:8px !important;
+    }
+  }
+  .noPaddingLeft{
+    padding-left: 0;
+  }
+  .maxWidthSelect{
+    max-width: 50%;
+  }
+  ion-list {
+    margin: 0;
+    padding: 0 !important;
+    display: block;
+    list-style-type: none;
+  }
+}

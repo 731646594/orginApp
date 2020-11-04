@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      单据查询详情
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="contentBox">
+      <div *ngFor="let item of pageData.pageItem;">
+        <div *ngIf="item.itemType=='label'">
+          <label-normal [itemName]="item.itemName" [labelValue]="invoice[item.itemValue]" [nec]="item.nec"></label-normal>
+        </div>
+        <div *ngIf="item.itemType=='textarea'" class="whiteBackground">
+          <label-normal [itemName]="item.itemName" [nec]="item.nec"></label-normal>
+          <textarea readonly class="formTextarea" [(ngModel)]="invoice[item.itemValue]"></textarea>
+        </div>
+      </div>
+    <ion-item class="inputItem imgItem">
+      <ion-label><span style="color: transparent;padding: 5px;">*</span>照片区&emsp;:</ion-label>
+    </ion-item>
+    <div class="imgBox">
+      <div id="imgBox">
+      </div>
+    </div>
+  </div>
+</ion-content>

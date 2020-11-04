@@ -14,6 +14,8 @@ import {MaintenancePage} from "../../maintenance/maintenance";
 import {ConfigProvider} from "../../../../services/config";
 import * as $ from "jquery";
 import {MaintenanceAcceptancePage} from "../../maintenance/maintenanceAcceptance/maintenanceAcceptance";
+import {MaintenanceRemindPage} from "../../maintenance/maintenanceRemind/maintenanceRemind";
+import {MaintenanceSearchPage} from "../../maintenance/maintenanceSearch/maintenanceSearch";
 
 @Component({
   selector: 'page-repairApply',
@@ -104,6 +106,10 @@ export class RepairApplyPage {
       this.listUrl = "lhd/app/devMaintenanceController.do?getPeripheryMaintenanceInfo"
     }else if (this.pageName == "保养验收"){
       this.listUrl = "lhd/app/devMaintenanceController.do?maintenanceAcceptance"
+    }else if (this.pageName == "保养提醒"){
+      this.listUrl = "viewServiceRemindController/getRemindData.do"
+    }else if (this.pageName == "保养单据查询"){
+      this.listUrl = "serviceMaintenanceRecordController/search.do"
     }
     this.cardData = {
       cardParent:[
@@ -180,6 +186,24 @@ export class RepairApplyPage {
         {itemName:"责任单位", itemType:"label",itemValue:"zrdwTypeName"}
       ]
     }
+    if(this.pageName == "保养提醒"){
+      this.cardData.cardParent = [
+        {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
+        {itemName:"单据状态", itemType:"label",itemValue:"djzt"},
+        {itemName:"单位名称", itemType:"label",itemValue:"departName"},
+        {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
+        {itemName:"设备编码", itemType:"label",itemValue:"assetsCode"}
+      ]
+    }
+    if(this.pageName == "保养单据查询"){
+      this.cardData.cardParent = [
+        {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
+        // {itemName:"单据状态", itemType:"label",itemValue:"djzt"},
+        // {itemName:"单位名称", itemType:"label",itemValue:"departName"},
+        {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
+        {itemName:"设备编码", itemType:"label",itemValue:"assetsCode"}
+      ]
+    }
   }
   ionViewDidEnter(){
     if (this.refreshData){
@@ -245,6 +269,38 @@ export class RepairApplyPage {
           });
           alertCtrl.present();
         });
+      }else if(this.pageName == "保养提醒"){
+        this.page = 1;
+        this.isNewSearch = true;//'1371000070010'
+        this.httpService.postData(this.httpService.getUrl()+this.listUrl,{page:this.page,rows:this.pageSize,funccode:this.funccode,departCode:this.storageService.read('loginDepartCode'),token:this.storageService.read('token')},data=>{
+          this.itemData = data.data[0].entityList;
+          (<HTMLElement>document.getElementsByClassName("contentBox")[0].parentNode).scrollTop = 0;
+          for (let i in this.itemData){
+            this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
+          }
+          },true,(err)=>{
+          this.itemData = [];
+          let alertCtrl = this.alertCtrl.create({
+            title:err
+          });
+          alertCtrl.present();
+        });
+      }else if(this.pageName == '保养单据查询'){
+        this.page = 1;
+        this.isNewSearch = true;//'21511250000010001'
+        this.httpService.postData(this.httpService.getUrl()+this.listUrl, {departcode:this.storageService.read('loginDepartCode'),fromtype:this.storageService.read('fromtype')}, (data)=>{
+          this.itemData = data.data[0].entityList;
+          (<HTMLElement>document.getElementsByClassName("contentBox")[0].parentNode).scrollTop = 0;
+          for (let i in this.itemData){
+            this.itemData[i]["djztName"] = ConfigProvider.djzt2Name(this.itemData[i]["djzt"]);
+          }
+        },true,(err)=>{
+          this.itemData = [];
+          let alertCtrl = this.alertCtrl.create({
+            title:err
+          });
+          alertCtrl.present();
+        });
       }
       else {
         this.page = 1;
@@ -295,6 +351,10 @@ export class RepairApplyPage {
       this.app.getRootNav().push(MaintenancePage,{pageName:this.pageName,data:Data,operatorList:this.operatorList})
     }else if (this.pageName == "保养验收"){
       this.app.getRootNav().push(MaintenanceAcceptancePage,{pageName:this.pageName,data:Data,operatorList:this.operatorList})
+    }else if (this.pageName == "保养提醒"){
+      this.app.getRootNav().push(MaintenanceRemindPage,{pageName:this.pageName,data:Data,operatorList:this.operatorList})
+    }else if (this.pageName == '保养单据查询'){
+      this.app.getRootNav().push(MaintenanceSearchPage,{pageName:this.pageName,data:Data,operatorList:this.operatorList})
     }
   }
   submitForm(detail){
@@ -490,6 +550,13 @@ export class RepairApplyPage {
     alertCtrl.present();
   }
   submitForm3(detail){
+    if (!detail.xmmc){
+      let alertCtrl0 = this.alertCtrl.create({
+        title:'请先补录单据数据！'
+      });
+      alertCtrl0.present();
+      return false
+    }
     let alertCtrl = this.alertCtrl.create({
       title:"通过",
       cssClass:"alertMiddle",

@@ -112,7 +112,7 @@ export class MenuPage {
     //52:交接班录入
     //53:数据上传
     //61:维修申请
-    //62:维修申请补录
+    //62:维修申请补录//去除
     //63:维修审批
     //64:维修验收
     //65:维修验收审批
@@ -124,6 +124,8 @@ export class MenuPage {
     //72:开始保养
     //73:保养办结
     //74:保养验收
+    //75:保养提醒
+    //76:保养单据查询
     //81:勘探部项目款审批
     //82:工程竣工决算款审批
     //83:进度款审批
@@ -277,6 +279,14 @@ export class MenuPage {
     else if(page == 74){
       willGoPage = RepairApplyPage;
       params = {pageName:"保养验收",funccode:funccode};
+    }
+    else if(page == 75){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"保养提醒",funccode:funccode};
+    }
+    else if(page == 76){
+      willGoPage = RepairApplyPage;
+      params = {pageName:"保养单据查询",funccode:funccode};
     }
     else if(page == 81){
       willGoPage = SettlementPage;
