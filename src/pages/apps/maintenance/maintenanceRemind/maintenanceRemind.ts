@@ -200,7 +200,7 @@ export class MaintenanceRemindPage{
       return false;
     }
     //uploadfile:JSON.stringify(this.base64List)
-    this.httpService.postData(this.httpService.getUrl() + "serviceMaintenanceRecordController/saveForm.do", {userDepart:this.storageService.read('loginDepartCode'),userDepartName:this.storageService.read('loginDepartName'),data:JSON.stringify(this.invoice),formdata:JSON.stringify(this.detail),uploadfile:''}, (data)=>{
+    this.httpService.postData(this.httpService.getUrl() + "serviceMaintenanceRecordController/saveForm.do", {userDepart:this.storageService.read('loginDepartCode'),userDepartName:this.storageService.read('loginDepartName'),data:JSON.stringify(this.invoice),formdata:JSON.stringify(this.detail),uploadfile:JSON.stringify(this.base64List)}, (data)=>{
       let alertCtrl = this.alertCtrl.create({
         title:'保存成功！'
       });

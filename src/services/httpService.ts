@@ -15,7 +15,7 @@ export class HttpService {
   public getUrl2(){
     let url=this.getUrl();
     let urlHead = url.split(":")[0]+"://"+url.split("/")[2]+'/'+url.split("/")[3]+'/';
-    return urlHead
+    return this.getUrl()
   }
   public getUrl3(){
     let url=this.storageService.read("systemUrl");
@@ -29,6 +29,12 @@ export class HttpService {
   public getUrl(){
     let url=this.storageService.read("serverUrl");
     if (!url){
+      //智慧实物
+      this.setUrl("http","swapp.0731ctny.com","","plamassets");
+      return "http://swapp.0731ctny.com/plamassets/mobile/";
+      //宁夏petrochina.nxxs.zcpd
+      // this.setUrl("http","127.0.0.1","10901","plamassets");
+      // return "http://127.0.0.1:10901/plamassets/mobile/";
       //98
       // this.setUrl("http","lhsm.vip","8088","plamassets");
       // return "http://lhsm.vip:8088/plamassets/mobile/";
@@ -39,8 +45,8 @@ export class HttpService {
       // this.setUrl("http","210.12.194.18","9080","plamassets");
       // return "http://210.12.194.18:9080/plamassets/mobile/";
       //湖北petrochina.hbxs.zcpd
-      this.setUrl("http","210.12.193.123","9081","plamassets");
-      return "http://210.12.193.123:9081/plamassets/mobile/";
+      // this.setUrl("http","210.12.193.123","9081","plamassets");
+      // return "http://210.12.193.123:9081/plamassets/mobile/";
       //福建
       // this.setUrl("http","210.12.193.92","9080","plamassets");
       // return "http://210.12.193.92:9080/plamassets/mobile/";
