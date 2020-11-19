@@ -6,6 +6,7 @@ import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {InventoryPage} from "../../../commonStyle/inventory/inventory";
 import {InventoryEntryPage} from "../inventoryEntry/inventoryEntry";
+import {HttpService} from "../../../../services/httpService";
 
 @Component({
   selector: 'page-inventory',
@@ -14,7 +15,7 @@ import {InventoryEntryPage} from "../inventoryEntry/inventoryEntry";
 export class ScanCodePage extends InventoryPage{
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,public events?:Events,
               public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
-              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,public httpService?:HttpService) {
     super(navCtrl,storageService,navParams,events);
     this.data={
       pageName:"快速扫码",
@@ -63,6 +64,9 @@ export class ScanCodePage extends InventoryPage{
         ]
       }
     };
+    if(this.httpService.getUrl()=="http://210.12.193.123:9081/plamassets/mobile/"){
+      this.data['pageData'].pageItem[0].itemType = 'label'
+    }
     this.pageName = this.data["pageName"];
     this.pageData = this.data["pageData"];
     this.invoice["usedState"]="010101";
