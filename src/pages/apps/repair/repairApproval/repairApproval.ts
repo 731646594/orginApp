@@ -53,7 +53,7 @@ export class RepairApprovalPage {
       this.invoice = temp.djFormData;
       $(".inputSpec").eq(0).children("input").val(this.invoice["rgfwf"]);
       $(".inputSpec").eq(1).children("input").val(this.invoice["wxbjjehj"]);
-      // this.invoice["ygwxzz"] = this.invoice["rgfwf"] + this.invoice["wxbjjehj"];
+      this.invoice["ygwxzz"] = this.invoice["rgfwf"] + this.invoice["wxbjjehj"];
       this.detailData = this.detailData.concat(temp.listMainEquip);
       this.data = this.data.concat(temp.listCsxx);
       for (let i in this.detailData){
@@ -159,9 +159,15 @@ export class RepairApprovalPage {
           }
         ]
       ],
-    }
+    };
     if (this.invoice["wxfs"]=="供应商维修"){
-      this.pageData.segmentName =["单据信息", "主设备","厂商评价"]
+      this.pageData.segmentName =["单据信息", "主设备","供应商信息"]
+    }
+    if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.pageData.pageItem[0].splice(6, 0, {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0});
+      this.pageData.pageItem[0].splice(17,4);
+      this.pageData.pageItem[0].splice(9,1);
+      this.pageData.pageItem[0].splice(1,1);
     }
     this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?ifFirst", {WXDH:this.invoice['wxdh']}, (data)=>{
       console.log(data);
@@ -170,14 +176,15 @@ export class RepairApprovalPage {
         this.invoice["ygwxzz"] = this.invoice["rgfwf"] + this.invoice["wxbjjehj"];
         this.pageData.pageItem[0] = [
           {itemName:"维修单号", itemType:"label",itemValue:"wxdh",nec:0},
-          {itemName:"单据状态", itemType:"label",itemValue:"djztName",nec:0},
+          // {itemName:"单据状态", itemType:"label",itemValue:"djztName",nec:0},
           {itemName:"申请时间", itemType:"label",itemValue:"sqsj",nec:0},
           {itemName:"申请单位", itemType:"label",itemValue:"sqdwmc",nec:0},
           {itemName:"所属城市", itemType:"label",itemValue:"sscs",nec:0},
           {itemName:"申请人", itemType:"label",itemValue:"sqrmc",nec:0},
+          {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0},
           {itemName:"联系电话", itemType:"label",itemValue:"zfyl8",nec:0},
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
-          {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
+          // {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
           {itemName:"故障描述", itemType:"textarea-readonly",itemValue:"wxms",nec:0},
           {itemName:"备注", itemType:"label",itemValue:"bzxx",nec:0},
           {itemName:"单据来源", itemType:"label", itemValue:"djlyName",nec:0},
@@ -185,10 +192,10 @@ export class RepairApprovalPage {
           {itemName:"已占用预算", itemType:"label",itemValue:"yzyysze",nec:0},
           {itemName:"已使用预算", itemType:"label",itemValue:"ysyysze",nec:0},
           {itemName:"未使用预算", itemType:"label", itemValue:"wsyysze",nec:0},
-          {itemName:"预算编码", itemType:"label", itemValue:"ysbm",nec:0},
-          {itemName:"预算类别", itemType:"label",itemValue:"yslbName",nec:0},
-          {itemName:"预算单位", itemType:"label", itemValue:"ysdwmc",nec:0},
-          {itemName:"预算年度", itemType:"label",itemValue:"ysnd",nec:0},
+          // {itemName:"预算编码", itemType:"label", itemValue:"ysbm",nec:0},
+          // {itemName:"预算类别", itemType:"label",itemValue:"yslbName",nec:0},
+          // {itemName:"预算单位", itemType:"label", itemValue:"ysdwmc",nec:0},
+          // {itemName:"预算年度", itemType:"label",itemValue:"ysnd",nec:0},
           {itemName:"项目名称", itemType:"input",itemValue:"xmmc",nec:1},
           {itemName:"人工及配件费用", itemType:"input-spec",itemValue:"rgfwf",nec:1},
           {itemName:"备件", itemType:"filter2",itemValue:"bjmc",nec:0},

@@ -114,8 +114,8 @@ export class MenuPage {
     //61:维修申请
     //62:维修申请补录//去除
     //63:维修审批
-    //64:维修验收
-    //65:维修验收审批
+    //64:维修验收/检维修确认
+    //65:维修验收审批/检维修确认审批
     //66:维修单据查询
     //67:外委派单
     //68:外委开始维修
@@ -243,10 +243,16 @@ export class MenuPage {
     else if(page == 64){
       willGoPage = RepairApplyPage;
       params = {pageName:"维修验收",funccode:funccode};
+      if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+        params = {pageName:"检维修确认",funccode:funccode};
+      }
     }
     else if(page == 65){
       willGoPage = RepairApplyPage;
       params = {pageName:"维修验收审批",funccode:funccode};
+      if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+        params = {pageName:"检维修确认审批",funccode:funccode};
+      }
     }
     else if(page == 66){
       willGoPage = RepairApplyPage;

@@ -120,9 +120,9 @@
                   </div>
                 </ion-list>
               </ion-list>
-              <div class="cardButton" *ngIf="isFist" item-end (click)="deleteItem(i)">
-                <ion-icon name="remove-circle" class="cardCheckedIcon requireLabel"></ion-icon>
-              </div>
+              <!--<div class="cardButton" *ngIf="isFist" item-end (click)="deleteItem(i)">-->
+                <!--<ion-icon name="remove-circle" class="cardCheckedIcon requireLabel"></ion-icon>-->
+              <!--</div>-->
             </div>
             <ion-content *ngIf="item.card.cardChild" class="callContent disContent supplierContent">
               <ion-list class="callList">
@@ -141,9 +141,9 @@
   <button class="formFooterButton" (click)="pickPhoto()" *ngIf="isFist&&shape=='brief'&&invoice.sfscfj == 1">
     <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
   </button>
-  <button class="formFooterButton" (click)="addForm2()" *ngIf="isFist&&shape=='supplier'&&data.length==0">
-    <ion-icon class="formFooterIcon" name="add"></ion-icon><br>新增
-  </button>
+  <!--<button class="formFooterButton" (click)="addForm2()" *ngIf="isFist&&shape=='supplier'&&data.length==0">-->
+    <!--<ion-icon class="formFooterIcon" name="add"></ion-icon><br>新增-->
+  <!--</button>-->
   <button class="formFooterButton" (click)="saveInfo()" *ngIf="isFist">
     <ion-icon class="formFooterIcon" name="cloud-upload"></ion-icon><br>保存
   </button>

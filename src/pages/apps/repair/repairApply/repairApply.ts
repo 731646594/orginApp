@@ -49,7 +49,7 @@ export class RepairApplyPage {
     // if (this.pageName == "开始维修"||this.pageName == "维修办结"){
     //   this.listUrl = "/lhd/app/devRepairController.do?datagrid"
     // }
-    if (this.pageName == "维修申请"||this.pageName == "维修申请补录"||this.pageName == "维修审批"||this.pageName == "维修验收审批") {
+    if (this.pageName == "维修申请"||this.pageName == "维修申请补录"||this.pageName == "维修审批"||this.pageName=='维修验收审批'||this.pageName == "检维修确认审批") {
       this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {}, data => {
         this.storageService.write("listJjcd", data.obj.zd.listJjcd);
         this.storageService.write("listWxfs", data.obj.zd.listWxfs);
@@ -76,10 +76,10 @@ export class RepairApplyPage {
     }else if (this.pageName == "维修审批"){
       this.listUrl = "lhd/app/devRepairController.do?datagridsp";
       this.funccode = "4000001002"
-    }else if (this.pageName == "维修验收"){
+    }else if (this.pageName == "维修验收"||this.pageName == "检维修确认"){
       this.listUrl = "lhd/app/devRepairController.do?datagridys";
       this.funccode = "4000001006"
-    }else if (this.pageName == "维修验收审批"){
+    }else if (this.pageName == "维修验收审批"||this.pageName == "检维修确认审批"){
       this.listUrl = "lhd/app/devRepairController.do?datagridyssp";
       this.funccode = "4000001007"
     }else if (this.pageName == "维修单据查询"){
@@ -119,6 +119,9 @@ export class RepairApplyPage {
         {itemName:"申请时间", itemType:"label",itemValue:"sqsj"},
       ],
     };
+    if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.cardData.cardParent.splice(1, 1);
+    }
     if (this.pageName == "维修单据查询") {
       this.cardData.cardParent[2] = {itemName: "申请单位", itemType: "label", itemValue: "sqdwmc"}
     }
@@ -189,7 +192,6 @@ export class RepairApplyPage {
     if(this.pageName == "保养提醒"){
       this.cardData.cardParent = [
         {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
-        {itemName:"单据状态", itemType:"label",itemValue:"djzt"},
         {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
         {itemName:"设备编码", itemType:"label",itemValue:"assetsCode"}
@@ -198,8 +200,6 @@ export class RepairApplyPage {
     if(this.pageName == "保养单据查询"){
       this.cardData.cardParent = [
         {itemName:"保养编号", itemType:"label",itemValue:"maintenanceNumberDetail"},
-        // {itemName:"单据状态", itemType:"label",itemValue:"djzt"},
-        // {itemName:"单位名称", itemType:"label",itemValue:"departName"},
         {itemName:"设备名称", itemType:"label",itemValue:"assetsName"},
         {itemName:"设备编码", itemType:"label",itemValue:"assetsCode"}
       ]
@@ -339,9 +339,9 @@ export class RepairApplyPage {
       this.app.getRootNav().push(RepairSupplementPage,{data:Data})
     }else if (this.pageName == "维修审批"){
       this.app.getRootNav().push(RepairApprovalPage,{data:Data})
-    }else if (this.pageName == "维修验收"){
+    }else if (this.pageName == "维修验收"||this.pageName == "检维修确认"){
       this.app.getRootNav().push(RepairAcceptancePage,{data:Data})
-    }else if (this.pageName == "维修验收审批"){
+    }else if (this.pageName == "维修验收审批"||this.pageName == "检维修确认审批"){
       this.app.getRootNav().push(RepairAcceptanceApprovalPage,{data:Data})
     }else if (this.pageName == "维修单据查询"){
       this.app.getRootNav().push(RepairSearchPage,{data:Data})
@@ -359,9 +359,13 @@ export class RepairApplyPage {
   }
   submitForm(detail){
     this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?report",{dataobj:JSON.stringify([detail]),departName:this.storageService.read("loginDepartName"),departcode:this.storageService.read("loginDepartCode")},data=>{
-      console.log(data)
+      console.log(data);
+      let msg = '上报成功！';
+      if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+        msg = '送审成功！'
+      }
       let alertCtrl = this.alertCtrl.create({
-        title:"上报成功！"
+        title:msg
       });
       alertCtrl.present();
       this.ionViewDidEnter()
@@ -369,14 +373,22 @@ export class RepairApplyPage {
   }
   deleteForm(detail){
     if (detail.djzt != 1){
+      let msg = '不符合作废条件！';
+      if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+        msg = '不符合删除条件！'
+      }
       let alertCtrl = this.alertCtrl.create({
-        title:"不符合作废条件！"
+        title:msg
       });
       alertCtrl.present();
       return false;
     }
+    let msg = '确定作废单据？';
+    if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+      msg = '确定删除单据？'
+    }
     let alertCtrl = this.alertCtrl.create({
-      title:"确定作废单据？",
+      title:msg,
       cssClass:"alertMiddle",
       buttons:[
         {
@@ -386,9 +398,13 @@ export class RepairApplyPage {
           text:"确定",
           handler:(e)=>{
             this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/rewriteDevJWXGLDJSQController.do?delete",{dataobj:JSON.stringify([detail])},data=>{
-              console.log(data)
+              console.log(data);
+              let msg2 = '作废成功！';
+              if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+                msg2 = '删除成功！'
+              }
               let alertCtrl = this.alertCtrl.create({
-                title:"作废成功！"
+                title:msg2
               });
               alertCtrl.present();
               this.ionViewDidEnter()

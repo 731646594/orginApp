@@ -25,8 +25,10 @@
                 </div>
               </div>
               <div class="buttonBox" *ngIf="pageName == '维修申请'">
-                <button ion-button (click)="submitForm(detail);$event.stopPropagation();">上报</button>
-                <button ion-button color="danger" (click)="deleteForm(detail);$event.stopPropagation();">作废</button>
+                <button ion-button *ngIf="httpService.getUrl() != 'http://swapp.0731ctny.com:/plamassets/mobile/'" (click)="submitForm(detail);$event.stopPropagation();">上报</button>
+                <button ion-button *ngIf="httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'" (click)="submitForm(detail);$event.stopPropagation();">送审</button>
+                <button ion-button *ngIf="httpService.getUrl() != 'http://swapp.0731ctny.com:/plamassets/mobile/'" color="danger" (click)="deleteForm(detail);$event.stopPropagation();">作废</button>
+                <button ion-button *ngIf="httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'" color="danger" (click)="deleteForm(detail);$event.stopPropagation();">删除</button>
                 <button ion-button color="secondary" (click)="finishForm(detail);$event.stopPropagation();">办结</button>
               </div>
               <div class="buttonBox" *ngIf="pageName == '维修申请补录'">
@@ -38,10 +40,10 @@
                 <button ion-button (click)="submitForm3(detail);$event.stopPropagation();">通过</button>
                 <button ion-button color="danger" (click)="deleteForm3(detail);$event.stopPropagation();">驳回</button>
               </div>
-              <div class="buttonBox" *ngIf="pageName == '维修验收'">
+              <div class="buttonBox" *ngIf="pageName == '维修验收'||pageName == '检维修确认'">
                 <button ion-button (click)="submitForm4(detail);$event.stopPropagation();">上报</button>
               </div>
-              <div class="buttonBox" *ngIf="pageName == '维修验收审批'">
+              <div class="buttonBox" *ngIf="pageName == '维修验收审批'||pageName == '检维修确认审批'">
                 <button ion-button (click)="submitForm5(detail);$event.stopPropagation();">通过</button>
                 <button ion-button color="danger" (click)="deleteForm5(detail);$event.stopPropagation();">驳回</button>
               </div>

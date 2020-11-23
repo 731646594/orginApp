@@ -166,6 +166,12 @@ export class RepairSearchPage {
     if (this.invoice["zfyl1"] == "03"||this.invoice["zfyl1"] == "05"){
       this.pageData.segmentName =["单据信息", "主设备","厂商评价"];
     }
+    if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.pageData.pageItem[0].splice(6, 0, {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0});
+      this.pageData.pageItem[0].splice(17,4);
+      this.pageData.pageItem[0].splice(9,1);
+      this.pageData.pageItem[0].splice(1,1);
+    }
   }
   ionViewDidLoad() {
 

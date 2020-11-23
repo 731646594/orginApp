@@ -177,6 +177,11 @@ export class RepairExternalPage {
       this.pageData.pageItem[0][15] = {itemName:"恢复时间", itemType:"label",itemValue:"hfsj",nec:1};
       this.pageData.pageItem[0][16] = {itemName:"油站经理签字", itemType:"sign",itemValue:"sign",nec:1};
     }
+    if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.pageData.pageItem[0].splice(6, 0, {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0});
+      this.pageData.pageItem[0].splice(9,1);
+      this.pageData.pageItem[0].splice(1,1);
+    }
   }
   ionViewDidLoad() {
 

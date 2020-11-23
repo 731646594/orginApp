@@ -52,4 +52,10 @@ page-repairApplyAdd{
   .flexCon:nth-child(3){
     width: 40%;
   }
+  .showClass{
+    display: block;
+  }
+  .hideClass{
+    display: none;
+  }
 }

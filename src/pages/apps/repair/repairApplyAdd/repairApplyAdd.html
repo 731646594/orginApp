@@ -12,6 +12,9 @@
       <ion-segment-button value="detailed" >
         {{pageData.segmentName[1]}}
       </ion-segment-button>
+      <ion-segment-button [ngClass]="pageData.segmentName[2]?'showClass':'hideClass'" value="supplier" >
+        {{pageData.segmentName[2]}}
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -19,6 +22,12 @@
   <div class="contentBox" [ngSwitch]="shape">
     <div *ngSwitchCase="'brief'">
       <div *ngFor="let item of pageData.pageItem[0];">
+        <div *ngIf="item.itemType=='date'">
+          <ion-item class="inputItem">
+            <ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>
+            <ion-datetime class="dataNormal" [placeholder]="'请选择'+item.itemName" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [(ngModel)]="invoice[item.itemValue]"></ion-datetime>
+          </ion-item>
+        </div>
         <div *ngIf="item.itemType=='input'">
           <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [nec]="item.nec" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
         </div>
@@ -87,6 +96,33 @@
         </div>
       </div>
     </div>
+    <div *ngSwitchCase="'supplier'">
+      <div *ngFor="let item of pageData.pageItem[2];">
+        <div *ngFor="let detail of supplierData;let i = index">
+          <div class="callContentBox detailCallContentBox">
+            <div class="callContentMiniBox">
+              <ion-list class="callContent">
+                <ion-list class="callList" (click)="displayContent(i)">
+                  <div *ngFor="let parent of item.card.cardParent">
+                    <label-normal [itemName]="parent.itemName" [labelValue]="detail[parent.itemValue]"></label-normal>
+                  </div>
+                </ion-list>
+              </ion-list>
+              <div class="cardButton" item-end (click)="deleteItem2(i)">
+                <ion-icon name="remove-circle" class="cardCheckedIcon requireLabel"></ion-icon>
+              </div>
+            </div>
+            <ion-content *ngIf="item.card.cardChild" class="callContent disContent supplierContent">
+              <ion-list class="callList">
+                <div *ngFor="let child of item.card.cardChild">
+                  <label-newline [itemName]="child.itemName" [labelValue]="detail[child.itemValue]"></label-newline>
+                </div>
+              </ion-list>
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>
 <footer class="formFooter" padding *ngIf="!isFocus">
@@ -94,6 +130,9 @@
     <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
   </button>
   <button class="formFooterButton" (click)="addForm()" *ngIf="shape=='detailed'">
+    <ion-icon class="formFooterIcon" name="add"></ion-icon><br>新增
+  </button>
+  <button class="formFooterButton" (click)="addForm2()" *ngIf="shape=='supplier'&&supplierData.length==0">
     <ion-icon class="formFooterIcon" name="add"></ion-icon><br>新增
   </button>
   <button class="formFooterButton" (click)="saveInfo()">
