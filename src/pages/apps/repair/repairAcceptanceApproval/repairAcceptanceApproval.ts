@@ -10,7 +10,7 @@ import {Camera} from "@ionic-native/camera";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
 import {File} from "@ionic-native/file";
 import {ConfigProvider} from "../../../../services/config";
-import {RepairAcceptanceEvaluatePage} from "../repairAcceptanceEvaluate/repairAcceptanceEvaluate";
+import {RepairAcceptanceApprovalEvaluatePage} from "../repairAcceptanceApprovalEvaluate/repairAcceptanceApprovalEvaluate";
 let that;
 @Component({
   selector: 'page-repairAcceptanceApproval',
@@ -248,7 +248,7 @@ export class RepairAcceptanceApprovalPage {
   gotoEvaluate(index){
     let date = new Date();
     let dateString = this.datePipe.transform(date,"yyyy-MM-dd");
-    this.app.getRootNav().push(RepairAcceptanceEvaluatePage,{data:this.insertCspj[this.data[index].csxh],modal:{
+    this.app.getRootNav().push(RepairAcceptanceApprovalEvaluatePage,{data:this.insertCspj[this.data[index].csxh],modal:{
         gysxh:this.data[index].csxh,
         djlx:"维修",
         djbh:this.invoice["wxdh"],
