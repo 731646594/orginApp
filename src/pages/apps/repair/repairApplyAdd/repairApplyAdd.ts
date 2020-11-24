@@ -24,11 +24,11 @@ export class RepairApplyAddPage {
   pageData;
   invoice = {};
   data = [];
-  supplierData = [];
   i = 0;
   displayIndex;
   listBase64=[];
   tableData=[];
+  isGys = false;
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService,public datePipe?:DatePipe,public actionSheetCtrl?:ActionSheetController,
@@ -60,7 +60,6 @@ export class RepairApplyAddPage {
         temp.djFormData["djztName"] = ConfigProvider.djztName(temp.djFormData["djzt"]);
         this.invoice = temp.djFormData;
         this.data = this.data.concat(temp.listMainEquip);
-        this.supplierData = this.supplierData.concat(temp.listCsxx);
         for (let i in this.data){
           this.getWxHistory(i)
         }
@@ -159,22 +158,6 @@ export class RepairApplyAddPage {
               ]
             }
           }
-        ],
-        [
-          {itemType:"card",
-            card:{
-              cardParent:[
-                {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
-                {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
-              ],
-              cardChild:[
-                {itemName:"厂商地址", itemType:"label",itemValue:"csdz"},
-                {itemName:"联系电话", itemType:"label",itemValue:"lxdh"},
-                {itemName:"手机", itemType:"label",itemValue:"phone"},
-                {itemName:"厂商类型", itemType:"label",itemValue:"cslx"},
-              ]
-            }
-          }
         ]
       ],
     };
@@ -191,6 +174,7 @@ export class RepairApplyAddPage {
         {itemName:"维修方式", itemType:"select", itemValue:"zfyl1",nec:1,itemValueName:"zfyl1",optionValueString:"complexcode",optionNameString:"complexname",
           option:listWxfs,
         },
+        {itemName:"供应商信息", itemType:"filter",itemValue:"zfyl9",nec:1},
         // {itemName:"紧急程度", itemType:"select", itemValue:"zfyl7",nec:1,itemValueName:"zfyl7",optionValueString:"complexname",optionNameString:"complexname",
         //   option:listJjcd,
         // },
@@ -206,7 +190,7 @@ export class RepairApplyAddPage {
       let date = new Date();
       this.invoice["yqwcsj"] = this.datePipe.transform(date,"yyyy-MM-dd");
       if (this.invoice["wxfs"]=="供应商维修"){
-        this.pageData.segmentName =["单据信息", "主设备","供应商信息"]
+        this.isGys = true;
       }
     }
     this.events.subscribe("showFooter", (res) => {
@@ -258,9 +242,10 @@ export class RepairApplyAddPage {
   getSelectValue(value, key,keyName) {
     this.invoice[keyName] = value["selectedValue"];
     if(keyName == 'zfyl1'&&value["selectedName"]=='供应商维修'){
-      this.pageData.segmentName =["单据信息", "主设备","厂商评价"]
+      this.isGys = true;
     }else if (keyName == 'zfyl1'&&value["selectedName"]!='供应商维修'){
-      this.pageData.segmentName =["单据信息", "主设备"]
+      this.isGys = false;
+      this.invoice['zfyl9'] = '';
     }
   }
   getInputValue(value,key){
@@ -567,23 +552,10 @@ export class RepairApplyAddPage {
     modal.onDidDismiss(data=>{
       if(data&&data.selectedData){
         console.log(data.selectedData);
-        this.supplierData.push({});
-        this.supplierData[this.supplierData.length-1]["csxh"] = data.selectedData["gysxh"];
-        this.supplierData[this.supplierData.length-1]["csdwmc"] = data.selectedData["gysdwmc"];
-        this.supplierData[this.supplierData.length-1]["csdz"] = data.selectedData["gysdz"];
-        this.supplierData[this.supplierData.length-1]["lxdh"] = data.selectedData["gyslxdh"];
-        this.supplierData[this.supplierData.length-1]["phone"] = data.selectedData["gyssjh"];
-        this.supplierData[this.supplierData.length-1]["cslx"] = data.selectedData["gyslxmc"];
+        this.invoice["zfyl9"] = data.selectedData["gysdwmc"];
+        this.invoice["zfyl10"] = data.selectedData["gysxh"];
       }
     })
-  }
-  deleteItem2(index){
-    let contentBox = document.getElementsByClassName("detailCallContentBox");
-    if (index==this.displayIndex){
-      this.displayIndex = -1;
-    }
-    contentBox[index].parentNode.removeChild(contentBox[index]);
-    this.supplierData.splice(index,1);
   }
   saveInfo(){
     let departCode = "";
@@ -629,9 +601,9 @@ export class RepairApplyAddPage {
         this.invoice["wxfs"] = listWxfs[i].complexname;
       }
     }
-    if(this.invoice["wxfs"]=="供应商维修"&&this.supplierData.length==0){
+    if(this.invoice["wxfs"]=="供应商维修"&&!this.invoice["zfyl9"]){
       let alertCtrl = this.alertCtrl.create({
-        title:"请添加供应商"
+        title:"请选择供应商"
       });
       alertCtrl.present();
       return false;
@@ -656,9 +628,6 @@ export class RepairApplyAddPage {
       return false;
     }
     let body = {djFormData:JSON.stringify(this.invoice),mainEquipData:JSON.stringify(this.data)};
-    if (this.invoice["wxfs"]=="供应商维修"){
-      body["csxxData"]=JSON.stringify(this.supplierData);
-    }
     if (!this.navParams.get("data")){
       if (this.invoice["sfscfj"]==1&&this.listBase64.length==0){
         let alertCtrl = this.alertCtrl.create({

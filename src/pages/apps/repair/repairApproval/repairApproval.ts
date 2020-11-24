@@ -164,10 +164,12 @@ export class RepairApprovalPage {
       this.pageData.segmentName =["单据信息", "主设备","供应商信息"]
     }
     if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.pageData.segmentName =["单据信息", "主设备"];
       this.pageData.pageItem[0].splice(6, 0, {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0});
       this.pageData.pageItem[0].splice(17,4);
       this.pageData.pageItem[0].splice(9,1);
       this.pageData.pageItem[0].splice(1,1);
+      this.pageData.pageItem[0].splice(8, 0,{itemName:"供应商信息", itemType:"label",itemValue:"zfyl9",nec:0});
     }
     this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?ifFirst", {WXDH:this.invoice['wxdh']}, (data)=>{
       console.log(data);
@@ -184,6 +186,7 @@ export class RepairApprovalPage {
           {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0},
           {itemName:"联系电话", itemType:"label",itemValue:"zfyl8",nec:0},
           {itemName:"维修方式", itemType:"label", itemValue:"wxfs",nec:0},
+          {itemName:"供应商信息", itemType:"label",itemValue:"zfyl9",nec:0},
           // {itemName:"紧急程度", itemType:"label", itemValue:"zfyl7",nec:0},
           {itemName:"故障描述", itemType:"textarea-readonly",itemValue:"wxms",nec:0},
           {itemName:"备注", itemType:"label",itemValue:"bzxx",nec:0},
@@ -660,13 +663,6 @@ export class RepairApprovalPage {
 
   }
   saveInfo(){
-    if(this.invoice["wxfs"]=="供应商维修"&&this.data.length==0){
-      let alertCtrl = this.alertCtrl.create({
-        title:"请添加供应商"
-      });
-      alertCtrl.present();
-      return false;
-    }
     let j = this.pageData.pageItem[0].filter((item) => {
       return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
     });
@@ -678,9 +674,6 @@ export class RepairApprovalPage {
       return false;
     }
     let body = {djFormData:JSON.stringify(this.invoice),mainEquipData:JSON.stringify(this.detailData)};
-    if (this.invoice["wxfs"]=="供应商维修"){
-      body["csxxData"]=JSON.stringify(this.data);
-    }
     console.log(body);
     body["flag"] = 2;
     body['userName'] = this.storageService.read('loginUserName');
@@ -700,13 +693,6 @@ export class RepairApprovalPage {
   }
   passForm(){
     if (this.isFist){
-      if(this.invoice["wxfs"]=="供应商维修"&&this.data.length==0){
-        let alertCtrl = this.alertCtrl.create({
-          title:"请添加供应商"
-        });
-        alertCtrl.present();
-        return false;
-      }
       let j = this.pageData.pageItem[0].filter((item) => {
         return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
       });
@@ -718,9 +704,6 @@ export class RepairApprovalPage {
         return false;
       }
       let body = {djFormData:JSON.stringify(this.invoice),mainEquipData:JSON.stringify(this.detailData)};
-      if (this.invoice["wxfs"]=="供应商维修"){
-        body["csxxData"]=JSON.stringify(this.data);
-      }
       body["flag"] = 2;
       body['userName'] = this.storageService.read('loginUserName');
       body['userCode'] = this.storageService.read('loginUserCode');

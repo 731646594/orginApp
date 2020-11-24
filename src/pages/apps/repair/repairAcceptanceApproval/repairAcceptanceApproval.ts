@@ -58,8 +58,12 @@ export class RepairAcceptanceApprovalPage {
       this.invoice["wxjsrq"] = this.datePipe.transform(date,"yyyy-MM-dd");
       this.invoice["yssj"] = this.datePipe.transform(date,"yyyy-MM-dd");
       this.detailData = this.detailData.concat(temp.listMainEquip);
-      if (temp.listCsxx.length>0){
-        this.data = this.data.concat(temp.listCsxx);
+      if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/") {
+        this.data = [{csdwmc: this.invoice['zfyl9'], csxh: this.invoice['zfyl10']}];
+      }else {
+        if (temp.listCsxx.length>0){
+          this.data = this.data.concat(temp.listCsxx);
+        }
       }
       for (let i in this.detailData){
         this.getWxHistory(i)
@@ -188,6 +192,10 @@ export class RepairAcceptanceApprovalPage {
 
     }
     if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.pageData.pageItem[2][0].card = {cardParent:[
+          {itemName:"厂商序号", itemType:"label",itemValue:"csxh"},
+          {itemName:"厂商单位", itemType:"label",itemValue:"csdwmc"},
+        ]};
       this.pageData.pageItem[0].splice(6, 0, {itemName:"要求完成时间", itemType:"label",itemValue:"zfyl12",nec:0});
       this.pageData.pageItem[0].splice(16,4);
       this.pageData.pageItem[0].splice(9,1);
