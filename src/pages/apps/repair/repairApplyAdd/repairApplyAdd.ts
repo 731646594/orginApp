@@ -162,6 +162,7 @@ export class RepairApplyAddPage {
       ],
     };
     if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"){
+      this.invoice["sscs"] = "";
       this.pageData.pageItem[0] = [
         {itemName:"维修单号", itemType:"label",itemValue:"wxdh",nec:0},
         // {itemName:"单据状态", itemType:"label",itemValue:"djztName",nec:0},
@@ -573,6 +574,7 @@ export class RepairApplyAddPage {
       (departCode.indexOf("137100009")==-1)&&
       (departCode.indexOf("137100007")==-1)&&
       (departCode.indexOf("137100008")==-1)&&
+      (departCode.indexOf("10216")==-1)&&
       (this.invoice["zfyl1"] == "05")
     ){
       let alertCtrl = this.alertCtrl.create({
@@ -618,7 +620,7 @@ export class RepairApplyAddPage {
     //   }
     // }
     let j = this.pageData.pageItem[0].filter((item) => {
-      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0");
+      return (item.nec==1&&!this.invoice[item.itemValue]&&this.invoice[item.itemValue]!="0"&&item.itemName!='供应商信息');
     });
     if (j.length>0){
       let alertCtrl = this.alertCtrl.create({

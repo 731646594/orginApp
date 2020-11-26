@@ -218,21 +218,20 @@ export class RepairApprovalPage {
             ],
           },
           {itemName:"问题类别", itemType:"select", itemValue:"wtlb",nec:1,itemValueName:"wtlb",optionValueString:"complexcode",optionNameString:"complexname",
-            option:[
-              {complexname:"油站运营类",complexcode:"油站运营类"},
-              {complexname:"油站信息类",complexcode:"油站信息类"},
-              {complexname:"油站办公类",complexcode:"油站办公类"},
-              {complexname:"油库运营类",complexcode:"油库运营类"},
-              {complexname:"油库信息类",complexcode:"油库信息类"},
-              {complexname:"油库办公类",complexcode:"油库办公类"},
-              {complexname:"机关办公类",complexcode:"机关办公类"},
-              {complexname:"机关信息类",complexcode:"机关信息类"},
-            ],
+            option:[],
           },
           {itemName:"预估维修总值", itemType:"label",itemValue:"ygwxzz",nec:0},
           {itemName:"监控防范措施", itemType:"textarea",itemValue:"jkffcs",nec:0},
           {itemName:"整改措施", itemType:"textarea",itemValue:"zgcs",nec:0},
-        ]
+        ];
+        this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?getProblem", {}, data => {
+          console.log(data.obj)
+          let optionData = [];
+          for (let i in data.obj){
+            optionData.push({complexname:data.obj[i]['complexname'],complexcode:data.obj[i]['complexname']})
+          }
+          this.pageData.pageItem[0][21].option = optionData;
+        }, false);
       }
     },false,(err)=>{console.log(err)})
   }
