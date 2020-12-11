@@ -40,7 +40,7 @@
               <ion-option *ngIf="detailData[field.columnName]">暂未整改</ion-option>
               <ion-option>其他情况</ion-option>
             </ion-select>
-            <ion-input class="fieldInput" *ngIf="!field.columnRequire" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
+            <ion-input class="fieldInput" *ngIf="!field.columnRequire" [(ngModel)]="storageData[field.columnName]" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
           </ion-item>
           <ion-item class="labelItem" *ngIf="temporaryStorageData['col'+(i*20+i2+1)]=='其他情况'">
             <ion-input class="itemInput" [(ngModel)]="storageData['col'+(i*20+i2+1)]" placeholder="请输入其他情况" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
