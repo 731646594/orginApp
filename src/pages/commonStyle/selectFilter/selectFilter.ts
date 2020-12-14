@@ -20,7 +20,7 @@ export class SelectFilterPage {
     this.data = this.navParams.get('data');
     this.optionValue = this.navParams.get('optionValue');
     this.optionName = this.navParams.get('optionName');
-    if(this.optionName == "complexname"){
+    if(this.optionName == "complexname"||this.optionName == "gysdwmc"){
       this.placeholderString="请输入要筛选或输入的字符"
     }
     this.filterData = JSON.parse(JSON.stringify(this.data));
@@ -51,7 +51,7 @@ export class SelectFilterPage {
   }
   getItems(ev) {
     var val = ev.target.value;
-    if(this.optionName == "complexname"){
+    if(this.optionName == "complexname"||this.optionName == "gysdwmc"){
       this.inputValue = val
     }
     if (val && val.trim() != '') {
@@ -67,7 +67,7 @@ export class SelectFilterPage {
   }
   back(){
     let modelData;
-    if(this.optionName == "complexname"){
+    if(this.optionName == "complexname"||this.optionName == "gysdwmc"){
       modelData = {selectedValue:this.inputValue,selectedName:this.inputValue}
     }else {
       modelData = '-1';
