@@ -8,7 +8,7 @@
     <ion-list>
       <ion-item class="inputItem miniContentBox">
         <div (click)="detailPage(zjb,'zjb')">
-          <div style="font-weight: bolder">周检表</div>
+          <div style="font-weight: bolder">{{pageName+'表'}}</div>
           <div *ngIf="zjb.length!=0">
             <div  class="itemContentDiv">分公司：<div class="departNameDiv">{{zjb.fgsmc}}</div></div>
             <div  class="itemContentDiv">油站名称：<div class="departNameDiv">{{zjb.yzmc}}</div></div>
@@ -19,7 +19,7 @@
         </div>
       </ion-item>
     </ion-list>
-    <ion-list>
+    <ion-list *ngIf="pageName == '周检'">
       <ion-item class="inputItem miniContentBox">
         <div (click)="detailPage(jjb,'jjb')">
           <div style="font-weight: bolder">交接班</div>

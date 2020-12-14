@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>周检表录入</ion-title>
+    <ion-title>{{pageName+'表录入'}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -21,7 +21,7 @@
         </ion-select>
       </ion-item>
       <ion-item class="inputItem">
-        <ion-label>周检人员:</ion-label>
+        <ion-label>{{pageName+'人员:'}}</ion-label>
         <ion-input [(ngModel)]="userName" (ionFocus)="inputOnfocus()" (ionBlur)="inputOnblur()"></ion-input>
       </ion-item>
     </ion-list>

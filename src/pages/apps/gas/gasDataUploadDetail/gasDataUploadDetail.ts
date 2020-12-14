@@ -22,8 +22,12 @@ export class GasDataUploadDetailPage {
   signatureImage1;
   signatureImage2;
   i = 0;
+  pageName = '周检';
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,public app:App) {
+    if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/") {
+      this.pageName = '巡检';
+    }
     that = this;
     this.departCode = this.storageService.read("loginDepartCode");
     this.itemName = null;
