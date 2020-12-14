@@ -29,7 +29,6 @@ export class RepairApplyAddPage {
   listBase64=[];
   tableData=[];
   isGys = false;
-  gysData = [];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService,public datePipe?:DatePipe,public actionSheetCtrl?:ActionSheetController,
@@ -54,7 +53,6 @@ export class RepairApplyAddPage {
       this.invoice["sscs"] = str.substring(str.indexOf("/")+1,str.indexOf("/",str.indexOf("/")+1));
     }
     this.invoice["djly"] = 2;
-    this.gysData = this.storageService.read('GYS');
     if(this.navParams.get("data")){
       this.invoice = this.navParams.get("data");
       this.httpService.postData2(this.httpService.getUrl2() + "lhd/app/devRepairController.do?editData", {djFormData:JSON.stringify(this.invoice)}, (data)=>{
@@ -177,11 +175,10 @@ export class RepairApplyAddPage {
         {itemName:"维修方式", itemType:"select", itemValue:"zfyl1",nec:1,itemValueName:"zfyl1",optionValueString:"complexcode",optionNameString:"complexname",
           option:listWxfs,
         },
-        // {itemName:"供应商信息", itemType:"filter",itemValue:"zfyl9",nec:1},
+        {itemName:"供应商信息", itemType:"filter",itemValue:"zfyl9",nec:1},
         // {itemName:"紧急程度", itemType:"select", itemValue:"zfyl7",nec:1,itemValueName:"zfyl7",optionValueString:"complexname",optionNameString:"complexname",
         //   option:listJjcd,
         // },
-        {itemName:"供应商信息", itemType:"selectFilter",nec:1, itemValue:["zfyl10","zfyl9"],optionValueString:"gysxh",optionNameString:"gysdwmc"},
         {itemName:"故障描述", itemType:"textarea",itemValue:"wxms",nec:1},
         {itemName:"备注", itemType:"input",itemValue:"bzxx",nec:0},
         {itemName:"是否上传附件", itemType:"select", itemValue:"sfscfj",nec:1,itemValueName:"sfscfj",optionValueString:"optionValue",optionNameString:"optionName",
@@ -251,16 +248,6 @@ export class RepairApplyAddPage {
       this.isGys = false;
       this.invoice['zfyl9'] = '';
       this.invoice['zfyl10'] = '';
-      document.getElementById('zfyl9').getElementsByClassName("select-text")[0].innerHTML = '';
-    }
-  }
-  getSelectValue2(value,key){
-    if (key.constructor == Array){
-      this.invoice[key[0]] = value["selectedValue"];
-      this.invoice[key[1]] = value["selectedName"];
-      document.getElementById(key[0]).getElementsByClassName("select-text")[0].innerHTML = value["selectedName"];
-    }else {
-      this.invoice[key] = value["selectedValue"];
     }
   }
   getInputValue(value,key){
@@ -536,42 +523,42 @@ export class RepairApplyAddPage {
       }
     })
   }
-  // addForm2(){
-  //   let data=this.storageService.read("GYS");
-  //   let content = {
-  //     searchCon:[
-  //       {value : "gysdwmc", text : '厂商单位'},
-  //       {value : "gysxh", text : '厂商序号'},
-  //     ],
-  //     searchSelect:"gysdwmc",
-  //     item:{
-  //       parent:[
-  //         {itemName:"厂商序号", itemType:"label",itemValue:"gysxh"},
-  //         {itemName:"厂商单位", itemType:"label",itemValue:"gysdwmc"},
-  //       ],
-  //       children:[
-  //         {itemName:"厂商地址", itemType:"label",itemValue:"gysdz"},
-  //         {itemName:"联系电话", itemType:"label",itemValue:"gyslxdh"},
-  //         {itemName:"手机", itemType:"label",itemValue:"gyssjh"},
-  //         {itemName:"厂商类型", itemType:"label",itemValue:"gyslxmc"},
-  //       ]
-  //     }
-  //   }
-  //   let body = {data:data,content:content}
-  //   this.createAlertPage2(RepairGysAlertPage,body)
-  // }
-  // createAlertPage2(pageUrl,body){
-  //   let modal = this.modalCtrl.create(pageUrl,body,{
-  //   });
-  //   modal.present();
-  //   modal.onDidDismiss(data=>{
-  //     if(data&&data.selectedData){
-  //       console.log(data.selectedData);
-  //       this.invoice["zfyl9"] = data.selectedData["gysdwmc"];
-  //       this.invoice["zfyl10"] = data.selectedData["gysxh"];
-  //     }
-  //   })
-  // }
+  addForm2(){
+    let data=this.storageService.read("GYS");
+    let content = {
+      searchCon:[
+        {value : "gysdwmc", text : '厂商单位'},
+        {value : "gysxh", text : '厂商序号'},
+      ],
+      searchSelect:"gysdwmc",
+      item:{
+        parent:[
+          {itemName:"厂商序号", itemType:"label",itemValue:"gysxh"},
+          {itemName:"厂商单位", itemType:"label",itemValue:"gysdwmc"},
+        ],
+        children:[
+          {itemName:"厂商地址", itemType:"label",itemValue:"gysdz"},
+          {itemName:"联系电话", itemType:"label",itemValue:"gyslxdh"},
+          {itemName:"手机", itemType:"label",itemValue:"gyssjh"},
+          {itemName:"厂商类型", itemType:"label",itemValue:"gyslxmc"},
+        ]
+      }
+    }
+    let body = {data:data,content:content}
+    this.createAlertPage2(RepairGysAlertPage,body)
+  }
+  createAlertPage2(pageUrl,body){
+    let modal = this.modalCtrl.create(pageUrl,body,{
+    });
+    modal.present();
+    modal.onDidDismiss(data=>{
+      if(data&&data.selectedData){
+        console.log(data.selectedData);
+        this.invoice["zfyl9"] = data.selectedData["gysdwmc"];
+        this.invoice["zfyl10"] = data.selectedData["gysxh"];
+      }
+    })
+  }
   saveInfo(){
     let departCode = "";
     departCode = this.storageService.read("loginDepartCode");

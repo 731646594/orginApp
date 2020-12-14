@@ -25,14 +25,11 @@
             <ion-datetime class="dataNormal" [placeholder]="'请选择'+item.itemName" displayFormat="YYYY-MM-DD" cancelText="关闭" doneText="确定" [(ngModel)]="invoice[item.itemValue]"></ion-datetime>
           </ion-item>
         </div>
-        <!--<div *ngIf="item.itemType=='filter'">-->
-          <!--<ion-item class="inputItem" *ngIf="isGys" (click)="addForm2()">-->
-            <!--<ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>-->
-            <!--<ion-label class="labelNormal">{{invoice[item.itemValue]}}</ion-label>-->
-          <!--</ion-item>-->
-        <!--</div>-->
-        <div *ngIf="item.itemType=='selectFilter'" [id]="item.itemValue[0]">
-          <select-filter *ngIf="isGys" [itemName]="item.itemName" [nec]="item.nec" [selectData]="gysData" [selectName]="invoice[item.itemValue[1]]" [optionValue]="item.optionValueString" [optionName]="item.optionNameString" (backValue)="getSelectValue2($event,item.itemValue)"></select-filter>
+        <div *ngIf="item.itemType=='filter'">
+          <ion-item class="inputItem" *ngIf="isGys" (click)="addForm2()">
+            <ion-label class="noFlexLabel"><span *ngIf="item.nec==0" class="star">*</span><span *ngIf="item.nec==1" class="star requireLabel">*</span>{{item.itemName+":"}}</ion-label>
+            <ion-label class="labelNormal">{{invoice[item.itemValue]}}</ion-label>
+          </ion-item>
         </div>
         <div *ngIf="item.itemType=='input'">
           <input-normal [itemName]="item.itemName" [inputType]="item.inputType" [nec]="item.nec" [inputValue]="invoice[item.itemValue]" (hideFooter)="hideFooter()" (backValue)="getInputValue($event,item.itemValue)"></input-normal>
