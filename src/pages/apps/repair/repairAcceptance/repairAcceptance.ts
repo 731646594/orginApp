@@ -52,7 +52,11 @@ export class RepairAcceptancePage {
       }
       this.invoice = temp.djFormData;
       if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/") {
-        this.insertCspj[this.invoice['zfyl10']] = [];
+        if(this.invoice['zfyl10']){
+          this.insertCspj[this.invoice['zfyl10']] = [];
+        }else{
+          this.insertCspj = []
+        }
       }
       if(temp.cspj&&!$.isEmptyObject(temp.cspj)){
         this.insertCspj=temp.cspj;
