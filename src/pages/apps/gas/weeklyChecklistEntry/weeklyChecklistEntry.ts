@@ -241,14 +241,14 @@ export class WeeklyChecklistEntryPage {
 
   selectedChange(ev,index,index2){
     if (ev == "合格"){
-      this.storageData["col"+(index*20+index2+1)]=ev;
-      this.temporaryStorageData["col"+(index*20+index2+1)]="";
+      this.storageData[this.colsData[index].fields[index2].columnName]=ev;
+      this.temporaryStorageData[this.colsData[index].fields[index2].columnName]="";
     }else if(ev == "其他情况"){
-      this.temporaryStorageData["col"+(index*20+index2+1)]=ev;
-      this.storageData["col"+(index*20+index2+1)]="";
+      this.temporaryStorageData[this.colsData[index].fields[index2].columnName]=ev;
+      this.storageData[this.colsData[index].fields[index2].columnName]="";
     }else if(ev == "暂未整改"){
-      this.temporaryStorageData["col"+(index*20+index2+1)]=ev;
-      this.storageData["col"+(index*20+index2+1)]="同上";
+      this.temporaryStorageData[this.colsData[index].fields[index2].columnName]=ev;
+      this.storageData[this.colsData[index].fields[index2].columnName]="同上";
     }
   }
   deleteImg(index){
@@ -285,30 +285,30 @@ export class WeeklyChecklistEntryPage {
     }
     for(let i = 0;i < this.colsData.length;i++){
       for (let j = 0;j < this.colsData[i].fields.length;j++){
-        if(this.storageData["col"+(i*20+j+1)]){
-          this.storageData["col"+(i*20+j+1)] = (this.storageData["col"+(i*20+j+1)]+"").trim();
+        if(this.storageData[this.colsData[i].fields[j].columnName]){
+          this.storageData[this.colsData[i].fields[j].columnName] = (this.storageData[this.colsData[i].fields[j].columnName]).trim();
         }
         for (let x in this.storageData){
           if(this.colsData[i]["fields"][j].columnName==x&&!this.detailData[this.colsData[i]["fields"][j].columnName]){
-            if(this.storageData["col"+(i*20+j+1)]=="同上"){
+            if(this.storageData[this.colsData[i].fields[j].columnName]=="同上"){
               let alertCtrl1 = this.alertCtrl.create({
                 title:"请勿在无未整改内容的项目里填写同上！"
               });
               alertCtrl1.present();
-              this.storageData["col"+(i*20+j+1)]="";
+              this.storageData[this.colsData[i].fields[j].columnName]="";
               return false;
             }
           }
         }
-        if(this.storageData["col"+(i*20+j+1)]==";"){
+        if(this.storageData[this.colsData[i].fields[j].columnName]==";"){
           let alertCtrl1 = this.alertCtrl.create({
             title:"填写有误！"
           });
           alertCtrl1.present();
-          this.storageData["col"+(i*20+j+1)]="";
+          this.storageData[this.colsData[i].fields[j].columnName]="";
           return false;
         }
-        if(!this.storageData["col"+(i*20+j+1)]&&this.colsData[i].fields[j].columnRequire==1){
+        if(!this.storageData[this.colsData[i].fields[j].columnName]&&this.colsData[i].fields[j].columnRequire==1){
           let alertCtrl = this.alertCtrl.create({
             title:"有必填项未填！"
           });
