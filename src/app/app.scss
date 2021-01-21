@@ -505,3 +505,6 @@
 .showAllLabel{
   white-space: pre-line;
 }
+ion-app.platform-ios14 ion-content{
+  pointer-events: auto;
+}
