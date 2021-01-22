@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController} from 'ionic-angular';
 import {HttpService} from "../../../services/httpService";
 import {StorageService} from "../../../services/storageService";
 
@@ -18,7 +18,7 @@ export class LoginPage {
   depart;
   departList=[];
   constructor(public navCtrl: NavController,public httpService:HttpService,public alertCtrl:AlertController,
-              public storageService:StorageService,public app:App) {
+              public storageService:StorageService,public app:App,public loadingCtrl:LoadingController) {
     this.loadData();
   }
   loadData(){
@@ -123,27 +123,68 @@ export class LoginPage {
   }
   entry(){
     this.downloadDictionaries();
+    let loading = this.loadingCtrl.create({
+      content:"请等待...",
+      dismissOnPageChange:true
+    });
     if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"||this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/"||(this.httpService.getUrl().indexOf("192.168")>-1)){
+      let loadingVal = true;
+      if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+        loading.present();
+        loadingVal = false;
+      }
       this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.depart.departcode},data=>{
         if (data.success=="true"){
           this.storageService.sqliteInsert("weeklyData",this.username,JSON.stringify(data.data));
           this.httpService.postData(this.httpService.getUrl()+"devHandOverController/getCheckListCols.do",{departCode:this.depart.departcode},data2=>{
             if (data2.success=="true"){
               this.storageService.sqliteInsert("handoverData",this.username,JSON.stringify(data2.data));
+              if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+                loading.dismiss();
+                this.storageService.write("loginDepartName",this.depart.shortname);
+                this.storageService.write("loginDepartLongName",this.depart.departname);
+                this.storageService.write("loginDepartCode",this.depart.departcode);
+                this.storageService.write("fromtype",this.depart.fromtype);
+                this.app.getRootNav().push(TabsPage);
+              }
             }else {
+              if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+                loading.dismiss();
+              }
               alert(data2.msg);
             }
+          },false,(err)=>{
+            if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+              loading.dismiss();
+            }
+            let alertCtrl = this.alertCtrl.create({
+              title:err
+            });
+            alertCtrl.present();
           });
         }else {
+          if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+            loading.dismiss();
+          }
           alert(data.msg);
         }
-      },true);
+      },loadingVal,(err)=>{
+        if (this.httpService.getUrl()=="http://210.12.193.61:9082/plamassets/mobile/"){
+          loading.dismiss();
+        }
+        let alertCtrl = this.alertCtrl.create({
+          title:err
+        });
+        alertCtrl.present();
+      });
     }
-    this.storageService.write("loginDepartName",this.depart.shortname);
-    this.storageService.write("loginDepartLongName",this.depart.departname);
-    this.storageService.write("loginDepartCode",this.depart.departcode);
-    this.storageService.write("fromtype",this.depart.fromtype);
-    this.app.getRootNav().push(TabsPage);
+    if (this.httpService.getUrl()!="http://210.12.193.61:9082/plamassets/mobile/"){
+      this.storageService.write("loginDepartName",this.depart.shortname);
+      this.storageService.write("loginDepartLongName",this.depart.departname);
+      this.storageService.write("loginDepartCode",this.depart.departcode);
+      this.storageService.write("fromtype",this.depart.fromtype);
+      this.app.getRootNav().push(TabsPage);
+    }
   }
   serviceSetting(){
     this.app.getRootNav().push(ServerSettingPage);
