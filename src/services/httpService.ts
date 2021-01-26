@@ -393,7 +393,7 @@ export class HttpService {
         .then(data => {
           let res = JSON.parse(data.data);
           if (isLoading){
-            loading.dismiss();
+            setTimeout((e)=>{loading.dismiss()},1000);
           }
           if(successCallback){
             if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
@@ -410,7 +410,7 @@ export class HttpService {
         })
         .catch(error => {
           if (isLoading){
-            loading.dismiss();
+            setTimeout((e)=>{loading.dismiss()},1000);
           }
           let errMsg = "网络通信异常";
           switch (error.status) {
@@ -446,7 +446,7 @@ export class HttpService {
       return this.http.post(url,this.transformRequest(body),options).map(res=>res.json()).subscribe(
         (res)=>{
           if (isLoading){
-            loading.dismiss();
+            setTimeout((e)=>{loading.dismiss()},1000);
           }
           if(successCallback){
             if(res["success"]=="true"||res["success"]=="success"||res["success"]==true){
@@ -462,7 +462,7 @@ export class HttpService {
           }
         },(err)=>{
           if (isLoading){
-            loading.dismiss();
+            setTimeout((e)=>{loading.dismiss()},1000);
           }
           let errMsg = "网络通信异常";
           switch (err.status) {
