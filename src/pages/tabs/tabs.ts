@@ -51,6 +51,7 @@ export class TabsPage {
     //17:RFID
     //18:数据同步
     //19:RFID特殊
+    //20:上传查询
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -101,7 +102,7 @@ export class TabsPage {
           [14,"","chaxun.png","本地下载查询","1"],[15,"","shangchuan.png","数据上传","1"],[16,"","luruzhong.png","盘盈录入","1"]
         ],
         [
-          [18,"","xiazai.png","数据同步","1"],[],[]
+          [18,"","xiazai.png","数据同步","1"],[20,"","diaobochaxun.png","上传查询","1"],[]
         ]
       ]
     };
