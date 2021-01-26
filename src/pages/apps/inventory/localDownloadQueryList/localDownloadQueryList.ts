@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { App, NavController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
+import {HttpService} from "../../../../services/httpService";
 
 @Component({
   selector: 'page-localDownloadQueryList',
@@ -11,7 +12,12 @@ export class LocalDownloadQueryListPage {
   planDetailListLength;
   userCode;
   displayIndex;
-  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App) {
+  pageName = '本地下载列表';
+  constructor(public navCtrl: NavController,public storageService:StorageService,
+              public app:App,public httpServe:HttpService) {
+    if (this.httpServe.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+      this.pageName = '台账列表'
+    }
     this.loadData();
   }
   ionViewDidEnter(){

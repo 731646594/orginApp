@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {App, NavController, ToastController} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {File} from "@ionic-native/file";
+import {HttpService} from "../../../../services/httpService";
 @Component({
   selector: 'page-inventoryQuery',
   templateUrl: 'inventoryQuery.html'
@@ -30,8 +31,14 @@ export class InventoryQueryPage {
   page=1;
   pageData={};
   loginDepartCode;
-  constructor(public navCtrl: NavController,public storageService:StorageService,public app:App,public toastCtrl:ToastController,public file:File) {
+  pageName = '盘点查询';
+  constructor(public navCtrl: NavController,public storageService:StorageService,
+              public app:App,public toastCtrl:ToastController,public file:File,
+              public httpService:HttpService) {
     this.loadData();
+    if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+      this.pageName = '盘点进度';
+    }
   }
   ionViewDidEnter(){
   }
