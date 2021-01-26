@@ -12,6 +12,10 @@ import {AllocateApprovalPage} from "../apps/allocate/allocateApproval/allocateAp
 import {TransferConfirmationPage} from "../apps/allocate/transferConfirmation/transferConfirmation";
 import {Network} from "@ionic-native/network";
 import {NativeService} from "../../services/NativeService";
+import {WeeklyChecklistEntryPage} from "../apps/gas/weeklyChecklistEntry/weeklyChecklistEntry";
+import {RepairApplyPage} from "../apps/repair/repairApply/repairApply";
+import {RepairSearchPage} from "../apps/repair/repairSearch/repairSearch";
+import {InventoryDataUploadQueryPage} from "../apps/inventory/inventoryDataUploadQuery/inventoryDataUploadQuery";
 // import {JpushUtils} from "../../services/JpushUtils";
 let that;
 @Component({
@@ -31,7 +35,12 @@ export class HomePage {
   num5;
   pageData;
   pageItem;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService, public httpService:HttpService,public network:Network,public navParams:NavParams,public alertCtrl:AlertController,public nativeService:NativeService,public events:Events) {
+  url;
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,
+              public httpService:HttpService,public network:Network,public navParams:NavParams,
+              public alertCtrl:AlertController,public nativeService:NativeService,
+              public events:Events) {
+    this.url = this.httpService.getUrl();
     this.loadData();
     this.events.subscribe("homeGoPage", (res) => {
       this.willGoPage(res,"1")
@@ -93,7 +102,7 @@ export class HomePage {
       alertCtrl.present();
       return false;
     }
-    if(this.storageService.getDevice()!=2&&pageIndex == 1&&!this.storageService.read('noFlightMode')){
+    if(this.storageService.getDevice()!=2&&(pageIndex == 1||pageIndex == 10)&&!this.storageService.read('noFlightMode')){
       if(this.network.type != 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请切换到飞行模式！"
@@ -103,7 +112,7 @@ export class HomePage {
       }
     }
     else {
-      if(pageIndex !=4&&this.network.type == 'none'){
+      if(pageIndex != 4&&pageIndex != 12&&this.network.type == 'none'){
         let alertCtrl = this.alertCtrl.create({
           title:"请恢复网络链接！"
         });
@@ -137,6 +146,18 @@ export class HomePage {
     }
     else if(pageIndex == 9){
       this.app.getRootNav().push(ScrapApprovalPage)
+    }
+    else if(pageIndex == 10){
+      this.app.getRootNav().push(WeeklyChecklistEntryPage)
+    }
+    else if(pageIndex == 11){
+      this.app.getRootNav().push(RepairApplyPage,{pageName:'维修申请'})
+    }
+    else if(pageIndex == 12){
+      this.app.getRootNav().push(InventoryDataUploadQueryPage)
+    }
+    else if(pageIndex == 13){
+      this.app.getRootNav().push(RepairApplyPage,{pageName:'维修单据查询'})
     }
   }
 }

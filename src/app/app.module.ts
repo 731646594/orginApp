@@ -116,6 +116,7 @@ import {GasInputStatusQueryPage} from "../pages/apps/reportQuery/gasInputStatusQ
 import {MaintenanceRemindPage} from "../pages/apps/maintenance/maintenanceRemind/maintenanceRemind";
 import {MaintenanceSearchPage} from "../pages/apps/maintenance/maintenanceSearch/maintenanceSearch";
 import {RepairAcceptanceApprovalEvaluatePage} from "../pages/apps/repair/repairAcceptanceApprovalEvaluate/repairAcceptanceApprovalEvaluate";
+import {InventoryDataUploadQueryPage} from "../pages/apps/inventory/inventoryDataUploadQuery/inventoryDataUploadQuery";
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import {RepairAcceptanceApprovalEvaluatePage} from "../pages/apps/repair/repairA
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     InventoryDataDownloadDetailPage,
+    InventoryDataUploadQueryPage,
     LocalDownloadQueryPage,
     LocalDownloadQueryListPage,
     ScrapApplicationPage,
@@ -247,6 +249,7 @@ import {RepairAcceptanceApprovalEvaluatePage} from "../pages/apps/repair/repairA
     InventoryDataUploadPage,
     InventoryDataDownloadPage,
     InventoryDataDownloadDetailPage,
+    InventoryDataUploadQueryPage,
     LocalDownloadQueryPage,
     LocalDownloadQueryListPage,
     ScrapApplicationPage,

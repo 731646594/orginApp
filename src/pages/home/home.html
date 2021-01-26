@@ -8,7 +8,7 @@
 
 <ion-content>
   <div class="appsButtonBigBox">
-    <div class="appsButtonBox">
+    <div class="appsButtonBox" *ngIf="url != 'http://swapp.0731ctny.com:/plamassets/mobile/'">
       <button class="appsButton" (click)="willGoPage(1,pageItem[0][4])">
         <div class="appsButtonIconBox2" >
           <img src="assets/homePageImgs/saoyisao.png">
@@ -24,9 +24,26 @@
           <img src="assets/homePageImgs/bfsq.png">
         </div><br>报废申请</button>
     </div>
+    <div class="appsButtonBox" *ngIf="url == 'http://swapp.0731ctny.com:/plamassets/mobile/'">
+      <button class="appsButton" (click)="willGoPage(1,pageItem[0][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/saoyisao.png">
+        </div><br>快速扫码
+      </button>
+      <button class="appsButton" (click)="willGoPage(10,pageItem[9][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/dbsq.png">
+        </div><br>巡检表录入
+      </button>
+      <button class="appsButton" (click)="willGoPage(11,pageItem[6][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/bfsq.png">
+        </div><br>维修申请
+      </button>
+    </div>
   </div>
   <div class="splitBar"></div>
-  <div class="appsButtonBigBox">
+  <div class="appsButtonBigBox" *ngIf="url != 'http://swapp.0731ctny.com:/plamassets/mobile/'">
     <div class="appsButtonBox">
       <button class="appsButton" (click)="willGoPage(4,pageItem[1][4])">
         <ion-badge  *ngIf="inventoryNum!=0&&inventoryNum<100" item-end>{{inventoryNum}}</ion-badge>
@@ -77,6 +94,28 @@
           <img src="assets/homePageImgs/zzpd@2x.png">
         </div>
         <br>报废审批
+      </button>
+    </div>
+  </div>
+  <div class="appsButtonBigBox" *ngIf="url == 'http://swapp.0731ctny.com:/plamassets/mobile/'">
+    <div class="appsButtonBox">
+      <button class="appsButton" (click)="willGoPage(4,pageItem[1][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/zzpd@2x.png">
+        </div>
+        <br>盘点进度
+      </button>
+      <button class="appsButton" (click)="willGoPage(12,pageItem[2][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/wpjh@2x.png">
+        </div>
+        <br>上传查询
+      </button>
+      <button class="appsButton" (click)="willGoPage(13,pageItem[10][4])">
+        <div class="appsButtonIconBox2" >
+          <img src="assets/homePageImgs/dbsp@2x.png">
+        </div>
+        <br>维修单查询
       </button>
     </div>
   </div>

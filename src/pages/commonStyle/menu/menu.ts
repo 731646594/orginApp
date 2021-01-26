@@ -32,6 +32,7 @@ import {DayReportSupplementPage} from "../../apps/report/dayReportSupplement/day
 import {DayReportSearchPage} from "../../apps/report/dayReportSearch/dayReportSearch";
 import {SimpleSummaryPage} from "../../apps/reportQuery/simpleSummary/simpleSummary";
 import {GasInputStatusQueryPage} from "../../apps/reportQuery/gasInputStatusQuery/gasInputStatusQuery";
+import {InventoryDataUploadQueryPage} from "../../apps/inventory/inventoryDataUploadQuery/inventoryDataUploadQuery";
 
 @Component({
   selector: 'page-menu',
@@ -97,6 +98,7 @@ export class MenuPage {
     //17:RFID
     //18:数据同步
     //19:RFID特殊
+    //20:上传查询
     //21:报废申请
     //22:报废审批
     //23:报废查询
@@ -184,6 +186,9 @@ export class MenuPage {
           return false;
         }
       })
+    }
+    else if(page == 20){
+      willGoPage = InventoryDataUploadQueryPage;
     }
     else if(page == 21){
       willGoPage = ScrapApplicationPage;
