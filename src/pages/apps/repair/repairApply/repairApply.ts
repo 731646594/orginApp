@@ -672,6 +672,7 @@ export class RepairApplyPage {
         title:"上报成功！"
       });
       alertCtrl.present();
+      this.events.publish('menuNumPublish','repairAcceptanceDataComplete');
       this.ionViewDidEnter()
     },true)
   }

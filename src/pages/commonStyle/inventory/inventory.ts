@@ -313,6 +313,7 @@ export class InventoryPage {
           PageUtil.pages["home"].inventoryNum = willListLength;
         }
         this.storageService.sqliteInsert("existPlanDetail",this.userCode,JSON.stringify(invoiceList));
+        this.events.publish('menuNumPublish','inventoryDataComplete');
         for(let key in this.invoice){
           this.invoice[key] = "";
         }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {PageUtil, StorageService} from "../../../../services/storageService";
 import {FileTransfer,FileTransferObject} from "@ionic-native/file-transfer";
@@ -30,7 +30,7 @@ export class InventoryDataDownloadDetailPage {
     41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public loadingCtrl:LoadingController,public file:File,
-              public fileTransfer:FileTransfer,public navParams:NavParams,public app:App) {
+              public fileTransfer:FileTransfer,public navParams:NavParams,public app:App,public events:Events) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -122,6 +122,7 @@ export class InventoryDataDownloadDetailPage {
               this.storageService.deleteUserTable("existPlanDetail",this.userCode);
               this.storageService.deleteUserTable("newPlanDetail",this.userCode);
               PageUtil.pages["home"].inventoryNum = data.length;
+              this.events.publish('menuNumPublish','inventoryDataDownloadComplete');
             };
             reader.readAsDataURL(file);
           })

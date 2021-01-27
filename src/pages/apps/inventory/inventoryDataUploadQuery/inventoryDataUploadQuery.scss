@@ -1,3 +1,64 @@
 page-inventoryDataUploadQuery {
-
+  .scroll-content{
+    background-color: rgb(246,246,246) ;
+  }
+  .con{
+    margin-bottom: 60px;
+  }
+  .callContent{
+    width: 81%;
+  }
+  .callList{
+    padding-right: 0;
+  }
+  .cardButton{
+    background: red;
+    color: white;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    margin: auto auto auto 0;
+  }
+  .item-ios{
+    border: none !important;
+  }
+  .label-ios{
+    margin-right: 0 !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .planListBox{
+    margin-bottom: 60px;
+  }
+  .listFooter{
+    width: 100%;
+    display: flex;
+    padding: 5px !important;
+    border-top: 1px solid #d9d9d9;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
+    background: white;
+  }
+  .listFooterButton {
+    background: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    color: #4389e8;
+    font-size: 1em;
+  }
+  .listFooterIcon{
+    font-size: 2em;
+    color: #4389e8;
+    margin-bottom: 2px;
+  }
+  .planInfoBox{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 // import {GasDataUploadDetailPage} from "../gasDataUploadDetail/gasDataUploadDetail";
@@ -35,7 +35,7 @@ export class GasDataUploadPage {
   isHaveData = false;
   pageName = '周检';
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public navParams:NavParams,public app:App) {
+              public alertCtrl:AlertController,public navParams:NavParams,public app:App,public events:Events) {
     if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/") {
       this.pageName = '巡检';
     }
@@ -155,6 +155,7 @@ export class GasDataUploadPage {
           this.jjb=[];
           this.storageService.deleteUserTable("jjb",this.userCode);
         }
+        this.events.publish('menuNumPublish','weeklyCheckDataUploadComplete');
         this.httpService.postData(this.httpService.getUrl()+"devWeeklyCheckController/getCheckListCols.do",{departCode:this.departCode},data=>{
           if (data.success=="true"){
             this.storageService.sqliteInsert("weeklyData",this.userCode,JSON.stringify(data.data));

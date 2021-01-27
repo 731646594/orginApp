@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {Camera, CameraOptions} from "@ionic-native/camera";
@@ -37,7 +37,7 @@ export class WeeklyChecklistEntryPage {
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,
               public actionSheetCtrl:ActionSheetController,public camera:Camera,public file:File,
-              public app:App) {
+              public app:App,public events:Events) {
     if(this.httpService.getUrl()=="http://swapp.0731ctny.com:/plamassets/mobile/") {
       this.pageName = '巡检';
     }
@@ -339,6 +339,7 @@ export class WeeklyChecklistEntryPage {
       }else {
         this.storageService.insertIntoUserTable(tableName,this.userCode,this.storageData);
       }
+      this.events.publish('menuNumPublish','weeklyCheckDataComplete');
       let alertCtrl = this.alertCtrl.create({
         title:"保存成功！"
       });

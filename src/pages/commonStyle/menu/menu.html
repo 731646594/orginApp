@@ -11,6 +11,8 @@
     <div class="menuName">{{Data[3]}}</div>
     <div class="appsButtonBox" *ngFor="let datas of Data[1].pageData">
       <div *ngFor="let data of datas" class="appsButton" (click)="appChoose(data[0],data[1],data[4],data[5])">
+        <ion-badge  *ngIf="data[6]!=0&&data[6]<100" item-end>{{data[6]}}</ion-badge>
+        <ion-badge  *ngIf="data[6]>=100" item-end>99+</ion-badge>
         <div class="appsButtonIconBox2" *ngIf="data[2]">
           <img [src]="'assets/menuPageImgs/'+data[2]">
         </div>

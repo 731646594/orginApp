@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import { StorageService} from "../../../../services/storageService";
 import {File} from "@ionic-native/file";
@@ -24,7 +24,8 @@ export class InventoryDataUploadPage {
   failPhotoLength = 0;
   necNotFinish = false;
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
-              public alertCtrl:AlertController,public file:File,public loadingCtrl:LoadingController,public navParams:NavParams,public app:App) {
+              public alertCtrl:AlertController,public file:File,public loadingCtrl:LoadingController,
+              public navParams:NavParams,public app:App,public events:Events) {
     this.loadData();
   }
   ionViewDidEnter(){
@@ -125,12 +126,18 @@ export class InventoryDataUploadPage {
         let l = this.planDetailList[this.planIndex].realIndex-this.newPlanDetail.length;
         if(l>-1){
           this.existPlanDetail[l]["Uploaded"]=true;
+          if (this.existPlanDetail[l]["uploadedCount"]){
+            this.existPlanDetail[l]["uploadedCount"]++;
+          }else {
+            this.existPlanDetail[l]["uploadedCount"] = 1;
+          }
           this.storageService.updateUserTable("existPlanDetail",this.userCode,JSON.stringify(this.existPlanDetail));
         }
         else {
           this.newPlanDetail[this.planDetailList[this.planIndex].realIndex]["Uploaded"]=true;
           this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
         }
+        this.events.publish('menuNumPublish','inventoryDataUploadComplete');
         if (isFailPhoto){
           this.failPhotoLength++;
         }
@@ -247,6 +254,7 @@ export class InventoryDataUploadPage {
               this.newPlanDetail.splice(this.planDetailList[index].realIndex,1);
               this.storageService.updateUserTable("newPlanDetail",this.userCode,JSON.stringify(this.newPlanDetail));
             }
+            this.events.publish('menuNumPublish','inventoryDataUploadComplete');
             this.loadData();
           }
         },

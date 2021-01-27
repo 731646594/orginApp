@@ -1,15 +1,29 @@
-<!--
-  Generated template for the InventoryDataUploadQueryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
     <ion-title>上传查询</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
+  <div class="con">
+    <div class="planInfoBox">
+      <label-normal [itemName]="'盘点计划名称'" [labelValue]="planData.planName"></label-normal>
+      <label-normal [itemName]="'盘点计划编码'" [labelValue]="planData.planNumber"></label-normal>
+      <label-normal [itemName]="'盘点计划结束日期'" [labelValue]="planData.stopDate"></label-normal>
+      <label-normal [itemName]="'上传明细数量'" [labelValue]="planDetailList.length"></label-normal>
+    </div>
+    <div *ngFor="let planDetail of planDetailList;let i = index">
+      <div class="callContentBox">
+        <div class="callContentMiniBox">
+          <ion-list class="callContent">
+            <ion-list class="callList">
+              <label-normal [itemName]="'资产条码'" [labelValue]="planDetail.barCode"></label-normal>
+              <label-normal [itemName]="'资产名称'" [labelValue]="planDetail.assetsName"></label-normal>
+              <label-normal [itemName]="'上传次数'" [labelValue]="planDetail.uploadedCount"></label-normal>
+            </ion-list>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -32,12 +32,14 @@ export class InventoryQueryPage {
   pageData={};
   loginDepartCode;
   pageName = '盘点查询';
+  existName = '存在';
   constructor(public navCtrl: NavController,public storageService:StorageService,
               public app:App,public toastCtrl:ToastController,public file:File,
               public httpService:HttpService) {
     this.loadData();
     if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
       this.pageName = '盘点进度';
+      this.existName = '已盘';
     }
   }
   ionViewDidEnter(){

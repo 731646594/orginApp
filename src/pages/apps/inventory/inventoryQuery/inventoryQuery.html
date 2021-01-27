@@ -19,7 +19,7 @@
     <ion-toolbar class="searchToolbar">
       <ion-segment [(ngModel)]="planStatus">
         <ion-segment-button value="exist" (click)="readData()">
-          存在：{{existNum}}
+          {{existName}}：{{existNum}}
         </ion-segment-button>
         <ion-segment-button value="will" (click)="readData()">
           未盘：{{willNum}}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, App, Events, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {StorageService} from "../../../services/storageService";
 import {HttpService} from "../../../services/httpService";
 import {ScanCodePage} from "../../apps/inventory/scanCode/scanCode";
@@ -33,6 +33,7 @@ import {DayReportSearchPage} from "../../apps/report/dayReportSearch/dayReportSe
 import {SimpleSummaryPage} from "../../apps/reportQuery/simpleSummary/simpleSummary";
 import {GasInputStatusQueryPage} from "../../apps/reportQuery/gasInputStatusQuery/gasInputStatusQuery";
 import {InventoryDataUploadQueryPage} from "../../apps/inventory/inventoryDataUploadQuery/inventoryDataUploadQuery";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'page-menu',
@@ -46,12 +47,21 @@ export class MenuPage {
   pageName;
   pageData;
   paramsData;
-  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,public navParams:NavParams,
-              public httpService:HttpService,public alertCtrl:AlertController,public loadingCtrl:LoadingController,public network:Network) {
-
+  constructor(public app:App,public navCtrl: NavController,public storageService:StorageService,
+              public navParams:NavParams, public httpService:HttpService,public alertCtrl:AlertController,
+              public loadingCtrl:LoadingController,public network:Network,public events:Events,
+              public datePipe:DatePipe) {
+    this.events.subscribe('menuNumPublish',(e)=>{
+      if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/') {
+        this.menuNum(e);
+      }
+    })
   }
   ionViewDidEnter(){
     this.loadData();
+  }
+  ionViewWillUnload(){
+    this.events.unsubscribe("menuNumPublish");
   }
   loadData(){
     this.userName = this.storageService.read("loginUserName");
@@ -61,6 +71,109 @@ export class MenuPage {
     this.paramsData = this.navParams.data;
     this.pageName = this.paramsData.pageName;
     this.pageData = this.paramsData.pageData;
+    if (this.httpService.getUrl() == 'http://swapp.0731ctny.com:/plamassets/mobile/'){
+      this.menuNum();
+    }
+  }
+  menuNum(name?:any){
+    this.pageData.forEach((item1)=>{
+      item1[1].pageData.forEach((item2)=>{
+        item2.forEach((item3)=>{
+          if ((!name || name=='inventoryDataDownloadComplete') && item3[0] == 13){
+            this.httpService.postData(this.httpService.getUrl()+"cellPhoneControllerOffline/phonecheckplandownload.do",{userCode:this.userCode,departCode:this.departCode},data=>{
+              let num = 0;
+              let planList=data.data;
+              let planListLen = planList.length;
+              num = planListLen;
+              this.storageService.getUserTable().executeSql(this.storageService.getSSS("localPlan",this.userCode),[]).then(res=>{
+                if (res.rows.length>0){
+                  try {
+                    if (JSON.parse(res.rows.item(0).stringData)["planNumber"]){
+                      num = planListLen - 1
+                    }
+                  }catch {}
+                }
+                item3[6] = num;
+              }).catch(e =>alert("erro2_1:"+JSON.stringify(e)));
+            },false,(err)=>{
+              item3[6] =0;
+              let alertCtrl = this.alertCtrl.create({
+                title:err
+              });
+              alertCtrl.present();
+            });
+          }
+          if ((!name|| name=='inventoryDataDownloadComplete' || name=='inventoryDataComplete') && item3[0] == 12){
+            this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
+              let num = 0;
+              if (res.rows.length>0){
+                let willPlan = JSON.parse(res.rows.item(0).stringData);
+                let willPlanLen = 0;
+                for (let i in willPlan){
+                  if (this.departCode == willPlan[i]["departCode"]){
+                    willPlanLen++;
+                  }
+                }
+                num  = willPlanLen;
+              }
+              item3[6] = num;
+            }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
+          }
+          if ((!name || name=='inventoryDataDownloadComplete' || name=='inventoryDataComplete' || name=='inventoryDataUploadComplete') && item3[0] == 15){
+            let planDetailList = [];
+            this.storageService.getUserTable().executeSql(this.storageService.getSSS("newPlanDetail",this.userCode),[]).then(res=>{
+              if (res.rows.length>0){
+                let newPlanDetail = JSON.parse(res.rows.item(0).stringData);
+                planDetailList = planDetailList.concat(newPlanDetail);
+              }
+              this.storageService.getUserTable().executeSql(this.storageService.getSSS("existPlanDetail",this.userCode),[]).then(res=>{
+                if (res.rows.length>0){
+                  let existPlanDetail = JSON.parse(res.rows.item(0).stringData);
+                  planDetailList = planDetailList.concat(existPlanDetail);
+                }
+                planDetailList = planDetailList.filter((item,i)=>{
+                  return !item["Uploaded"]
+                });
+                item3[6] = planDetailList.length;
+              }).catch(e =>alert("erro2_3_2:"+JSON.stringify(e)));
+            }).catch(e =>alert("erro2_3_1:"+JSON.stringify(e)));
+          }
+          if ((!name) && item3[0] == 51){
+            item3[6] = 1;
+            let date = this.datePipe.transform(new Date(),"yyyy-MM-dd");
+            if (date == this.storageService.read('weeklyCheckDataCompleteDate')){
+              item3[6] = 0;
+            }
+          }
+          if ((name=='weeklyCheckDataComplete') && item3[0] == 51) {
+            let date = this.datePipe.transform(new Date(),"yyyy-MM-dd");
+            this.storageService.write('weeklyCheckDataCompleteDate',date);
+            item3[6] = 0;
+          }
+          if ((!name || name=='weeklyCheckDataComplete' || name=='weeklyCheckDataUploadComplete') && item3[0] == 53) {
+            this.storageService.getUserTable().executeSql(this.storageService.getSSS("zjb",this.userCode),[]).then(res =>{
+              let num = 0;
+              if (res.rows.length>0){
+                num = 1;
+              }
+              item3[6] = num;
+            }).catch(e =>alert("erro21:"+JSON.stringify(e))  );
+          }
+          if ((!name || name=='repairAcceptanceDataComplete') && item3[0] == 64) {
+            this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devRepairController.do?datagridys", {page:1,rows:100,funccode:"4000001006"},data=>{
+              let itemData = data.obj.rows;
+              item3[6] = itemData.length;
+            },false,(err)=>{
+              item3[6] =0;
+              let alertCtrl = this.alertCtrl.create({
+                title:err
+              });
+              alertCtrl.present();
+            });
+          }
+        })
+      })
+    });
   }
   appChoose(page,params,canIn,funccode){
     if(canIn=="0"){

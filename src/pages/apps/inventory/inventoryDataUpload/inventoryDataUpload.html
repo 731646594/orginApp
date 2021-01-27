@@ -10,6 +10,7 @@
       <label-normal [itemName]="'盘点计划名称'" [labelValue]="planData.planName"></label-normal>
       <label-normal [itemName]="'盘点计划编码'" [labelValue]="planData.planNumber"></label-normal>
       <label-normal [itemName]="'盘点计划结束日期'" [labelValue]="planData.stopDate"></label-normal>
+      <label-normal [itemName]="'已盘明细数量'" [labelValue]="planDetailList.length"></label-normal>
     </div>
     <div *ngFor="let planDetail of planDetailList;let i = index">
       <div class="callContentBox">
