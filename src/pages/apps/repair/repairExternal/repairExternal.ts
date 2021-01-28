@@ -33,6 +33,7 @@ export class RepairExternalPage {
   listBase64 = [];
   isShowFooter = true;
   shape = "brief";
+  base64List = [];
   constructor(public navCtrl?: NavController, public navParams?: NavParams, public alertCtrl?: AlertController,
               public storageService?: StorageService, public events?: Events, public app?: App,
               public httpService?: HttpService, public datePipe?: DatePipe, public actionSheetCtrl?: ActionSheetController,
@@ -297,6 +298,36 @@ export class RepairExternalPage {
             }
           };
         }
+        let node2 = document.getElementById("imgBox2");
+        for (let j in this.base64List) {
+          let base64Image = "";
+          if (this.base64List[j].imgUrl) {
+            base64Image = this.base64List[j].imgUrl;
+          } else {
+            base64Image = this.base64List[j];
+          }
+          let div = document.createElement("div");
+          div.className = "imgInclusion";
+          div.innerHTML +=
+            "<img id=\"i2" + this.i + "\" name=\"i2" + this.i + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
+            "<img id=\"b2" + this.i + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+          node2.appendChild(div);
+          document.getElementById("i2" + this.i).onclick = function () {
+            try {
+              that.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
+            } catch (e) {
+              alert(e)
+            }
+          };
+          document.getElementById("b2" + this.i).onclick = function () {
+            try {
+              node.removeChild(div);
+              that.base64List.splice(parseInt(this.id.slice(2)), 1);
+            } catch (e) {
+              alert(e)
+            }
+          };
+        }
       },100)
     }
   }
@@ -367,6 +398,98 @@ export class RepairExternalPage {
       this.app.getRootNav().pop()
     },true)
   }
+  pickPhoto(){
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: '拍摄照片',
+          icon: 'camera',
+          handler: () => {
+            this.openCamera(true);
+          }
+        },
+        {
+          text: '从相册中选择照片',
+          icon: 'images',
+          handler: () => {
+            this.openCamera(false);
+          }
+        },
+      ]
+    });
+    actionSheet.present();
+  }
+  openCamera(type) {
+    let sourceType;
+    let saveToPhotoAlbum;
+    if (type) {
+      sourceType = this.camera.PictureSourceType.CAMERA;
+      saveToPhotoAlbum = true;
+    }
+    else {
+      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+      saveToPhotoAlbum = false;
+    }
+    const options: CameraOptions = {
+      quality: 50,                                                   //相片质量 0 -100
+      destinationType: this.camera.DestinationType.FILE_URI,        //DATA_URL 是 base64   FILE_URL 是文件路径
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: saveToPhotoAlbum,                                       //是否保存到相册
+      sourceType: sourceType,         //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.resolveUri(imageData).then(url => {
+        url.file((file) => {
+          let reader = new FileReader();
+          reader.onloadend = (e) => {
+            let node = document.getElementById("imgBox2");
+            let base64Image = e.target['result'];
+            let div = document.createElement("div");
+            div.className = "imgInclusion";
+            div.innerHTML +=
+              "<img id=\"i2" + this.i + "\" name=\"i2" + this.i + "\" class=\"imgShow\" src=\"" + base64Image + "\">" +
+              "<img id=\"b2" + this.i + "\" class=\"imgDeleteButton\" src='assets/imgs/delete.png'>";
+            if (this.base64List.length==3){
+              let alertCtrl = this.alertCtrl.create({
+                title:"照片数量不能大于3张"
+              });
+              alertCtrl.present();
+              return false;
+            }
+            node.appendChild(div);
+            this.base64List.push(base64Image);
+            document.getElementById("i2" + this.i).onclick = function () {
+              try {
+                that.app.getRootNav().push(ShowPicturePage, {picture: base64Image})
+              } catch (e) {
+                alert(e)
+              }
+            };
+            document.getElementById("b2" + this.i).onclick = function () {
+              try {
+                node.removeChild(div);
+                that.base64List.splice(parseInt(this.id.slice(2)), 1);
+              } catch (e) {
+                alert(e)
+              }
+            };
+            this.i++;
+          };
+          reader.readAsDataURL(file);
+        }, err => {
+          alert(err)
+        });
+      }, err => {
+        alert(err)
+      })
+    }, (err) => {
+      // Handle error
+      alert(err)
+    });
+  }
   saveForm(){
     if (!this.invoice["bjmc"]){
       let alertCtrl = this.alertCtrl.create({
@@ -387,6 +510,7 @@ export class RepairExternalPage {
       id:this.invoice["id"],
       bjmc:this.invoice["bjmc"],
       bjbm:this.invoice["bjbm"],
+      uploadFile:JSON.stringify(this.base64List)
       // signImage:this.signatureImage
     },(data)=>{
       console.log(data);

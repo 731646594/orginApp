@@ -65,6 +65,13 @@
         <div id="imgBox">
         </div>
       </div>
+      <ion-item class="inputItem imgItem" *ngIf="pageName == '维修办结'">
+        <ion-label><span class="star">*</span>外委图片:</ion-label>
+      </ion-item>
+      <div class="imgBox">
+        <div id="imgBox2">
+        </div>
+      </div>
     </div>
     <div class="detailTab" *ngSwitchCase="'detailed'">
       <div *ngFor="let item of pageData.pageItem[1];">
@@ -116,6 +123,9 @@
   </button>
   <button class="formFooterButton" (click)="enterForm()" *ngIf="pageName == '开始维修'">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起进场
+  </button>
+  <button class="formFooterButton" (click)="pickPhoto()" *ngIf="pageName == '维修办结'">
+    <ion-icon class="formFooterIcon" name="camera"></ion-icon><br>照片
   </button>
   <button class="formFooterButton" (click)="saveForm()" *ngIf="pageName == '维修办结'">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>办结
