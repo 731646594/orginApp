@@ -775,6 +775,49 @@ export class RepairApplyPage {
     })
     alertCtrl.present();
   }
+  deleteForm6(detail){
+    let alertCtrl = this.alertCtrl.create({
+      title:"退回",
+      cssClass:"alertMiddle",
+      inputs:[
+        {
+          name:"reason",
+          placeholder:"请输入退回原因",
+        }
+      ],
+      buttons:[
+        {
+          text:"取消",
+        },
+        {
+          text:"确定",
+          handler:(e)=>{
+            if (!e.reason){
+              let alertCtrl1 = this.alertCtrl.create({
+                title:"退回原因不能为空！"
+              });
+              alertCtrl1.present();
+              return false;
+            }else {
+              this.httpService.postData2(this.httpService.getUrl2()+"lhd/app/devPeripheryRepairController.do?backPeripheryPlan", {
+                dataobj:JSON.stringify(detail),
+                backReason:e.reason,
+                userName:this.storageService.read('loginUserName'),
+                userCode:this.storageService.read('loginUserCode')
+              }, data=>{
+                let alertCtrl = this.alertCtrl.create({
+                  title:"退回成功！"
+                });
+                alertCtrl.present();
+                this.ionViewDidEnter()
+              },true)
+            }
+          }
+        }
+      ]
+    });
+    alertCtrl.present();
+  }
   addInvoice(){
     this.app.getRootNav().push(RepairApplyAddPage)
   }

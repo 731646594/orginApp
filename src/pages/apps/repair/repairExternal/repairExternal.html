@@ -121,6 +121,9 @@
   <button class="formFooterButton" (click)="dispatchForm()" *ngIf="pageName == '维修外委派单'&&invoice['djzt']==9">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起派单
   </button>
+  <button class="formFooterButton" (click)="returnForm()" *ngIf="pageName == '维修外委派单'&&(httpService.getUrl()=='http://210.12.193.92:9080/plamassets/mobile/'||httpService.getUrl().indexOf('192.168')>-1)">
+    <ion-icon class="formFooterIcon" name="close-circle"></ion-icon><br>退回
+  </button>
   <button class="formFooterButton" (click)="enterForm()" *ngIf="pageName == '开始维修'">
     <ion-icon class="formFooterIcon" name="checkmark-circle"></ion-icon><br>发起进场
   </button>
