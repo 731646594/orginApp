@@ -32,6 +32,7 @@ export class ConfigProvider {
     {name:"已办结",value:6},
     {name:"未派单",value:9},
     {name:"已派单",value:10},
+    {name:"派单被退回",value:20},
   ];
   static status = [
     {name:"待送审",value:"01"},
