@@ -50,7 +50,7 @@
                 <button ion-button (click)="submitForm5(detail);$event.stopPropagation();">通过</button>
                 <button ion-button color="danger" (click)="deleteForm5(detail);$event.stopPropagation();">驳回</button>
               </div>
-              <div class="buttonBox" *ngIf="pageName == '维修外委派单'&&(httpService.getUrl()=='http://210.12.193.92:9080/plamassets/mobile/'||httpService.getUrl().indexOf('192.168')>-1)">
+              <div class="buttonBox" *ngIf="pageName == '维修外委派单'&&detail['djzt']==9&&(httpService.getUrl()=='http://210.12.193.92:9080/plamassets/mobile/'||httpService.getUrl().indexOf('192.168')>-1)">
                 <button ion-button color="danger" (click)="deleteForm6(detail);$event.stopPropagation();">退回</button>
               </div>
             </ion-list>
