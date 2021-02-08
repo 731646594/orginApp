@@ -6,6 +6,7 @@ import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {InventoryPage} from "../../../commonStyle/inventory/inventory";
 declare let cordova: any;
+let that;
 
 @Component({
   selector: 'page-inventory',
@@ -17,6 +18,7 @@ export class InventoryEntryPage  extends InventoryPage{
               public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,public platform?:Platform) {
     super(navCtrl,storageService,navParams,events);
+    that = this;
     this.invoice["barCode"] = this.navParams.get("barCode");
     this.data={
       pageName:"盘盈录入",
@@ -91,6 +93,10 @@ export class InventoryEntryPage  extends InventoryPage{
       }
     }).catch(e =>alert("erro2_3:"+JSON.stringify(e)));
 
+  }
+  scanPlugin(event){
+    let barCode =  event.data;
+    that.invoice["barCode"] = barCode.replace(/\s+/g,"").replace("\u0008", "");
   }
   scan() {
     if (this.platform.is('android')){
