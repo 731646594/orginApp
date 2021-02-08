@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, Events, NavController, NavParams, Platform} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
 import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {InventoryPage} from "../../../commonStyle/inventory/inventory";
+declare let cordova: any;
 
 @Component({
   selector: 'page-inventory',
@@ -14,7 +15,7 @@ export class InventoryEntryPage  extends InventoryPage{
   departments;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,public events?:Events,
               public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
-              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,public platform?:Platform) {
     super(navCtrl,storageService,navParams,events);
     this.invoice["barCode"] = this.navParams.get("barCode");
     this.data={
@@ -92,37 +93,41 @@ export class InventoryEntryPage  extends InventoryPage{
 
   }
   scan() {
-    let options: BarcodeScannerOptions = {
-      preferFrontCamera: false,//前置摄像头
-      showFlipCameraButton: true,//翻转摄像头按钮
-      showTorchButton: true,//闪关灯按钮
-      prompt: '扫描中……',//提示文本
-      // formats: 'QR_CODE',//格式
-      orientation: 'portrait',//方向
-      torchOn: false,//启动闪光灯
-      resultDisplayDuration: 500,//显示扫描文本
-      disableSuccessBeep: true // iOS and Android
-    };
-    this.barcodeScanner
-      .scan(options)
-      .then((data) => {
-        this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
-        if(!this.invoice["barCode"]){
-          let alert = this.alertCtrl.create({
-            title:"请输入或扫描资产条码！"
-          });
-          alert.present();
-          return false;
-        }
-      })
-      .catch((err) => {
-        // const alert = this.alertCtrl.create({
-        //   title: 'Attention!',
-        //   subTitle: err,
-        //   buttons: ['Close']
-        // });
-        // alert.present();
-      });
+    if (this.platform.is('android')){
+      cordova.plugins.ScanKitPlugin.scan("test", result => {}, error => alert(error));
+    }else {
+      let options: BarcodeScannerOptions = {
+        preferFrontCamera: false,//前置摄像头
+        showFlipCameraButton: true,//翻转摄像头按钮
+        showTorchButton: true,//闪关灯按钮
+        prompt: '扫描中……',//提示文本
+        // formats: 'QR_CODE',//格式
+        orientation: 'portrait',//方向
+        torchOn: false,//启动闪光灯
+        resultDisplayDuration: 500,//显示扫描文本
+        disableSuccessBeep: true // iOS and Android
+      };
+      this.barcodeScanner
+        .scan(options)
+        .then((data) => {
+          this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
+          if(!this.invoice["barCode"]){
+            let alert = this.alertCtrl.create({
+              title:"请输入或扫描资产条码！"
+            });
+            alert.present();
+            return false;
+          }
+        })
+        .catch((err) => {
+          // const alert = this.alertCtrl.create({
+          //   title: 'Attention!',
+          //   subTitle: err,
+          //   buttons: ['Close']
+          // });
+          // alert.present();
+        });
+    }
   }
   saveInfo(){
     let j = this.pageData.pageItem.filter((item) => {

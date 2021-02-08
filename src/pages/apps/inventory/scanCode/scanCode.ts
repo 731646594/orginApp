@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, Events, NavController, NavParams, Platform} from 'ionic-angular';
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner,} from "@ionic-native/barcode-scanner";
 import {Camera} from "@ionic-native/camera";
@@ -15,7 +15,8 @@ import {HttpService} from "../../../../services/httpService";
 export class ScanCodePage extends InventoryPage{
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,public events?:Events,
               public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
-              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,public httpService?:HttpService) {
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,
+              public httpService?:HttpService,public platform?:Platform) {
     super(navCtrl,storageService,navParams,events);
     this.data={
       pageName:"快速扫码",

@@ -1,10 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
-import {ActionSheetController, AlertController, App, Events, Navbar, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, Events, Navbar, NavController, NavParams, Platform} from 'ionic-angular';
 import {PageUtil, StorageService} from "../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
 import {Camera,CameraOptions} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {ShowPicturePage} from "../../commonStyle/showPicture/showPicture";
+declare let cordova: any;
+let that;
 @Component({
   selector: 'page-inventory',
   templateUrl: 'inventory.html'
@@ -32,7 +34,9 @@ export class InventoryPage {
   uploadFile=[];
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,public events?:Events,
               public camera?:Camera,public file?:File, public actionSheetCtrl?:ActionSheetController,
-              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
+              public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,
+              public platform?:Platform) {
+    that = this;
     this.userCode = this.storageService.read("loginUserCode");
     this.invoice=JSON.parse("{}");
     this.events.subscribe("showFooter",(res) => {
@@ -41,10 +45,17 @@ export class InventoryPage {
     this.events.subscribe("hideFooter",(res) => {
       this.hideFooter();
     });
+    document.addEventListener('scan.receiveScanAndroidCallback', that.scanPlugin, false);
+  }
+  scanPlugin(event){
+    let barCode =  event.data;
+    that.invoice["barCode"] = barCode.replace(/\s+/g,"").replace("\u0008", "");
+    that.searchLocalPlanDetail();
   }
   ionViewWillUnload(){
     this.events.unsubscribe("showFooter");
     this.events.unsubscribe("hideFooter");
+    document.removeEventListener('scan.receiveScanAndroidCallback',that.scanPlugin);
   }
   ionViewDidEnter(){
     this.navBar.backButtonClick = this.backButtonClick;
@@ -99,31 +110,35 @@ export class InventoryPage {
     }
   }
   scan() {
-    let options: BarcodeScannerOptions = {
-      preferFrontCamera: false,//前置摄像头
-      showFlipCameraButton: true,//翻转摄像头按钮
-      showTorchButton: true,//闪关灯按钮
-      prompt: '扫描中……',//提示文本
-      // formats: 'QR_CODE',//格式
-      orientation: 'portrait',//方向
-      torchOn: false,//启动闪光灯
-      resultDisplayDuration: 500,//显示扫描文本
-      disableSuccessBeep: true // iOS and Android
-    };
-    this.barcodeScanner
-      .scan(options)
-      .then((data) => {
-        this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
-        this.searchLocalPlanDetail();
-      })
-      .catch((err) => {
-        // const alert = this.alertCtrl.create({
-        //   title: 'Attention!',
-        //   subTitle: err,
-        //   buttons: ['Close']
-        // });
-        // alert.present();
-      });
+    if (this.platform.is('android')){
+      cordova.plugins.ScanKitPlugin.scan("test", result => {}, error => alert(error));
+    }else {
+      let options: BarcodeScannerOptions = {
+        preferFrontCamera: false,//前置摄像头
+        showFlipCameraButton: true,//翻转摄像头按钮
+        showTorchButton: true,//闪关灯按钮
+        prompt: '扫描中……',//提示文本
+        // formats: 'QR_CODE',//格式
+        orientation: 'portrait',//方向
+        torchOn: false,//启动闪光灯
+        resultDisplayDuration: 500,//显示扫描文本
+        disableSuccessBeep: true // iOS and Android
+      };
+      this.barcodeScanner
+        .scan(options)
+        .then((data) => {
+          this.invoice["barCode"] = data.text.replace(/\s+/g,"").replace("\u0008", "");
+          this.searchLocalPlanDetail();
+        })
+        .catch((err) => {
+          // const alert = this.alertCtrl.create({
+          //   title: 'Attention!',
+          //   subTitle: err,
+          //   buttons: ['Close']
+          // });
+          // alert.present();
+        });
+    }
   }
   pickPhoto(){
     let actionSheet = this.actionSheetCtrl.create({

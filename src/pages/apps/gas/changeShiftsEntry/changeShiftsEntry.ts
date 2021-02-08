@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, App, NavController, NavParams, Platform} from 'ionic-angular';
 import {HttpService} from "../../../../services/httpService";
 import {StorageService} from "../../../../services/storageService";
 import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner";
@@ -7,6 +7,7 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {ChangeShiftsEntrySignaturePage} from "../changeShiftsEntrySignature/changeShiftsEntrySignature";
 import {ShowPicturePage} from "../../../commonStyle/showPicture/showPicture";
+declare let cordova: any;
 let that;
 @Component({
   selector: 'page-changeShiftsEntry',
@@ -43,11 +44,22 @@ export class ChangeShiftsEntryPage {
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public navParams:NavParams,public barcodeScanner:BarcodeScanner,
               public actionSheetCtrl:ActionSheetController,public camera:Camera,public file:File,
-              public app:App) {
-     this.loadData()
+              public app:App,public platform:Platform) {
+    that = this;
+    this.loadData();
+    document.addEventListener('scan.receiveScanAndroidCallback', that.scanPlugin, false);
+  }
+  scanPlugin(event){
+    let scanText = [];
+    scanText = event.data.split(",");
+    that.scanDepartCode = scanText[0].split(":")[1];
+    that.scanQybm = scanText[1].split(":")[1];
+    that.beforeShow()
+  }
+  ionViewWillUnload(){
+    document.removeEventListener('scan.receiveScanAndroidCallback',that.scanPlugin);
   }
   ionViewDidEnter(){
-    that = this;
     this.scanDepartCode = "";
     this.scanQybm = "";
     if (this.firstIn){
@@ -151,33 +163,37 @@ export class ChangeShiftsEntryPage {
     this.isOnfocus=false;
   }
   scan() {
-    let options: BarcodeScannerOptions = {
-      preferFrontCamera: false,//前置摄像头
-      showFlipCameraButton: true,//翻转摄像头按钮
-      showTorchButton: true,//闪关灯按钮
-      prompt: '扫描中……',//提示文本
-      // formats: 'QR_CODE',//格式
-      orientation: 'portrait',//方向
-      torchOn: false,//启动闪光灯
-      resultDisplayDuration: 500,//显示扫描文本
-      disableSuccessBeep: true // iOS and Android
-    };
-    this.barcodeScanner
-      .scan(options)
-      .then((data) => {
-        let scanText = [];
-        scanText = data.text.split(",");
-        this.scanDepartCode = scanText[0].split(":")[1];
-        this.scanQybm = scanText[1].split(":")[1];
-        this.beforeShow()
-      })
-      .catch((err) => {
-        let alert = this.alertCtrl.create({
-          title:"请扫描二维码！"
+    if (this.platform.is('android')){
+      cordova.plugins.ScanKitPlugin.scan("test", result => {}, error => alert(error));
+    }else {
+      let options: BarcodeScannerOptions = {
+        preferFrontCamera: false,//前置摄像头
+        showFlipCameraButton: true,//翻转摄像头按钮
+        showTorchButton: true,//闪关灯按钮
+        prompt: '扫描中……',//提示文本
+        // formats: 'QR_CODE',//格式
+        orientation: 'portrait',//方向
+        torchOn: false,//启动闪光灯
+        resultDisplayDuration: 500,//显示扫描文本
+        disableSuccessBeep: true // iOS and Android
+      };
+      this.barcodeScanner
+        .scan(options)
+        .then((data) => {
+          let scanText = [];
+          scanText = data.text.split(",");
+          this.scanDepartCode = scanText[0].split(":")[1];
+          this.scanQybm = scanText[1].split(":")[1];
+          this.beforeShow()
+        })
+        .catch((err) => {
+          let alert = this.alertCtrl.create({
+            title:"请扫描二维码！"
+          });
+          alert.present();
+          return false;
         });
-        alert.present();
-        return false;
-      });
+    }
   }
   pickPhoto(){
     let actionSheet = this.actionSheetCtrl.create({
