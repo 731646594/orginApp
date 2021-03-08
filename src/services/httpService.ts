@@ -80,7 +80,7 @@ export class HttpService {
       //浙江
       // this.setUrl("http","210.12.193.212","9080","plamassets");
       // return "http://210.12.193.212:9080/plamassets/mobile/"
-      //青海油田
+      //青海油田petrochina.qhyt.zcpd
       // this.setUrl("http","218.205.135.168","7000","plamassets");
       // return "http://218.205.135.168:7000/plamassets/mobile/"
       //华北油田
