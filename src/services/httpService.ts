@@ -30,8 +30,8 @@ export class HttpService {
     let url=this.storageService.read("serverUrl");
     if (!url){
       //智慧实物
-      this.setUrl("http","swapp.0731ctny.com","","plamassets");
-      return "http://swapp.0731ctny.com/plamassets/mobile/";
+      // this.setUrl("http","swapp.0731ctny.com","","plamassets");
+      // return "http://swapp.0731ctny.com/plamassets/mobile/";
       //宁夏petrochina.nxxs.zcpd
       // this.setUrl("http","127.0.0.1","10901","plamassets");
       // return "http://127.0.0.1:10901/plamassets/mobile/";
@@ -60,8 +60,8 @@ export class HttpService {
       // this.setUrl("http","210.12.193.61","9081","plamassets");
       // return "http://210.12.193.61:9081/plamassets/mobile/";
       //广西9082
-      // this.setUrl("http","210.12.193.61","9082","plamassets");
-      // return "http://210.12.193.61:9082/plamassets/mobile/";
+      this.setUrl("http","210.12.193.61","9082","plamassets");
+      return "http://210.12.193.61:9082/plamassets/mobile/";
       //冀东petrochina.jdyt.zcpd
       // this.setUrl("http","127.0.0.1","10401","plamassets");
       // return "http://127.0.0.1:10401/plamassets/mobile/";
@@ -146,6 +146,7 @@ export class HttpService {
           body[i] = str;
         }
       }
+      this.nativeHttp.setRequestTimeout(180)
       this.nativeHttp.post(url, body, {type:"app"})
         .then(data => {
           let res = JSON.parse(data.data);
