@@ -12,6 +12,7 @@ export class DeviceTypePage {
   typeData = [
     {itemName:"手机",itemValue:"phone"},
     {itemName:"盘点枪CX900",itemValue:"CX900"},
+    {itemName:"AUTOID UTouch",itemValue:"ufh"},
   ];
   constructor(public navCtrl: NavController,public httpService:HttpService,public storageService:StorageService,
               public alertCtrl:AlertController,public app:App) {
