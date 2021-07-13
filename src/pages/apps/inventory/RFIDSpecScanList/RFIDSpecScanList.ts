@@ -15,6 +15,7 @@ export class RFIDSpecScanListPage{
   cardItem;
   userCode;
   type = "";
+  page = 1;
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner) {
@@ -29,7 +30,7 @@ export class RFIDSpecScanListPage{
       ]
     }
   }
-  ionViewDidEnter(){
+  ionViewDidLoad(){
     this.userCode = this.storageService.read("loginUserCode");
     if(this.type=="will"){
       this.storageService.getUserTable().executeSql(this.storageService.getSSS("willPlanDetail",this.userCode),[]).then(res=>{
@@ -82,13 +83,15 @@ export class RFIDSpecScanListPage{
     }
   }
   getMore(infiniteScroll){
-    this.getData();
+    this.getData(infiniteScroll);
     infiniteScroll.complete();
   }
-  getData(){
+  getData(infiniteScroll?:any){
     let item = this.data;
-    this.filterData = [];
-    for (let i in item){
+    if (this.page == 1){
+      this.filterData = [];
+    }
+    for (let i = (this.page - 1) * 10;i < this.page * 10;i++){
       if(item[i]){
         if(!item[i].checkResult||item[i].checkResult==''){
           item[i].checkResultName = "未盘"
@@ -96,8 +99,13 @@ export class RFIDSpecScanListPage{
           item[i].checkResultName = "已盘"
         }
         this.filterData.push(item[i]);
+      }else {
+        if (infiniteScroll){
+          infiniteScroll.complete();
+        }
       }
     }
+    this.page++;
   }
   getSelectIndex(index){
     if(this.filterData[index].checkResultName=="未盘"||this.filterData[index].checkResultName=="已盘"){
