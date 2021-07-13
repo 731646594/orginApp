@@ -114,26 +114,52 @@ export class RFIDScanListPage{
   }
   getData(infiniteScroll?:any){
     let item = this.data;
-    if (this.page == 1){
-      this.filterData = [];
-    }
-    for (let i = (this.page - 1) * 10;i < this.page * 10;i++){
-      if(item[i]){
-        if(!item[i].checkResult||item[i].checkResult==''){
-          item[i].checkResultName = "未盘"
-        }else if(item[i].checkResult=='1'){
-          item[i].checkResultName = "已盘"
-        }else{
-          item[i].checkResultName = "盘盈"
-        }
-        this.filterData.push(item[i]);
-      }else {
-        if (infiniteScroll){
-          infiniteScroll.complete();
+    let isFirst = true;
+    let isScanList = false;
+    for (let i in item){
+      if (isFirst){
+        if (i != '0'){
+          isScanList = true;
         }
       }
+      isFirst = false;
     }
-    this.page++;
+    if (isScanList){
+      this.filterData = [];
+      for (let i in item){
+        if(item[i]){
+          if(!item[i].checkResult||item[i].checkResult==''){
+            item[i].checkResultName = "未盘"
+          }else if(item[i].checkResult=='1'){
+            item[i].checkResultName = "已盘"
+          }else{
+            item[i].checkResultName = "盘盈"
+          }
+          this.filterData.push(item[i]);
+        }
+      }
+    }else {
+      if (this.page == 1){
+        this.filterData = [];
+      }
+      for (let i = (this.page - 1) * 10;i < this.page * 10;i++){
+        if(item[i]){
+          if(!item[i].checkResult||item[i].checkResult==''){
+            item[i].checkResultName = "未盘"
+          }else if(item[i].checkResult=='1'){
+            item[i].checkResultName = "已盘"
+          }else{
+            item[i].checkResultName = "盘盈"
+          }
+          this.filterData.push(item[i]);
+        }else {
+          if (infiniteScroll){
+            infiniteScroll.complete();
+          }
+        }
+      }
+      this.page++;
+    }
   }
   getSelectIndex(index){
     if(this.filterData[index].checkResultName=="未盘"||this.filterData[index].checkResultName=="已盘"){
