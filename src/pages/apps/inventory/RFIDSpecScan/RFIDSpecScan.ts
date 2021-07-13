@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, AlertController, App, Events, NavController, NavParams} from 'ionic-angular';
+import {
+  ActionSheetController,
+  AlertController,
+  App,
+  Events,
+  NavController,
+  NavParams,
+  ToastController
+} from 'ionic-angular';
 import {PageUtil,StorageService} from "../../../../services/storageService";
 import {BarcodeScanner,} from "@ionic-native/barcode-scanner";
 import {File} from "@ionic-native/file";
@@ -37,7 +45,7 @@ export class RFIDSpecScanPage{
   constructor(public navCtrl?:NavController,public storageService?:StorageService,public navParams?:NavParams,
               public events?:Events, public file?:File, public actionSheetCtrl?:ActionSheetController,
               public app?:App,public alertCtrl?:AlertController,public barcodeScanner?:BarcodeScanner,
-              private nativeAudio?: NativeAudio) {
+              private nativeAudio?: NativeAudio,public toastController?:ToastController) {
     that = this;
     PageUtil.pages["RFIDSpecScan"]=this;
     this.nativeAudio.preloadSimple('uniqueId1', 'assets/beep.ogg');
@@ -243,17 +251,45 @@ export class RFIDSpecScanPage{
   }
   init(){
     cordova.plugins.RfidScanPlugin.initEngine(this.storageService.read("deviceType"), result => {
-      cordova.plugins.RfidScanPlugin.init("", result =>  {}, error => alert(error));
+      cordova.plugins.RfidScanPlugin.init("", result =>  {
+        let toastCtrl = this.toastController.create({
+          message: '初始化成功',
+          duration: 2000,
+          position: 'bottom',
+          cssClass:"toastTextCenter"
+        })
+        toastCtrl.present();
+      }, error => alert(error));
 
     }, error => alert(error));
   }
   startScan(){
     this.isScanning = true;
-    cordova.plugins.RfidScanPlugin.startScan("", result =>  {}, error => alert(error));
+    cordova.plugins.RfidScanPlugin.startScan("", result =>  {
+      let toastCtrl = this.toastController.create({
+        message: '开始扫描',
+        duration: 2000,
+        position: 'bottom',
+        cssClass:"toastTextCenter"
+      })
+      if (this.storageService.read("deviceType") == 'ufh'){
+        toastCtrl.present();
+      }
+    }, error => alert(error));
   }
   endScan(){
     this.isScanning = false;
-    cordova.plugins.RfidScanPlugin.stopScan("", result =>  {}, error => alert(error));
+    cordova.plugins.RfidScanPlugin.stopScan("", result =>  {
+      let toastCtrl = this.toastController.create({
+        message: '停止扫描',
+        duration: 2000,
+        position: 'bottom',
+        cssClass:"toastTextCenter"
+      })
+      if (this.storageService.read("deviceType") == 'ufh'){
+        toastCtrl.present();
+      }
+    }, error => alert(error));
   }
 
   getScanStatus(){
